@@ -1,0 +1,174 @@
+<div class="flex-container-parent-row">
+	<!-- Colonne de gauche -->
+	<div class="flex-item-parent-row">
+		<div class="flex-container-card-row">
+			<mat-card class="flex-item-card-row">
+				<mat-card-content class="card-content">
+					<div class="card-title">
+						<ng-container *ngIf="showSimpleDateOrRangeDate ; then showSimpleDate; else showRangeDate"></ng-container>
+						<ng-template #showSimpleDate>
+							Liste des RDV's
+							<span class="card-content">
+								<!-- RDV du jour : -->
+								<!-- du {{ dateSelectionnee | date:'EEEE dd MMMM':'':'fr' | DateFirstCharUpper }} -->
+								du {{ dateSelectionnee | date: 'dd / MM' }}
+							</span>
+						</ng-template>
+						<!-- <div class="card-title" *ngIf="show; else avecDateB"> -->
+						<ng-template #showRangeDate>
+							Liste des RDV's
+							<span class="card-content">
+								du {{ dateSelectionneeA | date: 'dd / MM' }} au {{ dateSelectionneeB | date: 'dd / MM' }}
+							</span>
+						</ng-template>
+
+
+					</div>
+					<mat-divider></mat-divider>
+					<div>
+						<p>
+							DATEHeure D Date, NomPrenom, Soin, Lieu, MODIFIER
+						</p>
+					</div>
+				</mat-card-content>
+			</mat-card>
+		</div>
+	</div>
+	<!-- Colonne de droite -->
+	<div class="flex-item-parent-row">
+		<div clas="flex-container-child-col">
+			<!-- Colonne Haut -->
+			<div class="flex-item-child-child-col">
+				<mat-accordion>
+					<mat-expansion-panel>
+						<mat-expansion-panel-header>
+							<mat-panel-title>
+								Calendrier Rdv
+							</mat-panel-title>
+							<mat-panel-description>
+								Types de sélection de date
+							</mat-panel-description>
+						</mat-expansion-panel-header>
+						<!-- Date -->
+						<ng-template matExpansionPanelContent>
+							<mat-horizontal-stepper linear="false" role="tab" #stepper="matHorizontalStepper">
+								<mat-step>
+									<ng-template matStepLabel>Simple Date</ng-template>
+									<mat-form-field class="card-content">
+										<input matInput [matDatepicker]="picker" [(ngModel)]="dateSelectionnee" placeholder="Selectionner une date" disabled>
+										<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+										<mat-datepicker #picker disabled="false" touchUi="true" #picker [startAt]="dateSelectionnee"></mat-datepicker>
+									</mat-form-field>
+									<button mat-raised-button (click)="rechercherSimpleDate()">Rechercher</button>
+								</mat-step>
+								<!-- Plage de dates -->
+								<mat-step>
+									<ng-template matStepLabel>plage de Date</ng-template>
+									<mat-form-field class="card-content">
+										<input matInput [matDatepicker]="pickerA" [(ngModel)]="dateSelectionneeA" placeholder="Date Début" disabled>
+										<mat-datepicker-toggle matSuffix [for]="pickerA"></mat-datepicker-toggle>
+										<mat-datepicker #pickerA disabled="false" touchUi="true" #pickerA [startAt]="dateSelectionnee"></mat-datepicker>
+									</mat-form-field>
+									<mat-form-field class="card-content">
+										<input matInput [matDatepicker]="pickerB" [(ngModel)]="dateSelectionneeB" placeholder="Date Fin" disabled>
+										<mat-datepicker-toggle matSuffix [for]="pickerB"></mat-datepicker-toggle>
+										<mat-datepicker #pickerB disabled="false" touchUi="true" [startAt]="startDate" #pickerB [startAt]="dateSelectionneeB"></mat-datepicker>
+									</mat-form-field>
+									<button mat-raised-button (click)="rechercherRangeDate()">Rechercher</button>
+								</mat-step>
+							</mat-horizontal-stepper>
+						</ng-template>
+					</mat-expansion-panel>
+				</mat-accordion>
+			</div>
+			<!-- Colonne du bas -->
+			<div clas="flex-item-child-col">
+				<mat-accordion>
+					<mat-expansion-panel [expanded]="true">
+						<mat-expansion-panel-header>
+							<mat-panel-title>
+								Informations Rdv
+							</mat-panel-title>
+							<mat-panel-description>
+								Date/heure/client/prestation
+							</mat-panel-description>
+						</mat-expansion-panel-header>
+						<ng-template matExpansionPanelContent>
+							<form>
+								<div>
+									<span class="item-titre">Date de rdv :</span>
+									<mat-form-field class="item-date">
+										<input matInput [min]="minDate" [matDatepicker]="picker4" placeholder="DateRdv">
+										<mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+										<mat-datepicker #picker4 startView="month" disabled="false" touchUi="true" [startAt]="startDate"></mat-datepicker>
+									</mat-form-field>
+								</div>
+								<div>
+									<!-- Debut_heure -->
+									<span class="item-titre">Heure début :</span>
+									<mat-form-field class="item-heure-minute">
+										<mat-select placeholder="Heures">
+											<mat-option *ngFor="let heure of heures" [value]="heure.value">
+												{{ heure.viewValue }}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+									<span class="item-titre"> : </span>
+									<!-- Debut minutes -->
+									<mat-form-field class="item-heure-minute">
+										<mat-select placeholder="Minutes">
+											<mat-option *ngFor="let minute of minutes" [value]="minute.value">
+												{{ minute.viewValue }}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+								<div>
+									<!-- Fin_heure -->
+									<span class="item-titre">Heure fin :</span>
+									<mat-form-field class="item-heure-minute">
+										<mat-select placeholder="Heure">
+											<mat-option *ngFor="let heure of heures" [value]="heure.value">
+												{{ heure.viewValue }}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+									<!-- Fin minutes -->
+									<span class="item-titre"> : </span>
+									<mat-form-field v>
+										<mat-select placeholder="Minutes">
+											<mat-option *ngFor="let minute of minutes" [value]="minute.value">
+												{{ minute.viewValue }}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+								<div>
+										<span class="item-titre">Genre : </span>
+										<mat-form-field class="item-heure-minute">
+												<mat-select placeholder="Genre">
+													<mat-option *ngFor="let genre of genres" [value]="genre.value">
+														{{ genre.viewValue }}
+													</mat-option>
+												</mat-select>
+											</mat-form-field>
+								</div>
+								<!-- Prestations -->
+								<div>
+										<span class="item-titre">Prestation : </span>
+										<mat-form-field class="item-prestation">
+												<mat-select placeholder="Genre">
+													<mat-option *ngFor="let genre of genres" [value]="genre.value">
+														{{ genre.viewValue }}
+													</mat-option>
+												</mat-select>
+											</mat-form-field>
+								</div>
+							</form>
+						</ng-template>
+					</mat-expansion-panel>
+				</mat-accordion>
+			</div>
+		</div>
+	</div>
+</div>

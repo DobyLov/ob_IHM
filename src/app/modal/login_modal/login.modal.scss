@@ -1,0 +1,224 @@
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  height: 300px; 
+  // align-content:stretch;
+  // align-items:flex-start;
+}
+
+.flex-item-title {
+  flex:1;  
+
+}
+
+.toggleDiv {
+  // color: black;
+  font-family: 'Montserrat', sans-serif;  
+  font-size: 12px;
+
+}
+
+.flex-item-title p {
+  color: black;
+  font-family: 'Montserrat', sans-serif;  
+  font-size:24px;
+  font-weight: bold;
+  // font-weight: 300; // bold est plus fort
+  text-align: center;
+}
+
+.flex-item {
+  flex:1;  
+  margin: 25px;
+  width: 100%;
+  // flex: none; /* make this flex item inflexible, so width property controls its width entirely */
+  // height: 40px;
+}
+
+.flex-item > * {
+  width: 80%;
+}
+
+.flex-item div {
+  color: black;
+  font-family: 'Great vibes', cursive;
+  font-size: 20px;
+  // border-color: 1px crimson solid;
+}
+
+.flex-item-ForgottenPwd {
+  color: black;
+  font-family: 'Montserrat', sans-serif;  
+  font-size: 14px;
+}
+
+.flex-item-Action {
+  flex:1;
+}
+
+.flex-container-actionOkCancel {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+.flex-item-ActionokCancel {
+  // flex: 1 0 auto;
+  flex:1;
+
+  // width: 100%;
+  // border: 1px solid crimson;
+  // align-items: stretch;
+}
+
+// modal
+.flex-item-title {
+	// -webkit-flex: 0 0 auto;
+  // flex: 0 0 auto;
+  // flex: 1;
+  color: black;
+  font-family: 'Great vibes', cursive;
+  font-size: 26px;
+  // width: 100%;  
+  // border: 1px solid crimson;
+  // align-items: stretch;
+}
+
+// Modal:toolBar
+.flex-item-titleMaj {
+  // flex: 0 0 auto;
+  color: black;
+  font-family: 'Great vibes', cursive;
+  font-size: 24px;  
+  // text-align: center;
+  // width: 90%;
+  border: 1px crimson;
+}
+
+.flex-container-login {
+
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  height:250px; 
+  // align-items:flex-start;
+  // align-items: stretch;
+  border: 1px solid  crimson;
+}
+// .flex-item-titleMin {
+//   font-family: 'Great vibes', cursive;
+//   color: rgb(201, 144, 39);
+//   font-size: 25px;
+//   // text-align: center;  
+// }
+.flex-item2 {
+  flex: 1;
+	// -webkit-flex: 0 0 auto;
+  // flex: 0 0 auto;
+  flex: 1;
+  font-family: 'Montserrat', sans-serif; 
+  font-size: 16px;
+  margin:20px;
+  width: 90%;
+  border: 1px solid crimson;
+}
+
+.flex-item3 {
+	// -webkit-flex: 0 0 auto;
+  // flex: 0 0 auto;
+  flex: 1;
+  font-family: 'Montserrat', sans-serif;  
+  font-size: 14px;
+  margin:20px;
+  width: 90%;
+  border: 1px solid crimson;
+}
+.flex-item4 {
+  // flex: 1 0 auto;
+  // flex:1;
+  font-family: 'Montserrat', sans-serif;  
+  font-size: 14px;
+  // width: 100%;
+  border: 1px solid  crimson;
+  // align-items: stretch;
+}
+
+.flex-container-actionOkCancel {
+  display: flex;
+  flex-direction: row;
+}
+.flex-item5 {
+  // flex: 1 0 auto;
+  flex:1;
+  font-family: 'Montserrat', sans-serif;  
+  font-size: 14px;
+  // width: 100%;
+  border: 1px solid crimson;
+  // align-items: stretch;
+}
+
+
+// ************************************************
+
+// .example-container {
+//   display: flex;
+//   flex-direction: column;
+//   width: 450px; // Largeur
+//   height: 300px; // hauteur
+//   // border-color: #92a8d1;
+// }
+
+// .example-container > * {
+//   width: 100%;
+//   // border: 5px solid red;
+// }
+
+// .example-right-align {
+//   text-align: right;
+// }
+
+// input.example-right-align::-webkit-outer-spin-button,
+// input.example-right-align::-webkit-inner-spin-button {
+//   display: none;
+// }
+
+// input.example-right-align {
+//   -moz-appearance: textfield;
+// }
+
+// .mat-dialog-container {
+//   overflow: hidden !important;
+//   // border: none !important;
+//   // border-radius: 50px !important;
+//   border-color:antiquewhite !important;
+//   padding: 5px !important;
+// }
+
+
+
+
+// .example-container > div {
+//   width: 100%;
+//   font-family: 'Montserrat', sans-serif;  
+//   font-weight: bold;
+//   font-size: 16px;
+
+// }
+// .example-container > * {
+//   width: 100%;
+//   font-family: 'Montserrat', sans-serif;  
+//   font-weight: bold;
+//   font-size: 15px;
+// }
+
+// .flex-container {
+// 	display: -webkit-flex;
+// 	display: flex;
+// 	-webkit-flex-flow: row wrap;
+// 	flex-flow: row wrap;
+// 	-webkit-justify-content: space-between;
+//   justify-content:space-between;
+//   width: 350px;
+//   height:250px;
+
+// }

@@ -1,0 +1,134 @@
+
+.header {
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+  }
+
+  .connMenu {
+    font-family: 'Montserrat', sans-serif;  
+    font-size: 16px; 
+    font-weight: bold;   
+    color: black;
+  }
+
+  .connMenu:disabled {
+    color: rgba(78, 76, 76, 0.644);
+  }
+
+  // Welcom main page
+  .flex-container-toolbar {
+    display: flex;
+    display: -webkit-flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-justify-content: space-between;
+    justify-content:space-between;
+  }
+  
+  .flex-item1 {
+    -webkit-flex: 1 1 auto;
+    flex: 1 1 auto;
+  }  
+
+  .flex-item2 {
+    -webkit-flex: 1 0 0;
+    flex: 1 0 0;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;  
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    // font-weight: 300; // bold est plus fort
+  }
+
+  .flex-item3 {
+    -webkit-flex: 1 0 auto;
+    flex: 1 0 0;
+    // align-self: flex-end;
+    text-align: right;
+  }
+
+  // SideNav
+  .sidenav-container {
+    position: absolute;
+    top: 60px;
+    bottom: 64px;
+    left: 0;
+    right: 0;
+  }
+
+  .inside-sidenav {
+    display: flex;
+    display: -webkit-flex;
+    align-items: right;
+    justify-content: right;
+    width: 180px;
+    background: #AED581;
+    // background: #C5E1A5;
+  }
+
+  .flex-side-bar-menu {
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: column nowrap;
+    align-content: flex-start;
+    align-items:stretch;
+   
+  }
+
+  // Lorsque l utilisateur est connecte
+  .userConn {
+    font-family: 'Great vibes', cursive;
+    font-size: 25px;
+    color: black;
+    
+  }
+
+  // menu dans la sidebar
+  .vertical-menu {
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: column nowrap;
+    align-content: flex-start;
+    align-items:stretch;
+    // width: 200px;
+    // weight: 100px;
+    // font-family: 'Great vibes', cursive;  
+    font-family: 'Montserrat', sans-serif;  
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  .vertical-menu a {
+    // background-color: #eee;
+    background-color: #AED581;
+    // color: rgb(201, 144, 39);
+    color: black;
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+  }
+
+  .vertical-menu a:hover {
+    // background-color: #ccc;
+    background-color:rgb(201, 144, 39);
+  }
+
+  .vertical-menu a.active {
+    background-color: #AED581;
+    // font-family: 'Great vibes', cursive;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    text-decoration: underline;
+    // color: white;
+    color: rgb(201, 144, 39);
+  }
+ 
+ 
+  
+  

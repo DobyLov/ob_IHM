@@ -1,0 +1,161 @@
+// Customisation Modal
+.mat-dialog-container {
+  overflow: hidden !important;
+  border-radius: 20px !important;
+  padding: 0px !important;
+}
+
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    width: 300px; // 350
+    height:250px; // 250
+    // align-content:stretch;
+    // align-items:flex-start;
+  }
+  
+  .flex-item-title {
+    flex:1;  
+  }
+  
+  .flex-item-title p {
+    color: black;
+    font-family: 'Montserrat', sans-serif;  
+    font-size:19px;
+    font-weight: bold;
+    // font-weight: 300; // bold est plus fort
+    text-align: center;
+    // width: 90%;
+  }
+  
+  .flex-item {
+    flex:1; 
+    margin: 25px;
+    width: 90%;
+    height: 25px;
+  }
+  
+  .flex-item > * {
+    width: 80%;
+  }
+  
+  .flex-item div {
+    color: black;
+    font-family: 'Montserrat', sans-serif;  
+    font-size: 18px;
+    // border-color: 1px crimson solid;
+  }
+  
+  .flex-item-ForgottenPwd {
+    color: black;
+    font-family: 'Montserrat', sans-serif;  
+    font-size: 14px;
+  }
+  
+  .flex-item-Action {
+    flex:1;
+  }
+  
+  .flex-container-actionOkCancel {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+  }
+  .flex-item-ActionokCancel {
+    // flex: 1 0 auto;
+    flex:1;
+  
+    // width: 100%;
+    // border: 1px solid crimson;
+    // align-items: stretch;
+  }
+  
+  // modal
+  .flex-item-title {
+      // -webkit-flex: 0 0 auto;
+    // flex: 0 0 auto;
+    // flex: 1;
+    color: black;
+    font-family: 'Great vibes', cursive;
+    font-size: 26px;
+    // width: 100%;  
+    // border: 1px solid crimson;
+    // align-items: stretch;
+  }
+  
+  // Modal:toolBar
+  .flex-item-titleMaj {
+    // flex: 0 0 auto;
+    color: black;
+    font-family: 'Great vibes', cursive;
+    font-size: 24px;  
+    // text-align: center;
+    // width: 90%;
+    border: 1px crimson;
+  }
+  
+  .flex-container-login {
+  
+    display: flex;
+    flex-direction: column;
+    width: 450px;
+    height:250px; 
+    // align-items:flex-start;
+    // align-items: stretch;
+    border: 1px solid  crimson;
+  }
+  // // .flex-item-titleMin {
+  // //   font-family: 'Great vibes', cursive;
+  // //   color: rgb(201, 144, 39);
+  // //   font-size: 25px;
+  // //   // text-align: center;  
+  // // }
+  // .flex-item2 {
+  //   flex: 1;
+  //     // -webkit-flex: 0 0 auto;
+  //   // flex: 0 0 auto;
+  //   flex: 1;
+  //   font-family: 'Montserrat', sans-serif; 
+  //   font-size: 16px;
+  //   margin:20px;
+  //   width: 90%;
+  //   border: 1px solid crimson;
+  // }
+  
+  // .flex-item3 {
+  //     // -webkit-flex: 0 0 auto;
+  //   // flex: 0 0 auto;
+  //   flex: 1;
+  //   font-family: 'Montserrat', sans-serif;  
+  //   font-size: 14px;
+  //   margin:20px;
+  //   width: 90%;
+  //   border: 1px solid crimson;
+  // }
+  // .flex-item4 {
+  //   // flex: 1 0 auto;
+  //   // flex:1;
+  //   font-family: 'Montserrat', sans-serif;  
+  //   font-size: 14px;
+  //   // width: 100%;
+  //   border: 1px solid  crimson;
+  //   // align-items: stretch;
+  // }
+  
+  // .flex-container-actionOkCancel {
+  //   display: flex;
+  //   flex-direction: row;
+  // }
+  // .flex-item5 {
+  //   // flex: 1 0 auto;
+  //   flex:1;
+  //   font-family: 'Montserrat', sans-serif;  
+  //   font-size: 14px;
+  //   // width: 100%;
+  //   border: 1px solid crimson;
+  //   // align-items: stretch;
+  // }
+  
+
+  
