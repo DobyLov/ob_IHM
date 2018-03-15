@@ -53,7 +53,11 @@ export class RdvComponent implements OnInit {
     {value: '2', viewValue: 'HOMME'}
   ];
   pretations = [
-    {value: ''}
+    {value: '1', viewValue: 'epilation'}
+  ]
+  lieux = [
+    {value: '1', viewValue: 'adresse client'},
+    {value: '2', viewValue: 'la bomboniere'}
   ]
 
 

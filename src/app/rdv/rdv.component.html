@@ -163,6 +163,14 @@
 													</mat-option>
 												</mat-select>
 											</mat-form-field>
+											<span class="item-titre">Lieu Rdv : </span>
+											<mat-form-field class="item-prestation">
+													<mat-select placeholder="Lieu">
+														<mat-option *ngFor="let lieu of lieux" [value]="lieu.value">
+															{{ lieu.viewValue }}
+														</mat-option>
+													</mat-select>
+												</mat-form-field>
 								</div>
 							</form>
 						</ng-template>
