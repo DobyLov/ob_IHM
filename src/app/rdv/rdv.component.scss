@@ -60,19 +60,32 @@
 }
 
 .item-titre {
-    max-width: 30%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    max-width: 50%;
     text-align: right;
 }
-.item-date {
-    max-width: 30%;
-    text-align: right
+.item {
+    width: 50%;
+    text-align: left
 }
 .item-heure-minute {
     max-width: 30%;
     text-align: center
 }
 
+.flex-container-item-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    
+}
 
+.flex-item-row {
+    flex:1;
+    width: 50%;
+}
 // .date-picker {
 //     font-family: 'Montserrat', sans-serif;
 //     font-size: 16px;
@@ -92,5 +105,32 @@
 
 // }
 
+.container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    position: relative;
+    // margin: 1em;
+  }
+  
+  .demo-form {
+    padding: 0em;
+  }
+  
+  .mat-card {
+    padding: 0;
+    max-width: 500px;
+    // margin: 3rem auto;
+  }
 
+//   .snack-bar {
+//       border: 5px solid coral;
+//   }
 

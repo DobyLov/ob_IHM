@@ -1,14 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 // import { FormGroup, Validators } from '@angular/forms';
-
 
 @Component({
   selector: 'app-rdv',
   templateUrl: './rdv.component.html',
   styleUrls: ['./rdv.component.scss']
 })
-export class RdvComponent implements OnInit {
 
+export class RdvComponent implements OnInit {
  
   dateSearchPanelOpenState: boolean = false;
   rdvInfoPanelOpenState: boolean = true;
@@ -19,35 +19,6 @@ export class RdvComponent implements OnInit {
   startDate = new Date(this.dateSelectionnee);
   minDate = new Date();
 
-  // heures
-  heures = [
-    {value: '08', viewValue: '08'},
-    {value: '09', viewValue: '09'},
-    {value: '10', viewValue: '10'},
-    {value: '11', viewValue: '11'},
-    {value: '12', viewValue: '12'},
-    {value: '13', viewValue: '13'},
-    {value: '14', viewValue: '14'},
-    {value: '15', viewValue: '15'},
-    {value: '16', viewValue: '16'},
-    {value: '17', viewValue: '17'},
-    {value: '18', viewValue: '18'},
-    {value: '19', viewValue: '19'},
-    {value: '20', viewValue: '20'},
-    {value: '21', viewValue: '21'}
-  ];
-  minutes = [
-    {value: '00', viewValue: '00'},
-    {value: '15', viewValue: '15'},
-    {value: '20', viewValue: '20'},
-    {value: '25', viewValue: '25'},
-    {value: '30', viewValue: '30'},
-    {value: '35', viewValue: '35'},
-    {value: '40', viewValue: '40'},
-    {value: '45', viewValue: '45'},
-    {value: '50', viewValue: '50'},
-    {value: '55', viewValue: '55'}
-  ];
   genres = [
     {value: '1', viewValue: 'FEMME'},
     {value: '2', viewValue: 'HOMME'}
@@ -59,9 +30,27 @@ export class RdvComponent implements OnInit {
     {value: '1', viewValue: 'adresse client'},
     {value: '2', viewValue: 'la bomboniere'}
   ]
+  // time  
+  qqchoz: String;
+  public timeClockDebut = { hour: 0, minute: 0, meriden: 'PM', format: 24 };
+  public timeClockFin = { hour: '10', minute: '10', meriden: 'PM', format: 24 };
+  // hour: string = this.timeClockDebut.hour;
+  // minute: string = this.timeClockDebut.minute;
+  constructor(public dialog: MatDialog
+              // ,public dialogclockFin: MatDialog
+            ) { }
 
+   openDialogClockDebut(): void {
+    let dialogRef = this.dialog.open(DialogClockDebutComponent, {
+      data: { timeclockDebut: this.timeClockDebut, qqchoz: this.qqchoz }
+      // data: { qqchoz: this.qqchoz }
+    });
 
-  constructor() { }
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+      this.timeClockDebut = result;
+    });
+  }
 
   ngOnInit() { }
 
@@ -101,8 +90,43 @@ export class RdvComponent implements OnInit {
       console.log("La date A est inferieure a B");
       console.log("val de dateSelectioneeA : " + dateA);
       console.log("val de dateSelectioneeB : " + dateB);
-    }
-    
-    
+    }    
   }
+}
+
+@Component({
+  selector: 'dialog-clock-debut.component',
+  templateUrl: './dialog-clock-debut/dialog-clock-debut.component.html'
+
+})
+
+export class DialogClockDebutComponent {
+
+  
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogClockDebutComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { 
+
+      this.data.timeClockDebut = { hour: '0', minute: '0', meriden: 'PM', format: 24 };
+     }
+
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  onRevert() {
+    // this.exportTime =  { hour: 7, minute: 15, meriden: 'PM', format: 12 };
+    console.log("btn Annuler Heure de début séléctionnée : " 
+    + this.data.timeClockDebut.hour + " : " + this.data.timeClockDebut.minute);
+    this.dialogRef.close();
+  }
+
+  onSubmit() {    
+    console.log("btn valider Heure de début séléctionnée : " 
+    + this.data.timeClockDebut.hour + " : " + this.data.timeClockDebut.minute);
+    this.dialogRef.close(this.data.timeClockDebut);
+  }
+
 }

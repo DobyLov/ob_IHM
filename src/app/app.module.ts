@@ -2,7 +2,6 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 // Animations
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 // Routing
 import { AppRoutingModule } from './/app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,15 +17,18 @@ import { UtilisateurComponent } from './utilisateur/utilisateur.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { DateFirstCharUpperPipe } from './pipe/datefirstcharupper.pipe';
 import { LoginComponent } from './login/login.component';
-
+import { DialogClockDebutComponent } from './rdv/rdv.component';
 import { ForgottenPwdModalComponent } from './login/login.component';
 
 import { UsersettingsComponent } from './user/usersettings/usersettings.component';
 //FontAwsome angular
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
-//ng-datepicker
-// import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+
+// Time Picker
+import { Ng5TimePickerModule } from 'ng5-time-picker';
+
+
 // Forms
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, 
@@ -56,6 +58,8 @@ import {
   MatSelectModule,
   MatStepperModule,
   MatSidenavModule,
+  MatSnackBarModule,
+  MatTabsModule,
   MatToolbarModule } from '@angular/material';
   
 // Import Locale_Fr
@@ -64,6 +68,7 @@ import localeFr from '@angular/common/locales/fr';
 // the second parameter 'fr' is optional
 registerLocaleData(localeFr, 'fr');
 import localeFrExtra from '@angular/common/locales/extra/fr';
+
 registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
 
 
@@ -84,10 +89,10 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
     WelcomeComponent,
     LoginComponent,
     UsersettingsComponent,
-    ForgottenPwdModalComponent
+    ForgottenPwdModalComponent,
+    DialogClockDebutComponent
   ],
-  imports: [
-    
+  imports: [    
     AngularFontAwesomeModule,
     AppRoutingModule,
     BrowserModule,
@@ -109,10 +114,12 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
     MatSelectModule,
     MatStepperModule,
     MatSidenavModule,
+    MatSnackBarModule,
     MatToolbarModule,
-    
-    FormsModule, ReactiveFormsModule
-    // ,    OwlDateTimeModule, OwlNativeDateTimeModule
+    MatTabsModule, 
+    Ng5TimePickerModule,  
+    FormsModule, 
+    ReactiveFormsModule
 
   ],
 
