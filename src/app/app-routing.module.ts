@@ -12,6 +12,7 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { LoginComponent } from './login/login.component';
 import { ForgottenPwdModalComponent } from './login/login.component';
 import { DialogClockDebutComponent } from './rdv/rdv.component';
+import { DialogClockFinComponent } from './rdv/rdv.component';
 
 const routes: Routes = [
 
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'rdvlist', component: RdvListComponent },
   { path: 'rdvadd', component: RdvAddComponent },
   { path: 'rdvclockdebut', component: DialogClockDebutComponent },
+  { path: 'rdvclockfin', component: DialogClockFinComponent },
   { path: '**', component: PagenotfoundComponent },
   { path: '', redirectTo: '/WelcomeComponent', pathMatch: 'full' }
 

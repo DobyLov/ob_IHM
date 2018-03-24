@@ -57,6 +57,8 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;    
     font-weight: bold;
+    width: 100%;
+
 }
 
 .item-titre {
@@ -79,31 +81,55 @@
     flex-direction: row;
     justify-content: flex-start;
     flex-wrap: nowrap;
-    
+    // max-width: 50%;    
 }
+.flex-container-item-row-btnvalider {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.flex-container-item-row-btnvalider {
+    flex:1;
+    justify-content: flex-end;
+}
+
 
 .flex-item-row {
     flex:1;
     width: 50%;
 }
-// .date-picker {
-//     font-family: 'Montserrat', sans-serif;
-//     font-size: 16px;
-// }
 
-// .mat-dialog-container {
-//     overflow: hidden !important;
-//     border-radius: 20px !important;
-//     padding: 0px !important;
-// }
+.flex-item-row-button {
+    // flex: 1;
+    width: 50px;
+    text-align: right;
+    
+}
 
-// .flex-container-col {
+.flex-item-row-centre-text {
+    text-align: center;
+}
 
-// }
+.flex-item-row-client-title {
+    flex: 1;
+    width: 100%;
+    text-align: left;
+}
+.flex-item-row-client-content {
+    flex: 1;
+    width: 50%;
+    text-align: left;
+}
 
-// .flex-item-col {
+.flex-item-row-content-radiobtn {
+    vertical-align: text-bottom;
+}
 
-// }
+.items {
+    max-width: 50%;
+}
+
+
 
 .container {
     display: -webkit-box;
@@ -127,8 +153,11 @@
   .mat-card {
     padding: 0;
     max-width: 500px;
-    // margin: 3rem auto;
+    border-radius: 20px;
+    margin: 3rem auto;
   }
+
+
 
 //   .snack-bar {
 //       border: 5px solid coral;

@@ -2,8 +2,8 @@
 	<!-- Colonne de gauche -->
 	<div class="flex-item-parent-row">
 		<div class="flex-container-card-row">
-			<mat-card class="flex-item-card-row">
-				<mat-card-content class="card-content">
+			<!-- <mat-card class="flex-item-card-row"> -->
+				<!-- <mat-card-content class="card-content"> -->
 					<div class="card-title">
 						<ng-container *ngIf="showSimpleDateOrRangeDate ; then showSimpleDate; else showRangeDate"></ng-container>
 						<ng-template #showSimpleDate>
@@ -30,8 +30,8 @@
 							DATEHeure D Date, NomPrenom, Soin, Lieu, MODIFIER
 						</p>
 					</div>
-				</mat-card-content>
-			</mat-card>
+				<!-- </mat-card-content> -->
+			<!-- </mat-card> -->
 		</div>
 	</div>
 	<!-- Colonne de droite -->
@@ -53,36 +53,37 @@
 						<mat-tab-group>
 							<mat-tab label="Date">
 								Date
-								<!-- <ng-template matExpansionPanelContent> -->
-								<!-- <mat-horizontal-stepper linear="false" role="tab" #stepper="matHorizontalStepper"> -->
-								<!-- <mat-step> -->
 								<ng-template matStepLabel>Simple Date</ng-template>
 								<mat-form-field class="card-content">
-									<input matInput [matDatepicker]="picker" [(ngModel)]="dateSelectionnee" placeholder="Selectionner une date" disabled>
+									<input matInput [matDatepicker]="picker" [(ngModel)]="dateSelectionnee" 
+												placeholder="Selectionner une date" disabled>
 									<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-									<mat-datepicker #picker disabled="false" touchUi="true" #picker [startAt]="dateSelectionnee"></mat-datepicker>
+									<mat-datepicker #picker disabled="false" touchUi="true" 
+																	#picker [startAt]="dateSelectionnee"></mat-datepicker>
 								</mat-form-field>
-								<button mat-raised-button (click)="rechercherSimpleDate()">Rechercher</button>
+								<button mat-icon-button (click)="rechercherSimpleDate()">
+										<i class="material-icons">search</i>
+											<!-- Rechercher -->
+								</button>
 							</mat-tab>
 							<mat-tab label="Plage de date">
-								<!-- </mat-step> -->
-								<!-- Plage de dates -->
-								<!-- <mat-step> -->
-								<!-- <ng-template matStepLabel>plage de Date</ng-template> -->
 								<mat-form-field class="card-content">
-									<input matInput [matDatepicker]="pickerA" [(ngModel)]="dateSelectionneeA" placeholder="Date Début" disabled>
+									<input matInput [matDatepicker]="pickerA" [(ngModel)]="dateSelectionneeA" 
+													placeholder="Date Début" disabled>
 									<mat-datepicker-toggle matSuffix [for]="pickerA"></mat-datepicker-toggle>
-									<mat-datepicker #pickerA disabled="false" touchUi="true" #pickerA [startAt]="dateSelectionnee"></mat-datepicker>
+									<mat-datepicker #pickerA disabled="false" touchUi="true" 
+																	#pickerA [startAt]="dateSelectionnee"></mat-datepicker>
 								</mat-form-field>
 								<mat-form-field class="card-content">
-									<input matInput [matDatepicker]="pickerB" [(ngModel)]="dateSelectionneeB" placeholder="Date Fin" disabled>
+									<input matInput [matDatepicker]="pickerB" [(ngModel)]="dateSelectionneeB" 
+													placeholder="Date Fin" disabled>
 									<mat-datepicker-toggle matSuffix [for]="pickerB"></mat-datepicker-toggle>
-									<mat-datepicker #pickerB disabled="false" touchUi="true" [startAt]="startDate" #pickerB [startAt]="dateSelectionneeB"></mat-datepicker>
+									<mat-datepicker #pickerB disabled="false" touchUi="true" [startAt]="startDate" 
+																	#pickerB [startAt]="dateSelectionneeB"></mat-datepicker>
 								</mat-form-field>
-								<button mat-raised-button (click)="rechercherRangeDate()">Rechercher</button>
-								<!-- </mat-step> -->
-								<!-- </mat-horizontal-stepper> -->
-								<!-- </ng-template> -->
+								<button mat-icon-button (click)="rechercherRangeDate()">
+										<i class="material-icons">search</i>
+									</button>
 							</mat-tab>
 						</mat-tab-group>
 
@@ -102,41 +103,131 @@
 							</mat-panel-description>
 						</mat-expansion-panel-header>
 						<ng-template matExpansionPanelContent>
-						<div class="flex-container-item-row">	
 							<form>
-								<span clas="flex-item-row">
-										Date du Rdv :
-								<!-- </span>
-								<span>		 -->
-										<mat-form-field>				
-											<input matInput [min]="minDate" [matDatepicker]="picker4" placeholder="">
-											<mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-											<mat-datepicker #picker4 startView="month" disabled="false" touchUi="true" 
-																			[startAt]="startDate"></mat-datepicker>
-										</mat-form-field>
-								</span>
+								<div class="flex-container-item-row">	
+										<span clas="flex-item-row">
+												Date du Rdv :
+												<mat-form-field>				
+													<input matInput [min]="minDate" [(ngModel)]="dateReservationRdv" 
+																[matDatepicker]="picker4" placeholder=""
+																[ngModelOptions]="{standalone: true}" disabled>
+													<mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+													<mat-datepicker #picker4 startView="month" disabled="false" touchUi="true" 
+																					[startAt]="startDate"></mat-datepicker>
+												</mat-form-field>
+										</span>
+								</div>
+								<mat-divider></mat-divider>
+								<div class="flex-container-item-row">
+												<span class="flex-item-row">
+														<span>
+																<u>Heure Début</u>
+														</span>
+														<br>
+														<span *ngIf="timeClockDebut">{{ timeClockDebut.hour | timeHourTwoDigits }}:{{ timeClockDebut.minute | timeMinuteTwoDigits }}</span>									
+														<button mat-icon-button (click)="openDialogClockDebut($envent)">									
+																<mat-icon>
+																	<i class="material-icons">schedule</i>
+																</mat-icon>
+														</button>
+														<span *ngIf="timeIsValid" class="flex-item-row-exclamation">
+															!
+														</span>
+												</span>
+												<span class="flex-item-row">
+														<span>
+																<u>Heure Fin</u>
+															</span>	
+															<br>
+														<span *ngIf="timeClockFin">{{ timeClockFin.hour | timeHourTwoDigits }}:{{ timeClockFin.minute | timeMinuteTwoDigits }}</span>
+														<button mat-icon-button (click)="openDialogClockFin()">									
+																<mat-icon>
+																	<i class="material-icons">schedule</i>
+																</mat-icon>
+														</button>
+												</span>
+												<span class="flex-item-row-button">
+														<button mat-icon-button (click)="dateTimeValider(dateReservationRdv)">	
+																<i class="material-icons">done</i>	
+																</button>
+												</span>
+									</div>
+								<mat-divider></mat-divider>
+								<u>Client(e)</u>
+								<br>
+								<div class="flex-container-item-row">
+										<span class="flex-item-row-client-content">
+												<mat-form-field class="items">
+														<mat-select placeholder="Client(e)">
+															<mat-option class="items" *ngFor="let client of clients" [value]="client.value">
+																{{ client.viewValue }}
+															</mat-option>
+														</mat-select>
+												</mat-form-field>
+										</span>
+										<span class="flex-item-row-client-content" text-align="center">
+												<mat-radio-group value="2" required class="items">
+															<mat-radio-button value="1">Homme</mat-radio-button>
+															<mat-radio-button value="2">Femme</mat-radio-button>
+												</mat-radio-group>
+										</span>
+										<span class="flex-item-row-button">												
+											</span>
+								</div>
+								<mat-divider></mat-divider>
+								<u>Prestation</u>
+								<br>
+								<div class="flex-container-item-row">
+									<span class="flex-item-row-client-content">
+											<mat-form-field>
+													<mat-select placeholder="Prestations">
+														<mat-option class="items" *ngFor="let prestation of prestations" [value]="prestation.value">
+															{{ prestation.viewValue }}
+														</mat-option>
+													</mat-select>
+											</mat-form-field>
+									</span>
+									<span class="flex-item-row-client-content">
+											<mat-form-field>
+													<mat-select placeholder="Soins(e)">
+														<mat-option class="items" *ngFor="let soin of soins" [value]="soin.value">
+															{{ soin.viewValue }}
+														</mat-option>
+													</mat-select>
+											</mat-form-field>
+									</span>
+									<span class="flex-item-row-button">												
+										</span>
+
+								</div>
+								<mat-divider></mat-divider>
+								<u>Lieu Rdv</u>
+								<br>
+								<div>
+										<span class="flex-item-row-client-content">
+												<mat-form-field>
+														<mat-select placeholder="Lieu Rdv">
+															<mat-option class="items" *ngFor="let lieu of lieux" [value]="lieu.value">
+																{{ lieu.viewValue }}
+															</mat-option>
+														</mat-select>
+												</mat-form-field>
+										</span>
+										<span class="flex-item-row-button">												
+											</span>
+								</div>
+								<mat-divider></mat-divider>								
+								<div class="flex-container-item-row-btnvalider">
+										<span class="flex-item-row-btnvalider">
+												<button color="primary" mat-raised-button (click)="dateTimeValider(dateReservationRdv)">	
+														<!-- <i class="material-icons">done</i> -->
+													Valider
+												</button>
+										</span>
+										<!-- <span class="flex-item-row-button">												
+										</span> -->
+								</div>
 							</form>
-						</div>
-						<div class="flex-container-item-row">
-							<span class="flex-item-row">
-									<span>Heure Début</span>
-									<button mat-icon-button (click)="openDialogClockDebut()">									
-											<mat-icon>
-												<i class="material-icons">schedule</i>
-											</mat-icon>
-										</button>
-									<span *ngIf="timeClockDebut">{{ timeClockDebut.hour }} : {{ timeClockDebut.minute }}</span>
-							</span>
-							<span class="flex-item-row">
-									<span>Heure Fin</span>
-									<button mat-icon-button (click)="openDialogClockDebut()">									
-											<mat-icon>
-												<i class="material-icons">schedule</i>
-											</mat-icon>
-										</button>
-									<span *ngIf="timeClockDebut">{{ timeClockDebut.hour }} : {{ timeClockDebut.minute }}</span>
-							</span>
-						</div>
 						</ng-template>
 					</mat-expansion-panel>
 				</mat-accordion>

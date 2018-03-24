@@ -16,8 +16,11 @@ import { PrestationComponent } from './prestation/prestation.component';
 import { UtilisateurComponent } from './utilisateur/utilisateur.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { DateFirstCharUpperPipe } from './pipe/datefirstcharupper.pipe';
+import { TimeHourTwoDigitsPipe } from './pipe/timeHourTwoDigits.pipe';
+import { TimeMinuteTwoDigitsPipe } from './pipe/timeMinuteTwoDigits.pipe'; 
 import { LoginComponent } from './login/login.component';
 import { DialogClockDebutComponent } from './rdv/rdv.component';
+import { DialogClockFinComponent } from './rdv/rdv.component';
 import { ForgottenPwdModalComponent } from './login/login.component';
 
 import { UsersettingsComponent } from './user/usersettings/usersettings.component';
@@ -69,6 +72,7 @@ import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr, 'fr');
 import localeFrExtra from '@angular/common/locales/extra/fr';
 
+
 registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
 
 
@@ -77,7 +81,9 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
   declarations: [
     AppComponent,
     ClientComponent,
-    DateFirstCharUpperPipe,   
+    DateFirstCharUpperPipe, 
+    TimeHourTwoDigitsPipe,  
+    TimeMinuteTwoDigitsPipe,
     FooterComponent,
     HomeComponent,
     RdvAddComponent,
@@ -90,7 +96,8 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
     LoginComponent,
     UsersettingsComponent,
     ForgottenPwdModalComponent,
-    DialogClockDebutComponent
+    DialogClockDebutComponent,
+    DialogClockFinComponent
   ],
   imports: [    
     AngularFontAwesomeModule,
