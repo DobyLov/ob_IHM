@@ -16,32 +16,26 @@ import { PrestationComponent } from './prestation/prestation.component';
 import { UtilisateurComponent } from './utilisateur/utilisateur.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { DateFirstCharUpperPipe } from './pipe/datefirstcharupper.pipe';
-import { TimeHourTwoDigitsPipe } from './pipe/timeHourTwoDigits.pipe';
-import { TimeMinuteTwoDigitsPipe } from './pipe/timeMinuteTwoDigits.pipe'; 
 import { LoginComponent } from './login/login.component';
-import { DialogClockDebutComponent } from './rdv/rdv.component';
-import { DialogClockFinComponent } from './rdv/rdv.component';
+import { LoginService } from './login/login.service';
 import { ForgottenPwdModalComponent } from './login/login.component';
-
 import { UsersettingsComponent } from './user/usersettings/usersettings.component';
-//FontAwsome angular
+// FontAwsome angular
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-
-
-// Time Picker
-import { Ng5TimePickerModule } from 'ng5-time-picker';
-
-
+// authentification
+import { AuthRequestOptions } from './login/authRequestOptions';
+import { AuthErrorHandlerService } from './login/authErrorHandler.service';
+import { HttpClientModule } from '@angular/common/http';
 // Forms
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ToasterService } from './service/toaster.service'
+
 import { FormsModule, 
         FormBuilder, 
         FormGroup,
         FormControl, 
         ReactiveFormsModule,
         Validators } from '@angular/forms';
-
-        // import { MatMomentDateModule, } from '@angular/d';
 
 // Materials!!
 import { 
@@ -68,22 +62,20 @@ import {
 // Import Locale_Fr
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+
 // the second parameter 'fr' is optional
 registerLocaleData(localeFr, 'fr');
 import localeFrExtra from '@angular/common/locales/extra/fr';
-
-
-registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
-
-
+registerLocaleData( localeFr, 'fr-FR', localeFrExtra );
+// Pipe
+import { TimeMinuteTwoDigitsPipe } from './pipe/timeMinuteTwoDigits.pipe';
+import { TimeHourTwoDigitsPipe } from './pipe/timeHourTwoDigits.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     ClientComponent,
     DateFirstCharUpperPipe, 
-    TimeHourTwoDigitsPipe,  
-    TimeMinuteTwoDigitsPipe,
     FooterComponent,
     HomeComponent,
     RdvAddComponent,
@@ -96,9 +88,10 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
     LoginComponent,
     UsersettingsComponent,
     ForgottenPwdModalComponent,
-    DialogClockDebutComponent,
-    DialogClockFinComponent
+    TimeMinuteTwoDigitsPipe,
+    TimeHourTwoDigitsPipe
   ],
+
   imports: [    
     AngularFontAwesomeModule,
     AppRoutingModule,
@@ -123,16 +116,20 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
     MatSidenavModule,
     MatSnackBarModule,
     MatToolbarModule,
-    MatTabsModule, 
-    Ng5TimePickerModule,  
+    MatTabsModule,  
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
+    
 
   ],
 
-  // exports: [DateFirstCharUpperPipe],
-
-  providers: [{ provide: LOCALE_ID, useValue: 'fr' }],
+  providers: [{ provide: LOCALE_ID, useValue: 'fr' },
+              { provide: AuthRequestOptions, useClass: AuthRequestOptions },
+              { provide: AuthErrorHandlerService, useClass: AuthErrorHandlerService },
+              { provide: LoginService, useClass: LoginService},
+              { provide: ToasterService, useClass: ToasterService }
+              ],
 
   bootstrap: [AppComponent]
 })

@@ -6,7 +6,8 @@
     <mat-toolbar-row class="flex-container-toolbar"> 
         <div class="flex-item1"> 
             <button mat-icon-button [disabled]="btnSideBarState" (click)="mysidenav.toggle()">
-            <mat-icon>menu</mat-icon>
+            <!-- <mat-icon>menu</mat-icon> -->
+            <img src="./assets/OpBLogo.svg" width="30" height="30" border="0">
             <!-- <fa name="fas fa-bars" size="2x"></fa> -->
             </button>
         </div>
@@ -16,13 +17,12 @@
             <span >{{ dateBrute | date: 'EEEE d MMMM yyyy':'':'fr' | DateFirstCharUpper }}</span>      
         </div>
         <div class="flex-item3">
-            <span class="userConn">{{ userNameConnected }}</span>
             <button mat-icon-button [matMenuTriggerFor]="menu">
                     <mat-icon>blur_on</mat-icon>
                 <!-- <fa name="fas fa-user" size="2x"></fa> -->
             </button>      
             <!-- // Bouton login a droite de la tootlbar -->
-            <mat-menu #menu="matMenu">          
+            <mat-menu #menu="matMenu">
                 <button mat-menu-item [disabled]="btnLoginState" (click)="openLoginPage()" class="connMenu">
                     <fa name="fas fa-sign-in" size="1x"> </fa>
                     <span>Connexion</span>
@@ -43,8 +43,11 @@
 <!-- sidenav -->
 <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #mysidenav role="directory" mode="over" opened="false" class="inside-sidenav" fixedTopGap=64  fixedBottomGap=64>
-        <mat-divider></mat-divider>   
-        <div class="vertical-menu">   
+        <mat-divider></mat-divider> 
+        <div>
+            <span class="userConn">{{ userNameConnected }}</span> 
+        </div>  
+        <div class="vertical-menu">  
             <!-- <div> -->         
             <h4 matSubheader><u>Menu</u></h4>  
             <!-- <div><a routerLink="/welcome" routerLinkActive="active" (click)="mysidenav.close()">OpusBeaute</a></div> -->

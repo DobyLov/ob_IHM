@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { LoginService } from '../login/login.service'
+import { ToasterService } from '../service/toaster.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +20,9 @@ export class LoginComponent implements OnInit {
   emailLogin = new FormControl('', [Validators.required, Validators.email]);
   
   constructor(private router: Router,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              public _loginService: LoginService,
+              private _toasterService: ToasterService) { }
 
       openDialog(): void {
         
@@ -36,9 +40,14 @@ export class LoginComponent implements OnInit {
             '';
   }
 
-  ngOnInit() {
+  ngOnInit() {}
 
-   }
+  login(emailLogin, pwd) {
+
+    this._loginService.login(emailLogin, pwd);
+    this._toasterService.showToaster('helloworld');
+
+  }
    openForgottenPwdModal() {
      this.openDialog();
    }
@@ -47,19 +56,6 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['./welcome']);
    }
 
-   checkCredentials(emailLogin,pwd) {
-
-    if (this.emailLogin.value == "fred@fred.com" && this.pwd == "fred") {
-        console.log("Modal: Credentiel verifies");
-  
-             
-        
-    } else {
-      console.log("Modal: les credentiels ne match pas");
-
-    }
-
-  }
    
 }
 
@@ -82,9 +78,10 @@ export class ForgottenPwdModalComponent implements OnInit {
   userIsConnected: boolean;  
   toggletext = "Saisir login et mot de passe pour s'authentitfier";
   
-  constructor(private router: Router,
-              public dialogRef: MatDialogRef<ForgottenPwdModalComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) {  }
+  constructor(  public _loginService: LoginService,
+                private router: Router,
+                public dialogRef: MatDialogRef<ForgottenPwdModalComponent>,
+                @Inject(MAT_DIALOG_DATA) public data: any) {  }
 
 
   ngOnInit() {
@@ -104,10 +101,14 @@ export class ForgottenPwdModalComponent implements OnInit {
   }
   // Authentification 
   closeModal() {
+
     this.dialogRef.close();
   }
 
-  transmitEMail() {
+  transmitEMail(email) {
+    console.log("loginComponent loginRenewPwd : " + email);
+    this._loginService.resetPwd(email);
+    this.dialogRef.close();
 
   }
 

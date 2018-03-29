@@ -121,36 +121,62 @@
 								<div class="flex-container-item-row">
 												<span class="flex-item-row">
 														<span>
-																<u>Heure Début</u>
+																<u>Rdv Début</u>
 														</span>
 														<br>
-														<span *ngIf="timeClockDebut">{{ timeClockDebut.hour | timeHourTwoDigits }}:{{ timeClockDebut.minute | timeMinuteTwoDigits }}</span>									
-														<button mat-icon-button (click)="openDialogClockDebut($envent)">									
-																<mat-icon>
-																	<i class="material-icons">schedule</i>
-																</mat-icon>
-														</button>
-														<span *ngIf="timeIsValid" class="flex-item-row-exclamation">
-															!
-														</span>
+														<div class="flex-container-item-row">
+																<span class="flex-item-row-client-content">
+																		<mat-form-field class="items">
+																				<mat-select placeholder="Heures"  [(ngModel)]="hDSelectedValue" name="heure">
+																					<mat-option class="items" *ngFor="let heure of heures"[value]="heure.value">
+																						{{ heure.viewValue }}</mat-option>
+																				</mat-select>	
+																		</mat-form-field>
+																</span>
+																<span class="flex-item-row-client-content">
+																		<mat-form-field class="items">
+																				<mat-select placeholder="Minutes" [(ngModel)]="mDSelectedValue" name="minute">
+																					<mat-option class="items" *ngFor="let minute of minutes" [value]="minute.value">
+																						{{ minute.viewValue }}</mat-option>
+																				</mat-select>	
+																		</mat-form-field>
+																</span>
+														</div>
 												</span>
+							</div>
+							<div class="flex-container-item-row">
 												<span class="flex-item-row">
 														<span>
-																<u>Heure Fin</u>
+																<u>Rdv Fin</u>
 															</span>	
+															<!-- <span>{{ hFSelectedValue }}:{{ mFSelectedValue }} </span> -->
 															<br>
-														<span *ngIf="timeClockFin">{{ timeClockFin.hour | timeHourTwoDigits }}:{{ timeClockFin.minute | timeMinuteTwoDigits }}</span>
-														<button mat-icon-button (click)="openDialogClockFin()">									
-																<mat-icon>
-																	<i class="material-icons">schedule</i>
-																</mat-icon>
-														</button>
+															<div class="flex-container-item-row">
+																	<span class="flex-item-row-client-content">
+																			<mat-form-field class="items">
+																					<mat-select placeholder="Heures"  [(ngModel)]="hFSelectedValue" name="heure">
+																							<!-- <mat-select placeholder="Heures"  [(ngModel)]="hFSelectedValue" name="heure"> -->
+																						<mat-option class="items" *ngFor="let heure of heures"[value]="heure.value">
+																							{{ heure.viewValue }}</mat-option>
+																					</mat-select>	
+																			</mat-form-field>
+																	</span>
+																	<span class="flex-item-row-client-content">
+																			<mat-form-field class="items">
+																					<mat-select placeholder="Minutes" [(ngModel)]="mFSelectedValue" name="minute">
+																							<!-- <mat-select placeholder="Minutes" [(ngModel)]="mFSelectedValue" name="minute"> -->
+																						<mat-option class="items" *ngFor="let minute of minutes" [value]="minute.value">
+																							{{ minute.viewValue }}</mat-option>
+																					</mat-select>	
+																			</mat-form-field>
+																	</span>
+															</div>
 												</span>
-												<span class="flex-item-row-button">
+												<!-- <span class="flex-item-row-button">
 														<button mat-icon-button (click)="dateTimeValider(dateReservationRdv)">	
 																<i class="material-icons">done</i>	
 																</button>
-												</span>
+												</span> -->
 									</div>
 								<mat-divider></mat-divider>
 								<u>Client(e)</u>
@@ -165,47 +191,46 @@
 														</mat-select>
 												</mat-form-field>
 										</span>
-										<span class="flex-item-row-client-content" text-align="center">
-												<mat-radio-group value="2" required class="items">
-															<mat-radio-button value="1">Homme</mat-radio-button>
-															<mat-radio-button value="2">Femme</mat-radio-button>
-												</mat-radio-group>
+										<span class="flex-item-row-client-content">
+												<mat-form-field class="items">
+														<mat-select placeholder="Genre">
+															<mat-option class="items" *ngFor="let genre of genres" [value]="genre.value">
+																{{ genre.viewValue }}
+															</mat-option>
+														</mat-select>
+												</mat-form-field>
 										</span>
-										<span class="flex-item-row-button">												
-											</span>
 								</div>
 								<mat-divider></mat-divider>
 								<u>Prestation</u>
 								<br>
 								<div class="flex-container-item-row">
 									<span class="flex-item-row-client-content">
-											<mat-form-field>
+											<mat-form-field class="items">
 													<mat-select placeholder="Prestations">
-														<mat-option class="items" *ngFor="let prestation of prestations" [value]="prestation.value">
+														<mat-option class="items" *ngFor="let prestation of prestations" 
+														[value]="prestation.value">
 															{{ prestation.viewValue }}
 														</mat-option>
 													</mat-select>
 											</mat-form-field>
 									</span>
 									<span class="flex-item-row-client-content">
-											<mat-form-field>
-													<mat-select placeholder="Soins(e)">
+											<mat-form-field class="items">
+													<mat-select placeholder="Soins">
 														<mat-option class="items" *ngFor="let soin of soins" [value]="soin.value">
 															{{ soin.viewValue }}
 														</mat-option>
 													</mat-select>
 											</mat-form-field>
 									</span>
-									<span class="flex-item-row-button">												
-										</span>
-
 								</div>
 								<mat-divider></mat-divider>
 								<u>Lieu Rdv</u>
 								<br>
-								<div>
+								<div class="flex-container-item-row">
 										<span class="flex-item-row-client-content">
-												<mat-form-field>
+												<mat-form-field class="items">
 														<mat-select placeholder="Lieu Rdv">
 															<mat-option class="items" *ngFor="let lieu of lieux" [value]="lieu.value">
 																{{ lieu.viewValue }}
@@ -213,19 +238,20 @@
 														</mat-select>
 												</mat-form-field>
 										</span>
-										<span class="flex-item-row-button">												
-											</span>
-								</div>
-								<mat-divider></mat-divider>								
-								<div class="flex-container-item-row-btnvalider">
+										<span class="flex-item-row-btndelete">
+												<button color="warn" mat-icon-button 
+												(click)="dateTimeValider(dateReservationRdv)">	
+														<i class="material-icons">delete</i>
+												</button>
+										</span>
 										<span class="flex-item-row-btnvalider">
-												<button color="primary" mat-raised-button (click)="dateTimeValider(dateReservationRdv)">	
+												<button color="primary" mat-raised-button 
+												(click)="dateTimeValider(dateReservationRdv)">	
 														<!-- <i class="material-icons">done</i> -->
 													Valider
 												</button>
 										</span>
-										<!-- <span class="flex-item-row-button">												
-										</span> -->
+
 								</div>
 							</form>
 						</ng-template>

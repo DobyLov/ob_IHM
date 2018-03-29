@@ -57,7 +57,7 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;    
     font-weight: bold;
-    width: 100%;
+    width: 50%;
 
 }
 
@@ -83,16 +83,19 @@
     flex-wrap: nowrap;
     // max-width: 50%;    
 }
-.flex-container-item-row-btnvalider {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-}
-.flex-container-item-row-btnvalider {
+// .flex-container-item-row-btnvalider {
+//     display: flex;
+//     flex-direction: row;
+//     flex-wrap: nowrap;
+// }
+.flex-item-row-btnvalider {
     flex:1;
-    justify-content: flex-end;
+    align-items: right;
 }
-
+.flex-item-row-btndelete {
+    flex:1;
+text-align: center;
+}
 
 .flex-item-row {
     flex:1;
@@ -126,7 +129,10 @@
 }
 
 .items {
-    max-width: 50%;
+    // max-width: 50%;
+    width: 100%;
+    // max-width: 80px;
+    // max-width: 50%;
 }
 
 

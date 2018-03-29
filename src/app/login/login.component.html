@@ -11,46 +11,46 @@
                           </mat-toolbar>
                       </div>
 
-                  
-                      <div class="flex-item">
-                        <mat-form-field>
-                          <input matInput placeholder="Email" [formControl]="emailLogin" required>
-                          <mat-error *ngIf="emailLogin.invalid">{{getErrorMessage()}}</mat-error>
-                        </mat-form-field>
-                      </div>
+                      <!-- <form [formGroup]="form"> -->
+                          <div class="flex-item">
+                            <mat-form-field>
+                              <input matInput placeholder="Email" [formControl]="emailLogin" required>
+                              <mat-error *ngIf="emailLogin.invalid">{{getErrorMessage()}}</mat-error>
+                            </mat-form-field>
+                          </div>
+                    
+                          <div class="flex-item">
+                              <mat-form-field >
+                                <input matInput placeholder="Mot de passe" [(ngModel)]="pwd" [type]="hide ? 'password' : 'text'" required>
+                                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                              </mat-form-field>    
+                          </div>
                 
-                      <div class="flex-item">
-                          <mat-form-field >
-                            <input matInput placeholder="Mot de passe" [(ngModel)]="pwd" [type]="hide ? 'password' : 'text'" required>
-                            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
-                          </mat-form-field>    
-                      </div>
-            
-                  
-                      <div class="flex-item">
-                          <p class="flex-item-ForgottenPwd">
-                              Mot de passe oublié ? 
-                              <a routerLink="/login" (click)="openForgottenPwdModal()" role="button">Clic</a>.
-                          </p>
-                      </div>
-                  
-                    <div class="flex-item-bottom">
-                      <div class="flex-container-actionOkCancel">
-                        <mat-toolbar color="primary">   
-                              <div class="flex-item-ActionOkCancel">  
-                                <button mat-icon-button (click)="checkCredentials(emailLogin,pwd)">
-                                  <mat-icon>done</mat-icon>
-                                </button>
-                              </div> 
+                          <div class="flex-item">
+                              <p class="flex-item-ForgottenPwd">
+                                  Mot de passe oublié ? 
+                                  <a routerLink="/login" (click)="openForgottenPwdModal()" role="button">Clic</a>.
+                              </p>
+                          </div>
+                      
+                        <div class="flex-item-bottom">
+                          <div class="flex-container-actionOkCancel">
+                            <mat-toolbar color="primary">   
+                                  <div class="flex-item-ActionOkCancel">  
+                                    <button mat-icon-button (click)="login(emailLogin.value,pwd)">
+                                      <mat-icon>done</mat-icon>
+                                    </button>
+                                  </div> 
 
-                              <div class="flex-item-ActionOkCancel">
-                                <button mat-icon-button (click)="closeForgottenPwdModal()">
-                                  <mat-icon>clear</mat-icon>
-                                </button>
-                              </div>
-                        </mat-toolbar>
-                      </div>
-                    </div> 
+                                  <div class="flex-item-ActionOkCancel">
+                                    <button mat-icon-button (click)="closeForgottenPwdModal()">
+                                      <mat-icon>clear</mat-icon>
+                                    </button>
+                                  </div>
+                            </mat-toolbar>
+                          </div>
+                        </div> 
+                <!-- </form> -->
             </div>
         <div>
 

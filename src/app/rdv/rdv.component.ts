@@ -14,15 +14,54 @@ moment.locale('fr');
 })
 
 export class RdvComponent implements OnInit {
+
+  //initialise Hdebut Hfin
+  // hDSelectedValue: string = '00';
+  // mDSelectedValue: string = '00';
+  // hFSelectedValue: string = '00';
+  // mFSelectedValue: string = '00';
    
-  dateSearchPanelOpenState: boolean = false;
-  rdvInfoPanelOpenState: boolean = true;
+  // dateSearchPanelOpenState: boolean = false;
+  // rdvInfoPanelOpenState: boolean = true;
+  // proprietes des champs Datepicker
   dateSelectionnee: Date = new Date();
   dateSelectionneeA: Date = new Date();
   dateSelectionneeB: Date = new Date();
   showSimpleDateOrRangeDate: boolean = true;
   startDate = new Date(this.dateSelectionnee);
-  minDate = new Date();
+  // minDate = new Date();
+
+  heures = [
+    {value: '08', viewValue: '08'},
+    {value: '09', viewValue: '09'},
+    {value: '10', viewValue: '10'},
+    {value: '11', viewValue: '11'},
+    {value: '12', viewValue: '12'},
+    {value: '13', viewValue: '13'},
+    {value: '14', viewValue: '14'},
+    {value: '15', viewValue: '15'},
+    {value: '16', viewValue: '16'},
+    {value: '17', viewValue: '17'},
+    {value: '18', viewValue: '18'},
+    {value: '19', viewValue: '19'},
+    {value: '20', viewValue: '20'},
+    {value: '21', viewValue: '21'}
+  ];
+
+  minutes =  [
+    {value: '00', viewValue: '00'},
+    {value: '05', viewValue: '05'},
+    {value: '10', viewValue: '10'},
+    {value: '15', viewValue: '15'},
+    {value: '20', viewValue: '20'},
+    {value: '25', viewValue: '25'},
+    {value: '30', viewValue: '30'},
+    {value: '35', viewValue: '35'},
+    {value: '40', viewValue: '40'},
+    {value: '45', viewValue: '45'},
+    {value: '50', viewValue: '50'},
+    {value: '55', viewValue: '55'}
+  ];
 
   genres = [
     {value: '1', viewValue: 'FEMME'},
@@ -30,57 +69,31 @@ export class RdvComponent implements OnInit {
   ];
   prestations = [
     {value: '1', viewValue: 'epilation'}
-  ]
+  ];
   soins = [
     {value: '1', viewValue: 'aisselle'},
     {value: '2', viewValue: 'sourcils'}
-  ]
+  ];
   lieux = [
     {value: '1', viewValue: 'adresse client'},
     {value: '2', viewValue: 'la bomboniere'}
-  ]
+  ];
   clients = [
     {value: "1", viewValue: 'toto'},
     {value: "2", viewValue: 'tata'}
-  ]
+  ];
 
   // time  
-  timeClockDebut = { hour: 0, minute: 0, meriden: 'PM', format: 24 };
-  timeClockFin = { hour: 0, minute: 0, meriden: 'PM', format: 24 };
-  userTime: any;
-  exportTime: any;
+  // timeClockDebut = { hour: 0, minute: 0, meriden: 'PM', format: 24 };
+  // timeClockFin = { hour: 0, minute: 0, meriden: 'PM', format: 24 };
+  // userTime: any;
+  // exportTime: any;
   // myDateFormatee: Date;
   dateReservationRdv: Date = new Date();
   dateReservationRdvD: Date;
   dateReservationRdvF: Date;
 
-  constructor(public dialogClockDebut: MatDialog,
-              public dialogClockFin: MatDialog
-            ) { }
-
-   openDialogClockDebut(): void {
-    let dialogRefRefClockDebut = this.dialogClockDebut.open(DialogClockDebutComponent, {
-      data: { timeClockDebut: this.timeClockDebut, timeClockFin: this.timeClockFin }
-
-    });
-
-    dialogRefRefClockDebut.afterClosed().subscribe(resultDebut => {
-      console.log('The dialog was closed', resultDebut);
-      this.timeClockDebut = resultDebut;
-    });
-  }
-
-  openDialogClockFin(): void {
-    let dialogRefRefClockFin = this.dialogClockFin.open(DialogClockFinComponent, {
-      data: { timeClockDebut: this.timeClockDebut, timeClockFin: this.timeClockFin }
-
-    });
-
-    dialogRefRefClockFin.afterClosed().subscribe(resultFin => {
-      console.log('The dialog was closed', resultFin);
-      this.timeClockFin = resultFin;
-    });
-  }
+  constructor( ) { }
 
   ngOnInit() {
   }
@@ -132,8 +145,8 @@ export class RdvComponent implements OnInit {
 
 dateTimeValider(dateReservationRdv: Date) {
   
-  this.dateReservationRdvD = this.formatTime24H(dateReservationRdv, this.timeClockDebut.hour, this.timeClockDebut.minute)
-  this.dateReservationRdvF = this.formatTime24H(dateReservationRdv, this.timeClockFin.hour, this.timeClockFin.minute)
+  // this.dateReservationRdvD = this.formatTime24H(dateReservationRdv, this.timeClockDebut.hour, this.timeClockDebut.minute)
+  // this.dateReservationRdvF = this.formatTime24H(dateReservationRdv, this.timeClockFin.hour, this.timeClockFin.minute)
 
 }
 
@@ -148,80 +161,3 @@ formatTime24H(date: Date, heure: number, minute: number) {
 
 }
 
-
-// ********************************************************************
-// Clock Debut
-// ********************************************************************
-@Component({
-  selector: 'dialog-clock-debut.component',
-  templateUrl: './dialog-clock-debut/dialog-clock-debut.component.html'
-
-})
-
-export class DialogClockDebutComponent {
-
-  constructor(
-    public dialogRefClockDebut: MatDialogRef<DialogClockDebutComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { 
-
-      this.data.timeClockDebut = { hour: 1, minute: 0, meriden: 'PM', format: 24 };
-      this.data.timeClockFin = { hour: 0, minute: 0, meriden: 'PM', format: 24 };
-     }
-
-  onNoClickClockDebut(): void {
-    this.dialogRefClockDebut.close(this.data.timeClockDebut);
-  }
-
-  onRevertClockDebut() {
-    // this.exportTime =  { hour: 7, minute: 15, meriden: 'PM', format: 12 };
-    console.log("btn Annuler Heure de début séléctionnée : " 
-    + this.data.timeClockDebut.hour + " : " + this.data.timeClockDebut.minute);
-    this.dialogRefClockDebut.close(this.data.timeClockDebut);
-  }
-
-  onSubmitClockDebut() {    
-    console.log("btn valider Heure de début séléctionnée : " 
-    + this.data.timeClockDebut.hour + " : " + this.data.timeClockDebut.minute);
-    this.dialogRefClockDebut.close(this.data.timeClockDebut);
-  }
-
-}
-
-// ********************************************************************
-// Clock Fin
-// ********************************************************************
-@Component({
-  selector: 'dialog-clock-fin.component',
-  templateUrl: './dialog-clock-fin/dialog-clock-fin.component.html'
-
-})
-
-export class DialogClockFinComponent {
-
-  constructor(
-    public dialogRefClockFin: MatDialogRef<DialogClockDebutComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { 
-
-      this.data.timeClockDebut = { hour: 0, minute: 0, meriden: 'PM', format: 24 };
-      this.data.timeClockFin = { hour: 0, minute: 0, meriden: 'PM', format: 24 };
-     }
-
-  onNoClick(): void {
-    console.log("dialog fin no clic")
-    this.dialogRefClockFin.close(this.data.timeClockFin);
-  }
-
-  onRevertClockFin() {
-    // this.exportTime =  { hour: 7, minute: 15, meriden: 'PM', format: 12 };
-    console.log("btn Annuler Heure de début séléctionnée : " 
-    + this.data.timeClockFin.hour + " : " + this.data.timeClockFin.minute);
-    this.dialogRefClockFin.close(this.data.timeClockFin);
-  }
-
-  onSubmitClockFin() {    
-    console.log("btn valider Heure de début séléctionnée : " 
-    + this.data.timeClockFin.hour + " : " + this.data.timeClockFin.minute);
-    this.dialogRefClockFin.close(this.data.timeClockFin);
-  }
-
-}

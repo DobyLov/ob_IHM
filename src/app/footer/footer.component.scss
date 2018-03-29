@@ -1,20 +1,39 @@
   .footer {
     position: fixed;
-    // bottom: 0;
+    bottom: 0;
     left: 0;
     right: 0;
   }
 
-
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-flow: nowrap;
+  align-content:center;
+  justify-content:last baseline;
+  // align-items: baseline;
+  // align-items: center;
+}
 .flex-item {
-  // -webkit-flex: 1 1 auto;
-  // flex: 1 1 auto;
   flex: 1;
   text-align: center;
+  vertical-align: baseline;
   font-family: 'Pacifico';
-  font-size: 20px;
-  // font-weight: 100;s
+  font-size: 16px;
 }
+
+.flex-item img {
+  // position:fixed;
+  // top:30px; /* Move the image down, so its top is half way down the container */
+  // margin-top:-100px; /* Move the image back up half its height */
+}
+
+.flex-item-smallfont {
+  font-family: 'Pacifico';
+  font-size: 10px;
+}
+
+
 
 
 

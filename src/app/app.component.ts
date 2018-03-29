@@ -21,6 +21,7 @@ import {
   Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
+import { LoginService } from './login/login.service';
 
 
 @Component({
@@ -66,16 +67,20 @@ export class AppComponent implements OnInit {
       isDeconnectedState: boolean = true;
 
       ngOnInit() {
-        // this.transformdate(this.dateBrute);
+        // this.userIsConnected = true;
+        this.btnLoginState = false;
+        this.btnParametersState = true;
+        this.btnSideBarState = true;
+        this.btnLogoutState = true;
       }
 
       ngAfterViewInit() {
-        // this.openLoginPage();
-        this.router.navigate(['./rdv']);
+
       }
 
       // router pour la navigation manuelle
-      constructor(private router: Router) { }
+      constructor(private router: Router,
+                  public _loginService: LoginService) { }
 
       
       // Activation des menus de l applicaiton
@@ -90,35 +95,20 @@ export class AppComponent implements OnInit {
         this.btnSideBarState = !this.btnSideBarState;
         // enable btn logout
         this.btnLogoutState = !this.btnLogoutState;
-        // user name Trick 
-        this.userNameConnected = "Audrey";
-        this.goHome();   
+ 
+ 
       }
 
       //boutton de logout pour simuler la deconnexion
     logout() {
-      if (this.userIsConnected === true) {
-        this.userIsConnected = !this.userIsConnected;   
-        // enable btn logon 
-        this.btnLogoutState = !this.btnLogoutState;
-        // disable btn param
-        this.btnParametersState = !this.btnParametersState;
-        // disable sidebar
-        this.btnSideBarState = !this.btnSideBarState;
-        // enable btn logon
-        this.btnLoginState = !this.btnLoginState;
-        // retour page welcome
-        this.goWelcome();
-      } else {
-        console.log("Pas de deconnextion possible !!!");
-
-      }
+      let userEmail: string = this._loginService.getEmailFromLocalStorage();
+      this._loginService.logout(userEmail);
+      
     }
 
     // une fois connecte envoi direc dur home qui liste les rdvs du jour
     goHome() {
       this.router.navigate(['./home']);
-      console.log("Acces au Home");
     }
 
     // a la deconection envoi direct sur Welcome

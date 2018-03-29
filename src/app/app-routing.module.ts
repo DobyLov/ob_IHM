@@ -11,27 +11,24 @@ import { RdvAddComponent } from './rdv/rdv-add/rdv-add.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { LoginComponent } from './login/login.component';
 import { ForgottenPwdModalComponent } from './login/login.component';
-import { DialogClockDebutComponent } from './rdv/rdv.component';
-import { DialogClockFinComponent } from './rdv/rdv.component';
+import { AuthGardService } from './login/authGard.service';
 
 const routes: Routes = [
 
   { path: '', component: WelcomeComponent },
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGardService] },
+  { path: 'rdv', component: RdvComponent, canActivate: [AuthGardService] },
+  { path: 'client', component: ClientComponent, canActivate: [AuthGardService] },
+  { path: 'prestation', component: PrestationComponent, canActivate: [AuthGardService] },
+  { path: 'utilisateur', component: UtilisateurComponent, canActivate: [AuthGardService] },
+  { path: 'rdvlist', component: RdvListComponent, canActivate: [AuthGardService] },
+  { path: 'rdvadd', component: RdvAddComponent, canActivate: [AuthGardService] },
+  { path: '', redirectTo: '/WelcomeComponent', pathMatch: 'full' },
   { path: 'welcome', component: WelcomeComponent },
-  { path: 'login', component: LoginComponent },
   { path: 'forgottenpwdmodal', component: ForgottenPwdModalComponent},
-  { path: 'rdv', component: RdvComponent },
-  { path: 'client', component: ClientComponent },
-  { path: 'prestation', component: PrestationComponent },
-  { path: 'utilisateur', component: UtilisateurComponent },
-  { path: 'rdvlist', component: RdvListComponent },
-  { path: 'rdvadd', component: RdvAddComponent },
-  { path: 'rdvclockdebut', component: DialogClockDebutComponent },
-  { path: 'rdvclockfin', component: DialogClockFinComponent },
-  { path: '**', component: PagenotfoundComponent },
-  { path: '', redirectTo: '/WelcomeComponent', pathMatch: 'full' }
-
+  { path: 'login', component: LoginComponent },
+  { path: '**', component: PagenotfoundComponent }
+ 
 ];
 
 @NgModule({
@@ -40,4 +37,5 @@ const routes: Routes = [
   exports: [ RouterModule ],
 
 })
+
 export class AppRoutingModule { }
