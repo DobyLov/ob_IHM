@@ -11,37 +11,34 @@ $custom-theme: mat-light-theme($custom-primary, $custom-accent);
 @include angular-material-theme($custom-theme);
 
 // Customisation Modal
-// .mat-dialog-container {
-//     overflow: hidden !important;
-//     border-radius: 20px !important;
-//     // padding: 0px !important;
+.mat-dialog-container {
+    overflow: hidden !important;
+    border-radius: 20px !important;
+    padding: 0px !important;
     
-// }
+}
+
+.snackbarWarning {
+    height: 50;
+    width: 50;
+    color: #DD2C00;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    background: #aed581;
+}
+
+.snackbarInfo {
+    height: 50;
+    width: 50;
+    color: #000000;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    background: #aed581;
+}
 
 
-// alternative01
-// $altern1-primary: mat-palette($mat-orange, 400);// green 200
-// $altern1-accent: mat-palette($mat-red, 500);// amber 800
-// $altern1-custom-theme: mat-light-theme($altern1-primary, $altern1-accent);
-// .alternative01 {
-//     @include angular-material-theme($altern1-custom-theme);
-// }
-
-
-// alternative02
-// $altern2-primary: mat-palette($mat-purple, 500);// green 200
-// $altern2-accent: mat-palette($mat-blue, 500);// amber 800
-// $altern2-custom-theme: mat-light-theme($altern2-primary, $altern2-accent);
-// .alternative02 {
-//     @include angular-material-theme($altern2-custom-theme);
-// }
-// // cust typo
-
-// $cus-typ: mat-typography-config(
-//   $font-family: 'Roboto Slab',
-//   $headline: mat-typography-level(32px, 48px, 700),
-//   $body-1: mat-typography-level(16px, 24px, 500)
-// );
-
-// @include mat-core($cus-typ);
 

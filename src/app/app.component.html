@@ -1,6 +1,6 @@
 
   
-<link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Roboto+Slab:700|Roboto:900|Source+Sans+Pro|Montserrat:300" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Source+Sans+Pro|Montserrat:300" rel="stylesheet">
  <!-- toolbar  -->
  <mat-toolbar class="header" color="primary">
     <mat-toolbar-row class="flex-container-toolbar"> 
@@ -23,7 +23,7 @@
             </button>      
             <!-- // Bouton login a droite de la tootlbar -->
             <mat-menu #menu="matMenu">
-                <button mat-menu-item [disabled]="btnLoginState" (click)="openLoginPage()" class="connMenu">
+                <button mat-menu-item [disabled]="btnLoginState" (click)="openLogin()" class="connMenu">
                     <fa name="fas fa-sign-in" size="1x"> </fa>
                     <span>Connexion</span>
                 </button>

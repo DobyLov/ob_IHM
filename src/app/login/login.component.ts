@@ -1,119 +1,127 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { LoginService } from '../login/login.service'
-import { ToasterService } from '../service/toaster.service';
-
+import { Router } from '@angular/router';
+import { User } from '../login/user'
+ 
 @Component({
   selector: 'app-login',
   templateUrl: '../login/login.component.html',
   styleUrls: ['../login/login.component.scss']
 })
+
 export class LoginComponent implements OnInit {
-
-  emailForgottenPwd =' ';
-  hide = true;
-  pwd = '';
-
-  // controles
-  emailLogin = new FormControl('', [Validators.required, Validators.email]);
   
   constructor(private router: Router,
               public dialog: MatDialog,
-              public _loginService: LoginService,
-              private _toasterService: ToasterService) { }
+							public _loginService: LoginService) { }
 
-      openDialog(): void {
-        
-        let dialogRef = this.dialog.open(ForgottenPwdModalComponent, {width: '350px'});
-    
-        dialogRef.afterClosed().subscribe(result => {
-          this.emailForgottenPwd = result;
-        });
-      }
+	ngOnInit() {
+				// open modal
+				setTimeout(() => {
+					this.openDialog()})
+	}
   
+  openDialog(): void {
+    let dialogRef = this.dialog.open(LoginModalComponent, {
+      width: '450px',
+      data: {  }
+    });
 
-  getErrorMessage() {
-    return this.emailLogin.hasError('required') ? 'valeur obligatoire' :
-        this.emailLogin.hasError('email') ? 'Format d\'email non valide' :
-            '';
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+		//    = result;
+			
+		this.openWelcomePage();
+    });
   }
 
-  ngOnInit() {}
-
-  login(emailLogin, pwd) {
-
-    this._loginService.login(emailLogin, pwd);
-    this._toasterService.showToaster('helloworld');
-
+	openWelcomePage() {
+		this.router.navigate(['./welcome']);
   }
-   openForgottenPwdModal() {
-     this.openDialog();
-   }
+  
+  openHomePage() {
+		this.router.navigate(['./home']);
+  }
 
-   closeForgottenPwdModal() {
-    this.router.navigate(['./welcome']);
-   }
-
-   
-}
-
-// ***********************************
-// ************ Modals ***************
-// ***********************************
-
-
+}   
+ 
 @Component({
-  selector: 'app-forgottenPwdmodal',
-  templateUrl: '../modal/forgotten-pwd_modal/forgotten.pwd.modal.html',
-  styleUrls: ['../modal/forgotten-pwd_modal/forgotten.pwd.modal.scss']
-
-})
-
-export class ForgottenPwdModalComponent implements OnInit {
-
-  hide = true;
-  pwd = '';
-  userIsConnected: boolean;  
-  toggletext = "Saisir login et mot de passe pour s'authentitfier";
+    selector: 'app-loginModal',
+    templateUrl: './login_modal/login.modal.html',
+    styleUrls: ['./login_modal/login.modal.scss']
+  })
+  export class LoginModalComponent implements OnInit {
   
-  constructor(  public _loginService: LoginService,
-                private router: Router,
-                public dialogRef: MatDialogRef<ForgottenPwdModalComponent>,
-                @Inject(MAT_DIALOG_DATA) public data: any) {  }
+    // Masque par defaut la saisie du mot de passe
+    hide = true;    
+    loginForm: FormGroup;
 
+    constructor(private router: Router,
+                public _loginService: LoginService,
+                public dialogRef: MatDialogRef<LoginModalComponent>,
+                // private formBuilder: FormBuilder,
+                @Inject(MAT_DIALOG_DATA) public data: any) { }
+                					
+		ngOnInit() {
+       this.createFromGroup();
+    }
+    
+    createFromGroup() {
+      this.loginForm = new FormGroup ({
+        mail: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(30), 
+                                Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]),
+        pwd: new FormControl('', [Validators.required, Validators.minLength(7), Validators.maxLength(30)]) }); 
+    
+    }
+    
+    getEmailErrorMessage() {
+      return this.loginForm.get('mail').getError('required') ? 'Email obligatoire' :
+          this.loginForm.get('mail').getError('email') ? 'Format d\'email non valide !! ( xyz@xyz.xyz)' :
+          this.loginForm.get('mail').getError('pattern') ? 'Format d\'email non valide !! ( xyz@xyz.xyz)' :
+          this.loginForm.get('mail').getError('maxlength') ? '30 caractères maximum !' :
+							'';
+    }
 
-  ngOnInit() {
+    getPwdErrorMessage() {
+      return this.loginForm.get('pwd').getError('required') ? 'Mot de passe obligatoire' :
+              this.loginForm.get('pwd').getError('minlength') ? '7 caractères minimum !' :
+              this.loginForm.get('pwd').getError('maxlength') ? '30 caractères maximum !' :
+              '';
+    }    
+  
+    onNoClick() {		
+      this.loginForm.reset();				
+			this.dialogRef.close();
+    }
 
-  } 
+    openForgottenPwd() {
+			this.dialogRef.close();
+      this.router.navigate(['./forgottenpwd']);
+    }
 
-  // controles
-  emailForgottenPwd = new FormControl('', [Validators.required, Validators.email]);
-  getErrorMessage() {
-    return this.emailForgottenPwd.hasError('required') ? 'valeur obligatoire' :
-        this.emailForgottenPwd.hasError('email') ? 'Format d\'email non valide' :
-            '';
-  }
+    checkCredentials() {
+      console.log("Le formaulaire de login est : " + this.loginForm.valid)
+      let user: User = new User();
+      user.email = this.loginForm.get('mail').value;
+      user.pwd = this.loginForm.get('pwd').value;
+      if(this.loginForm.valid) { 
+        this._loginService.login(user);
+      
+      } else {
+        this.loginForm.setValue(this.loginForm.get('mail').value,
+                                null);
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-  // Authentification 
-  closeModal() {
+      }
+    }
 
-    this.dialogRef.close();
-  }
-
-  transmitEMail(email) {
-    console.log("loginComponent loginRenewPwd : " + email);
-    this._loginService.resetPwd(email);
-    this.dialogRef.close();
-
-  }
-
+    closeLoginModal() {
+          this.loginForm.reset();
+          this.dialogRef.close();
+          this.router.navigate(['./welcome'])
+      }
 }
+  
 
-
-
-
+  

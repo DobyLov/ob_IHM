@@ -1,0 +1,48 @@
+<link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Roboto+Slab:700|Roboto:900|Source+Sans+Pro|Montserrat:300" rel="stylesheet">
+<div class="flex-container">    
+    <div class="flex-item-title">
+        <mat-toolbar color="primary"  class="flex-item-title">
+            <p >S'authentifier: </p>
+        </mat-toolbar>
+    </div>
+    <form [formGroup]="loginForm">
+              <div class="flex-item" >
+                <mat-form-field>
+                  <input matInput placeholder="Adresse mail" formControlName="mail" required>
+                  <mat-icon matSuffix >email</mat-icon>
+                  <mat-error *ngIf="loginForm">{{getEmailErrorMessage()}}</mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="flex-item">
+                    <mat-form-field >
+                      <input matInput placeholder="Mot de passe" formControlName="pwd"
+                              [type]="hide ? 'password' : 'text'" required>
+                      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                      <mat-error *ngIf="loginForm">{{getPwdErrorMessage()}}</mat-error>
+                    </mat-form-field>
+              </div>
+              <div class="flex-item">
+                  <p class="flex-item-ForgottenPwd">
+                      Mot de passe oublié ? 
+                      <a routerLink="/forgottenpwd" (click)="openForgottenPwd()" md-dialog-close role="button">Clic</a>.
+                  </p>
+              </div>
+              <div class="flex-item-action">
+                <div class="flex-container-actionOkCancel">
+                    <mat-toolbar color="primary">   
+                        <div class="flex-item-ActionokCancel">             
+                          <button mat-icon-button [disabled]="!loginForm.valid" (click)="checkCredentials()">
+                            <mat-icon >done</mat-icon>
+
+                          </button>
+                        </div>                       
+                        <div class="flex-item-ActionokCancel">
+                          <button mat-icon-button (click)="closeLoginModal()">
+                            <mat-icon>clear</mat-icon>
+                          </button>
+                        </div>
+                    </mat-toolbar>
+               </div> 
+            </div>
+      </form>

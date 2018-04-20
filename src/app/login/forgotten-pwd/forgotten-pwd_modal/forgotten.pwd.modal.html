@@ -16,23 +16,23 @@
           <mat-form-field>
             <!-- <input matInput placeholder="Email" [formControl]="email" required> -->
             <input matInput placeholder="Email" [formControl]="emailForgottenPwd" required>
-            <mat-error *ngIf="emailForgottenPwd.invalid">{{getErrorMessage()}}</mat-error>
+            <mat-icon matSuffix >email</mat-icon>
+            <mat-error *ngIf="emailForgottenPwd.invalid">{{getMailPwdErrorMessage()}}</mat-error>
           </mat-form-field>
         </div>
+        <div></div>
     </div>
 
   <div class="flex-item-action">
     <div class="flex-container-actionOkCancel">
         <mat-toolbar color="primary">   
           <div class="flex-item-ActionokCancel">             
-            <button mat-icon-button (click)="transmitEMail(emailForgottenPwd.value)">
-              <!-- <fa name="fas fa-check-circle" size="2x"></fa> -->
+            <button mat-icon-button [disabled]="!emailForgottenPwd.valid" (click)="transmitEMail()">
               <mat-icon>done</mat-icon>
             </button>
           </div> 
           <div class="flex-item-ActionokCancel">
             <button mat-icon-button (click)="closeModal()">
-              <!-- <fa name="fas fa-times-circle" size="2x"></fa> -->
               <mat-icon>clear</mat-icon>
             </button>
           </div>

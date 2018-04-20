@@ -1,0 +1,15 @@
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.flex-item {
+    flex: 1;
+    align-content: center;
+    font-style: italic;
+    font-size: 20;
+    align-items: center;
+    // color: blue; 
+    background: #2196F3;
+}

@@ -16,10 +16,13 @@ import { PrestationComponent } from './prestation/prestation.component';
 import { UtilisateurComponent } from './utilisateur/utilisateur.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { DateFirstCharUpperPipe } from './pipe/datefirstcharupper.pipe';
-import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
-import { ForgottenPwdModalComponent } from './login/login.component';
+import { LoginComponent } from './login/login.component';
+import { LoginModalComponent } from './login/login.component';
+import { ForgottenPwdComponent } from './login/forgotten-pwd/forgotten-pwd.component';
+import { ForgottenPwdModalComponent } from './login/forgotten-pwd/forgotten-pwd.component';
 import { UsersettingsComponent } from './user/usersettings/usersettings.component';
+import { User } from '../app/login/user'
 // FontAwsome angular
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 // authentification
@@ -28,7 +31,8 @@ import { AuthErrorHandlerService } from './login/authErrorHandler.service';
 import { HttpClientModule } from '@angular/common/http';
 // Forms
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ToasterService } from './service/toaster.service'
+import { ToasterService } from './service/toaster.service';
+import { SnackBarComponent } from './service/toaster.service'
 
 import { FormsModule, 
         FormBuilder, 
@@ -71,25 +75,30 @@ registerLocaleData( localeFr, 'fr-FR', localeFrExtra );
 import { TimeMinuteTwoDigitsPipe } from './pipe/timeMinuteTwoDigits.pipe';
 import { TimeHourTwoDigitsPipe } from './pipe/timeHourTwoDigits.pipe';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
     ClientComponent,
     DateFirstCharUpperPipe, 
     FooterComponent,
+    ForgottenPwdComponent,
+    ForgottenPwdModalComponent,
     HomeComponent,
+    LoginComponent,
+    LoginModalComponent,
+    PagenotfoundComponent,   
+    PrestationComponent,
     RdvAddComponent,
     RdvComponent,
     RdvListComponent, 
-    PagenotfoundComponent,   
-    PrestationComponent,
-    UtilisateurComponent,
-    WelcomeComponent,
-    LoginComponent,
-    UsersettingsComponent,
-    ForgottenPwdModalComponent,
+    SnackBarComponent,
     TimeMinuteTwoDigitsPipe,
-    TimeHourTwoDigitsPipe
+    TimeHourTwoDigitsPipe,
+    UsersettingsComponent,
+    UtilisateurComponent,
+    WelcomeComponent
   ],
 
   imports: [    
@@ -129,6 +138,7 @@ import { TimeHourTwoDigitsPipe } from './pipe/timeHourTwoDigits.pipe';
               { provide: AuthErrorHandlerService, useClass: AuthErrorHandlerService },
               { provide: LoginService, useClass: LoginService},
               { provide: ToasterService, useClass: ToasterService }
+              { provide: User, useClass: User}
               ],
 
   bootstrap: [AppComponent]

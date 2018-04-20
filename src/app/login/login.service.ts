@@ -1,52 +1,64 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 // jwt webToken
 import * as jwt_decode from "jwt-decode";
 // moment pour le formatage des dates
 import * as moment from 'moment/moment';
+import { ToasterService } from '../service/toaster.service';
+import { HttpResponse } from 'selenium-webdriver/http';
+import { User } from '../login/user';
 moment.locale('fr');
 
 
 const apiOpusBeaute: String = "http://192.168.1.100:8080/opusbeaute-0/obws";
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/x-www-form-urlencoded'
-  })
+    'Content-Type': 'application/x-www-form-urlencoded' })
 };
 
 @Injectable()
 export class LoginService {
 
-  constructor(private httpCli: HttpClient) { }
+  constructor(private httpCli: HttpClient,
+              private _toasterService: ToasterService,
+              private user: User) {
+                this.user = user;
+               }
 
-  login(userEmail: string, pwd: string) {
+  login(user: User): boolean {
 
     //check si le token de l utilisateur est dans le LocalStorage
-    if (this.checkIfTokenExistInLocalStorage(userEmail) == true) {
-      let token = this.getTokenFromLocalStorage(userEmail);
+    if (this.checkIfTokenExistInLocalStorage(user.email) == true) {
+      let token = this.getTokenFromLocalStorage(user.email);
+      // recupere la date de validite du token
       let isDateIsExpired: Date = this.getTokenExpirationDate(token);
       let isTokenDateValid = this.isTokenDateIsExpired(isDateIsExpired);
 
+      // verifie si la date de validite du token est non valide
       if (isTokenDateValid === false) {
-        this.removeUserTokenFromLocalStorage(userEmail);
-        this.getTokenFromMiddleware(userEmail, pwd);
+        // supprime le token dans le LC
+        this.removeUserTokenFromLocalStorage(user);
+        // recupere le token avec les credetiels depuis le MidleWare
+        this.getTokenFromMiddleware(user);
         let preprenom = this.getPrenomFromLocalStorage();
         console.log("recup userconnected : " + preprenom);
 
+        return true;
       }
 
     } else {
-      this.getTokenFromMiddleware(userEmail, pwd);
+      this.getTokenFromMiddleware(user);
+      return true;
 
     }
-
+    return false;
   }
 
-  checkIfTokenExistInLocalStorage(userEmail: string): boolean {
+  checkIfTokenExistInLocalStorage(email: string): boolean {
 
-    let getLocalToken = localStorage.getItem(userEmail);
+    let getLocalToken = localStorage.getItem(email);
     if (getLocalToken != null) {
       console.log("checkIfTokenExistInLocalStorage : il y a bien un Token dans le local Storage.");
       return true;
@@ -59,21 +71,26 @@ export class LoginService {
   }
 
   getTokenFromLocalStorage(userEmail: string) {
-    let locTok = localStorage.getItem(userEmail);
+    let locStok = localStorage.getItem(userEmail);
     console.log("getTokenFromLocalStorage : Le token du Local storage est recupere.")
-    return locTok;
+    return locStok;
   }
 
-  getTokenFromMiddleware(userEmail: string, pwd: string) {
+  getTokenFromMiddleware(user: User) {
 
-    let body = `email=${userEmail}&pwd=${pwd}`;
+    let body = `email=${user.email}&pwd=${user.pwd}`;
     let url = `${apiOpusBeaute}/login`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    console.log("getTokenFromMiddleware : credetiels : " + "login : " + user.email + " " + "Pwd : " + user.pwd)
     console.log("getTokenFromMiddleware : recuperation du token depuis le MW et depot dans le localStrorage");
 
+    // recupere le token depuis le MW
     let token = this.httpCli.post(url, body, { headers, withCredentials: true, responseType: 'text' })
-      .subscribe(resultat => { this.tokenToLocalStorage(userEmail, resultat) },
-      error => console.log('oops', error));
+      .subscribe(resultat => { this.tokenToLocalStorage(user, resultat),
+                                this.messageToaster('Authetification avec succès !', 'snackbarInfo', 3000) },
+      (error: HttpErrorResponse) => { if (error.status == 401) { 
+                                      this.messageToaster("Veuillez vérifier vos crédentiels",'snackbarWarning', 2000)
+                                    }});
 
     return token;
   }
@@ -100,9 +117,9 @@ export class LoginService {
     }
   }
 
-  removeUserTokenFromLocalStorage(userEmail) {
+  removeUserTokenFromLocalStorage(user: User) {
     console.log("removeUserTokenFromLocalStorage : Suppression du Token.")
-    localStorage.removeItem(userEmail);
+    localStorage.removeItem(user.email);
   }
 
   getDateNow(): Date {
@@ -126,46 +143,58 @@ export class LoginService {
     return prenom
   }
 
-  logout(userEmail) {
+  logout(user: User) {
     console.log("logout : Token supprime du LocalStorage.")
-    localStorage.removeItem(userEmail);
+    localStorage.removeItem(user.email);
     console.log("logout : userConnected prenom supprime du LocalStorage.")
     localStorage.removeItem('connectedUser');
     console.log("logout : userConnected email supprime du LocalStorage.")
     localStorage.removeItem('userEmail');
   }
 
-  tokenToLocalStorage(userEmail, resultat: string) {
+  tokenToLocalStorage(user: User, resultat: string) {
     console.log("tokenToLocalStorage : token persiste dans le localStorage")
-    localStorage.setItem(userEmail, resultat);
+    localStorage.setItem(user.email, resultat);
     let prenom: string = this.getPrenomFromToken(resultat);
-    this.prenomToLocalStorage(prenom);
-    this.emailToLocalStorage(userEmail);
+    this.prenomToLocalStorage(user);
+    this.emailToLocalStorage(user);
 
   }
 
-  emailToLocalStorage(userEmail) {
+  emailToLocalStorage(user: User) {
     console.log("emailToLocalStorage : userEmail persiste dans le localStorage");
-    localStorage.setItem('userEmail', userEmail);
+    localStorage.setItem('userEmail', user.email);
   }
 
-  getEmailFromLocalStorage(): string {
+  getEmailFromLocalStorage(): User {
+    let user: User;
     console.log("getEmailFromLocalStorage : userEmail persiste dans le localStorage");
-    let email: string = localStorage.getItem('userEmail');
-
-    return email;
+    user.email = localStorage.getItem('userEmail');
+    return user;
   }
 
-  prenomToLocalStorage(userPrenom: string) {
+  prenomToLocalStorage(user: User) {
     console.log("prenomToLocalStorage : Prenom persiste dans le localStorage")
-    localStorage.setItem('connectedUser', userPrenom);
+    localStorage.setItem('connectedUser', user.prenom);
   }
 
-  resetPwd(email: String) {
+  // snackbarWarning
+  // snackbarInfo
+  // timer en ms
+  messageToaster(message, style, timer) {
+        this._toasterService.showToaster(message, style, timer);
 
-    let url = `${apiOpusBeaute}/renewpwd/${email}`;
-    return this.httpCli.post(url, httpOptions)
-      .subscribe(res => console.log("retour du serveur : " + res));
   }
 
+  resetPwd(emailToResetPwd: String) {
+  
+    let url = `${apiOpusBeaute}/renewpwd/${emailToResetPwd}`;
+    this.httpCli.post(url,httpOptions)
+            .subscribe( resp => { this.messageToaster('Vous allez reçevoir un mail avec votre mot de passe.','snackbarInfo',6000)},
+                          err => { if (err.status == 403) {
+                            this.messageToaster('Il y a un problème, le mail n est pas connu !','snackbarWarning',6000)}                  
+                          } )
+     
+  }
+      
 }

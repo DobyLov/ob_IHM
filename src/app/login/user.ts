@@ -1,6 +1,9 @@
 export class User {
+
     public idUser: number;
-    public username: String;
-    public pwd: String
+    public prenom: string;
+    public nom: string;
+    public email: string;
+    public pwd: String;
 
 }

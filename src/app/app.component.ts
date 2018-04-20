@@ -6,23 +6,14 @@ import {
   OnDestroy,
   Inject } from '@angular/core';
 
-import { 
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
+import {
   MatMenuTrigger,
   MatSidenav, 
   MatSidenavContainer } from '@angular/material';
 
-// import { MatFormFieldModule } from '@angular/material/form-field';
-
-import { 
-  FormControl, 
-  Validators } from '@angular/forms';
-
 import { Router } from '@angular/router';
 import { LoginService } from './login/login.service';
-
+import { User } from './login/user'
 
 @Component({
   selector: 'app-root',
@@ -40,7 +31,7 @@ export class AppComponent implements OnInit {
 
       userNameConnected: String = '';
 
-      title = 'app'
+      title = 'OOPPusbeaute'
 
       sidenavlinks = [{
         rubrique: 'Rdv',
@@ -66,6 +57,8 @@ export class AppComponent implements OnInit {
       btnParametersState = true;
       isDeconnectedState: boolean = true;
 
+      
+
       ngOnInit() {
         // this.userIsConnected = true;
         this.btnLoginState = false;
@@ -80,7 +73,7 @@ export class AppComponent implements OnInit {
 
       // router pour la navigation manuelle
       constructor(private router: Router,
-                  public _loginService: LoginService) { }
+                  private _loginService: LoginService) { }
 
       
       // Activation des menus de l applicaiton
@@ -96,30 +89,21 @@ export class AppComponent implements OnInit {
         // enable btn logout
         this.btnLogoutState = !this.btnLogoutState;
  
- 
       }
 
       //boutton de logout pour simuler la deconnexion
-    logout() {
-      let userEmail: string = this._loginService.getEmailFromLocalStorage();
-      this._loginService.logout(userEmail);
-      
-    }
-
-    // une fois connecte envoi direc dur home qui liste les rdvs du jour
-    goHome() {
-      this.router.navigate(['./home']);
-    }
-
-    // a la deconection envoi direct sur Welcome
-    goWelcome() {
-      this.router.navigate(['./welcome']);
+    logout() {   
+      // var user: User;
+      let user = this._loginService.getEmailFromLocalStorage();
+      this._loginService.logout(user);      
     }
 
     // ouvri la page d authentification
-    openLoginPage() {
+    openLogin() {
       this.router.navigate(['./login']);
     }
 }
+
+
 
 
