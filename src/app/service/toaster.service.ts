@@ -7,11 +7,15 @@ export class ToasterService {
 
   constructor(private snackBar: MatSnackBar)  {  }
 
-  showToaster(message: string, snackbarWarning: string, timer: number) {
+
+  // snackStyle defini dans le custom-theme.scss => 
+  // error (snackbarWarning)
+  // info (snackbarInfo)
+  showToaster(snackMessage: string, snackStyle: string, snackTimer: number) {
       this.snackBar.openFromComponent(SnackBarComponent, { 
-        data: message,
-        duration: timer,
-        extraClasses: ['snackbarWarning']
+        data: snackMessage,
+        duration: snackTimer,
+        extraClasses: [snackStyle]
       });      
   }  
 

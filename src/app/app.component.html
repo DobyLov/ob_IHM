@@ -1,51 +1,14 @@
 
+        <app-header></app-header>
+
   
-<link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Source+Sans+Pro|Montserrat:300" rel="stylesheet">
- <!-- toolbar  -->
- <mat-toolbar class="header" color="primary">
-    <mat-toolbar-row class="flex-container-toolbar"> 
-        <div class="flex-item1"> 
-            <button mat-icon-button [disabled]="btnSideBarState" (click)="mysidenav.toggle()">
-            <!-- <mat-icon>menu</mat-icon> -->
-            <img src="./assets/OpBLogo.svg" width="30" height="30" border="0">
-            <!-- <fa name="fas fa-bars" size="2x"></fa> -->
-            </button>
-        </div>
-        <!-- </span> -->
-        <div class="flex-item2">
-            <!-- Date au milieur de la toolbar -->
-            <span >{{ dateBrute | date: 'EEEE d MMMM yyyy':'':'fr' | DateFirstCharUpper }}</span>      
-        </div>
-        <div class="flex-item3">
-            <button mat-icon-button [matMenuTriggerFor]="menu">
-                    <mat-icon>blur_on</mat-icon>
-                <!-- <fa name="fas fa-user" size="2x"></fa> -->
-            </button>      
-            <!-- // Bouton login a droite de la tootlbar -->
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item [disabled]="btnLoginState" (click)="openLogin()" class="connMenu">
-                    <fa name="fas fa-sign-in" size="1x"> </fa>
-                    <span>Connexion</span>
-                </button>
-                <button mat-menu-item [disabled]="btnParametersState" class="connMenu">
-                    <fa name="fas fa-cogs" size="1x"></fa> 
-                    <span>Paramètres</span>
-                </button>
-                <button mat-menu-item [disabled]="btnLogoutState" (click)="logout()" class="connMenu">
-                    <fa name="fas fa-sign-out" size="1x"></fa>
-                    <span>Déconnexion</span>
-                </button>
-            </mat-menu>
-        </div>
-    </mat-toolbar-row>
-</mat-toolbar>
 
 <!-- sidenav -->
 <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #mysidenav role="directory" mode="over" opened="false" class="inside-sidenav" fixedTopGap=64  fixedBottomGap=64>
         <mat-divider></mat-divider> 
         <div>
-            <span class="userConn">{{ userNameConnected }}</span> 
+            <span class="userConn">{{ userNameConnected }} fred</span> 
         </div>  
         <div class="vertical-menu">  
             <!-- <div> -->         
@@ -65,7 +28,9 @@
             <div><a routerLink="/prestation" routerLinkActive="active" (click)="mysidenav.close()">Prestation</a></div> -->
         </div>
     </mat-sidenav>  
-    
+
+
+
     <div>
         <router-outlet></router-outlet> 
     </div>

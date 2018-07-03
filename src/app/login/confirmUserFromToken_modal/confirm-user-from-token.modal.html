@@ -1,0 +1,37 @@
+
+<link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Roboto+Slab:700|Roboto:900|Source+Sans+Pro|Montserrat:300" rel="stylesheet">
+<div class="flex-container">    
+    <div class="flex-item-title">
+        <mat-toolbar color="primary" >
+          <div class="flex-item-title">
+              <p>Confirmation Utilisateur </p>
+          </div>
+        </mat-toolbar>
+    </div>
+    <div>
+        <div class="flex-item">
+        Avant de continuer, pouvez vous<br>
+        confirmer que vous étes <br>
+        l'utilisateur <b>{{ prenom }}</b>, enregistré<br>
+        avec l'adresse <b>{{ userMail }}</b>.
+        </div>
+        <div class="flex-item">
+        <div></div>
+    </div>
+
+  <div class="flex-item-action">
+    <div class="flex-container-actionOkCancel">
+        <mat-toolbar color="primary">   
+          <div class="flex-item-ActionokCancel">             
+            <button mat-icon-button (click)="userConfirmed()">
+              <mat-icon>Oui</mat-icon>
+            </button>
+          </div> 
+          <div class="flex-item-ActionokCancel">
+            <button mat-icon-button (click)="userNotConfirmed(userMail)">
+              <mat-icon>Non</mat-icon>
+            </button>
+          </div>
+        </mat-toolbar>
+    </div>
+</div>

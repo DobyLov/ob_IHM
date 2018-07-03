@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { LoginService } from '../login.service';
+import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { FormControl, Validators } from '@angular/forms';
@@ -49,7 +49,9 @@ export class ForgottenPwdComponent implements OnInit {
 
 export class ForgottenPwdModalComponent {
   
-  constructor(  public _loginService: LoginService,
+  constructor(  
+                // public _loginService: LoginService,
+                public _authService: AuthService,
                 private router: Router,
                 public dialogRef: MatDialogRef<ForgottenPwdModalComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: any) {  }
@@ -80,7 +82,7 @@ export class ForgottenPwdModalComponent {
 
   transmitEMail() {
     console.log("transmitEMail : " + this.emailForgottenPwd.value);
-    this._loginService.resetPwd(this.emailForgottenPwd.value);
+    this._authService.resetPwd(this.emailForgottenPwd.value);
     this.dialogRef.close();   
 
   }

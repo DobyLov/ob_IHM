@@ -1,12 +1,26 @@
 
   <div class="flex-tcontainer-centertemp">
     <p>
-      L utilisater loggé : {{ userlogged }}
+      Bonjour 
+      {{ currentUtilisateur$.prenomUtilisateur  }},
+      <br>
+      vous êtes sur votre page d'accueil.
     </p>
-    <!-- <p>
-      <fa name="cog" size="5x" animation="spin"></fa>
-    </p> -->
+    <p>
+      
+    </p>
   </div>
-
+  <div>
+      <button mat-menu-item (click)="goWelcome()" class="connMenu">
+          <fa name="fas fa-adjust" size="1x"> </fa>
+          <span>goWelcome</span>
+      </button>
+  </div>
+  <div>
+      <button mat-menu-item (click)="goUnknowPage()" class="connMenu">
+          <fa name="fas fa-adjust" size="1x"> </fa>
+          <span>pageUnknow</span>
+      </button>
+  </div>
 
 

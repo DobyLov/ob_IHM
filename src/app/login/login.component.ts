@@ -1,9 +1,12 @@
-import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { LoginService } from '../login/login.service'
+import { AuthService } from '../login/auth.service'
 import { Router } from '@angular/router';
-import { User } from '../login/user'
+import { Utilisateur } from '../utilisateur/utilisateur'
+import { Credentials } from '../login/credentials';
+import { Observable } from 'rxjs/Observable';
+import { UtilisateurService } from '../utilisateur/utilisateur.service';
  
 @Component({
   selector: 'app-login',
@@ -12,13 +15,13 @@ import { User } from '../login/user'
 })
 
 export class LoginComponent implements OnInit {
-  
+
   constructor(private router: Router,
-              public dialog: MatDialog,
-							public _loginService: LoginService) { }
+              public _authService: AuthService,
+              public dialog: MatDialog) { }
+  
 
 	ngOnInit() {
-				// open modal
 				setTimeout(() => {
 					this.openDialog()})
 	}
@@ -29,12 +32,8 @@ export class LoginComponent implements OnInit {
       data: {  }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-		//    = result;
-			
-		this.openWelcomePage();
-    });
+    // dialogRef.afterClosed().subscribe( result => {});
+    this.openWelcomePage();
   }
 
 	openWelcomePage() {
@@ -43,6 +42,11 @@ export class LoginComponent implements OnInit {
   
   openHomePage() {
 		this.router.navigate(['./home']);
+  }
+
+  logout(){
+    // this._authService.logOut(userMail);
+    this.router.navigate(['./welcome']);
   }
 
 }   
@@ -57,12 +61,23 @@ export class LoginComponent implements OnInit {
     // Masque par defaut la saisie du mot de passe
     hide = true;    
     loginForm: FormGroup;
+    isUserIsConnected$: boolean;
+    // isLogged$: Observable<boolean>;
 
     constructor(private router: Router,
-                public _loginService: LoginService,
+                public _authService: AuthService,
                 public dialogRef: MatDialogRef<LoginModalComponent>,
-                // private formBuilder: FormBuilder,
-                @Inject(MAT_DIALOG_DATA) public data: any) { }
+                public credz: Credentials,
+                private _utilisateurservice: UtilisateurService,
+                @Inject(MAT_DIALOG_DATA) public data: any) {
+
+                this._authService.statusOfIsUserIsLogged.subscribe(isLoggedIn => {
+                  this.isUserIsConnected$ = isLoggedIn.valueOf();
+                  if (this.isUserIsConnected$ === true) {
+                      this.dialogRef.close();
+                  } 
+                })
+                }
                 					
 		ngOnInit() {
        this.createFromGroup();
@@ -101,19 +116,12 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['./forgottenpwd']);
     }
 
-    checkCredentials() {
-      console.log("Le formaulaire de login est : " + this.loginForm.valid)
-      let user: User = new User();
-      user.email = this.loginForm.get('mail').value;
-      user.pwd = this.loginForm.get('pwd').value;
-      if(this.loginForm.valid) { 
-        this._loginService.login(user);
+    login() {
+      let credz: Credentials = new Credentials();
+      credz.email = this.loginForm.get('mail').value;
+      credz.pwd = this.loginForm.get('pwd').value;
+      this._authService.login(credz);
       
-      } else {
-        this.loginForm.setValue(this.loginForm.get('mail').value,
-                                null);
-
-      }
     }
 
     closeLoginModal() {
