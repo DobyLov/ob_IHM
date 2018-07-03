@@ -24,6 +24,7 @@ import { Credentials } from './login/credentials';
 import { AuthService } from './login/auth.service';
 import { RequestOptions } from '@angular/http';
 import { AuthGardService } from './login/authGard.service';
+import { SideBarService } from './service/sidebar.service';
 import { LoginComponent } from './login/login.component';
 import { LoginModalComponent } from './login/login.component';
 import { ForgottenPwdComponent } from './login/forgotten-pwd/forgotten-pwd.component';
@@ -144,6 +145,7 @@ import {
               { provide: HTTP_INTERCEPTORS, useClass: AuthRequestOptions, multi : true },
               { provide: AuthErrorHandlerService, useClass: AuthErrorHandlerService },
               { provide: UtilisateurService, useClass: UtilisateurService},
+              { provide: SideBarService, useClass: SideBarService},
               { provide: AuthService, useClass: AuthService},
               { provide: AuthGardService, useClass: AuthGardService},
               { provide: ToasterService, useClass: ToasterService },

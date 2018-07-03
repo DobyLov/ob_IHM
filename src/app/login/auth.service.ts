@@ -217,12 +217,6 @@ export class AuthService {
     this.messageToaster('Vous êtes déconnecté', 'snackbarInfo', 3000);
   }
 
-  getCurrentUser() {
-
-  }
-
-
-
   // snackbarWarning
   // snackbarInfo
   // timer en ms

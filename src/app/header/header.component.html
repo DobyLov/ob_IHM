@@ -3,8 +3,8 @@
  <mat-toolbar class="header" color="primary">
     <mat-toolbar-row class="flex-container-toolbar"> 
         <div class="flex-item1"> 
-            <!-- <button mat-icon-button [disabled]="btnSideBarState" (click)="mysidenav.toggle()"> -->
-                    <button mat-icon-button [disabled]="!isUserIsConnected$" >
+            <button mat-icon-button [disabled]="!isUserIsConnected$" (click)="sideBarNavToggle()">
+                    <!-- <button mat-icon-button [disabled]="!isUserIsConnected$" > -->
             <!-- <mat-icon>menu</mat-icon> -->
             <img src="./assets/OpBLogo.svg" width="30" height="30" border="0">
             <!-- <fa name="fas fa-bars" size="2x"></fa> -->
@@ -16,12 +16,12 @@
             <span >{{ dateBrute | date: 'EEEE d MMMM yyyy':'':'fr' | DateFirstCharUpper }}</span>      
         </div>
         <div class="flex-item3">
-            <button mat-icon-button [matMenuTriggerFor]="menu">
+            <button mat-icon-button [matMenuTriggerFor]="menuLogin" (click)="forceCloseSideMenuBar()">
                     <mat-icon>blur_on</mat-icon>
                 <!-- <fa name="fas fa-user" size="2x"></fa> -->
             </button>      
             <!-- // Bouton login a droite de la tootlbar -->
-            <mat-menu #menu="matMenu">
+            <mat-menu #menuLogin="matMenu">
                 <button mat-menu-item [disabled]="isUserIsConnected$" (click)="openLogin()" class="connMenu">
                     <fa name="fas fa-sign-in" size="1x"> </fa>
                     <span>Connexion</span>
