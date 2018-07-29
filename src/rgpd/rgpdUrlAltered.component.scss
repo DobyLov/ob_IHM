@@ -1,0 +1,20 @@
+.cardCenter {
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    width:350px;
+    text-align:center;
+    margin: 0 auto;
+}
+
+.card {
+    max-width: 600px;
+}
+
+.card-titre {
+    font-family: 'Montserrat', sans-serif;  
+    font-size: 22px;
+    font-weight: bold;
+    color: black;
+}

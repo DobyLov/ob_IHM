@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 // Animations
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Routing
-import { AppRoutingModule } from './/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { HeaderComponent } from './header/header.component';
@@ -23,13 +23,21 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { Credentials } from './login/credentials';
 import { AuthService } from './login/auth.service';
 import { RequestOptions } from '@angular/http';
-import { AuthGardService } from './login/authGard.service';
+import { AuthGuardService } from './login/authGuard.service';
 import { SideBarService } from './service/sidebar.service';
 import { LoginComponent } from './login/login.component';
 import { LoginModalComponent } from './login/login.component';
 import { ForgottenPwdComponent } from './login/forgotten-pwd/forgotten-pwd.component';
 import { ForgottenPwdModalComponent } from './login/forgotten-pwd/forgotten-pwd.component';
 import { ConfimrUserFromTokenModalComponent } from './header/header.component';
+
+import { RgpdComponent } from '../rgpd/rgpd.component';
+import { RgpdPageNotFoundComponent } from '../rgpd/rgpdpagenotfound.component';
+import { RgpdTokenExpiredComponent } from '../rgpd/rgpdtokenexpired.component';
+import { RgpdUrlAlteredComponent } from '../rgpd/rgpdUrlAltered.component';
+import { AuthRgpdService } from '../rgpd/authRgpd.service';
+import { AuthGuardRgpdService } from '../rgpd/authGuardRgpd.service';
+
 // FontAwsome angular
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 // authentification
@@ -38,8 +46,11 @@ import { AuthErrorHandlerService } from './login/authErrorHandler.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // Forms
 import { MatFormFieldModule } from '@angular/material/form-field';
+
 import { ToasterService } from './service/toaster.service';
 import { SnackBarComponent } from './service/toaster.service';
+import { BottomSheetService } from './service/bottomsheet.service';
+import { BottomSheetComponent } from './service/bottomsheet.service';
 
 // Import Locale_Fr
 import { registerLocaleData } from '@angular/common';
@@ -55,16 +66,17 @@ import { TimeHourTwoDigitsPipe } from './pipe/timeHourTwoDigits.pipe';
 import { DateFirstCharUpperPipe } from './pipe/datefirstcharupper.pipe';
 
 import { FormsModule, 
-        FormBuilder, 
-        FormGroup,
-        FormControl, 
-        ReactiveFormsModule,
-        Validators } from '@angular/forms';
+  FormBuilder, 
+  FormGroup,
+  FormControl, 
+  ReactiveFormsModule,
+  Validators } from '@angular/forms';
 
 // Materials!!
-import { 
+import {
   MatButtonModule,
   MatButtonToggleModule,
+  MatBottomSheetModule,
   MatCardModule, 
   MatCheckboxModule,
   MatDatepickerModule,
@@ -81,13 +93,14 @@ import {
   MatSidenavModule,
   MatSnackBarModule,
   MatTabsModule,
-  MatToolbarModule } from '@angular/material';
-
+  MatToolbarModule,
+  MatTooltipModule } from '@angular/material';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    BottomSheetComponent,
     ClientComponent,
     ConfimrUserFromTokenModalComponent,
     DateFirstCharUpperPipe, 
@@ -102,7 +115,11 @@ import {
     PrestationComponent,
     RdvAddComponent,
     RdvComponent,
-    RdvListComponent, 
+    RdvListComponent,
+    RgpdComponent,
+    RgpdPageNotFoundComponent, 
+    RgpdTokenExpiredComponent,
+    RgpdUrlAlteredComponent,
     SnackBarComponent,
     TimeMinuteTwoDigitsPipe,
     TimeHourTwoDigitsPipe,
@@ -115,6 +132,8 @@ import {
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
+    MatBottomSheetModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
@@ -134,21 +153,24 @@ import {
     MatSidenavModule,
     MatSnackBarModule,
     MatToolbarModule,
+    MatTooltipModule,
     MatTabsModule,  
-    FormsModule, 
     ReactiveFormsModule,
     HttpClientModule   
 
   ],
-
+  entryComponents: [BottomSheetComponent],
   providers: [{ provide: LOCALE_ID, useValue: 'fr' },
               { provide: HTTP_INTERCEPTORS, useClass: AuthRequestOptions, multi : true },
               { provide: AuthErrorHandlerService, useClass: AuthErrorHandlerService },
               { provide: UtilisateurService, useClass: UtilisateurService},
               { provide: SideBarService, useClass: SideBarService},
               { provide: AuthService, useClass: AuthService},
-              { provide: AuthGardService, useClass: AuthGardService},
+              { provide: AuthRgpdService, useClass: AuthRgpdService},
+              { provide: AuthGuardRgpdService, useClass: AuthGuardRgpdService},
+              { provide: AuthGuardService, useClass: AuthGuardService},
               { provide: ToasterService, useClass: ToasterService },
+              { provide: BottomSheetService, useClass: BottomSheetService },
               { provide: Credentials, useClass: Credentials},
               { provide: Utilisateur, useClass: Utilisateur}
               ],

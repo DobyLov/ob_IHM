@@ -1,3 +1,5 @@
+// Header standard quand l app n est pas ouverte
+// depuis le L url Rgpd
 .header {
     position: fixed;
     margin: 0;
@@ -34,7 +36,7 @@
     flex: 1 1 auto;
   }  
 
-  .flex-item2 {
+  .flex-heure {
     -webkit-flex: 1 0 0;
     flex: 1 0 0;
     text-align: center;
@@ -50,4 +52,19 @@
     flex: 1 0 0;
     // align-self: flex-end;
     text-align: right;
+  }
+
+
+  // header du rgpd
+  .style1 {
+    color: rgb(201, 144, 39);
+    font-family: 'Great vibes', cursive;
+    font-size: 45px;
+  }
+  
+  .style3 {
+    // align-items: flex-start;
+    color: black;
+    font-family: 'Great vibes', cursive;
+    font-size: 30px;
   }

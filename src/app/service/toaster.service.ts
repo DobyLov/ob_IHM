@@ -15,7 +15,7 @@ export class ToasterService {
       this.snackBar.openFromComponent(SnackBarComponent, { 
         data: snackMessage,
         duration: snackTimer,
-        extraClasses: [snackStyle]
+        panelClass: [snackStyle]
       });      
   }  
 

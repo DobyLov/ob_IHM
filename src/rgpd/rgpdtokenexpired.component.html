@@ -1,0 +1,51 @@
+<html>
+    <div class="cardCenter">
+        <mat-card class="card">
+            <mat-card-header>
+                <div mat-card-avatar class="opusBeaute-header-image"></div>
+                <mat-card-title class="card-titre">RGPD Privacy</mat-card-title>
+                <mat-card-subtitle class="card-sousTitre">Quelques données en toute confiance</mat-card-subtitle>
+                <br>
+            </mat-card-header>
+            
+            <mat-card-content class="card-contenu">
+                <span *ngIf="displayRgpdMailRenewalPurposal; else  alternateMsg" else >
+                    <p>
+                        Bonjour {{ rgpdPrenomClient$ }}, le lien qui vous à été envoyé pour ouvrir cette page n'est plus valide.
+                    </p>
+                    <p>
+                        Vous pouvez cliquer sur le bouton ci-dessous pour faire la demande d'un nouveau lien,
+                        une réponse vous sera délivrée dans les plus brefs délais.
+                    </p>
+                    <p>
+                        Pour des raisons de sécurité, 
+                        le nouveau lien que vous reçevrez par email sera valide pendant 20 minutes.
+                    </p>
+                    <p>
+                        Merci pour l'interet que vous portez sur la gestion de vos données au sein de notre système.
+                    </p>
+                </span>
+                <ng-template #alternateMsg>
+                    <div>
+                        Pas de token pas de message
+                    </div>
+                </ng-template>
+            </mat-card-content>
+            <mat-card-actions>
+                <div *ngIf="displayRgpdMailRenewalPurposal">
+                    <span>
+
+                    </span>
+                    <span>
+                        <button mat-raised-button 
+                            matTooltip="Cliquer pour reçevoir un Email avec un nouveau lien valide."                           
+                            [disabled]="!mailBtnOnOff" (click)="askForNewRgpdUrl()">
+                            Je souhaite un nouveau Lien
+                        </button>
+                    </span>
+                    
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</html>

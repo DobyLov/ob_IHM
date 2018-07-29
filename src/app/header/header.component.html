@@ -3,7 +3,7 @@
  <mat-toolbar class="header" color="primary">
     <mat-toolbar-row class="flex-container-toolbar"> 
         <div class="flex-item1"> 
-            <button mat-icon-button [disabled]="!isUserIsConnected$" (click)="sideBarNavToggle()">
+            <button *ngIf=!openAppFromRgpdUrl mat-icon-button [disabled]="!isUserIsConnected$" (click)="sideBarNavToggle()">
                     <!-- <button mat-icon-button [disabled]="!isUserIsConnected$" > -->
             <!-- <mat-icon>menu</mat-icon> -->
             <img src="./assets/OpBLogo.svg" width="30" height="30" border="0">
@@ -11,12 +11,20 @@
             </button>
         </div>
         <!-- </span> -->
-        <div class="flex-item2">
+
+        <div *ngIf="!openAppFromRgpdUrl; else  rgpdBlock" class="flex-heure">
             <!-- Date au milieur de la toolbar -->
             <span >{{ dateBrute | date: 'EEEE d MMMM yyyy':'':'fr' | DateFirstCharUpper }}</span>      
         </div>
+        <ng-template #rgpdBlock>
+            <p>
+                <span class="style1">La Bonbonnière</span>
+                <span class="style3">&nbsp;d'Audrey</span>
+            </p>
+        </ng-template>
+ 
         <div class="flex-item3">
-            <button mat-icon-button [matMenuTriggerFor]="menuLogin" (click)="forceCloseSideMenuBar()">
+            <button *ngIf=!openAppFromRgpdUrl mat-icon-button [matMenuTriggerFor]="menuLogin" (click)="forceCloseSideMenuBar()">
                     <mat-icon>blur_on</mat-icon>
                 <!-- <fa name="fas fa-user" size="2x"></fa> -->
             </button>      

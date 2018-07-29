@@ -14,29 +14,37 @@ import { LoginComponent } from './login/login.component';
 import { ConfimrUserFromTokenModalComponent } from './header/header.component';
 import { ForgottenPwdComponent } from './login/forgotten-pwd/forgotten-pwd.component';
 import { ForgottenPwdModalComponent } from './login/forgotten-pwd/forgotten-pwd.component';
-import { AuthGardService } from './login/authGard.service';
+import { AuthGuardService } from './login/authGuard.service';
 import { SnackBarComponent } from './service/toaster.service';
+import { RgpdComponent } from '../rgpd/rgpd.component'
+import { AuthGuardRgpdService } from '../rgpd/authGuardRgpd.service';
+import { RgpdPageNotFoundComponent } from '../rgpd/rgpdpagenotfound.component';
+import { RgpdTokenExpiredComponent } from '../rgpd/rgpdtokenexpired.component';
+import { RgpdUrlAlteredComponent } from '../rgpd/rgpdUrlAltered.component';
 
 
 const routes: Routes = [
 
   { path: '', component: WelcomeComponent },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGardService]},
-  { path: 'rdv', component: RdvComponent, canActivate: [AuthGardService] },
-  { path: 'client', component: ClientComponent, canActivate: [AuthGardService] },
-  { path: 'prestation', component: PrestationComponent, canActivate: [AuthGardService] },
-  { path: 'utilisateur', component: UtilisateurComponent, canActivate: [AuthGardService] },
-  { path: 'rdvlist', component: RdvListComponent, canActivate: [AuthGardService] },
-  { path: 'rdvadd', component: RdvAddComponent, canActivate: [AuthGardService] },
-  { path: 'confirmusermodal', component: ConfimrUserFromTokenModalComponent, canActivate: [AuthGardService] },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
+  { path: 'rdv', component: RdvComponent, canActivate: [AuthGuardService] },
+  { path: 'client', component: ClientComponent, canActivate: [AuthGuardService] },
+  { path: 'prestation', component: PrestationComponent, canActivate: [AuthGuardService] },
+  { path: 'utilisateur', component: UtilisateurComponent, canActivate: [AuthGuardService] },
+  { path: 'rdvlist', component: RdvListComponent, canActivate: [AuthGuardService] },
+  { path: 'rdvadd', component: RdvAddComponent, canActivate: [AuthGuardService] },
+  { path: 'confirmusermodal', component: ConfimrUserFromTokenModalComponent, canActivate: [AuthGuardService] },
   { path: '', redirectTo: '/WelcomeComponent', pathMatch: 'full' },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'snackbar', component: SnackBarComponent},
   { path: 'login', component: LoginComponent },
   { path: 'loginmodal', component: LoginModalComponent },
   { path: 'forgottenpwd', component: ForgottenPwdComponent },
-  { path: 'forgottenpwdmodal', component: ForgottenPwdModalComponent},
-
+  { path: 'forgottenpwdmodal', component: ForgottenPwdModalComponent },
+  { path: 'rgpd', component: RgpdComponent, canActivate: [AuthGuardRgpdService] },
+  { path: 'rgpdpagenotfound', component: RgpdPageNotFoundComponent },
+  { path: 'rgpdtokenexpired', component: RgpdTokenExpiredComponent },
+  { path: 'rgpdurlaltered', component: RgpdUrlAlteredComponent },
   { path: '**', component: PagenotfoundComponent }
  
 ];

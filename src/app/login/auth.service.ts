@@ -5,7 +5,7 @@ import * as jwt_decode from 'jwt-decode';
 import { default as decode } from 'jwt-decode';
 
 import { appConfig } from '../constant/apiOpusBeauteUrl';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { ToasterService } from '../service/toaster.service';
 import { Utilisateur } from '../utilisateur/utilisateur';
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
@@ -77,7 +77,10 @@ export class AuthService {
   getTokenFromMiddleware = async function getTokenFromMiddleware(credz: Credentials) {
     // Specifie la variable de retour en string
     let resultatToken: string;
-    let body = `email=${credz.email}&pwd=${credz.pwd}`;
+    // let body = `email=${credz.email}&pwd=${credz.pwd}`;
+    let body: HttpParams = new HttpParams();
+    body = body.append("email", `${credz.email}`);
+    body = body.append("pwd", `${credz.pwd}`);
     let url = `${appConfig.apiOpusBeauteUrl}/login`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     // Promesse  

@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   // @ViewChild('matMenu') cdr: ChangeDetectorRef;
   @Input() isUserIsConnected$: boolean;
-  sideNavToggle: Boolean;
+  sideNavToggle$: Boolean;
 
   userMail: string;
   prenom: string;
@@ -26,27 +26,28 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   btnLoginState = false;
   btnLogoutState = true;
   btnSideBarState = true;
-  btnParametersState = true;
+  btnParametersState = false;
+  url: string;
+  openAppFromRgpdUrl: boolean = false;
 
   constructor(private _authService: AuthService,
-    public _utilisateurservice: UtilisateurService,
-    public _sidebarservice: SideBarService,
-    private router: Router,
-    public dialog: MatDialog,
-    private cd: ChangeDetectorRef) {
-
-
-  }
+              public _utilisateurservice: UtilisateurService,
+              public _sidebarservice: SideBarService,
+              private router: Router,
+              public dialog: MatDialog,
+              private cd: ChangeDetectorRef) { 
+                      this.url = window.location.href.toString() 
+                    }
 
   ngOnInit() {
 
     // rsouscription de l observable Boolean du bouton de la navBar
     this._sidebarservice.statusOfSideNavToggle.subscribe(isSideBarOpen => {
-      this.sideNavToggle = isSideBarOpen.valueOf();
+      this.sideNavToggle$ = isSideBarOpen.valueOf();
     })
 
-    // souscription a l orbservable isconnected
-    this._authService.statusOfIsUserIsLogged.subscribe(isLoggedIn => {
+      // souscription a l orbservable isconnected
+      this._authService.statusOfIsUserIsLogged.subscribe(isLoggedIn => {
       // console.log("header Constructor :  connecte : " + isLoggedIn.valueOf())
       this.isUserIsConnected$ = isLoggedIn.valueOf();
 
@@ -72,7 +73,48 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.checkIfATokenIsPresentInLS();
+
+    if (!this.searchRgpdMgmtInsideUrl()) {
+      this.checkIfATokenIsPresentInLS();
+      this.openAppFromRgpdUrl = false;
+      console.log("headerComponent : ouverture l app Welcome");       
+    
+    } else {
+      this.openAppFromRgpdUrl = true;
+      console.log("headerComponent : ouverture l app Rgpd");
+
+    }
+
+  }
+
+  /**
+   * detection de la partie RGPD dans l URL de la page 
+   * 
+   */
+  public searchRgpdMgmtInsideUrl(): Boolean {
+
+    console.log("HeaderComponent : searching string in URL");
+    let isRgpdMgmtInTheString: Boolean = false;
+    // brochette de regex
+    let regexTkn = new RegExp(`rgpd` + `\\?` + `tkn=`);
+    let regexRgpdUrlAltered = new RegExp('rgpdurlaltered');
+    let regexRgpdTokenExpired = new RegExp('rgpdtokenexpired');
+    let regexRgpdPageNotFounded = new RegExp('rgpdpagenotfound');
+
+    if ( this.url.search(regexTkn) !=-1 || 
+          this.url.search(regexRgpdUrlAltered) !=-1 || 
+          this.url.search(regexRgpdPageNotFounded) !=-1 || 
+          this.url.search(regexRgpdTokenExpired) !=-1 ) {
+      
+      isRgpdMgmtInTheString = true;
+      console.log("HeaderComponent : URL taggee avec rgpd => Management  : " + isRgpdMgmtInTheString);    
+    } else {
+      isRgpdMgmtInTheString = false;
+      console.log("HeaderComponent : Navigation Standard sans tag RGPD : " + isRgpdMgmtInTheString);
+    }
+
+    return isRgpdMgmtInTheString;
+
   }
 
   openDialog(): void {
@@ -81,15 +123,19 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       width: '450px',
       data: { userMail: this.userMail }
     });
+
     dialogRef.afterClosed().subscribe(result => {
       // console.log('The dialog confirmation was closed');
       this.ngOnInit();
     });
+
   }
 
   checkIfATokenIsPresentInLS() {
+
     if (this._authService.isTokenDateIsExpired() == false) {
-      this.router.navigate(['./welcome']);
+      this.logOut();
+      // this.router.navigate(['./welcome']);
       // console.log("HeaderComponent : checkIfTokenIsPresent val de isUserIsconncted : " + this.isUserIsConnected$.valueOf())
       if (this.isUserIsConnected$.valueOf() == false)
         this.userMail = this._authService.getMailFromToken();
@@ -98,8 +144,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       })
     }
   }
+
   // mettre le parametre userMail recupere du service Utilisateur pour CurrenUtilisateur
   logOut() {
+
     this._authService.changeStatusOfIsLogged(false);
     // this._sidebarservice.changeStatusOfSideNavToggle(true);
     this._authService.removeGivenTokenFromLS(this.userMail);
@@ -117,7 +165,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   forceCloseSideMenuBar() {
-    console.log("headerComponent : forceCloseSideMenuBar : ");
+    // console.log("headerComponent : forceCloseSideMenuBar : ");
     this._sidebarservice.changeStatusOfSideNavState(true);
   }
 
@@ -141,14 +189,17 @@ export class ConfimrUserFromTokenModalComponent implements OnInit {
     public dialogRef: MatDialogRef<ConfimrUserFromTokenModalComponent>,
     public _utilisateurService: UtilisateurService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    // console.log("ConfimrUserFromTokenModal : constructor : userMail : " + this.userMail);
-    this.token = this._authService.getOBTokenViaMailFromLS(this.userMail);
-    // console.log("ConfimrUserFromTokenModal : constructor : token : " + this.token);
-    this.prenom = this._authService.getPrenomFromGivedToken(this.token);
-    // console.log("ConfimrUserFromTokenModal : constructor : prenom : " + this.prenom);
+
+      // console.log("ConfimrUserFromTokenModal : constructor : userMail : " + this.userMail);
+      this.token = this._authService.getOBTokenViaMailFromLS(this.userMail);
+      // console.log("ConfimrUserFromTokenModal : constructor : token : " + this.token);
+      this.prenom = this._authService.getPrenomFromGivedToken(this.token);
+      // console.log("ConfimrUserFromTokenModal : constructor : prenom : " + this.prenom);
+
   }
 
   ngOnInit() { }
+
 
   userConfirmed() {
     this._authService.changeStatusOfIsLogged(true);

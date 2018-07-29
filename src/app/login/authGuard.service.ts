@@ -5,7 +5,7 @@ import { ToasterService } from '../service/toaster.service';
 
 
 @Injectable()
-export class AuthGardService implements CanActivate {
+export class AuthGuardService implements CanActivate {
 
   constructor(
     private router: Router, 
