@@ -12,19 +12,28 @@ export class RgpdComponent implements OnInit {
 
 
     emailClient: string;
-    prenomClient: string;
+    rgpdPrenomClient: string;
     idClient: number;
     token: string;
+    displaySendRgpdOptions: boolean = true;
 
     constructor(private _authgardrgpdservice: AuthGuardRgpdService,
                 private _authrgpdservice: AuthRgpdService) {
-                    // this.token = this._authrgpdservice.getToken();
-                    this.idClient = this._authrgpdservice.getIdClientFromToken(this.token);
-                    this.prenomClient = this._authrgpdservice.getPrenomClientFromToken(this.token);
-                    this.emailClient = this._authrgpdservice.getEmailClientFromToken(this.token);
+                    try {
+                        this.token = this._authrgpdservice.getRgpdTokenFromLS();
+                        this.idClient = this._authrgpdservice.getIdClientFromToken(this.token);
+                        this.rgpdPrenomClient = this._authrgpdservice.getPrenomClientFromToken(this.token);
+                        this.emailClient = this._authrgpdservice.getEmailClientFromToken(this.token);
+                    } catch (error) {
+                        this.displaySendRgpdOptions = true;
+
+                    }
                 }
 
     ngOnInit() {}
 
+    private sendRgpdOptions(){
+        this._authrgpdservice.removeRgpdTokenFromLS();
+    }
     
 }

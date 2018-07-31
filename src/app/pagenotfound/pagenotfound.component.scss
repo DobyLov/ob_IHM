@@ -1,16 +1,45 @@
-.flex-tcontainer-centertemp {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    align-content: center;
-    justify-content: center
+.cardCenter {
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    // width:350px;
+    width:600px;
+    text-align:center;
+    margin: 0 auto;
 }
 
-.flex-tcontainer-centertemp > div {
-    // background-color: #f1f1f1;
-    width: 100px;
-    margin: 10px;
-    text-align: center;
-    line-height: 75px;
-    font-size: 30px;
-  }
+.card {
+    // max-width: 600px;
+    max-width: 100%;
+}
+
+.card-titre {
+    font-family: 'Montserrat', sans-serif; 
+    text-align: left; 
+    font-size: 24px;
+    // font-weight: bold;
+    color: black;
+}
+
+.card-sousTitre {
+    font-family: 'Montserrat', sans-serif;  
+    text-align: left; 
+    font-size: 12px;
+    // font-weight: bold;
+    color: black;
+}
+
+.card-contenu {
+    font-family: 'Montserrat', sans-serif;  
+    font-size: 18px;
+    text-align: justify;
+    text-justify: inter-word;
+    // font-weight: bold;
+    color: black;
+}
+
+.opusBeaute-header-image {
+    background-image: url('http://192.168.1.100:4200/assets/OpBLogo.svg');
+    background-size: cover;
+}

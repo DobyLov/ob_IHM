@@ -14,8 +14,7 @@ $custom-theme: mat-light-theme($custom-primary, $custom-accent);
 .mat-dialog-container {
     overflow: hidden !important;
     border-radius: 20px !important;
-    padding: 0px !important;
-    
+    padding: 0px !important;    
 }
 
 .snackbarWarning {
@@ -40,5 +39,38 @@ $custom-theme: mat-light-theme($custom-primary, $custom-accent);
     background: #aed581;
 }
 
+//custom Bottomsheet
+.flex-bottomsheet-container {
+    display: flex;
+    flex-direction: row;
+    flex-flow: nowrap;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .flex-item-bottomsheet-extremity-L {
+    line-height: 40px;
+    width: 50px;
+    text-align: left;
+  }
+
+  .flex-item-bottomsheet-extremity-R {
+    line-height: 46px;
+    width: 150px;
+    // text-align: right;
+  }
+  
+  .flex-item-bottomsheet-center {
+    line-height: 46px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .styletxt-bottomsheet {
+      color: black;
+      font-family: 'Montserrat', sans-serif; 
+      font-size: 20px;
+      font-weight: bold;
+  }
 
 

@@ -1,6 +1,7 @@
 import { Component, Injectable, Inject } from '@angular/core';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material';
+import { Router } from '../../../node_modules/@angular/router';
 
 
 @Injectable()
@@ -18,17 +19,30 @@ export class BottomSheetService {
 
 @Component({
     selector: 'bottomsheet',
-    templateUrl: '../service/bottomsheet/bottomsheet.component.html',
-    styles: ['../service/bottomsheet/bottomsheet.component.scss']
+    templateUrl: '../service/bottomsheet/bottomsheet.component.html'
 })
 
 export class BottomSheetComponent {
 
+    message: string;
     constructor(private bottomSheetRef: MatBottomSheetRef<BottomSheetComponent>,
-                @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {}
+                private router: Router,
+                @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {
+                    this.message = data;
+                    this.bottomSheetRef.afterDismissed()
+                        .subscribe(res => { 
+                                console.log("fermeture du bottomsheet");
+                                this.router.navigateByUrl('');                                
+                            });
+                }
 
-    openLink(event: MouseEvent): void {
+    private openLink(event: MouseEvent): void {
         this.bottomSheetRef.dismiss();
         event.preventDefault();
     }
+
+    closeBottomSheet() {
+        this.bottomSheetRef.dismiss();
+    }
+
 }

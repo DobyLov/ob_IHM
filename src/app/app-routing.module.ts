@@ -43,7 +43,7 @@ const routes: Routes = [
   { path: 'forgottenpwdmodal', component: ForgottenPwdModalComponent },
   { path: 'rgpd', component: RgpdComponent, canActivate: [AuthGuardRgpdService] },
   { path: 'rgpdpagenotfound', component: RgpdPageNotFoundComponent },
-  { path: 'rgpdtokenexpired', component: RgpdTokenExpiredComponent },
+  { path: 'rgpdtokenexpired', component: RgpdTokenExpiredComponent},
   { path: 'rgpdurlaltered', component: RgpdUrlAlteredComponent },
   { path: '**', component: PagenotfoundComponent }
  

@@ -4,14 +4,14 @@
             <mat-card-header>
                 <div mat-card-avatar class="opusBeaute-header-image"></div>
                 <mat-card-title class="card-titre">RGPD Privacy</mat-card-title>
-                <mat-card-subtitle class="card-sousTitre">Quelques données en toute confiance</mat-card-subtitle>
+                <mat-card-subtitle class="card-sousTitre" *ngIf="displayRgpdMailRenewalPurposal">Vos informations en toute confiance</mat-card-subtitle>
                 <br>
             </mat-card-header>
             
             <mat-card-content class="card-contenu">
                 <span *ngIf="displayRgpdMailRenewalPurposal; else  alternateMsg" else >
                     <p>
-                        Bonjour {{ rgpdPrenomClient$ }}, le lien qui vous à été envoyé pour ouvrir cette page n'est plus valide.
+                        Bonjour {{ rgpdPrenomClient }}, le lien qui vous à été envoyé pour ouvrir cette page n'est plus valide.
                     </p>
                     <p>
                         Vous pouvez cliquer sur le bouton ci-dessous pour faire la demande d'un nouveau lien,
@@ -26,20 +26,26 @@
                     </p>
                 </span>
                 <ng-template #alternateMsg>
-                    <div>
-                        Pas de token pas de message
+                    <div >
+                        <span>
+                            <p>MSG ALTERNATIF :
+                               Si vous rencontrez le moindre soucis pour accéder aux réglages RGPD,
+                               veuillez contacter Audrey. 
+                            </p>
+                        </span>                        
                     </div>
                 </ng-template>
             </mat-card-content>
             <mat-card-actions>
                 <div *ngIf="displayRgpdMailRenewalPurposal">
                     <span>
-
                     </span>
                     <span>
+                            <!-- [disabled]="!mailBtnOnOff"  -->
                         <button mat-raised-button 
-                            matTooltip="Cliquer pour reçevoir un Email avec un nouveau lien valide."                           
-                            [disabled]="!mailBtnOnOff" (click)="askForNewRgpdUrl()">
+                            [disabled]="!mailBtnOnOff"
+                            matTooltip="Cliquer pour reçevoir un Email avec un nouveau lien valide." 
+                            (click)="askForNewRgpdUrl()">
                             Je souhaite un nouveau Lien
                         </button>
                     </span>

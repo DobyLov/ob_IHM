@@ -1,3 +1,22 @@
-<html>
-    bottom sheet works
-</html>
+<link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Roboto+Slab:700|Roboto:900|Source+Sans+Pro" rel="stylesheet">
+
+
+<div class="flex-bottomsheet-container">
+
+    <!-- <div class="flex-item-bottomsheet-extremity-L">
+        <mat-icon>mail_outline</mat-icon>
+    </div> -->
+
+    <div class="flex-item-bottomsheet-center">
+       <span class="styletxt-bottomsheet">
+           {{ message }}
+        </span>
+    </div>
+
+    <div class="flex-item-bottomsheet-extremity-R">
+        <button mat-raised-button (click)="closeBottomSheet()">
+                <mat-icon aria-label="Example icon-button with a heart icon">close</mat-icon>
+        </button>
+    </div>
+
+</div>

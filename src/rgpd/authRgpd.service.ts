@@ -4,6 +4,8 @@ import { HttpHeaders, HttpClient, HttpParams } from "@angular/common/http";
 import { appConfig } from "../app/constant/apiOpusBeauteUrl";
 import { BehaviorSubject } from "rxjs";
 import { Router } from "@angular/router";
+// import { error } from "../../node_modules/protractor";
+import { BottomSheetService } from "../app/service/bottomsheet.service";
 
 @Injectable()
 export class AuthRgpdService {
@@ -13,6 +15,7 @@ export class AuthRgpdService {
     public isTokenStructureIsIntegre$ = new BehaviorSubject<boolean>(false);
 
     constructor(private httpCli: HttpClient,
+                private _bottomsheetservice: BottomSheetService,
                 private router: Router){}
 
     public get IsTokenStructureIsIntegre() {
@@ -28,10 +31,32 @@ export class AuthRgpdService {
     }
 
     /**
+     * Verifie si le token est valide
+     * @param token string
+     */
+    public isRgpdTokenIsvalid(token: string): boolean {
+        console.log("AuthRgpdService : Verification de la validite du RgpdToken.");
+        
+        try {
+
+            this.rgpdTokenIntegrityChecker(token);
+            this.isRgpdTokenDateIsValid(token);
+            this.setRgpdTokenToLS(token);
+            console.log("AuthRgpdService : Le RgpdToken est valide");
+            return true;
+
+        } catch (erro) {
+
+            console.log("AuthRgpdService : Le rgpdtoken n est pas valide.");
+            return false;
+        }
+    }
+
+    /**
      * Test de l integrite du token
      * @param token 
      */
-    public tokenIntegrityChecker(token: string): boolean {
+    public rgpdTokenIntegrityChecker(token: string): boolean {
         
         try {
             // test de l integrite du token
@@ -54,7 +79,7 @@ export class AuthRgpdService {
    * Recherche une chaine specifique dans l URL de la page 
    * @param rgpdUrl
    */
-  public searchTknStringInsideRgpdUrl(rgpdUrl: string): Boolean {
+  public searchRgpdTknStringInsideRgpdUrl(rgpdUrl: string): Boolean {
     let isTknIsPresentIntoTheString: Boolean = false;
     let regex = new RegExp(`rgpd` + `\\?` + `tkn=`);
     if (rgpdUrl.search(regex) != -1) {
@@ -72,29 +97,12 @@ export class AuthRgpdService {
    * Extrait le token de l URL
    * @param url 
    */
-  public urlTokenExtractor(url: string): string {
+  public urlRgpdTokenExtractor(url: string): string {
 
     let tokenExtracted = url.substr(url.search(new RegExp(`rgpd` + `\\?` + `tkn=`)), url.length).replace(new RegExp(`rgpd` + `\\?` + `tkn=`),"");
     return tokenExtracted;
 
   }
-
-    /**
-     * Verifie la date de validite du token :
-     * @param token 
-     */
-    public tokenDateValidator(token: string): Boolean {
-        // console.log("AuthRgpdService : token => " + token);
-        if (this.isRgpdTokenDateIsValid(token)) {
-            this.setTokenAsObservable(token);
-            this.setRgpdTokenToLS(token);
-            return true;
-
-        } else {
-            console.log("AuthRgpdService : Le token fourni par l URL est perime.");
-            return false;
-        }
-    }
 
     /**
      * Defini et Stock le token comme observable
@@ -115,7 +123,7 @@ export class AuthRgpdService {
    /**
     * Retourne le token sous forme d observable
     */
-    get getToken(): string {
+    get getTokenFromURL(): string {
         return this.tokenExtractedFromUrl$.getValue();
     }
 
@@ -124,13 +132,16 @@ export class AuthRgpdService {
      * @param token string
      */
     public isRgpdTokenDateIsValid(token: string): Boolean {
+        console.log("authRgpdService : verification de la date du token");
         let dateNow = new Date();
         let isJwtIsValid: Boolean;
               
         if (new Date(jwt_decode(token).exp * 1000) > dateNow) {
             isJwtIsValid = true;
+            console.log("authRgpdService : La date du token est valide");
         } else {
             isJwtIsValid = false;
+            console.log("authRgpdService : La date du token n est pas valide");
         }
             
         return isJwtIsValid;
@@ -138,30 +149,12 @@ export class AuthRgpdService {
     }
 
     /**
-     * Verifie si la structure du Token est integre
-     * @param token 
-     */
-    private isTokenStructureIsValid(token: string): Boolean {
-
-        try {
-            jwt_decode(token);
-            console.log("AuthRgpdService : la structure du token est valide.");
-            return true;
-
-        } catch (error) {
-            console.log("AuthRgpdService : la structure du token n est pas valide." + error);
-            return false;
-        }
-        
-    }
-
-    /**
      * Fait une demande d une URL construite
      * avec un token valide au MidleWare
      * @param token 
      */
-    public askANewRgpdTokenByEmail(token: string): void {
-
+    public askANewRgpdTokenByEmail(token: string) {
+        
         let prenomClient: string = this.getPrenomClientFromToken(token);
         let idClient: number = this.getIdClientFromToken(token);
         let emailClient: string = this.getEmailClientFromToken(token);
@@ -171,15 +164,14 @@ export class AuthRgpdService {
         let httpParams: HttpParams =  new HttpParams()
             httpParams = httpParams.set("rgpdIdClient", `${idClient}`);
             httpParams = httpParams.set("rgpdPrenomClient", `${prenomClient}`);
-            httpParams = httpParams.set("rgpdEmailClient", `${emailClient}`); 
-        // promesse =>
-        let promesse = new Promise (( resolve ) => {
-            // this.httpCli.post(url, body, { headers, withCredentials: false, responseType: 'text' })
-            return this.httpCli.get(url, { headers: headers, params: httpParams } )
-            .toPromise()
-            .then(res => {console.log("AuthRgpdService : promesse ok")})
-            .catch(err => {console.log("AuthRgpdService : promesse error : " + err)})
-        })
+            httpParams = httpParams.set("rgpdEmailClient", `${emailClient}`);   
+  
+        // Observable 
+        this.httpCli.get(url, { headers: headers, params: httpParams })
+            .subscribe(            
+                res => {this._bottomsheetservice.openBottomSheet("E-mail envoyé")},
+                err => {this._bottomsheetservice.openBottomSheet("E-mail non envoye")}
+            )  
     }
 
     /**
@@ -194,11 +186,14 @@ export class AuthRgpdService {
      * Recupere le token depuis le LocalStorage
      */
     public getRgpdTokenFromLS(): string {
+        console.log("AuthRgpdService : Recuperation du token dans le LS");
         try {
-            let tokenFLs = localStorage.getItem("Rgpd_Tkn");
+            let tokenFLs = localStorage.getItem("rgpd_tkn");
+            console.log("AuthRgpdService : Token trouve dans le LS");
             return tokenFLs;
+
         } catch (err) {
-            console.log("AuthRgpdService : il n y a pas de token dans le LS : " + err );
+            console.log("AuthRgpdService : il n y a pas de token dans le LS : ");
             return null;
         }
     }

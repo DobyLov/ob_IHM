@@ -27,30 +27,43 @@ export class AuthGuardRgpdService implements CanActivate {
   canActivate() {
     // console.log("AuthGuardRgpdService : activate ok");
 
-    if (this._authrgpdservice.searchTknStringInsideRgpdUrl(this.url)) {
+    if (this._authrgpdservice.searchRgpdTknStringInsideRgpdUrl(this.url)) {
 
       console.log("AuthGuardRgpdService : il y a un token dans l url :)");
-      if (!this._authrgpdservice.tokenIntegrityChecker(this._authrgpdservice.urlTokenExtractor(this.url))) {
+      if (!this._authrgpdservice.rgpdTokenIntegrityChecker(this._authrgpdservice.urlRgpdTokenExtractor(this.url))) {
         console.log("AuthGuardRgpdService : le token fourni dans l Url n est pas integre :((")
         this.router.navigate(['./rgpdurlaltered']);
-      }
+        // return false;
 
-      if (this._authrgpdservice.tokenDateValidator((this._authrgpdservice.urlTokenExtractor(this.url)))) {
-        console.log("AuthGuardRgpdService : La date du token est valide :)");
-        this.router.navigate(['./rgpd']);
+      } else if (this._authrgpdservice.isRgpdTokenDateIsValid((this._authrgpdservice.urlRgpdTokenExtractor(this.url)))) {
+        console.log("AuthGuardRgpdService : Le token est valide :)");
         return true;
-      
+        this.router.navigate(['./rgpd']);
+        
+
       } else {
         console.log("AuthGuardRgpdService : La date du token est perimee :(");
         this.router.navigate(['./rgpdtokenexpired']);
         console.log("AuthGuardRgpdService : pouete fin de methode Activate")
-        return false;
-      }
-      
+        // return false;
+      }  
+
     } else {
-      console.log("AuthGuardRgpdService : il n'y a pas tkn dans l url :)");
-      this.router.navigate(['./rgpdpagenotfound']);
-      return false;
+
+      if (this._authrgpdservice.isRgpdTokenIsvalid(this._authrgpdservice.getRgpdTokenFromLS())) {
+        return true;
+      }
+
+      if (this.url.search(new RegExp('/rgpdtokenexpired'))) {
+          console.log("AuthGuardRgpd : redirection vers expired");
+          this.router.navigate(['./rgpdtokenexpired']);
+          // return false;
+
+        } else {
+          console.log("AuthGuardRgpdService : il n'y a pas tkn dans l url :)");
+          this.router.navigate(['./rgpdpagenotfound']);
+          // return false;
+        }
     }
   }
 }

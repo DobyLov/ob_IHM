@@ -15,7 +15,9 @@ export class PagenotfoundComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.router.navigate(['./welcome'])
-    }, 5000);
+      // console.log("re-route");
+      // this.router.navigate(['./welcome']);
+      this.router.navigateByUrl('');
+    }, 10000);
   }
 }

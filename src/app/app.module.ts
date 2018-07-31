@@ -39,7 +39,7 @@ import { AuthRgpdService } from '../rgpd/authRgpd.service';
 import { AuthGuardRgpdService } from '../rgpd/authGuardRgpd.service';
 
 // FontAwsome angular
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
 // authentification
 import { AuthRequestOptions } from './login/authRequestOptions';
 import { AuthErrorHandlerService } from './login/authErrorHandler.service';
@@ -128,7 +128,7 @@ import {
   ],
 
   imports: [    
-    AngularFontAwesomeModule,
+    Angular2FontawesomeModule,
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
