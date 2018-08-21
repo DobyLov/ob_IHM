@@ -66,11 +66,12 @@ import { TimeHourTwoDigitsPipe } from './pipe/timeHourTwoDigits.pipe';
 import { DateFirstCharUpperPipe } from './pipe/datefirstcharupper.pipe';
 
 import { FormsModule, 
-  FormBuilder, 
-  FormGroup,
-  FormControl, 
+  // FormBuilder, 
+  // FormGroup,
+  // FormControl, 
   ReactiveFormsModule,
-  Validators } from '@angular/forms';
+  // Validators 
+} from '@angular/forms';
 
 // Materials!!
 import {
@@ -89,6 +90,7 @@ import {
   MatMenuModule,
   MatNativeDateModule,
   MatSelectModule,
+  MatSlideToggleModule,
   MatStepperModule,
   MatSidenavModule,
   MatSnackBarModule,
@@ -149,6 +151,7 @@ import {
     MatNativeDateModule,
     MatRadioModule,
     MatSelectModule,
+    MatSlideToggleModule,
     MatStepperModule,
     MatSidenavModule,
     MatSnackBarModule,

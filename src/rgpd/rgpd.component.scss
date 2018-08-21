@@ -1,0 +1,88 @@
+.cardContent {
+    width: 600px;
+}
+
+.rgpdStepperActionButton {
+    height: 55px;
+    width: 100%;
+}
+
+.rgpdStepperActionButtonDispatch {
+    width: 50%;
+    text-align:center;
+}
+
+.cardCenter {
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    // width:350px;
+    width:600px;
+    text-align:center;
+    margin: 0 auto;
+}
+
+.card {
+    // max-width: 600px;
+    max-width: 100%;
+}
+
+.card-txtTitre {
+    font-family: 'Montserrat', sans-serif; 
+    text-align: left; 
+    font-size: 24px;
+    // font-weight: bold;
+    color: black;
+}
+
+.card-txtSousTitre {
+    font-family: 'Montserrat', sans-serif;  
+    text-align: left; 
+    font-size: 12px;
+    // font-weight: bold;
+    color: black;
+}
+
+.card-txtContenu {
+    font-family: 'Montserrat', sans-serif;  
+    font-size: 18px;
+    text-align: justify;
+    text-justify: inter-word;
+    // font-weight: bold;
+    color: black;
+}
+
+.opusBeaute-header-image {
+    background-image: url('http://192.168.1.100:4200/assets/OpBLogo.svg');
+    background-size: cover;
+}
+
+ol li {
+    font-family: 'Montserrat', sans-serif;  
+    text-align: left; 
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+}
+
+
+// ul li {
+//     font-family: 'Montserrat', sans-serif;  
+//     text-align: left; 
+//     font-size: 16px;
+//     font-weight: normal;
+//     color: black;
+// }
+
+// .txtParagraph-title {
+
+// }
+
+.txtParagraphRgpd {
+    font-family: 'Montserrat', sans-serif;  
+    text-align: left; 
+    font-size: 16px;
+    font-weight: normal;
+    color: black; 
+}

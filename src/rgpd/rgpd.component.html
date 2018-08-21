@@ -1,46 +1,111 @@
 <html>
-    <div class="cardCenter">
-        <mat-card class="card">
+    <div>
+        <mat-card >
             <mat-card-header>
                 <div mat-card-avatar class="opusBeaute-header-image"></div>
-                <mat-card-title class="card-titre">RGPD Privacy</mat-card-title>
-                <mat-card-subtitle class="card-sousTitre">Nos utilisateurs en toute confiance</mat-card-subtitle>
+                <mat-card-title class="card-txtTitre">RGPD Privacy</mat-card-title>
+                <mat-card-subtitle class="card-txtSousTitre">Vos informations bien gérées</mat-card-subtitle>
                 <br>
             </mat-card-header>
             
-            <mat-card-content class="card-contenu">
-                <span>
-                    <p>
-                        Bonjour {{ rgpdPrenomClient }}, RGPD options à sélectionner
-                    </p>
-                    <p>
-
-                    
-                    </p>
-                    <p>
-
-                    </p>
-                    <p>
-
-                    </p>
-                </span>
+            <mat-card-content class="cardContent">
+                  <mat-horizontal-stepper [linear]="true" #stepper>
+                    <mat-step [stepControl]="rgpdFormGroup">
+                      <form [formGroup]="rgpdFormGroup">
+                        <ng-template matStepLabel>Rgpd Informations</ng-template>
+                        <!-- <div> -->
+                          <ol cdkScrollable>
+                            <li>Cadre 1
+                              <ul>
+                                <span id="fragment_top" class="txtParagraphRgpd">
+                                    test Rgpd 1
+                                </span>
+                              </ul>
+                            </li>
+                            <li>Cadre 2
+                              <ul>
+                                <span class="txtParagraphRgpd">
+                                  test Rgpd 2
+                                </span>
+                              </ul>
+                            </li>
+                            <li>Cadre 3
+                              <ul>
+                                <span class="txtParagraphRgpd">
+                                    test Rgpd 3
+                                </span>
+                              </ul>
+                            </li>
+                            <li>Cadre 4
+                              <ul>
+                                <span class="txtParagraphRgpd">
+                                  test rgpd 4
+                                </span>
+                              </ul>
+                            </li>
+                            <li>Cadre 5
+                              <ul>
+                                <span class="txtParagraphRgpd">
+                                  test rgpd 5
+                                </span>
+                              </ul>
+                            </li>
+                            <li>Cadre 6
+                                <ul>
+                                  <span class="txtParagraphRgpd">
+                                    test rgpd 6
+                                  </span>
+                                </ul>
+                              </li>
+                              <li>Cadre 7
+                                <ul>
+                                  <span class="txtParagraphRgpd">
+                                    test rgpd 7
+                                  </span>
+                                </ul>
+                              </li>
+                              <li>Cadre 7
+                                <ul>
+                                  <span class="txtParagraphRgpd">
+                                    test rgpd 7
+                                  </span>
+                                </ul>
+                              </li>
+                              <li>Cadre 7
+                                <ul>
+                                  <span id="fragTarget" class="txtParagraphRgpd" #target name="tatarget">
+                                    test rgpd 7
+                                  </span>
+                                </ul>
+                              </li>
+                          </ol>                        
+                        <div class="rgpdStepperActionButton">
+                          <span class="rgpdStepperActionButtonDispatch">
+                              <mat-checkbox  color="primary" [(ngModel)]="cb_checked" formControlName="cbCtrl">J'ai lu.</mat-checkbox>
+                          </span>
+                          <span class="rgpdStepperActionButtonDispatch">
+                              <button *ngIf="cb_checked" mat-mini-fab color="primary" matStepperNext>
+                                <i class="material-icons">navigate_next</i>
+                              </button>
+                          </span>                          
+                        </div>
+                      </form>
+                    </mat-step>
+                    <mat-step>
+                      <ng-template matStepLabel>Reglages</ng-template>
+                      <div><span>selector #1</span></div>
+                      <div><span>selector #1</span></div>
+                      <div><span>selector #1</span></div>
+                      <div><span>selector #1</span></div>
+                      <div><span>selector #1</span></div>
+                      <div>
+                        <button mat-button matStepperPrevious>Retour</button>
+                        <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
+                        <button mat-button (click)="sendRgpdOptions()">Envoyer</button>
+                      </div>
+                    </mat-step>
+                  </mat-horizontal-stepper>
             </mat-card-content>
-            <mat-card-actions>
-                <div *ngIf="displaySendRgpdOptions">
-                    <span>
-                    </span>
-                    <span>
-                            <!-- [disabled]="!mailBtnOnOff"  -->
-                        <button mat-raised-button 
-                            [disabled]="!mailBtnOnOff"
-                            matTooltip="Cliquer pour valider mes options." 
-                            (click)="sendRgpdOptions()">
-                            Valider mes choix
-                        </button>
-                    </span>
-                    
-                </div>
-            </mat-card-actions>
         </mat-card>
     </div>
 </html>
