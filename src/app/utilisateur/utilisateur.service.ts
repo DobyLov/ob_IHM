@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Utilisateur } from '../utilisateur/utilisateur';
-import { Roles } from '../utilisateur/roles';
+import { Utilisateur } from './utilisateur';
+import { Roles } from './roles';
 import { HttpClient } from '@angular/common/http';
 import { appConfig } from '../constant/apiOpusBeauteUrl';
 import { RequestOptions } from '@angular/http';

@@ -22,7 +22,7 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 // import { UsersettingsComponent } from './user/usersettings/usersettings.component';
 import { Credentials } from './login/credentials';
 import { AuthService } from './login/auth.service';
-import { RequestOptions } from '@angular/http';
+// import { RequestOptions } from '@angular/http';
 import { AuthGuardService } from './login/authGuard.service';
 import { SideBarService } from './service/sidebar.service';
 import { LoginComponent } from './login/login.component';
@@ -31,15 +31,15 @@ import { ForgottenPwdComponent } from './login/forgotten-pwd/forgotten-pwd.compo
 import { ForgottenPwdModalComponent } from './login/forgotten-pwd/forgotten-pwd.component';
 import { ConfimrUserFromTokenModalComponent } from './header/header.component';
 
-import { RgpdComponent } from '../rgpd/rgpd.component';
-import { RgpdPageNotFoundComponent } from '../rgpd/rgpdpagenotfound.component';
-import { RgpdTokenExpiredComponent } from '../rgpd/rgpdtokenexpired.component';
-import { RgpdUrlAlteredComponent } from '../rgpd/rgpdUrlAltered.component';
-import { AuthRgpdService } from '../rgpd/authRgpd.service';
-import { AuthGuardRgpdService } from '../rgpd/authGuardRgpd.service';
+import { RgpdComponent } from './rgpd/rgpd.component';
+import { RgpdPageNotFoundComponent } from './rgpd/rgpdpagenotfound.component';
+import { RgpdTokenExpiredComponent } from './rgpd/rgpdtokenexpired.component';
+import { RgpdUrlAlteredComponent } from './rgpd/rgpdUrlAltered.component';
+import { AuthRgpdService } from './rgpd/authRgpd.service';
+import { AuthGuardRgpdService } from './rgpd/authGuardRgpd.service';
 
 // FontAwsome angular
-import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
+import { Angular2FontawesomeModule } from 'angular2-fontawesome'
 // authentification
 import { AuthRequestOptions } from './login/authRequestOptions';
 import { AuthErrorHandlerService } from './login/authErrorHandler.service';

@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthRgpdService } from "./authRgpd.service";
-import { BottomSheetService } from '../app/service/bottomsheet.service';
+import { BottomSheetService } from '../service/bottomsheet.service';
 import { Router } from "@angular/router";
-import { error } from "../../node_modules/@angular/compiler/src/util";
-import { throwError } from "../../node_modules/rxjs";
+// import { error } from "@angular/compiler/src/util";
+// import { throwError } from "rxjs";
 
 @Component ({
     selector: 'app-rgpdtokenexpired',

@@ -1,7 +1,7 @@
 import { Component, Injectable, Inject } from '@angular/core';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material';
-import { Router } from '../../../node_modules/@angular/router';
+import { Router } from '@angular/router';
 
 
 @Injectable()

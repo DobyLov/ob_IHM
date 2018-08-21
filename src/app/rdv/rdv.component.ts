@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 // moment pour le formatage des dates
-import * as moment from 'moment/moment';
+import * as moment from 'moment';
 moment.locale('fr');
 
 // import { FormGroup, Validators } from '@angular/forms';

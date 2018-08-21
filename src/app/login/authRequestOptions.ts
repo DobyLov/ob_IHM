@@ -3,7 +3,7 @@ import { BaseRequestOptions, RequestOptions } from '@angular/http';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from './auth.service';
-import { AuthRgpdService } from '../../rgpd/authRgpd.service';
+import { AuthRgpdService } from '../rgpd/authRgpd.service';
 
 const AUTH_HEADER_KEY = 'Authorization';
 const AUTH_PREFIX = 'Bearer';

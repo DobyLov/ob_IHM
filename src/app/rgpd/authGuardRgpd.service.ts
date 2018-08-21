@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, CanActivate, Router } from '@angular/router';
-import { AuthRgpdService } from '../rgpd/authRgpd.service';
+// import { ActivatedRoute, CanActivate, Router } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
+import { AuthRgpdService } from './authRgpd.service';
 
 
 @Injectable()
@@ -13,7 +14,7 @@ export class AuthGuardRgpdService implements CanActivate {
   tokenExtracted: string;
 
   constructor(private router: Router,
-              private route: ActivatedRoute,
+              // private route: ActivatedRoute,
               private _authrgpdservice: AuthRgpdService) {
 
     // récuperation de l Url dans la barre de navigation

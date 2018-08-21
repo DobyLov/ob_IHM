@@ -1,11 +1,10 @@
 import { Injectable } from "@angular/core";
-import * as jwt_decode from 'jwt-decode';
 import { HttpHeaders, HttpClient, HttpParams } from "@angular/common/http";
-import { appConfig } from "../app/constant/apiOpusBeauteUrl";
 import { BehaviorSubject } from "rxjs";
 import { Router } from "@angular/router";
-// import { error } from "../../node_modules/protractor";
-import { BottomSheetService } from "../app/service/bottomsheet.service";
+import { BottomSheetService } from "../service/bottomsheet.service";
+import { appConfig } from "../constant/apiOpusBeauteUrl";
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable()
 export class AuthRgpdService {

@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { AuthService } from '../login/auth.service'
+import { AuthService } from './auth.service'
 import { Router } from '@angular/router';
 import { Utilisateur } from '../utilisateur/utilisateur'
-import { Credentials } from '../login/credentials';
+import { Credentials } from './credentials';
 import { Observable } from 'rxjs/Observable';
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
  

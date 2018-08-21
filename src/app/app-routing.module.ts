@@ -16,11 +16,11 @@ import { ForgottenPwdComponent } from './login/forgotten-pwd/forgotten-pwd.compo
 import { ForgottenPwdModalComponent } from './login/forgotten-pwd/forgotten-pwd.component';
 import { AuthGuardService } from './login/authGuard.service';
 import { SnackBarComponent } from './service/toaster.service';
-import { RgpdComponent } from '../rgpd/rgpd.component'
-import { AuthGuardRgpdService } from '../rgpd/authGuardRgpd.service';
-import { RgpdPageNotFoundComponent } from '../rgpd/rgpdpagenotfound.component';
-import { RgpdTokenExpiredComponent } from '../rgpd/rgpdtokenexpired.component';
-import { RgpdUrlAlteredComponent } from '../rgpd/rgpdUrlAltered.component';
+import { RgpdComponent } from './rgpd/rgpd.component'
+import { AuthGuardRgpdService } from './rgpd/authGuardRgpd.service';
+import { RgpdPageNotFoundComponent } from './rgpd/rgpdpagenotfound.component';
+import { RgpdTokenExpiredComponent } from './rgpd/rgpdtokenexpired.component';
+import { RgpdUrlAlteredComponent } from './rgpd/rgpdUrlAltered.component';
 
 
 const routes: Routes = [
