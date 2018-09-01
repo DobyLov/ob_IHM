@@ -1,15 +1,34 @@
+.rgpd-Container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+}
+
 .cardContent {
-    width: 600px;
+    width: 400px;
+    height: 100%;
 }
 
-.rgpdStepperActionButton {
-    height: 55px;
-    width: 100%;
+.article-Size-Fixer {
+    width: 380px;
 }
 
-.rgpdStepperActionButtonDispatch {
-    width: 50%;
-    text-align:center;
+.article-Title-Iteration {
+    font-family: 'Montserrat', sans-serif;  
+    text-align: left; 
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+}
+
+.article-Body-Iteration {
+    text-indent: 15px;
+    font-family: 'Montserrat', sans-serif;  
+    text-align: left; 
+    font-size: 14px;
+    // font-weight: bold;
+    color: black;
 }
 
 .cardCenter {
@@ -61,28 +80,82 @@
 ol li {
     font-family: 'Montserrat', sans-serif;  
     text-align: left; 
-    font-size: 18px;
+    font-size: 14px;
     font-weight: bold;
     color: black;
 }
 
-
-// ul li {
-//     font-family: 'Montserrat', sans-serif;  
-//     text-align: left; 
-//     font-size: 16px;
-//     font-weight: normal;
-//     color: black;
-// }
-
-// .txtParagraph-title {
-
-// }
-
 .txtParagraphRgpd {
     font-family: 'Montserrat', sans-serif;  
     text-align: left; 
-    font-size: 16px;
+    font-size: 10px;
     font-weight: normal;
     color: black; 
+}
+
+.rgpdReglages-Container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: space-between;
+    align-items: center ;
+    width: 100%;
+    height: 60px;
+}
+
+.slider-Subject {
+    text-align: left;
+    width: 90%;    
+}
+
+.slider-Switch {
+    text-align: right;
+    width: 10%;
+    margin: 10px;
+}
+  
+.slider-Margin {
+    text-align: center;
+    margin: 10px;
+}
+
+.rgpdReadActionZone-Container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    // text-align: right;
+    align-items: center;
+    height: 55px;
+}
+
+.rgpdActionText {
+    text-align: left;
+    // margin-right: 7px;
+}
+
+.rgpdActionCheckBox {
+    // text-align: left;
+    vertical-align: middle;
+    margin-right: 7px;
+}
+
+.rgpdActionNextButton {
+    vertical-align: middle;
+    margin-right: 15px;
+}
+
+.rgpdSettingsActionZone-Container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content:flex-end;
+}
+
+.rgpdPreviousButton {
+    margin-right: 15px;
+}
+
+.rgpdSendButton {
+    margin-right: 7px;
 }

@@ -1,8 +1,4 @@
-
-        <app-header></app-header>
-
-  
-
+<app-header></app-header>
 <!-- sidenav -->
 <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #mysidenav role="directory" mode="over" opened="false" class="inside-sidenav" fixedTopGap=64  fixedBottomGap=64>
@@ -12,25 +8,15 @@
         </div>  
         <div class="vertical-menu">  
             <!-- <div> -->         
-            <h4 matSubheader><u>Menu</u></h4>  
-            <!-- <div><a routerLink="/welcome" routerLinkActive="active" (click)="mysidenav.close()">OpusBeaute</a></div> -->
-            <!-- <mat-divider></mat-divider> -->
+            <h4 matSubheader><u>Menu</u></h4> 
             <a class="btn btn-secondary" routerLink="/rdv" routerLinkActive="active" (click)="mysidenav.close()"  role="button">View details</a>
             <mat-divider></mat-divider>
-            <!-- <div><a routerLink="/home" routerLinkActive="active" (click)="mysidenav.close()">Home</a></div> -->
             <h4 matSubheader><u>Rdv</u></h4> 
             <div><a routerLink="/rdv" routerLinkActive="active" (click)="mysidenav.close()" role="button">Rdv</a></div>
             <h4 matSubheader><u>Client</u></h4> 
             <div><a routerLink="/client" routerLinkActive="active" (click)="mysidenav.close()">Client</a></div>
-            <!-- <h4 matSubheader><u>Utilisateur</u></h4> 
-            <div><a routerLink="/utilisateur" routerLinkActive="active" (click)="mysidenav.close()">Utilisateur</a></div>
-            <h4 matSubheader><u>Prestation</u></h4> 
-            <div><a routerLink="/prestation" routerLinkActive="active" (click)="mysidenav.close()">Prestation</a></div> -->
         </div>
     </mat-sidenav>  
-
-
-
     <div>
         <router-outlet></router-outlet> 
     </div>
@@ -39,8 +25,4 @@
     </div>
 
 </mat-sidenav-container>
-
-<!-- <footer>
-    
-</footer> -->
 

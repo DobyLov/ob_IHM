@@ -1,25 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Utilisateur } from './utilisateur';
-import { Roles } from './roles';
 import { HttpClient } from '@angular/common/http';
 import { appConfig } from '../constant/apiOpusBeauteUrl';
-import { RequestOptions } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Credentials } from '../login/credentials';
 import { CurrentUtilisateur } from '../login/currentUtilisateur';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-
-
 
 @Injectable()
 export class UtilisateurService {
 
   url: string = appConfig.apiOpusBeauteUrl + '/utilisateur';
 
-  constructor(private HttpCli: HttpClient,
-    private router: Router,
-    public utilisateur: Utilisateur) { }
+  constructor(private httpCli: HttpClient,
+              private router: Router,
+              public utilisateur: Utilisateur) { }
 
   public cUtilisateur$ = new BehaviorSubject<CurrentUtilisateur>(null);
 
@@ -40,7 +34,7 @@ export class UtilisateurService {
   setCurrentUtilisateur(email) {
 
     let promise = new Promise<Utilisateur>((resolve, reject) => {
-      this.HttpCli.get<Utilisateur>(this.url + '/finduserbymail/' + email)
+      this.httpCli.get<Utilisateur>(this.url + '/finduserbymail/' + email)
         .toPromise()
         .then(resultaUtilisateur => {
           let cUz = this.mapUtilisateurToCurrentUtilisateur(resultaUtilisateur);
@@ -75,13 +69,13 @@ export class UtilisateurService {
   }
 
   getUserList() {
-    return this.HttpCli.get<Utilisateur>(this.url + '/list')
+    return this.httpCli.get<Utilisateur>(this.url + '/list')
       .subscribe(uList => { console.log("UtilisateurService : ListeUser : " + JSON.stringify(uList)) })
 
   }
   getUserById(idUser: number) {
 
-    let utilisateur = this.HttpCli.get<Utilisateur>(this.url + '/idUtilisateur/' + idUser)
+    let utilisateur = this.httpCli.get<Utilisateur>(this.url + '/idUtilisateur/' + idUser)
       .subscribe(data => { console.log("utilisateur connecte :" + data) });
   }
 

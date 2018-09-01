@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-// import { ActivatedRoute, CanActivate, Router } from '@angular/router';
 import { CanActivate, Router } from '@angular/router';
 import { AuthRgpdService } from './authRgpd.service';
 
@@ -8,10 +7,10 @@ import { AuthRgpdService } from './authRgpd.service';
 export class AuthGuardRgpdService implements CanActivate {
 
   url: string;
-  prenomClient: string;
-  emailClient: string;
-  idClient: number;
-  tokenExtracted: string;
+  // prenomClient: string;
+  // emailClient: string;
+  // idClient: number;
+  // tokenExtracted: string;
 
   constructor(private router: Router,
               // private route: ActivatedRoute,

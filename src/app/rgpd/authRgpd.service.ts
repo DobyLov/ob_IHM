@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { BottomSheetService } from "../service/bottomsheet.service";
 import { appConfig } from "../constant/apiOpusBeauteUrl";
 import * as jwt_decode from 'jwt-decode';
+import { NGXLogger } from "../../../node_modules/ngx-logger";
 
 @Injectable()
 export class AuthRgpdService {
@@ -13,18 +14,28 @@ export class AuthRgpdService {
     public tokenExtractedFromUrl$ = new BehaviorSubject("");
     public isTokenStructureIsIntegre$ = new BehaviorSubject<boolean>(false);
 
-    constructor(private httpCli: HttpClient,
-                private _bottomsheetservice: BottomSheetService,
-                private router: Router){}
-
+    constructor( private logger: NGXLogger,
+                 private httpCli: HttpClient,
+                 private _bottomsheetservice: BottomSheetService,
+                 private router: Router){}
+    
+    /**
+     * Retourne l orbservable de l etat du token
+     */
     public get IsTokenStructureIsIntegre() {
         return this.isTokenStructureIsIntegre$.asObservable();
     }
 
+    /**
+     * Retourne L observable de Url de la barre de navigation 
+     */
     public get getUrl() {
         return this.url$.asObservable();
     }
 
+    /**
+     * Retourne l observable du token extrait depuis l url
+     */
     public get getTokenFromUrl() {
         return this.tokenExtractedFromUrl$.asObservable();
     }
@@ -34,19 +45,19 @@ export class AuthRgpdService {
      * @param token string
      */
     public isRgpdTokenIsvalid(token: string): boolean {
-        console.log("AuthRgpdService : Verification de la validite du RgpdToken.");
-        
+        this.logger.info("AuthRgpdService Log : Verification de la validite du RgpdToken.");
         try {
 
-            this.rgpdTokenIntegrityChecker(token);
-            this.isRgpdTokenDateIsValid(token);
-            this.setRgpdTokenToLS(token);
-            console.log("AuthRgpdService : Le RgpdToken est valide");
-            return true;
+            if (this.rgpdTokenIntegrityChecker(token)) {
+                if (this.isRgpdTokenDateIsValid(token)) {
+                        this.logger.info("AuthRgpdService Log : le RgpdToken est valide");
+                        return true;                    
+                }
+            }
 
-        } catch (erro) {
-
+        } catch (error) {
             console.log("AuthRgpdService : Le rgpdtoken n est pas valide.");
+            this.logger.error("AuthRgpdService Log : Le RgpdToken n est pas valide.");
             return false;
         }
     }
@@ -60,13 +71,13 @@ export class AuthRgpdService {
         try {
             // test de l integrite du token
             jwt_decode(token);
-            console.log("AuthRgpdService : la structure du token est bonne :)");
+            this.logger.info("AuthRgpdService Log : La structure du Token est bonnes.");
             this.isTokenStructureIsIntegre$.next(true);
             return true;
             
 
         } catch (err) {
-            console.log("AuthRgpdService : Error catchee la structure du token est n est pas bonne :(")
+            this.logger.error("AuthRgpdService Log : La structure du token est n est pas bonne");
             this.isTokenStructureIsIntegre$.next(false);
             this.router.navigate(['./rgpdurlaltered'])
             return false;
@@ -79,14 +90,15 @@ export class AuthRgpdService {
    * @param rgpdUrl
    */
   public searchRgpdTknStringInsideRgpdUrl(rgpdUrl: string): Boolean {
+    this.logger.info("AuthRgpdService Log : Detection de la string rgpd?tkn= dans l url:");
     let isTknIsPresentIntoTheString: Boolean = false;
     let regex = new RegExp(`rgpd` + `\\?` + `tkn=`);
     if (rgpdUrl.search(regex) != -1) {
       isTknIsPresentIntoTheString = true;
-      // console.log("AuthGuardRgpdService : String present => rgpd?tkn=  : " + isTknIsPresentIntoTheString);    
+      this.logger.info("AuthRgpdService Log : Regex => string trouvee : " + isTknIsPresentIntoTheString);   
     } else {
       isTknIsPresentIntoTheString = false;
-      // console.log("AuthGuardRgpdService : String present => rgpd?tkn=  : " + isTknIsPresentIntoTheString);
+      this.logger.info("AuthRgpdService Log : Regex => string trouvee : " + isTknIsPresentIntoTheString);
     }
     this.setUrlAsObservable(rgpdUrl);
     return isTknIsPresentIntoTheString;
@@ -97,7 +109,7 @@ export class AuthRgpdService {
    * @param url 
    */
   public urlRgpdTokenExtractor(url: string): string {
-
+    this.logger.info("AuthRgpdService Log : Extraction du token depuis l url.");
     let tokenExtracted = url.substr(url.search(new RegExp(`rgpd` + `\\?` + `tkn=`)), url.length).replace(new RegExp(`rgpd` + `\\?` + `tkn=`),"");
     return tokenExtracted;
 
@@ -131,15 +143,17 @@ export class AuthRgpdService {
      * @param token string
      */
     public isRgpdTokenDateIsValid(token: string): Boolean {
-        console.log("authRgpdService : verification de la date du token");
+        this.logger.info("AuthRgpdService Log : Verification de la date du token:");
         let dateNow = new Date();
         let isJwtIsValid: Boolean;
               
         if (new Date(jwt_decode(token).exp * 1000) > dateNow) {
             isJwtIsValid = true;
-            console.log("authRgpdService : La date du token est valide");
+            this.logger.info("AuthRgpdService Log : La date du token est valide");
+            this.setRgpdTokenToLS(token);
         } else {
             isJwtIsValid = false;
+            this.logger.info("AuthRgpdService Log : La date du token est valide");
             console.log("authRgpdService : La date du token n est pas valide");
         }
             
@@ -178,7 +192,13 @@ export class AuthRgpdService {
      * @param token 
      */
     public setRgpdTokenToLS(token: string): void {
-        localStorage.setItem("rgpd_tkn", token);
+        try {
+            localStorage.setItem("rgpd_tkn", token);
+            console.log("authRgpdservice : Le token est persiste dans le LS");
+        } catch (error) {
+            console.log("authRgpdservice : Le Token n a pas ete persiste dans le LS");
+        }
+        
     }
 
     /**

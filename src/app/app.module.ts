@@ -52,6 +52,9 @@ import { SnackBarComponent } from './service/toaster.service';
 import { BottomSheetService } from './service/bottomsheet.service';
 import { BottomSheetComponent } from './service/bottomsheet.service';
 
+//CDK
+// import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+
 // Import Locale_Fr
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
@@ -60,10 +63,23 @@ import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr, 'fr');
 import localeFrExtra from '@angular/common/locales/extra/fr';
 registerLocaleData( localeFr, 'fr-FR', localeFrExtra );
+
 // Pipe
 import { TimeMinuteTwoDigitsPipe } from './pipe/timeMinuteTwoDigits.pipe';
 import { TimeHourTwoDigitsPipe } from './pipe/timeHourTwoDigits.pipe';
 import { DateFirstCharUpperPipe } from './pipe/datefirstcharupper.pipe';
+
+// Perfect ScrollBar
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+
+//logger
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true
+};
 
 import { FormsModule, 
   // FormBuilder, 
@@ -135,6 +151,7 @@ import {
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    LoggerModule.forRoot({level: NgxLoggerLevel.INFO}),
     MatBottomSheetModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -158,7 +175,9 @@ import {
     MatToolbarModule,
     MatTooltipModule,
     MatTabsModule,  
+    PerfectScrollbarModule,
     ReactiveFormsModule,
+    // ScrollDispatchModule,
     HttpClientModule   
 
   ],
@@ -166,16 +185,17 @@ import {
   providers: [{ provide: LOCALE_ID, useValue: 'fr' },
               { provide: HTTP_INTERCEPTORS, useClass: AuthRequestOptions, multi : true },
               { provide: AuthErrorHandlerService, useClass: AuthErrorHandlerService },
-              { provide: UtilisateurService, useClass: UtilisateurService},
-              { provide: SideBarService, useClass: SideBarService},
-              { provide: AuthService, useClass: AuthService},
-              { provide: AuthRgpdService, useClass: AuthRgpdService},
-              { provide: AuthGuardRgpdService, useClass: AuthGuardRgpdService},
-              { provide: AuthGuardService, useClass: AuthGuardService},
+              { provide: UtilisateurService, useClass: UtilisateurService },
+              { provide: SideBarService, useClass: SideBarService },
+              { provide: AuthService, useClass: AuthService },
+              { provide: AuthRgpdService, useClass: AuthRgpdService },
+              { provide: AuthGuardRgpdService, useClass: AuthGuardRgpdService },
+              { provide: AuthGuardService, useClass: AuthGuardService },
               { provide: ToasterService, useClass: ToasterService },
               { provide: BottomSheetService, useClass: BottomSheetService },
-              { provide: Credentials, useClass: Credentials},
-              { provide: Utilisateur, useClass: Utilisateur}
+              { provide: Credentials, useClass: Credentials },
+              { provide: Utilisateur, useClass: Utilisateur },
+              { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG }
               ],
 
   bootstrap: [AppComponent]

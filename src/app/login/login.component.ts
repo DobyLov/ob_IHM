@@ -3,10 +3,7 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AuthService } from './auth.service'
 import { Router } from '@angular/router';
-import { Utilisateur } from '../utilisateur/utilisateur'
 import { Credentials } from './credentials';
-import { Observable } from 'rxjs/Observable';
-import { UtilisateurService } from '../utilisateur/utilisateur.service';
  
 @Component({
   selector: 'app-login',
@@ -28,7 +25,8 @@ export class LoginComponent implements OnInit {
   
   openDialog(): void {
     let dialogRef = this.dialog.open(LoginModalComponent, {
-      width: '450px',
+      width: '430px',
+      maxHeight: '400px',
       data: {  }
     });
 
@@ -68,7 +66,6 @@ export class LoginComponent implements OnInit {
                 public _authService: AuthService,
                 public dialogRef: MatDialogRef<LoginModalComponent>,
                 public credz: Credentials,
-                private _utilisateurservice: UtilisateurService,
                 @Inject(MAT_DIALOG_DATA) public data: any) {
 
                 this._authService.statusOfIsUserIsLogged.subscribe(isLoggedIn => {

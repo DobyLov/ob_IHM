@@ -26,8 +26,10 @@ export class ForgottenPwdComponent implements OnInit {
   }
                  
   openDialog(): void {        
-    let dialogRef = this.dialog.open(ForgottenPwdModalComponent, 
-        {width: '450px'})
+    let dialogRef = this.dialog.open(ForgottenPwdModalComponent, {
+      maxWidth: '430px',
+      maxHeight: '400px',
+        })
     
   dialogRef.afterClosed().subscribe (result => {
       this.emailForgottenPwd = result,
