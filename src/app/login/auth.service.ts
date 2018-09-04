@@ -1,17 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
 import * as jwt_decode from 'jwt-decode';
-// a suppr
-import { default as decode } from 'jwt-decode';
-
+import { NGXLogger } from 'ngx-logger';
 import { appConfig } from '../constant/apiOpusBeauteUrl';
-import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ToasterService } from '../service/toaster.service';
-import { Utilisateur } from '../utilisateur/utilisateur';
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
 import { Credentials } from './credentials';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
@@ -27,35 +21,50 @@ export class AuthService {
   // declaration du BehaviorSubject pour passer la valeur a plusieurs component
   public isUserIsLogged$ = new BehaviorSubject<boolean>(false);
 
-  constructor(private httpCli: HttpClient,
-    private _toasterService: ToasterService,
-    private _utilisateurservice: UtilisateurService,
-    private router: Router,
-    private credz: Credentials,
-    private user: Utilisateur) { }
+  constructor( private logger: NGXLogger,
+                private httpCli: HttpClient,
+                private _toasterService: ToasterService,
+                private _utilisateurservice: UtilisateurService) { }
 
   get statusOfIsUserIsLogged() {
     return this.isUserIsLogged$.asObservable();
   }
 
-  changeStatusOfIsLogged(status: boolean) {
+  /**
+   * Modifie le status de l utilisateur 
+   * Connecte ou deconnecte
+   */
+  changeStatusOfIsLogged(status: boolean): void {
+
     if (status === true) {
+
       this.isUserIsLogged$.next(true);
+      this.logger.info("AuthService Log : Status Utilisateur Connecte");
+
     } else {
+
       this.isUserIsLogged$.next(false);
+      this.logger.info("AuthService Log : Status Utilisateur Deconnecte");
+
     }
+
   }
 
+  /**
+   * Procedure de Loggin
+   */
   // async pour pouvoir utiliser await
   async login(credz: Credentials) {
+    this.logger.info("AuthService Log : Procedure d authentification");
     let loglog: boolean = false;
-    let loginPromise = await new Promise((resolve, reject) => {
+    let loginPromise = await new Promise(( resolve ) => {
       this.getTokenFromMiddleware(credz)
         .then(res => {
           // get token from MW
           if (res != null) {
             loglog = true;
-            this.changeStatusOfIsLogged(loglog);            
+            this.changeStatusOfIsLogged(loglog);   
+            this.logger.info("AuthService Log : Authentification avec succes");      
             this.messageToaster('Authentification avec succès !', 'snackbarInfo', 3000);
             resolve();            
           }
@@ -66,7 +75,7 @@ export class AuthService {
         .catch((err) => {
           loglog = false;
           this.changeStatusOfIsLogged(loglog);
-          console.log("AuthService : Methode Login : login NOK : " + loglog);   
+          this.logger.info("AuthService Log : Authentification Echouee");   
           this.messageToaster("Veuillez vérifier vos crédentiels",'snackbarWarning', 2000) }
         
         )
@@ -74,7 +83,12 @@ export class AuthService {
     
   }
 
+  /**
+   * Recupere Un token depuis le Middleware
+   */
   getTokenFromMiddleware = async function getTokenFromMiddleware(credz: Credentials) {
+
+    this.logger.info("AuthService Log : envoie de la requete d authetification au MiddleWare");
     // Specifie la variable de retour en string
     let resultatToken: string;
     // let body = `email=${credz.email}&pwd=${credz.pwd}`;
@@ -88,79 +102,136 @@ export class AuthService {
       this.httpCli.post(url, body, { headers, withCredentials: true, responseType: 'text' })
         .toPromise()
         .then(resultat => {
+          this.logger.info("AuthService Log : Le Middleware a valide les credentiels");
           resultatToken = resultat;
-          if (resultat != null) {            
+          if (resultat != null) { 
+            this.logger.info("AuthService Log : Le Token va etre persiste dans le LocalStorage");           
             this.setTokenToLocalStorage(credz, resultat);
             resolve();
           }
         })
         .catch((err) => {
-          // console.log("Promesse erreur");
+          this.logger.info("AuthService Log :  Le Middleware n a pas valide les credentiels");
           resultatToken = null;
           reject();
         })
     })
+
     return resultatToken;
   }
 
-  setTokenToLocalStorage(credz: Credentials, resultat: string) {
-    // console.log("tokenToLocalStorage : token persiste dans le localStorage")      
+  /**
+   * Perstance du token dans le LocalStorage
+   * @param credz 
+   * @param resultat 
+   */
+  setTokenToLocalStorage(credz: Credentials, resultat: string):void {
+
+    this.logger.info("AuthService Log : Persiste le Token Dans le LocalStorage");
     localStorage.setItem('ObTkn_' + credz.email, resultat);
+  
   }
 
+  /**
+   * Recherche un Token dans le LocalStorage
+   * @returns Array<string>
+   */
   iterTokensOnLS = function iterTokenOnLS(): Array<string> {
+
+    this.logger.info("AuthService Log : Recherche la presence de Token dans le LocalStorage");
     let listOfItems:Array<string> = [];
     let nbOfItemsInLS = localStorage.length;
-    // console.log("AuthService : IterTokensOnLS nombre d objets dansle LS : " + nbOfItemsInLS);
+    
     if (nbOfItemsInLS > 0) {
       for (let i = 0; i <= nbOfItemsInLS -1; i++) {
         listOfItems[i] = localStorage.key(i);
         // console.log("AuthService IterTokensOnLS : token ID : " + i + " = " + listOfItems[i])
-      }
+      } 
+
+      this.logger.info("AuthService Log : " + nbOfItemsInLS + " trouve(s) dans le LocalStorage");
+    
+    } else {
+       
+      this.logger.info("AuthService Log : Aucun Token n a ete trouve dans le LocalStorage");
+      
     }
+
     return listOfItems;
+
   }
 
-  getMailFromToken(): string {
+  /**
+   * Cherche un Token commencant par ObTkn_
+   * dans l array<string>
+   * @returns string
+   */
+  public getMailFromToken(): string {
+
+    this.logger.info("AuthSrvice Log : Extracton de l Email depuis le Token");
     let listOfItems: Array<string> = this.iterTokensOnLS();
     let tknMail: string = null;
-    // for ( let j in listOfItems ) {
+
+    // Iteration su l array pleine de Token ...
     for (let j in listOfItems) {
+      
+      // Si la chaine(Token) commence par ObTkn_
       if (listOfItems[j].startsWith("ObTkn_")) {
-        // console.log("AuthService : suppression de ObTkn_ sur la string : " + listOfItems[j])
+
+        this.logger.info("AuthService Log : Token trouve avec la chaine ObTkn_");
+        // Supprime ObTkn_ de la chaine et sort de la boucle
         tknMail = listOfItems[j].replace('ObTkn_', '');
+        this.logger.info("AuthService Log : mail extrait ");
         break;
+
       }
     }
-    // console.log("AuthService : GetMailFromToken : extraction du mail du token dans le LS : " + tknMail)
+
     return tknMail;
   }
 
-  getOBTokenFromLocalStorage(): string {
+  /**
+   * Recupere Le ObTnk depuis le LocalStorage
+   * @returns string
+   */
+  public getOBTokenFromLocalStorage(): string {
+
+      this.logger.info("AuthService Log : Recuperation du ObTkn depuis le LocalStorage");
       let userMail = this.getMailFromToken();
       // let locStok = localStorage.getItem(credz.email);
       if (userMail != null) {
+
         let locStoToken = localStorage.getItem('ObTkn_' + userMail);
-        // console.log("authServivce : getTokenFromLocalStorage : Le token du Local Storage recupere." + locStok);
+        this.logger.info("AuthService Log : ObTkn recupere depuis le LocalStorage");
+
         return locStoToken;
 
       } else {
-        // console.log("authServivce : getTokenFromLocalStorage : Il n y a pas de token a recuperer dans le LS");
+        this.logger.info("AuthService Log : ObTkn non recupere depuis le LocalStorage");
         return null;
       }
   }
 
-  getOBTokenViaMailFromLS(userMail: string): string {    
+  /**
+   * Recupere le token dans le LocalStorage 
+   * en fournissant l email
+   * @returns string
+   */
+  public getOBTokenViaMailFromLS(userMail: string): string {   
+
+    this.logger.info("Authservice Log : Recuperation d un Token en fournissant l email");
     try {
 
       if (userMail != null) {
+
         let locStok = localStorage.getItem('ObTkn_' + userMail);
-        // console.log("authServivce : getTokenFromLocalStorage : Le token du Local Storage recupere." + locStok);
+        this.logger.info("Authservice Log : Token trouve");
         return locStok;
 
       } else {
-        // console.log("authServivce : getTokenFromLocalStorage : Il n y a pas de token a recuperer dans le LS");
+
+        this.logger.info("Authservice Log : token non trouve");
         return null;
+
       }
     } catch {
 
@@ -168,62 +239,114 @@ export class AuthService {
     }
   }
 
-  getPrenomFromGivedToken(token: string): string {
-      // return this.credz.prenom = jwt_decode(this.getTokenFromLocalStorage(credz)).prenom;
-      // return jwt_decode(this.getOBTokenViaMailFromLS(token)).prenom;
+  /**
+   * Recuperation du Prenom depuis le token fourni
+   * @param token 
+   */
+  public getPrenomFromGivedToken(token: string): string {
+
+      this.logger.info("AuthService Log : Extraction du Prenom depuis le Token");
+
       return jwt_decode(token).prenom;
 
   }
 
-  isTokenDateIsExpired(): boolean {
+  /**
+   * Verifie si la date du token est expiree
+   * @returns boolean
+   */
+  public isTokenDateIsExpired(): boolean {
+
+    this.logger.info("AuthService Log : Verification de la validite de la date fourni dans le token");
     // console.log("auth.service isTokenDateIsExpired cherche le token dans le LS");
     let token = this.getOBTokenFromLocalStorage();
     if (token != null) {
       // console.log("auth.service isTokenDateIsExpired token trouve");
       // let decodedToken = jwt_decode(token); 
       if (new Date(jwt_decode(token).exp * 1000) > new Date()) {
-        // console.log("auth.service isTokenDateIsExpired : token est valide :");
-        // this.isUserIsLogged$.next(true);
+
+        this.logger.info("AuthService Log : La date du token est validite");
         return false;
+
       } else {
-        // console.log("auth.service isTokenDateIsExpired : token n es plus valide : ");
-        // this.isUserIsLogged$.next(false);
+
+        this.logger.info("AuthService Log : La date du token n est pas validite");
         return true;
       }
+
     } else {
-      // console.log("auth.service isTokenDateIsExpired : il ny pas de token dans le LS");
+
       return true;
+
     }
   }
 
-  removeGivenTokenFromLS(userMail: string) {
+  /**
+   * suppression du token dans le LocalStorage
+   * @param userMail 
+   */
+  public removeGivenTokenFromLS(userMail: string):void {
+
+    try {
 
       localStorage.removeItem('ObTkn_' + userMail);
+      this.logger.info("AuthService Log :Le Token a ete supprime du LocalStorage");
       // console.log("AuthService : removetokenFromLsoken retire du LS !!!!")
+
+    } catch (err) {
+
+      this.logger.info("AuthService Log :Le Token n a pas ete supprime du LocalStorage");
+
+    }
+     
   
   }
 
-  resetPwd(emailToResetPwd: String) {
+  /**
+   * Demande de reinitialisation de maot de passe
+   * @param emailToResetPwd 
+   */
+  public resetPwd(emailToResetPwd: String): void {
+
+    this.logger.info("AuthService Log : Procedure de reinitialisation de mot de passe");
     let url = `${appConfig.apiOpusBeauteUrl}/renewpwd/${emailToResetPwd}`;
     this.httpCli.post(url, this.httpOptions)
-      .subscribe(resp => { this.messageToaster('Vous allez reçevoir un e-mail avec votre mot de passe.', 'snackbarInfo', 6000) },
-      err => {
-        if (err.status == 403) {
-          this.messageToaster('Il y a un problème, le mail n est pas connu !', 'snackbarWarning', 6000)
-        }
+      .subscribe(
+        () => { this.logger.info("AuthService Log : Mail connu de la Bdd, demande prise ne charge par le Middleware");
+                  this.messageToaster('Vous allez reçevoir un e-mail avec votre mot de passe.', 'snackbarInfo', 6000); },
+        err => {
+          if (err.status == 403) {
+                    this.logger.info("AuthService Log : Mail connu de la Bdd, demande prise ne charge par le Middleware");
+                    this.messageToaster('Il y a un problème, le mail n est pas connu !', 'snackbarWarning', 6000)
+          }
       })
   }
 
-  logOut(userMail) {
+  /**
+   * Deconnextion de l utilisateur
+   *  supprime le token
+   * @param userMail 
+   */
+  logOut(userMail): void {
+
+    this.logger.info("AuthService Log : Deconexion de l utilisateur");
     this.changeStatusOfIsLogged(false);
     this.removeGivenTokenFromLS(userMail);
     this.messageToaster('Vous êtes déconnecté', 'snackbarInfo', 3000);
+
   }
 
-  // snackbarWarning
-  // snackbarInfo
-  // timer en ms
+
+  /**
+   * 
+   * @param message 
+   * @param style 
+   * @param timer 
+   */
+  // snackbarWarning, // snackbarInfo, // timer en ms  
   messageToaster(message, style, timer) {
+
+    this.logger.info("AuthService Log : Message a toaster : " + message);
     this._toasterService.showToaster(message, style, timer);
 
   } 

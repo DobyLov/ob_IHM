@@ -167,7 +167,7 @@ export class AuthRgpdService {
      * @param token 
      */
     public askANewRgpdTokenByEmail(token: string) {
-        
+        this.logger.info("AuthRgpdServcice Log : Demande de nouveau lien par Email");
         let prenomClient: string = this.getPrenomClientFromToken(token);
         let idClient: number = this.getIdClientFromToken(token);
         let emailClient: string = this.getEmailClientFromToken(token);
@@ -182,8 +182,10 @@ export class AuthRgpdService {
         // Observable 
         this.httpCli.get(url, { headers: headers, params: httpParams })
             .subscribe(            
-                res => {this._bottomsheetservice.openBottomSheet("E-mail envoyé")},
-                err => {this._bottomsheetservice.openBottomSheet("E-mail non envoye")}
+                res => { this._bottomsheetservice.openBottomSheet("E-mail envoyé");
+                         this.logger.info("AuthRgpdServcice Log : Demande de nouveau lien par envoyee");},
+                err => { this._bottomsheetservice.openBottomSheet("E-mail non envoye");
+                         this.logger.error("AuthRgpdServcice Log : Demande de nouveau lien non envoyee");}
             )  
     }
 
@@ -192,11 +194,17 @@ export class AuthRgpdService {
      * @param token 
      */
     public setRgpdTokenToLS(token: string): void {
+        
+        this.logger.info("AuthRgpdServcice Log : Le token Persistance du token dans le LocalStorage");
+        
         try {
+
             localStorage.setItem("rgpd_tkn", token);
-            console.log("authRgpdservice : Le token est persiste dans le LS");
+            this.logger.info("AuthRgpdServcice Log : Le token est persiste dans le LocalStorage.");
+       
         } catch (error) {
-            console.log("authRgpdservice : Le Token n a pas ete persiste dans le LS");
+
+            this.logger.error("AuthRgpdServcice Log : Le token n a pas ete persiste dans le LocalStorage");
         }
         
     }
@@ -205,14 +213,18 @@ export class AuthRgpdService {
      * Recupere le token depuis le LocalStorage
      */
     public getRgpdTokenFromLS(): string {
-        console.log("AuthRgpdService : Recuperation du token dans le LS");
+
+        this.logger.info("AuthRgpdServcice Log : Recuperation du Token depuis le LocalStorage"); 
+
         try {
+
             let tokenFLs = localStorage.getItem("rgpd_tkn");
-            console.log("AuthRgpdService : Token trouve dans le LS");
+            this.logger.info("AuthRgpdServcice Log : Le Token Est trouve et recupere depuis le LocalStorage");
             return tokenFLs;
 
         } catch (err) {
-            console.log("AuthRgpdService : il n y a pas de token dans le LS : ");
+
+            this.logger.error("AuthRgpdServcice Log : Il n y a pas de token dans le LocalStorage");
             return null;
         }
     }
@@ -222,12 +234,15 @@ export class AuthRgpdService {
      */
     public removeRgpdTokenFromLS(): boolean {
 
+        this.logger.info("AuthRgpdServcice Log : suppression du Token du Localstorage"); 
         try{
             localStorage.removeItem("Rgpd_Item");
+            this.logger.info("AuthRgpdServcice Log : Le token a ete supprime du Localstorage");
             return true;
             
         } catch (err){
-            console.log("AuthRgpdService : Ily a eu un probleme lors de la supression du token dans le LS");
+
+            this.logger.error("AuthRgpdServcice Log : Le token n pas ete supprime");
             return false;
         }
     }

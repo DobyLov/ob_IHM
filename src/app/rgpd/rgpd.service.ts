@@ -5,6 +5,8 @@ import { appConfig } from '../constant/apiOpusBeauteUrl';
 import { Observable } from '../../../node_modules/rxjs';
 import { BottomSheetService } from '../service/bottomsheet.service';
 import { NGXLogger } from '../../../node_modules/ngx-logger';
+import { Client } from '../client/client';
+import { ClientService } from '../client/client.service';
 
 @Injectable(
   { providedIn: 'root' }
@@ -14,6 +16,7 @@ export class RgpdService {
   url: string = appConfig.apiOpusBeauteUrl + '/rgpd';
   constructor(  private logger: NGXLogger,
                 private httpCli: HttpClient,
+                private _clientservice: ClientService,
                 private _bottomsheetservice: BottomSheetService) { }
 
   /**
@@ -48,6 +51,29 @@ export class RgpdService {
           this.openBottomSheet("Il y a eu un problème, vos préférences ne sont pas enregistrées");
           this.logger.error("rgpdService Log : Les Nouveaux Settings n ont pas etes persistes");
         })
+  }
+
+  /**
+   * Retourne le Client cherché par son Id
+   * 
+   * @param idClient
+   * @returns Observable<Client>
+   */
+  public getClientById(idClient: number): Observable<Client> {
+
+    return this._clientservice.getClientByID(idClient);
+  }
+
+
+  /**
+   * Recuepere le Client cherche par son AdresseEmail
+   * 
+   * @param adresseClient 
+   * @returns Observable<Client>
+   */
+  public getClientByEmail(adresseClient: string): Observable<Client> {
+
+    return this._clientservice.getClientByEmail(adresseClient);
   }
 
   openBottomSheet(msg: string): void {

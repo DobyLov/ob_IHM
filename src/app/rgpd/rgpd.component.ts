@@ -7,6 +7,9 @@ import { Rgpd } from "./rgpd";
 import { RgpdService } from "./rgpd.service";
 import * as moment from 'moment';
 import { Router } from '../../../node_modules/@angular/router';
+import { BottomSheetService } from "../service/bottomsheet.service";
+import { ClientService } from "../client/client.service";
+import { Client } from "../client/client";
 
 moment.locale('fr');
 
@@ -28,6 +31,10 @@ export interface RgpdInfoText {
 export class RgpdComponent implements OnInit {
     @ViewChild(PerfectScrollbarComponent) componentRef: PerfectScrollbarComponent;
    
+    // Client
+    client: Client;
+    birthTtsToDateConverted: Date;
+    // Rgpd
     rgpd: Rgpd;
     // scrollbar status
     isScrolledToBottom: boolean = false;
@@ -37,12 +44,18 @@ export class RgpdComponent implements OnInit {
     idClient: number;
     token: string;
     displaySendRgpdOptions: boolean = true;
-    steperForm: FormControl;
-    // checkBox
+    // Forms Control
+    stepperFormReadRgpd: FormControl;
+    // stepperFormInfoPersoValidation: FormControl;
+
+    // checkBoxs
     cb_color: string = 'primary';
     labelPoz = 'after';
+    // cbReadRgpd
     checkBox_Checked: boolean = false;
     checkBox_Disabled: boolean = true;
+    // cbValidinfoPerso
+    checkBox_InfoPerso_Checked: boolean = false;
 
     // sliders
     ts_Color: string = 'primary';    
@@ -81,8 +94,10 @@ export class RgpdComponent implements OnInit {
 
     constructor(private logger: NGXLogger,
                 private router: Router,
+                private _bottomsheet: BottomSheetService,
                 private _authrgpdservice: AuthRgpdService,
                 private _rgpdservice: RgpdService,
+                private _clientservice: ClientService,
                 private cd: ChangeDetectorRef
             ) {
                 
@@ -91,8 +106,15 @@ export class RgpdComponent implements OnInit {
                         this.token = this._authrgpdservice.getRgpdTokenFromLS();
                         this.rgpdPrenomClient = this._authrgpdservice.getPrenomClientFromToken(this.token);
                         this.emailClient = this._authrgpdservice.getEmailClientFromToken(this.token);
+                        
+                        this.client = new Client();
+                        this.getClientByEmail(this.emailClient);
+
                         this.rgpd = new Rgpd();
-                        this.getRgpdClientSettings(this.emailClient);                      
+                        this.getRgpdClientSettings(this.emailClient); 
+
+                        this.convertTsToDate(this.client);
+
                         
                     } catch (error) { 
                         this.displaySendRgpdOptions = true 
@@ -102,8 +124,9 @@ export class RgpdComponent implements OnInit {
 
     ngOnInit() {   
         
-        this.steperForm = new FormControl( this.isScrolledToBottom, Validators.requiredTrue);
-        this.steperForm.setValue(false);
+        this.stepperFormReadRgpd = new FormControl( this.isScrolledToBottom, Validators.requiredTrue);
+        // this.stepperFormInfoPersoValidation = new FormControl( this.checkBox_InfoPerso_Checked, Validators.requiredTrue);
+        this.stepperFormReadRgpd.setValue(false);
         this.cd.detectChanges();
     }
 
@@ -118,7 +141,6 @@ export class RgpdComponent implements OnInit {
         this.ts_SmsRdvRemider_hasMoved = false;
         this.ts_MailRdvReminder_hasMoved = false;        
         this.disable_SendRgpdButton = true;
-
     }
 
     /**
@@ -152,7 +174,7 @@ export class RgpdComponent implements OnInit {
         if (this.checkBox_Checked == true && this.isScrolledToBottom == true) {
             this.logger.info("RgpdComponent Log : Validation du form par scrollbar");
             this.checkBox_Disabled = true;
-            this.steperForm.setValue(true);
+            this.stepperFormReadRgpd.setValue(true);
             this.cd.detectChanges();
         } 
 
@@ -164,15 +186,31 @@ export class RgpdComponent implements OnInit {
      * Et si le parametre isScrolledToBottom est a true
      * valide le steperForm
      */
-    public checkBox_Switcher(): void {
+    public checkBox_ReadRgpd_Switcher(): void {
         this.logger.info("RgpdComponent Log : CheckBox Checked");
         this.checkBox_Checked = !this.checkBox_Checked;
         this.checkBox_Disabled = ! this.checkBox_Disabled;
         if (this.isScrolledToBottom == true && this.checkBox_Checked == true) {
             this.logger.info("RgpdComponent Log : Validation du form par checkbox ");
-            this.steperForm.setValue(true);
+            this.stepperFormReadRgpd.setValue(true);
 
         } 
+    }
+
+    /**
+     * Permute l etat de la checkbox Validt donnee perso
+     * 
+     */
+    public checkBox_InfoPerso_Switcher(): void {
+        this.checkBox_InfoPerso_Checked = !this.checkBox_InfoPerso_Checked;
+        if ( this.checkBox_InfoPerso_Checked.valueOf() == true ) {
+            this._bottomsheet.openBottomSheet("Votre demande sera notifiée");
+        }
+
+        if ( this.checkBox_InfoPerso_Checked.valueOf() == false ) {
+            this._bottomsheet.openBottomSheet("Notification annulée");
+        } 
+        // this.stepperFormInfoPersoValidation.setValue(true);
     }
 
     /**
@@ -197,6 +235,31 @@ export class RgpdComponent implements OnInit {
             );
 
         return this.rgpd;   
+    }
+
+        /**
+     * Recupere le Client depuis la Bdd via son Email
+     * @param emailClient
+     */
+    private getClientByEmail(emailClient: string): Client {
+
+        this.logger.info("RgpdComponent Log : Recuperation du Client depuis la bdd");
+        this._clientservice.getClientByEmail(emailClient)       
+            .subscribe(
+                ( (res: Client ) => {  
+                    this.client = res;
+                    this.logger.info("RgpdComponent Log : La recuperation du client s est deroulee correctement");
+                    
+                    }
+                ),
+                err => {
+                    this._bottomsheet.openBottomSheet("Il y a un problème avec vos informations !")
+                    this.logger.info("RgpdComponent Log : La recuperation du client ne s est pas deroulee correctement")
+                }
+            
+            );
+
+        return this.client;   
     }
 
     /**
@@ -250,9 +313,12 @@ export class RgpdComponent implements OnInit {
         this.rgpdDateModifierUpdater(this.rgpd);
         this.rgpdSettingsModifier(this.rgpd);
         this._rgpdservice.setRgpdClientSettings(this.rgpd);
-
         this.logger.info("RgpdComponent Log : La persistance des settings effectuee");
-        this.is_SendRgpdButtonPressed = true;
+        this.disable_SendRgpdButton = true;
+        setTimeout(() => {
+            this.exitRgpdSettings();
+        }, 9000);
+
     }
 
     /**
@@ -354,7 +420,22 @@ export class RgpdComponent implements OnInit {
             }
     }
 
-    public exitRgpdSettings() {
+    private convertTsToDate(client: Client): Date {   
+             
+        this.birthTtsToDateConverted = new Date(client.dateAnniversaireClient.valueOf());
+        this.logger.info("RgpdComponent Log : conversion du Ts: " 
+                            + client.dateAnniversaireClient 
+                            + "en  Date : " 
+                            + this.birthTtsToDateConverted);
+        return this.birthTtsToDateConverted;
+    }
+
+    /**
+     * A la sortie de la page Rgpd :
+     * Purge les objets Rgpd et Client
+     * Puis affiche la page d accueil sans les boutons de menu et login
+     */
+    public exitRgpdSettings(): void {
         
         if (this.rgpd.rgpdCliEmail !=null) {
             this.rgpd = null;

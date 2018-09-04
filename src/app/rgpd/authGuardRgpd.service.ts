@@ -1,50 +1,54 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { AuthRgpdService } from './authRgpd.service';
+import { NGXLogger } from '../../../node_modules/ngx-logger';
 
 
-@Injectable()
+@Injectable(
+  { providedIn: 'root' }
+)
 export class AuthGuardRgpdService implements CanActivate {
 
   url: string;
-  // prenomClient: string;
-  // emailClient: string;
-  // idClient: number;
-  // tokenExtracted: string;
 
-  constructor(private router: Router,
-              // private route: ActivatedRoute,
-              private _authrgpdservice: AuthRgpdService) {
+  constructor( private logger: NGXLogger,
+               private router: Router,
+               private location: Location,
+               private _authrgpdservice: AuthRgpdService) {
 
-    // récuperation de l Url dans la barre de navigation
-    this.url = window.location.href.toString();
-    // console.log("AuthGuardRgpdService : Constructor : path : " + w
-    console.log("AuthGuardRgpdService : Constructor : url : " + this.url);
+              // récuperation de l Url dans la barre de navigation
+              this.url = this.location.path();
+              this.logger.info("AuthGuardRgpdService : Recuperation de l url via Locate@AngularCommon : " + this.url);
   }
+
 /**
- * directive pour acceder ou non a un page
+ * Directive pour acceder ou Non à la page Rgpd
+ * 
  */
   canActivate() {
-    // console.log("AuthGuardRgpdService : activate ok");
+
+    this.logger.info("AuthGuardRgpdService : Intervention de la methode Activate.");
 
     if (this._authrgpdservice.searchRgpdTknStringInsideRgpdUrl(this.url)) {
 
-      console.log("AuthGuardRgpdService : il y a un token dans l url :)");
+      this.logger.info("AuthGuardRgpdService : Il y bien un Token dans l URL.");
       if (!this._authrgpdservice.rgpdTokenIntegrityChecker(this._authrgpdservice.urlRgpdTokenExtractor(this.url))) {
-        console.log("AuthGuardRgpdService : le token fourni dans l Url n est pas integre :((")
+        this.logger.error("AuthGuardRgpdService : Le Token fourni dans l URL n est pas integre");
         this.router.navigate(['./rgpdurlaltered']);
         // return false;
 
       } else if (this._authrgpdservice.isRgpdTokenDateIsValid((this._authrgpdservice.urlRgpdTokenExtractor(this.url)))) {
-        console.log("AuthGuardRgpdService : Le token est valide :)");
+        this.logger.info("AuthGuardRgpdService : Le Token est valide.");
         return true;
+        this.logger.info("AuthGuardRgpdService : Fin de la Methode Activate");
         this.router.navigate(['./rgpd']);
         
 
       } else {
-        console.log("AuthGuardRgpdService : La date du token est perimee :(");
+        this.logger.error("AuthGuardRgpdService : La date du Token est perimee");
+        this.logger.info("AuthGuardRgpdService : Fin de la Methode Activate");
         this.router.navigate(['./rgpdtokenexpired']);
-        console.log("AuthGuardRgpdService : pouete fin de methode Activate")
         // return false;
       }  
 
@@ -55,12 +59,12 @@ export class AuthGuardRgpdService implements CanActivate {
       }
 
       if (this.url.search(new RegExp('/rgpdtokenexpired'))) {
-          console.log("AuthGuardRgpd : redirection vers expired");
+        this.logger.error("AuthGuardRgpdService : Redirection vers la page Lien Expire");
           this.router.navigate(['./rgpdtokenexpired']);
           // return false;
 
         } else {
-          console.log("AuthGuardRgpdService : il n'y a pas tkn dans l url :)");
+          this.logger.error("AuthGuardRgpdService : Il n y a pas de Token dans l URL");
           this.router.navigate(['./rgpdpagenotfound']);
           // return false;
         }

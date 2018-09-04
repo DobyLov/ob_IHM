@@ -10,9 +10,9 @@
             
             <mat-card-content class="cardContent">
                   <mat-horizontal-stepper [linear]="true" #stepper>
-                    <mat-step [stepControl]="steperForm">
+                    <mat-step [stepControl]="stepperFormReadRgpd">
                       <form>
-                        <ng-template matStepLabel>Rgpd Informations</ng-template>
+                        <ng-template matStepLabel>Règles</ng-template>
                         <perfect-scrollbar style="max-width: 100%; max-height: 300px;" (psYReachEnd)="bottomScrolled()">
                           <section *ngFor="let article of rgpdArticles">
                               <div class="article-Size-Fixer">
@@ -20,28 +20,111 @@
                                   <p class="article-Body-Iteration">{{ article.bodyArticle }}</p> 
                               </div>
                           </section>
-                          </perfect-scrollbar>
+                          </perfect-scrollbar>                          
                           <div class="rgpdReadActionZone-Container">
                               <mat-checkbox class="rgpdActionCheckBox"
                               [disabled]="checkBox_Disabled"
-                              (change)="checkBox_Switcher()"
+                              (change)="checkBox_ReadRgpd_Switcher()"
                               [(color)]="cb_color"
                               [(checked)]="checkBox_Checked"
-                              [labelPosition]='labelPoz'
-                              [disabled]="checkBox_Disabled"> 
+                              [labelPosition]='labelPoz'> 
                               J'ai lu                               
                             </mat-checkbox>
                             <span class="rgpdActionNextButton">                            
-                              <button [disabled]="!steperForm.valid" 
-                                      mat-mini-fab color="primary"
-                                      matStepperNext   
+                              <button [disabled]="!stepperFormReadRgpd.valid" 
+                                      mat-mini-fab color="primary"  
                                       (click)="goToRgpdSettings()" 
-                                      matStepperNext matTooltip="Aller aux réglages">
+                                      matStepperNext 
+                                      matTooltip="Consulter les informations personnlles">
                                 <i class="material-icons">navigate_next</i>
                               </button>
                             </span>                             
                           </div> 
                       </form>
+                    </mat-step>
+                    <mat-step>
+                        <form>                     
+                          <ng-template matStepLabel>Vous</ng-template>
+                          <div class="rgpdInfoPersoTitle-Container">
+                              <span><i class="material-icons">person</i></span>
+                              <span class="rgpdInfoPersoTitle">Vos Informations personnelles :</span>
+                          </div>  
+                          <div class="rgpdInfoPersoListe-Container">
+                              <div class="rgpdInfoPersoListeItem-Container">
+                                  <span class="rgpdInfoPersoIntitule-Item">Nom : </span>
+                                  <span class="rgpdInfoPersoContenu-Item"> {{ client.nomClient }}</span>
+                              </div>
+                              <div class="rgpdInfoPersoListeItem-Container">
+                                  <span class="rgpdInfoPersoIntitule-Item">Pénom : </span>
+                                  <span class="rgpdInfoPersoContenu-Item"> {{ client.prenomClient }}</span>
+                              </div>
+                              <div class="rgpdInfoPersoListeItem-Container">
+                                  <span class="rgpdInfoPersoIntitule-Item">Email : </span>
+                                  <span class="rgpdInfoPersoContenu-Item"> {{ client.adresseMailClient }}</span>
+                              </div>
+                              <div class="rgpdInfoPersoListeItem-Container">
+                                  <span class="rgpdInfoPersoIntitule-Item">Ligne Fixe : </span>
+                                  <span class="rgpdInfoPersoContenu-Item"> {{ client.telephoneClient }}</span>
+                              </div>
+                              <div class="rgpdInfoPersoListeItem-Container">
+                                  <span class="rgpdInfoPersoIntitule-Item">Ligne Mobile : </span>
+                                  <span class="rgpdInfoPersoContenu-Item"> {{ client.telMobileClient }}</span>
+                              </div>
+                              <div class="rgpdInfoPersoListeItem-Container">
+                                  <span class="rgpdInfoPersoIntitule-Item">Genre : </span>
+                                  <span class="rgpdInfoPersoContenu-Item"> {{ client.genre }}</span>
+                              </div>
+                              <div class="rgpdInfoPersoListeItem-Container">
+                                  <span class="rgpdInfoPersoIntitule-Item">Anniversaire : </span>
+                                  <span class="rgpdInfoPersoContenu-Item"> </span>
+                              </div>
+                              <br>
+                              <div class="rgpdInfoPersoListeItem-Container">
+                                  <span><i class="material-icons">person_pin_circle</i></span>
+                                  <span class="rgpdInfoPersoTitle">Adresse :</span>   
+                              </div>
+                              <div class="rgpdInfoPersoListeItem-Container">
+                                  <span class="rgpdInfoPersoIntitule-Item">Rue : </span>
+                                  <span class="rgpdInfoPersoContenu-Item"> {{ client.adresse.numero }},&nbsp; {{ client.adresse.rue }}  </span>
+                              </div>
+                              <div class="rgpdInfoPersoListeItem-Container">
+                                  <span class="rgpdInfoPersoIntitule-Item">CP : </span>
+                                  <span class="rgpdInfoPersoContenu-Item"> {{ client.adresse.zipCode }}</span>
+                              </div>
+                              <div class="rgpdInfoPersoListeItem-Container">
+                                  <span class="rgpdInfoPersoIntitule-Item">Ville : </span>
+                                  <span class="rgpdInfoPersoContenu-Item"> {{ client.adresse.ville }}</span>
+                              </div>                   
+                          </div>
+                          <br><mat-divider></mat-divider>
+                          <div class="rgpdInfoPersoActionCheckBox"> 
+                            <mat-checkbox 
+                              (change)="checkBox_InfoPerso_Switcher()"
+                              [(color)]="cb_color"
+                              [(checked)]="checkBox_InfoPerso_Checked"
+                              [labelPosition]='labelPoz'> 
+                              Demander une correction des informations                               
+                            </mat-checkbox> 
+                          </div>
+                          <br><mat-divider></mat-divider>
+                          <div class="rgpdInfoPersoActionNext"> 
+                              <span class="rgpdPreviousButton">
+                                  <button mat-mini-fab color="primary" 
+                                          matStepperPrevious matTooltip="Retour arrière">
+                                    <i class="material-icons">navigate_before</i>
+                                  </button>
+                                </span>
+                            <!-- <span>                          -->
+                              <button 
+                                      
+                                      mat-mini-fab color="primary"
+                                      matStepperNext
+                                      matTooltip="Aller aux réglages">
+                                <i class="material-icons">navigate_next</i>
+                              </button>
+                            <!-- </span> -->
+                          </div>
+                        </form>
                     </mat-step>
                     <mat-step>
                       <ng-template matStepLabel>Réglages</ng-template>

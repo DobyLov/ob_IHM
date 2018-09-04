@@ -13,6 +13,7 @@ import { RdvComponent } from './rdv/rdv.component';
 import { RdvListComponent } from './rdv/rdv-list/rdv-list.component';
 import { RdvAddComponent } from './rdv/rdv-add/rdv-add.component';
 import { ClientComponent } from './client/client.component';
+import { ClientService } from './client/client.service';
 import { PrestationComponent } from './prestation/prestation.component';
 import { Utilisateur } from './utilisateur/utilisateur';
 import { UtilisateurService } from './utilisateur/utilisateur.service';
@@ -177,7 +178,6 @@ import {
     MatTabsModule,  
     PerfectScrollbarModule,
     ReactiveFormsModule,
-    // ScrollDispatchModule,
     HttpClientModule   
 
   ],
@@ -195,6 +195,7 @@ import {
               { provide: BottomSheetService, useClass: BottomSheetService },
               { provide: Credentials, useClass: Credentials },
               { provide: Utilisateur, useClass: Utilisateur },
+              { provide: ClientService, useClass: ClientService },
               { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG }
               ],
 

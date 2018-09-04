@@ -38,7 +38,7 @@
     transform: translate(-50%, -50%);
     // width:350px;
     width:600px;
-    text-align:center;
+    text-align: center;
     margin: 0 auto;
 }
 
@@ -93,6 +93,86 @@ ol li {
     color: black; 
 }
 
+// Stepper Info Perso
+.rgpdInfoPersoBody-Container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: flex-start;
+    // align-items: center ;
+}
+
+.rgpdInfoPersoTitle-Container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content:flex-start;
+    align-items: center ;
+}
+
+.rgpdInfoPersoTitle {
+    font-family: 'Montserrat', sans-serif;  
+    text-align: left; 
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+}
+
+.rgpdInfoPersoListe-Container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content:flex-start;
+    // align-items: center ;
+    width: 100%;
+}
+
+.rgpdInfoPersoListeItem-Container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content:flex-start;
+    align-items: center ;
+    margin-left: 25px
+}
+
+.rgpdPersoListeAdresse-Item {
+    margin-left: 43px
+}
+
+.rgpdInfoPersoIntitule-Item {
+    font-family: 'Montserrat', sans-serif;  
+    // text-align: left; 
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    width: 45%;
+}
+
+.rgpdInfoPersoContenu-Item {
+    font-family: 'Montserrat', sans-serif;  
+    // text-align: left; 
+    font-size: 14px;
+    color: black;     
+}
+
+.rgpdInfoPersoActionCheckBox {
+    font-family: 'Montserrat', sans-serif;  
+    text-align: left; 
+    font-size: 12px;
+    font-weight: bold;
+    color: black; 
+    text-align: left;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.rgpdInfoPersoActionNext {
+    text-align: right; 
+    padding-top: 10px;   
+}
+
+// Stepper Reglages RGPD
 .rgpdReglages-Container {
     display: flex;
     flex-direction: row;

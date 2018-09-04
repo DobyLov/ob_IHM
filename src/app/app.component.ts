@@ -26,10 +26,7 @@ import {
   MAT_DIALOG_DATA
 } from '@angular/material';
 
-import { Utilisateur } from './utilisateur/utilisateur'
-import { AuthService } from './login/auth.service';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+
 import { SideBarService } from './service/sidebar.service';
 import { CurrentUtilisateur } from './login/currentUtilisateur';
 import { UtilisateurService } from './utilisateur/utilisateur.service';
@@ -49,7 +46,7 @@ export class AppComponent implements OnInit {
   // control de la sidenav
   @ViewChild('mysidenav') private mysidenav: MatSidenav;
   // control du menu
-  @ViewChild(MatMenuTrigger) private menutrigger: MatMenuTrigger;
+  // @ViewChild(MatMenuTrigger) private menutrigger: MatMenuTrigger;
 
   cUtilisateur: CurrentUtilisateur;
   userNameConnected$ = 'toto';
@@ -74,7 +71,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // observable pour fermer la sidebar des le clic sur le btn menu Login dans le header
     this._sidebarservice.statusOfSideNavState.subscribe(forceCloseSideBar => {
-      // console.log("appcomponent : ngonInit : remote close side bar");
       if (forceCloseSideBar.valueOf() == true) {
         this.mysidenav.close()
       }
@@ -83,7 +79,6 @@ export class AppComponent implements OnInit {
     // Observable pour ouvrir ou fermer la sideBar depuis le btn du header
     this._sidebarservice.statusOfSideNavToggle.subscribe(sideBarButton => {
       this.sideNavToggle = sideBarButton.valueOf();
-      // console.log("AppComponent : ngOnInit : isSideBarOpen.value() " + this.sideNavToggle);
 
       if (sideBarButton.valueOf() == true) {
 
