@@ -1,41 +1,51 @@
 
 <link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Roboto+Slab:700|Roboto:900|Source+Sans+Pro|Montserrat:300" rel="stylesheet">
 <div class="flex-container">    
-    <div class="flex-item-title">
-        <mat-toolbar color="primary" >
+    <div class="flex-item">
+        <mat-toolbar color="primary">
           <div class="flex-item-title">
-              <p>Demande de mot de passe </p>
+              Demande de mot de passe
           </div>
         </mat-toolbar>
     </div>
-    <div>
+    <div class="flex-item-body">
         <div class="flex-item">
-          Saisissez votre e-mail, pour reçevoir un nouveau mot de passe.
+          <p>
+            Vous avez perdu votre mot de passe pour acceder à l'application ?
+          </p>
+          <p>
+            Saisissez votre e-mail afin d'en reçevoir un nouveau.
+          </p>
         </div>
-        <div class="flex-item">
-          <mat-form-field>
-            <!-- <input matInput placeholder="Email" [formControl]="email" required> -->
+        <!-- <div class="flex-item"> -->
+          <mat-form-field class="formField">
             <input matInput placeholder="Email" [formControl]="emailForgottenPwd" required>
             <mat-icon matSuffix >email</mat-icon>
-            <mat-error *ngIf="emailForgottenPwd.invalid">{{getMailPwdErrorMessage()}}</mat-error>
+            <mat-error *ngIf="emailForgottenPwd.invalid">{{ getMailPwdErrorMessage() }}</mat-error>
           </mat-form-field>
-        </div>
-        <div></div>
+        <!-- </div> -->
     </div>
 
-  <div class="flex-item-action">
-    <div class="flex-container-actionOkCancel">
-        <mat-toolbar color="primary">   
-          <div class="flex-item-ActionokCancel">             
-            <button mat-icon-button [disabled]="!emailForgottenPwd.valid" (click)="transmitEMail()">
-              <mat-icon>done</mat-icon>
-            </button>
-          </div> 
-          <div class="flex-item-ActionokCancel">
-            <button mat-icon-button (click)="closeModal()">
-              <mat-icon>clear</mat-icon>
-            </button>
-          </div>
-        </mat-toolbar>
-    </div>
+    <div class="flex-item">
+      <div class="flex-container-actionOkCancel">
+          <mat-toolbar color="primary">   
+            <div class="flex-item-Action">             
+              <button mat-icon-button [disabled]="!emailForgottenPwd.valid" (click)="transmitEMail()">
+                <mat-icon>
+                    <i class="material-icons">check</i>
+                </mat-icon>
+              </button>
+            </div> 
+
+
+            <div class="flex-item-Action">
+              <button mat-icon-button (click)="closeModal()">
+                <mat-icon>
+                    <i class="material-icons">clear</i>
+                </mat-icon>
+              </button>
+            </div>
+          </mat-toolbar>
+      </div>
+
 </div>

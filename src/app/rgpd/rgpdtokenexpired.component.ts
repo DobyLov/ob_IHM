@@ -2,8 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { AuthRgpdService } from "./authRgpd.service";
 import { BottomSheetService } from '../service/bottomsheet.service';
 import { Router } from "@angular/router";
-// import { error } from "@angular/compiler/src/util";
-// import { throwError } from "rxjs";
+import { NGXLogger } from "ngx-logger";
+
 
 @Component ({
     selector: 'app-rgpdtokenexpired',
@@ -21,77 +21,94 @@ export class RgpdTokenExpiredComponent implements OnInit {
     isRgpdUrlNotNull: boolean = false;
     displayRgpdMailRenewalPurposal: boolean = true;
 
-    constructor(private _authrgpdservice: AuthRgpdService,
-                private _bottomsheetservice: BottomSheetService,
-                private router: Router) {
-                    this.firstThingsToDo();
+    constructor( private logger: NGXLogger,
+                 private _authrgpdservice: AuthRgpdService,
+                 private _bottomsheetservice: BottomSheetService,
+                 private router: Router) {
+                    this.GetInfos();
                 }
 
-    ngOnInit(){
+    ngOnInit() { }
 
-        // this.checkIfTokenUrlIsPresent();
-    }
-
-    private firstThingsToDo() {
+    /**
+     * Extraire le Token depuis l URL
+     *  Recupere Le Prenom et EMail du Client depuis le Token
+     */
+    private GetInfos(): void {
 
         try {  
 
+            this.logger.info("RgpdTokenExpiredComponent Log : Recuperation de L Url");
             this._authrgpdservice.getUrl.subscribe(url => { this.rgpdUrl$ = url.valueOf() });
-            
-            console.log("RgpdTokenExpiredcomponent : url : " + this.rgpdUrl$);
+
+            this.logger.info("RgpdTokenExpiredComponent Log : Extraction du Token de L Url");
             this.rgpdToken = this._authrgpdservice.urlRgpdTokenExtractor(this.rgpdUrl$);
-            console.log("RgpdTokenExpiredcomponent : token : " + this.rgpdToken);
+
+            this.logger.info("RgpdTokenExpiredComponent Log : Recuperation du Prenom/Client depuis le Token");
             this.rgpdPrenomClient = this._authrgpdservice.getPrenomClientFromToken(this.rgpdToken);
-            console.log("RgpdTokenExpiredcomponent : prenom : " + this.rgpdPrenomClient);
+
+            this.logger.info("RgpdTokenExpiredComponent Log : Recuperation de L Email/Client depuis le TOken");
             this.rgpdEmailClient = this._authrgpdservice.getEmailClientFromToken(this.rgpdToken);
-            console.log("RgpdTokenExpiredcomponent : rgpdEmailClient : " + this.rgpdEmailClient);
-                
     
         } catch (error) {
-            console.log("RgpdTokenExpiredcomponent : error catched");
+
+            this.logger.info("RgpdTokenExpiredComponent Log : Le Token n est pas valide");
             this.displayRgpdMailRenewalPurposal = false;
-            console.log("RgpdTokenExpiredcomponent : affichera le message principal : " + this.displayRgpdMailRenewalPurposal);
+            this.logger.info("RgpdTokenExpiredComponent Log : Pas d affichage de la proposition d email de renouvellement ");
 
         }
         
     }
 
-    private checkIfTokenUrlIsPresent() {
+    // /**
+    //  * 
+    //  */
+    // private checkIfTokenUrlIsPresent(): void {
 
-        // console.log("rgdpdTokenExpiredComponent : verifie su Url is present");
-        if (this.rgpdUrl$.valueOf() != "" ) {
-            // console.log("afficher le msg RGPD lien Expire");
-            this.displayRgpdMailRenewalPurposal = true; 
+    //     // console.log("rgdpdTokenExpiredComponent : verifie su Url is present");
+    //     if (this.rgpdUrl$.valueOf() != "" ) {
+    //         // console.log("afficher le msg RGPD lien Expire");
+    //         this.displayRgpdMailRenewalPurposal = true; 
 
-        } else {
-            // console.log("Ne pas afficher le msg RGPD lien Expire");
-            this.displayRgpdMailRenewalPurposal = false;
-            setTimeout(() => {
-               this.router.navigateByUrl(''); 
-            }, 10000);
+    //     } else {
+    //         // console.log("Ne pas afficher le msg RGPD lien Expire");
+    //         this.displayRgpdMailRenewalPurposal = false;
+    //         setTimeout(() => {
+    //            this.router.navigateByUrl(''); 
+    //         }, 10000);
 
-        }
-    }
+    //     }
+    // }
 
-    private askForNewRgpdUrl() {
+    /**
+     * Demande d un nouvel Email avec le Lien Rgpd au MiddleWare
+     */
+    private askForNewRgpdUrl(): void {
 
+            this.logger.info("RgpdTokenExpiredComponent Log : Envoi de la demande de nouveau Email de renouvellement lien Rgpd");
             this.mailBtnOnOff = false;
             this._authrgpdservice.askANewRgpdTokenByEmail(this.rgpdToken);
 
         try {
-            console.log("RgpdTokenExpired : Suppression du rgpdToken dans le  LS");
+
+            this.logger.info("RgpdTokenExpiredComponent Log : Supression du Token dans le LocalStorage.");
             this._authrgpdservice.removeRgpdTokenFromLS();  
 
         } catch (err) {
-            console.log("RgpdTokenExpired : Le rgpdToken n a pas ete supprime du LS");
+           
+            this.logger.info("RgpdTokenExpiredComponent Log : Pas de Token supprime du LocalStorage.");
+
         }
         
         
     }
 
-    private openBottomSheet(msg: string) {
+    // /**
+    //  * Affiche le message d information
+    //  */
+    // private openBottomSheet(msg: string): void {
 
-        this._bottomsheetservice.openBottomSheet(msg);
+    //     this._bottomsheetservice.openBottomSheet(msg);
 
-    }
+    // }
 }

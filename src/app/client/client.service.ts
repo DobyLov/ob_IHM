@@ -1,9 +1,9 @@
-import { Injectable } from "../../../node_modules/@angular/core";
+import { Injectable } from "@angular/core";
 import { Client } from "./client";
 import { appConfig } from "../constant/apiOpusBeauteUrl";
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
-import { Observable } from "../../../node_modules/rxjs";
-import { NGXLogger } from '../../../node_modules/ngx-logger';
+import { Observable } from "rxjs";
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable(
     { providedIn: 'root' }

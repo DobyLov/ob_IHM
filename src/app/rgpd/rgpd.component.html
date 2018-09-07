@@ -27,7 +27,8 @@
                               (change)="checkBox_ReadRgpd_Switcher()"
                               [(color)]="cb_color"
                               [(checked)]="checkBox_Checked"
-                              [labelPosition]='labelPoz'> 
+                              [labelPosition]='labelPoz'
+                              matTooltip="Valider la lecture">
                               J'ai lu                               
                             </mat-checkbox>
                             <span class="rgpdActionNextButton">                            
@@ -46,83 +47,87 @@
                         <form>                     
                           <ng-template matStepLabel>Vous</ng-template>
                           <div class="rgpdInfoPersoTitle-Container">
-                              <span><i class="material-icons">person</i></span>
+                              <span><i class="material-icons">assignment_ind</i></span>
                               <span class="rgpdInfoPersoTitle">Vos Informations personnelles :</span>
                           </div>  
+                          <div class="rgpdInfoPersoTitle-Container">
+                                <span class="rgpdinfoPersoTitleIcon"><i class="material-icons">person</i></span>
+                                <span class="rgpdInfoPersoTitle">Identité :</span>
+                            </div> 
                           <div class="rgpdInfoPersoListe-Container">
                               <div class="rgpdInfoPersoListeItem-Container">
                                   <span class="rgpdInfoPersoIntitule-Item">Nom : </span>
-                                  <span class="rgpdInfoPersoContenu-Item"> {{ client.nomClient }}</span>
+                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.nomClient | uppercase }}</span>
                               </div>
                               <div class="rgpdInfoPersoListeItem-Container">
-                                  <span class="rgpdInfoPersoIntitule-Item">Pénom : </span>
-                                  <span class="rgpdInfoPersoContenu-Item"> {{ client.prenomClient }}</span>
+                                  <span class="rgpdInfoPersoIntitule-Item">Prénom : </span>
+                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.prenomClient | FirstCharUpperPipe}}</span>
                               </div>
                               <div class="rgpdInfoPersoListeItem-Container">
                                   <span class="rgpdInfoPersoIntitule-Item">Email : </span>
-                                  <span class="rgpdInfoPersoContenu-Item"> {{ client.adresseMailClient }}</span>
+                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.adresseMailClient | lowercase }}</span>
                               </div>
                               <div class="rgpdInfoPersoListeItem-Container">
                                   <span class="rgpdInfoPersoIntitule-Item">Ligne Fixe : </span>
-                                  <span class="rgpdInfoPersoContenu-Item"> {{ client.telephoneClient }}</span>
+                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.telephoneClient }}</span>
                               </div>
                               <div class="rgpdInfoPersoListeItem-Container">
-                                  <span class="rgpdInfoPersoIntitule-Item">Ligne Mobile : </span>
-                                  <span class="rgpdInfoPersoContenu-Item"> {{ client.telMobileClient }}</span>
+                                  <span class="rgpdInfoPersoIntitule-Item">Ligne Mob : </span>
+                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.telMobileClient }}</span>   
                               </div>
                               <div class="rgpdInfoPersoListeItem-Container">
                                   <span class="rgpdInfoPersoIntitule-Item">Genre : </span>
-                                  <span class="rgpdInfoPersoContenu-Item"> {{ client.genre }}</span>
+                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.genreClient.genreHum | FirstCharUpperPipe }}</span>
                               </div>
                               <div class="rgpdInfoPersoListeItem-Container">
-                                  <span class="rgpdInfoPersoIntitule-Item">Anniversaire : </span>
-                                  <span class="rgpdInfoPersoContenu-Item"> </span>
+                                  <span class="rgpdInfoPersoIntitule-Item">Naissance : </span>
+                                  <span class="rgpdInfoPersoContenu-Item"*ngIf="requestComplete"> {{ client.dateAnniversaireClient | date: 'dd/MM/yyyy'}}</span>
                               </div>
-                              <br>
-                              <div class="rgpdInfoPersoListeItem-Container">
-                                  <span><i class="material-icons">person_pin_circle</i></span>
+                              <div class="rgpdInfoPersoTitle-Container">
+                                  <span class="rgpdinfoPersoTitleIcon"><i class="material-icons">person_pin_circle</i></span>
                                   <span class="rgpdInfoPersoTitle">Adresse :</span>   
                               </div>
                               <div class="rgpdInfoPersoListeItem-Container">
                                   <span class="rgpdInfoPersoIntitule-Item">Rue : </span>
-                                  <span class="rgpdInfoPersoContenu-Item"> {{ client.adresse.numero }},&nbsp; {{ client.adresse.rue }}  </span>
+                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.adresse.numero }},&nbsp; {{ client.adresse.rue | FirstCharUpperPipe }}  </span>
                               </div>
                               <div class="rgpdInfoPersoListeItem-Container">
                                   <span class="rgpdInfoPersoIntitule-Item">CP : </span>
-                                  <span class="rgpdInfoPersoContenu-Item"> {{ client.adresse.zipCode }}</span>
+                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.adresse.zipCode }}</span>
                               </div>
                               <div class="rgpdInfoPersoListeItem-Container">
                                   <span class="rgpdInfoPersoIntitule-Item">Ville : </span>
-                                  <span class="rgpdInfoPersoContenu-Item"> {{ client.adresse.ville }}</span>
+                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.adresse.ville }}</span>
                               </div>                   
                           </div>
                           <br><mat-divider></mat-divider>
-                          <div class="rgpdInfoPersoActionCheckBox"> 
-                            <mat-checkbox 
-                              (change)="checkBox_InfoPerso_Switcher()"
-                              [(color)]="cb_color"
-                              [(checked)]="checkBox_InfoPerso_Checked"
-                              [labelPosition]='labelPoz'> 
-                              Demander une correction des informations                               
-                            </mat-checkbox> 
-                          </div>
-                          <br><mat-divider></mat-divider>
-                          <div class="rgpdInfoPersoActionNext"> 
-                              <span class="rgpdPreviousButton">
-                                  <button mat-mini-fab color="primary" 
-                                          matStepperPrevious matTooltip="Retour arrière">
+                          <div class="rgpdInfoPersoAction-container">
+                                <mat-checkbox
+                                class="rgpdInfoPersoActionCheckBox" 
+                                (change)="checkBox_InfoPerso_Switcher()"
+                                [(color)]="cb_color"
+                                [(checked)]="checkBox_InfoPerso_Checked"
+                                [labelPosition]='labelPoz'
+                                matTooltip="Demander une correction des informations"> 
+                                Correction                             
+                              </mat-checkbox>
+                              <span>
+                                <button class="rgpdInfoPersoActionPrevious"
+                                        mat-mini-fab 
+                                        color="primary" 
+                                        matStepperPrevious 
+                                        matTooltip="Retour arrière">
                                     <i class="material-icons">navigate_before</i>
-                                  </button>
-                                </span>
-                            <!-- <span>                          -->
-                              <button 
-                                      
-                                      mat-mini-fab color="primary"
-                                      matStepperNext
-                                      matTooltip="Aller aux réglages">
-                                <i class="material-icons">navigate_next</i>
-                              </button>
-                            <!-- </span> -->
+                                </button>
+                                <span class="betweenButtons"></span>
+                                <button  class="rgpdInfoPersoActionNext"
+                                    mat-mini-fab 
+                                    color="primary"
+                                    matStepperNext
+                                    matTooltip="Aller aux réglages">
+                                    <i class="material-icons">navigate_next</i>
+                                </button>
+                              </span>
                           </div>
                         </form>
                     </mat-step>

@@ -6,4 +6,6 @@ export class ClientAdresse {
     public zipCode:number;
     public ville;
     public pays: string;
+    
+    constructor(){}
 }

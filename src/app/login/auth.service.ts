@@ -57,7 +57,7 @@ export class AuthService {
   async login(credz: Credentials) {
     this.logger.info("AuthService Log : Procedure d authentification");
     let loglog: boolean = false;
-    let loginPromise = await new Promise(( resolve ) => {
+    let loginPromise = await new Promise(( resolve, reject ) => {
       this.getTokenFromMiddleware(credz)
         .then(res => {
           // get token from MW
@@ -71,7 +71,6 @@ export class AuthService {
         }
         )
         .then( res => this._utilisateurservice.setCurrentUtilisateur(credz.email) )
-        // .then( res => this.router.navigate(['./home']) )
         .catch((err) => {
           loglog = false;
           this.changeStatusOfIsLogged(loglog);
@@ -110,10 +109,11 @@ export class AuthService {
             resolve();
           }
         })
-        .catch((err) => {
-          this.logger.info("AuthService Log :  Le Middleware n a pas valide les credentiels");
-          resultatToken = null;
-          reject();
+        .catch(() => { 
+            this.logger.info("AuthService Log :  Le Middleware n a pas valide les credentiels");
+            resultatToken = null;
+            reject();
+          
         })
     })
 
@@ -312,11 +312,11 @@ export class AuthService {
     let url = `${appConfig.apiOpusBeauteUrl}/renewpwd/${emailToResetPwd}`;
     this.httpCli.post(url, this.httpOptions)
       .subscribe(
-        () => { this.logger.info("AuthService Log : Mail connu de la Bdd, demande prise ne charge par le Middleware");
+        () => { this.logger.info("AuthService Log : Mail connu de la Bdd");
                   this.messageToaster('Vous allez reçevoir un e-mail avec votre mot de passe.', 'snackbarInfo', 6000); },
         err => {
           if (err.status == 403) {
-                    this.logger.info("AuthService Log : Mail connu de la Bdd, demande prise ne charge par le Middleware");
+                    this.logger.info("AuthService Log : Mail non connu de la Bdd");
                     this.messageToaster('Il y a un problème, le mail n est pas connu !', 'snackbarWarning', 6000)
           }
       })

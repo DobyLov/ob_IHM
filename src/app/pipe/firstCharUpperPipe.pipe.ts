@@ -2,8 +2,8 @@ import { DateConstants } from '../constant/date.constant';
 import { Pipe, PipeTransform } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-@Pipe({ name: 'DateFirstCharUpper' })
-export class DateFirstCharUpperPipe implements PipeTransform { 
+@Pipe({ name: 'FirstCharUpperPipe' })
+export class FirstCharUpperPipe implements PipeTransform { 
 
     
     transform(value: string){

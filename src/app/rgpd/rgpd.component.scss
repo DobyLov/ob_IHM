@@ -1,8 +1,7 @@
 .rgpd-Container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    
+    justify-content: center;    
 }
 
 .cardContent {
@@ -11,7 +10,7 @@
 }
 
 .article-Size-Fixer {
-    width: 380px;
+    width: 355px;
 }
 
 .article-Title-Iteration {
@@ -27,7 +26,6 @@
     font-family: 'Montserrat', sans-serif;  
     text-align: left; 
     font-size: 14px;
-    // font-weight: bold;
     color: black;
 }
 
@@ -99,7 +97,7 @@ ol li {
     flex-direction: column;
     flex-wrap: nowrap;
     align-content: flex-start;
-    // align-items: center ;
+    height: 25px;
 }
 
 .rgpdInfoPersoTitle-Container {
@@ -110,12 +108,15 @@ ol li {
     align-items: center ;
 }
 
+.rgpdinfoPersoTitleIcon {
+    margin-left: 10px;
+}
 .rgpdInfoPersoTitle {
     font-family: 'Montserrat', sans-serif;  
     text-align: left; 
     font-size: 18px;
     font-weight: bold;
-    color: black;
+    color: black; 
 }
 
 .rgpdInfoPersoListe-Container {
@@ -123,7 +124,6 @@ ol li {
     flex-direction: column;
     flex-wrap: nowrap;
     align-content:flex-start;
-    // align-items: center ;
     width: 100%;
 }
 
@@ -131,45 +131,52 @@ ol li {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-content:flex-start;
+    align-content:space-between;
     align-items: center ;
-    margin-left: 25px
-}
-
-.rgpdPersoListeAdresse-Item {
-    margin-left: 43px
+    margin-left: 35px
 }
 
 .rgpdInfoPersoIntitule-Item {
-    font-family: 'Montserrat', sans-serif;  
-    // text-align: left; 
-    font-size: 18px;
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 16px;
     font-weight: bold;
     color: black;
-    width: 45%;
+    width: 40%;
 }
 
 .rgpdInfoPersoContenu-Item {
     font-family: 'Montserrat', sans-serif;  
-    // text-align: left; 
-    font-size: 14px;
-    color: black;     
+    font-size: 16px;
+    color: black;  
+    // width: 60%;   
+}
+
+.rgpdInfoPersoContenuCheckBox {
+    width: 10px;
+}
+
+.rgpdInfoPersoAction-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    // vertical-align: 30px;
+    padding-top: 10px;
 }
 
 .rgpdInfoPersoActionCheckBox {
     font-family: 'Montserrat', sans-serif;  
     text-align: left; 
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
     color: black; 
     text-align: left;
-    padding-top: 20px;
-    padding-bottom: 10px;
+    padding-left: 30px;
 }
 
-.rgpdInfoPersoActionNext {
-    text-align: right; 
-    padding-top: 10px;   
+.betweenButtons {
+    padding: 10px;
 }
 
 // Stepper Reglages RGPD

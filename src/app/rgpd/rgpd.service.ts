@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Rgpd } from './rgpd';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { appConfig } from '../constant/apiOpusBeauteUrl';
-import { Observable } from '../../../node_modules/rxjs';
+import { Observable } from 'rxjs';
 import { BottomSheetService } from '../service/bottomsheet.service';
-import { NGXLogger } from '../../../node_modules/ngx-logger';
+import { NGXLogger } from 'ngx-logger';
 import { Client } from '../client/client';
 import { ClientService } from '../client/client.service';
 

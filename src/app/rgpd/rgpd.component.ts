@@ -1,12 +1,12 @@
 import { OnInit, Component, ViewChild, ChangeDetectorRef } from "@angular/core";
 import { AuthRgpdService } from "./authRgpd.service";
 import { Validators, FormControl} from '@angular/forms';
-import { PerfectScrollbarComponent } from "../../../node_modules/ngx-perfect-scrollbar";
+import { PerfectScrollbarComponent } from "ngx-perfect-scrollbar";
 import { NGXLogger } from 'ngx-logger';
 import { Rgpd } from "./rgpd";
 import { RgpdService } from "./rgpd.service";
 import * as moment from 'moment';
-import { Router } from '../../../node_modules/@angular/router';
+import { Router } from '@angular/router';
 import { BottomSheetService } from "../service/bottomsheet.service";
 import { ClientService } from "../client/client.service";
 import { Client } from "../client/client";
@@ -31,29 +31,34 @@ export interface RgpdInfoText {
 export class RgpdComponent implements OnInit {
     @ViewChild(PerfectScrollbarComponent) componentRef: PerfectScrollbarComponent;
    
-    // Client
     client: Client;
-    birthTtsToDateConverted: Date;
+    requestComplete: boolean = false;
     // Rgpd
     rgpd: Rgpd;
+
     // scrollbar status
     isScrolledToBottom: boolean = false;
+
     // Informations initiales extraites depuis de token
     emailClient: string;
     rgpdPrenomClient: string;
     idClient: number;
     token: string;
+    
+    // Parametre sert a afficher  le message pour demander un nouveau lien
     displaySendRgpdOptions: boolean = true;
+
     // Forms Control
     stepperFormReadRgpd: FormControl;
-    // stepperFormInfoPersoValidation: FormControl;
 
     // checkBoxs
     cb_color: string = 'primary';
     labelPoz = 'after';
+
     // cbReadRgpd
     checkBox_Checked: boolean = false;
     checkBox_Disabled: boolean = true;
+
     // cbValidinfoPerso
     checkBox_InfoPerso_Checked: boolean = false;
 
@@ -73,20 +78,46 @@ export class RgpdComponent implements OnInit {
 
     rgpdArticles = [
         {
-            "titleArticle": "1 Identification des données personnelles collectées",        
-            "bodyArticle": 'Les informations permettant d identifier le client Nom, prenom, date anniversaire, genre adresse postale, tel fixe, tel mobile, adresse mail.'
+            "titleArticle": "1 Identification des données",        
+            "bodyArticle": 'Les informations permettant d identifier le ' 
+            + 'client Nom, prenom, date anniversaire, genre adresse postale, ' 
+            + 'tel fixe, tel mobile, adresse mail.'
         },
         {  
-            "titleArticle": "2 Identification ",        
-            "bodyArticle": 'Les informations permettant d identifier le client Nom, prenom, date anniversaire, genre adresse postale, tel fixe, tel mobile, adresse mail.'
+            "titleArticle": "2 Objectif de la collecte",        
+            "bodyArticle": 'Cela permet une qualité de service élévée, le système '
+            + 'permet de prendre des rendez-vous, de les modifier, de les supprimer.'
+            + ' Le système analyse les rendez-vous plannifiés pour le jour suivant'
+            + ' et est en mesure d\'envoyer un Email et ou un SMS de rappel de rdv.'
+            + ' Pour réaliser ces fonctions bien définies le système nécessite les informations'
+            + ' de prénom, Email et ou numéro de téléphone portable.'
+            + ' Le contenu du message envoyé est à charactère informatif et contient les'
+            + ' informations suivantes : Prenom du client , indiquer l\'adresse du lieu de RDV la'
+            + ' le soin qui sera pratiqué ainsi que l heure.'
         },
         {  
-            "titleArticle": "3 Identification ",        
-            "bodyArticle": 'Les informations permettant d identifier le client Nom, prenom, date anniversaire, genre adresse postale, tel fixe, tel mobile, adresse mail.'
+            "titleArticle": "3 La durée de conservation ",        
+            "bodyArticle": 'Les données sont conservées à minima le temps de vie du logiciel mais celles-ci peuvent néanmoins être supprimées / modifiées à la demande du client.'
         },
         {  
-            "titleArticle": "4 Identification ",        
-            "bodyArticle": 'Les informations permettant d identifier le client Nom, prenom, date anniversaire, genre adresse postale, tel fixe, tel mobile, adresse mail.'
+            "titleArticle": "4  Responsable traitement",        
+            "bodyArticle": 'Le responsable du traitement des données : Frédéric BEAUDEAU frederic.beaudeau@outlook.com.'
+        },
+        {  
+            "titleArticle": "5  Protection des données",        
+            "bodyArticle": 'Le responsable de la protection des données : Frédéric BEAUDEAU frederic.beaudeau@outlook.com.'
+        },
+        {  
+            "titleArticle": "6 Finalité des traitements ",        
+            "bodyArticle": 'Les données collectées permettent d\'assurer le fonctionnement du logiciel de gestion clientelle.'
+        },
+        {  
+            "titleArticle": "7 Localisation des données ",        
+            "bodyArticle": 'Celles-ci sont hebergées dans un cloud privé respectant la reglementation Rgpd.'
+        },
+        {  
+            "titleArticle": "8 Exploitation commerciale ",        
+            "bodyArticle": 'Le données sont structurées dans une base de donnée et font l\'objet de traitement uniquement dédiés à l\'activité professionnelle, Les données sont ni revendues, ni cédées, ni louées sous quelques forme que ce soit au près d\'un quelconque organisme.'
         }
     ];
 
@@ -100,21 +131,19 @@ export class RgpdComponent implements OnInit {
                 private _clientservice: ClientService,
                 private cd: ChangeDetectorRef
             ) {
-                
-                
+
                     try {
-                        this.token = this._authrgpdservice.getRgpdTokenFromLS();
-                        this.rgpdPrenomClient = this._authrgpdservice.getPrenomClientFromToken(this.token);
-                        this.emailClient = this._authrgpdservice.getEmailClientFromToken(this.token);
-                        
+
                         this.client = new Client();
+                        this.token = this._authrgpdservice.getRgpdTokenFromLS();                        
+                        
+                        this.emailClient = this._authrgpdservice.getEmailClientFromToken(this.token); 
                         this.getClientByEmail(this.emailClient);
+                        console.log("RgpdComponent Log : CONSTRUCTOR => valeur de client.nom : " + this.client.nomClient);
+                        this.rgpdPrenomClient = this._authrgpdservice.getPrenomClientFromToken(this.token);
 
                         this.rgpd = new Rgpd();
                         this.getRgpdClientSettings(this.emailClient); 
-
-                        this.convertTsToDate(this.client);
-
                         
                     } catch (error) { 
                         this.displaySendRgpdOptions = true 
@@ -122,10 +151,9 @@ export class RgpdComponent implements OnInit {
                     
                 }
 
-    ngOnInit() {   
+    ngOnInit() { 
         
         this.stepperFormReadRgpd = new FormControl( this.isScrolledToBottom, Validators.requiredTrue);
-        // this.stepperFormInfoPersoValidation = new FormControl( this.checkBox_InfoPerso_Checked, Validators.requiredTrue);
         this.stepperFormReadRgpd.setValue(false);
         this.cd.detectChanges();
     }
@@ -177,7 +205,7 @@ export class RgpdComponent implements OnInit {
             this.stepperFormReadRgpd.setValue(true);
             this.cd.detectChanges();
         } 
-
+        
     }
 
     /**
@@ -242,14 +270,14 @@ export class RgpdComponent implements OnInit {
      * @param emailClient
      */
     private getClientByEmail(emailClient: string): Client {
-
+        
         this.logger.info("RgpdComponent Log : Recuperation du Client depuis la bdd");
         this._clientservice.getClientByEmail(emailClient)       
             .subscribe(
                 ( (res: Client ) => {  
-                    this.client = res;
+                    this.client = res;                    
                     this.logger.info("RgpdComponent Log : La recuperation du client s est deroulee correctement");
-                    
+                    this.requestComplete = true;
                     }
                 ),
                 err => {
@@ -258,7 +286,7 @@ export class RgpdComponent implements OnInit {
                 }
             
             );
-
+            
         return this.client;   
     }
 
@@ -420,15 +448,7 @@ export class RgpdComponent implements OnInit {
             }
     }
 
-    private convertTsToDate(client: Client): Date {   
-             
-        this.birthTtsToDateConverted = new Date(client.dateAnniversaireClient.valueOf());
-        this.logger.info("RgpdComponent Log : conversion du Ts: " 
-                            + client.dateAnniversaireClient 
-                            + "en  Date : " 
-                            + this.birthTtsToDateConverted);
-        return this.birthTtsToDateConverted;
-    }
+
 
     /**
      * A la sortie de la page Rgpd :

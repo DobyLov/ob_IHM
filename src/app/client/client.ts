@@ -1,4 +1,4 @@
-import { ClientAdresse } from '../client/clientAdresse';
+import { ClientAdresse } from './clientAdresse';
 import { Genre } from '../genre/genre';
 
 export class Client {
@@ -9,7 +9,7 @@ export class Client {
     public telephoneClient: number
     public telMobileClient: number;
     public adresse: ClientAdresse;
-    public genre: Genre; 
+    public genreClient: Genre; 
     public adresseMailClient: string;
     public dateAnniversaireClient: number;
     public suscribedCommercials: string;
@@ -19,5 +19,7 @@ export class Client {
     public rgpdInfoClientValidation: string;
     public rgpdDateClientvalidation: string;
     public rgpdClientCanModifyRgpdSettings: string;
+
+    constructor(){}
 
 }

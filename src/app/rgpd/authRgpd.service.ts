@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 import { BottomSheetService } from "../service/bottomsheet.service";
 import { appConfig } from "../constant/apiOpusBeauteUrl";
 import * as jwt_decode from 'jwt-decode';
-import { NGXLogger } from "../../../node_modules/ngx-logger";
+import { NGXLogger } from "ngx-logger";
 
 @Injectable()
 export class AuthRgpdService {
@@ -43,21 +43,25 @@ export class AuthRgpdService {
     /**
      * Verifie si le token est valide
      * @param token string
+     * @returns boolean
      */
     public isRgpdTokenIsvalid(token: string): boolean {
+
         this.logger.info("AuthRgpdService Log : Verification de la validite du RgpdToken.");
         try {
 
             if (this.rgpdTokenIntegrityChecker(token)) {
+
                 if (this.isRgpdTokenDateIsValid(token)) {
+
                         this.logger.info("AuthRgpdService Log : le RgpdToken est valide");
                         return true;                    
                 }
             }
 
         } catch (error) {
-            console.log("AuthRgpdService : Le rgpdtoken n est pas valide.");
-            this.logger.error("AuthRgpdService Log : Le RgpdToken n est pas valide.");
+            
+            this.logger.info("AuthRgpdService Log : Le RgpdToken n est pas valide.");
             return false;
         }
     }
@@ -67,16 +71,19 @@ export class AuthRgpdService {
      * @param token 
      */
     public rgpdTokenIntegrityChecker(token: string): boolean {
-        
+
+        this.logger.info("AuthRgpdService Log : Verification de l integrite du Token");
+
         try {
             // test de l integrite du token
             jwt_decode(token);
-            this.logger.info("AuthRgpdService Log : La structure du Token est bonnes.");
+            this.logger.info("AuthRgpdService Log : La structure du Token est bonne.");
             this.isTokenStructureIsIntegre$.next(true);
             return true;
             
 
         } catch (err) {
+
             this.logger.error("AuthRgpdService Log : La structure du token est n est pas bonne");
             this.isTokenStructureIsIntegre$.next(false);
             this.router.navigate(['./rgpdurlaltered'])
@@ -88,27 +95,38 @@ export class AuthRgpdService {
   /**
    * Recherche une chaine specifique dans l URL de la page 
    * @param rgpdUrl
+   * @returns boolean
    */
   public searchRgpdTknStringInsideRgpdUrl(rgpdUrl: string): Boolean {
+
     this.logger.info("AuthRgpdService Log : Detection de la string rgpd?tkn= dans l url:");
     let isTknIsPresentIntoTheString: Boolean = false;
     let regex = new RegExp(`rgpd` + `\\?` + `tkn=`);
+
     if (rgpdUrl.search(regex) != -1) {
+
       isTknIsPresentIntoTheString = true;
       this.logger.info("AuthRgpdService Log : Regex => string trouvee : " + isTknIsPresentIntoTheString);   
+
     } else {
+
       isTknIsPresentIntoTheString = false;
       this.logger.info("AuthRgpdService Log : Regex => string trouvee : " + isTknIsPresentIntoTheString);
+
     }
+
     this.setUrlAsObservable(rgpdUrl);
     return isTknIsPresentIntoTheString;
+
   }
 
   /**
    * Extrait le token de l URL
    * @param url 
+   * @returns string
    */
   public urlRgpdTokenExtractor(url: string): string {
+
     this.logger.info("AuthRgpdService Log : Extraction du token depuis l url.");
     let tokenExtracted = url.substr(url.search(new RegExp(`rgpd` + `\\?` + `tkn=`)), url.length).replace(new RegExp(`rgpd` + `\\?` + `tkn=`),"");
     return tokenExtracted;
@@ -148,13 +166,16 @@ export class AuthRgpdService {
         let isJwtIsValid: Boolean;
               
         if (new Date(jwt_decode(token).exp * 1000) > dateNow) {
+
             isJwtIsValid = true;
             this.logger.info("AuthRgpdService Log : La date du token est valide");
             this.setRgpdTokenToLS(token);
+
         } else {
+
             isJwtIsValid = false;
-            this.logger.info("AuthRgpdService Log : La date du token est valide");
-            console.log("authRgpdService : La date du token n est pas valide");
+            this.logger.info("AuthRgpdService Log : La date du token n est pas valide");
+
         }
             
         return isJwtIsValid;
@@ -166,7 +187,8 @@ export class AuthRgpdService {
      * avec un token valide au MidleWare
      * @param token 
      */
-    public askANewRgpdTokenByEmail(token: string) {
+    public askANewRgpdTokenByEmail(token: string): void {
+
         this.logger.info("AuthRgpdServcice Log : Demande de nouveau lien par Email");
         let prenomClient: string = this.getPrenomClientFromToken(token);
         let idClient: number = this.getIdClientFromToken(token);
@@ -181,9 +203,11 @@ export class AuthRgpdService {
   
         // Observable 
         this.httpCli.get(url, { headers: headers, params: httpParams })
-            .subscribe(            
+            .subscribe(   
+
                 res => { this._bottomsheetservice.openBottomSheet("E-mail envoyé");
                          this.logger.info("AuthRgpdServcice Log : Demande de nouveau lien par envoyee");},
+
                 err => { this._bottomsheetservice.openBottomSheet("E-mail non envoye");
                          this.logger.error("AuthRgpdServcice Log : Demande de nouveau lien non envoyee");}
             )  
@@ -235,7 +259,9 @@ export class AuthRgpdService {
     public removeRgpdTokenFromLS(): boolean {
 
         this.logger.info("AuthRgpdServcice Log : suppression du Token du Localstorage"); 
+
         try{
+
             localStorage.removeItem("Rgpd_Item");
             this.logger.info("AuthRgpdServcice Log : Le token a ete supprime du Localstorage");
             return true;

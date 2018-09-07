@@ -14,7 +14,7 @@
 
         <div *ngIf="!openAppFromRgpdUrl; else  rgpdBlock" class="flex-heure">
             <!-- Date au milieur de la toolbar -->
-            <span >{{ dateBrute | date: 'EEEE d MMMM yyyy':'':'fr' | DateFirstCharUpper }}</span>      
+            <span >{{ dateBrute | date: 'EEEE d MMMM yyyy':'':'fr' | FirstCharUpperPipe }}</span>      
         </div>
         <ng-template #rgpdBlock>
             <p>

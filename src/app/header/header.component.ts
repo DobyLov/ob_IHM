@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, Inject, ChangeDetectorRef, AfterViewInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { AuthService } from '../login/auth.service';
-import { Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
+import { NGXLogger } from 'ngx-logger';
+import { AuthService } from '../login/auth.service';
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
 import { SideBarService } from '../service/sidebar.service';
-import { NGXLogger } from '../../../node_modules/ngx-logger';
 
 @Component({
   selector: 'app-header',
@@ -31,13 +32,15 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   openAppFromRgpdUrl: boolean = false;
 
   constructor(  private logger: NGXLogger,
+                private location: Location,
                 private _authService: AuthService,
                 public _utilisateurservice: UtilisateurService,
                 public _sidebarservice: SideBarService,
                 private router: Router,
                 public dialog: MatDialog,
                 private cd: ChangeDetectorRef) { 
-                      this.url = window.location.href.toString() 
+
+                      this.url = this.location.path();
                     }
 
   ngOnInit() {
@@ -92,7 +95,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   /**
    * detection de la partie RGPD dans l URL de la page 
-   * 
+   * @returns boolean   * 
    */
   public searchRgpdMgmtInsideUrl(): Boolean {
 
@@ -123,14 +126,19 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   }
 
+  /**
+   * Ouverture du Modal ( confirmation utilisateur )
+   */
   openDialog(): void {
 
-    let dialogRef = this.dialog.open(ConfimrUserFromTokenModalComponent, {
+    this.logger.info("HeaderComponent Log : Ouverture du Modal ( Confirmation utilisateur )");
+    let dialogRef = this.dialog.open( ConfimrUserFromTokenModalComponent, {
       width: '450px',
       data: { userMail: this.userMail }
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.logger.info("HeaderComponent Log : Fermeture du Modal de Login");
       this.ngOnInit();
     });
 
@@ -175,8 +183,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   /**
    * Ouverture de la page Login
    */
-  openLogin(): void {
+  public openLogin(): void {
 
+    this.logger.info("HeaderComponent Log : Ouverture du Modal de Login");
     this.router.navigate(['/login']);
 
   }
@@ -185,8 +194,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
    * Toggle du sideNav
    * 
    */
-  sideBarNavToggle():void {
+  private sideBarNavToggle(): void {
 
+    this.logger.info("HeaderComponent Log : Toggle du SideNav Menu");
     this._sidebarservice.sideNavToggle();
 
   }
@@ -194,8 +204,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   /**
    * Forcer le SideNav a se fermer
    */
-  forceCloseSideMenuBar() {
-    // console.log("headerComponent : forceCloseSideMenuBar : ");
+  public forceCloseSideMenuBar(): void {
+
+    this.logger.info("HeaderComponent Log : Bouton Menu click & force la fermeture du SideBarMenu");
     this._sidebarservice.changeStatusOfSideNavState(true);
 
   }
@@ -218,9 +229,9 @@ export class ConfimrUserFromTokenModalComponent implements OnInit {
 
   constructor( private logger: NGXLogger,
                private router: Router,
-               public _authService: AuthService,
+               private _authService: AuthService,
                public dialogRef: MatDialogRef<ConfimrUserFromTokenModalComponent>,
-               public _utilisateurService: UtilisateurService,
+               private _utilisateurService: UtilisateurService,
                @Inject(MAT_DIALOG_DATA) public data: any) {
 
       this.token = this._authService.getOBTokenViaMailFromLS(this.userMail);
@@ -228,7 +239,9 @@ export class ConfimrUserFromTokenModalComponent implements OnInit {
 
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.logger.info("ConfimrUserFromTokenModalComponent Log : Ouverture du Modal ( Confirmation Utilisateur )");
+   }
 
   /**
    * Confirmation que l utilisateur est bien
@@ -246,8 +259,11 @@ export class ConfimrUserFromTokenModalComponent implements OnInit {
     }, 2000);
   }
 
-  onNoClick() {
-				
+  /**
+   * Fermeture du Modal ( Confirmation Utilisateur )
+   */
+  private onNoClick() {
+		this.logger.info("ConfimrUserFromTokenModalComponent Log : Fermeture du Modal ( Confirmeation Utilisateur )");
     this.router.navigate(['./welcome']);
     this.dialogRef.close();
   }

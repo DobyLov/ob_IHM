@@ -2,27 +2,33 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { ToasterService } from '../service/toaster.service';
+import { NGXLogger } from 'ngx-logger';
 
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
 
-  constructor(
-    private router: Router, 
-    private authService: AuthService,
-    private _toasterService: ToasterService) {}
+  constructor( private logger: NGXLogger,
+               private router: Router, 
+               private authService: AuthService,
+               private _toasterService: ToasterService) {}
 
   canActivate() {
-    // let isTokenIsExpired = this.authService.isTokenDateIsExpired();
-    // console.log("authGard : presence du token : " + isTokenIsExpired);
+
+    this.logger.info("AuthGuardService Log : Verifie le La validite du Token");
+
     if (!this.authService.isTokenDateIsExpired() == true) {
-      // console.log("authGard : canactivate : verifToken : Token is OK");
+
+      this.logger.info("AuthGuardService Log : Le Token est valide");
       return true;
+
     } else {
-    // console.log("authGard : canactivate : token HS / tokenExpired");
+
+      this.logger.info("AuthGuardService Log : Le Token n est pas valide");
     this._toasterService.showToaster("veuillez vous Connectez !", "snackbarWarning", 2500);
     this.router.navigate(['/login']);
     return false;
+    
     }
   }
 }

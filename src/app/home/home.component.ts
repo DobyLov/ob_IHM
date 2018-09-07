@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { UtilisateurService } from '../utilisateur/utilisateur.service';
-import { Utilisateur } from '../utilisateur/utilisateur';
 import { Router } from '@angular/router';
+import { NGXLogger } from 'ngx-logger';
+import { UtilisateurService } from '../utilisateur/utilisateur.service';
 import { CurrentUtilisateur } from '../login/currentUtilisateur';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  providers : [ NGXLogger]
 })
 export class HomeComponent implements OnInit {
 
-  // userlogged: string = localStorage.getItem('connectedUser');
   currentUtilisateur$: CurrentUtilisateur;
 
-  constructor( private _utilisateurservice: UtilisateurService,
+  constructor( private logger: NGXLogger,
+               private _utilisateurservice: UtilisateurService,
                private router: Router ) {
 
               this._utilisateurservice.getObsCurrentUtilisateur
@@ -23,16 +24,20 @@ export class HomeComponent implements OnInit {
               );    
               }
 
-  ngOnInit() {
-    // console.log("HomeComponent : ngOnInit : NomUtilisateur" + this.currentUtilisateur$.nomUtilisateur);
-   }
+  ngOnInit() {}
  
   getInfo() { }
 
-  goWelcome() {
+  /**
+   * Ouverture de la page Welcom
+   */
+  public goWelcome() {
     this.router.navigate(['./welcome'])
   }
 
+    /**
+   * Ouverture de la page Welcom
+   */
   goUnknowPage() {
     this.router.navigate(['./welcomee'])
 
