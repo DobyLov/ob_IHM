@@ -1,8 +1,8 @@
-# obihmV5
+# ob_IHM
 C'est l'interface homme machine du logiciel OpusBeauté.
 
 ## Objectif de OpusBeauté
- Ce logiciel est un outils de gestion clientelle dans le mêtier du cosmétique. 
+ Web Application de gestion clientelle dans le mêtier du cosmétique. 
  **RDV :** Il permet de consulter, ajouter, modifier, supprimer un rendez-vous horodaté avec une client pour une prestation cosmetique ainsi que sa durée.
  **Client:**
  
