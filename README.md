@@ -1,4 +1,4 @@
-# ![](https://github.com/DobyLov/ob_IHM/blob/master/src/assets/OpBLogo.svg) ob_IHM
+# ![](https://github.com/DobyLov/ob_IHM/blob/master/src/assets/Mini_4Git_OBLogoNoBkg.png) ob_IHM
 C'est l'interface homme machine du logiciel OpusBeauté.
 
 ## Objectif de OpusBeauté
