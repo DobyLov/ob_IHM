@@ -34,7 +34,6 @@ Lien du projet en Java : OpusBeaute_MiddleWare [Heading link](https://github.com
 Le projet a migré à trois reprises de angular 4 à 5 à 6
 
 ### Installation du Projet
-Prérequis: https://github.com/DobyLov/opusbeaute_middleware
 
 ```
 'git clone https://github.com/DobyLov/ob_IHM.git
