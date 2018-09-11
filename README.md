@@ -3,12 +3,20 @@ C'est l'interface homme machine du logiciel OpusBeauté.
 
 ## Objectif de OpusBeauté
  Web Application de gestion clientelle dans le mêtier du cosmétique. 
- **RDV :** Il permet de consulter, ajouter, modifier, supprimer un rendez-vous horodaté avec une client pour une prestation cosmetique ainsi que sa durée.
- **Client:**
  
- **Prestation:**
+ **RDV :** Permet de consulter, ajouter, modifier, supprimer un rendez-vous horodaté avec une client pour une prestation cosmetique ainsi que sa durée.
  
- **Praticiens:**
+ **Client:** Détail du client, Ajout, Edition, Modification, Suppressiondu d'un Client.
+ 
+ **Prestation:** Détail d'une Prestation, Ajout, Edition, Modification, Suppressiondu d'un Prestation.
+ 
+ **Praticiens:** Détail d'un Praticien, Ajout, Edition, Modification, Suppressiondu d'un Praticien.
+
+ **Connexion:** Permet l'authentification sur l'application d'un Utilisateur/Praticien.
+
+ **Parametre:** Detail de l'utilisateur logué, permet le changement du mot de passe...
+
+ **Rgpd:** Informe le Client de l'utilisation de ses données et règle les moyens de communication.
 
 ### Outils de développement
 * Node JS 8
