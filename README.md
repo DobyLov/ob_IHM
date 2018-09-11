@@ -28,22 +28,24 @@ C'est l'interface homme machine du logiciel OpusBeauté.
 ### Prérequis
 L'IHM est développée en TypeScript via le frameWork Angular et s'appuie sur des WebServices pour fonctionner.
 Ces Webservices sont proposés par un MiddleWare en java.
+Lien du projet en Java : OpusBeaute_MiddleWare [Heading link](https://github.com/DobyLov/opusbeaute_middleware)
 
 ### Migration
 Le projet a migré à trois reprises de angular 4 à 5 à 6
 
 ### Installation du Projet
-Prérequis: 
-    il faut installer 
-
-https://github.com/DobyLov/opusbeaute_middleware
+Prérequis: https://github.com/DobyLov/opusbeaute_middleware
 
 ```
-git clone https://github.com/DobyLov/ob_IHM.git
+'git clone https://github.com/DobyLov/ob_IHM.git
 ```
-```
-npm install
-```
-```
-ng serve --port 4200 --host 192.168.1.100 --aot
+    <?php
+        echo "Hello world!";
+    ?>
+    
+####Inline code
+'npm install'
+
+####Inline code
+'ng serve --port 4200 --host 192.168.1.100 --aot'
 ```
