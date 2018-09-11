@@ -395,7 +395,7 @@ export class RgpdComponent implements OnInit {
      */
     public onChangeTs_NewsLetter_Checked(): boolean {
         this.ts_NewsLetter_Checked = !this.ts_NewsLetter_Checked; 
-        this.ts_MailRdvReminder_hasMoved = !this.ts_NewsLetter_hasMoved;
+        this.ts_NewsLetter_hasMoved = !this.ts_NewsLetter_hasMoved;
         this.activateSendSettingsButton();
         return this.ts_NewsLetter_Checked;
     }
