@@ -19,11 +19,7 @@ C'est l'interface homme machine du logiciel OpusBeauté.
  **Rgpd:** Informe le Client de l'utilisation de ses données et règle les moyens de communication.
 
 ### Outils de développement
-* Node JS 8
-* npm
-* Angular 6
-* @angularCli
-* Chrome
+![](https://img.shields.io/badge/Node%20:-V%209.6.1-blue.svg) ![](https://img.shields.io/badge/Angular%20:-V%206.1.0-blue.svg) ![](https://img.shields.io/badge/Npm%20:-V%205.6.0-blue.svg) ![](https://img.shields.io/badge/Angular%20CLI%20:-V%206.1.1-blue.svg) ![](https://img.shields.io/badge/Chrome%20:-V%2068.0.3440.106-blue.svg)
 
 ### Prérequis
 L'IHM est développée en TypeScript via le frameWork Angular et s'appuie sur des WebServices pour fonctionner.
@@ -38,11 +34,10 @@ Le projet a migré à trois reprises de angular 4 à 5 à 6
 ```
 'git clone https://github.com/DobyLov/ob_IHM.git
 ```
-    <?php
+    '<?php
         echo "Hello world!";
-    ?>
-    
-####Inline code
+    ?>'
+
 'npm install'
 
 ####Inline code
