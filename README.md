@@ -40,10 +40,9 @@ Le projet a migré à trois reprises de angular 4 à 5 à 6
 
 ### Installation du Projet
 
-    fred
-        echo "Hello world!";
-    ?>okokedzedze
+    ```
     git clone https://github.com/DobyLov/ob_IHM.git
     npm install
-    ng serve --port 4200 --host 192.168.1.100 --aot'
+    ng serve --port 4200 --host 192.168.1.100 --aot```
+
 
