@@ -232,10 +232,14 @@ export class RgpdComponent implements OnInit {
     public checkBox_InfoPerso_Switcher(): void {
         this.checkBox_InfoPerso_Checked = !this.checkBox_InfoPerso_Checked;
         if ( this.checkBox_InfoPerso_Checked.valueOf() == true ) {
+
+            this.disable_SendRgpdButton = !this.disable_SendRgpdButton;
             this._bottomsheet.openBottomSheet("Votre demande sera notifiée");
         }
 
         if ( this.checkBox_InfoPerso_Checked.valueOf() == false ) {
+
+            this.disable_SendRgpdButton = !this.disable_SendRgpdButton ;
             this._bottomsheet.openBottomSheet("Notification annulée");
         } 
         // this.stepperFormInfoPersoValidation.setValue(true);
@@ -322,12 +326,18 @@ export class RgpdComponent implements OnInit {
      * @param booleanValue 
      */
     private booleanValueToStringValueChanger(booleanValue: boolean): string {
+       
         let stringToReturn: string;
         if ( booleanValue == false ) {
+
             stringToReturn = "F";
+
         } else {
+
             stringToReturn = "T";
+
         }
+
         return stringToReturn;
     }
 
@@ -338,22 +348,28 @@ export class RgpdComponent implements OnInit {
      */
     public sendRgpdOptions(): void {
         this.logger.info("RgpdComponent Log : Persistance des settings");
+        console.log("value of demnade de correction : " + this.client.telephoneClient);
         this.rgpdDateModifierUpdater(this.rgpd);
         this.rgpdSettingsModifier(this.rgpd);
         this._rgpdservice.setRgpdClientSettings(this.rgpd);
         this.logger.info("RgpdComponent Log : La persistance des settings effectuee");
         this.disable_SendRgpdButton = true;
+        this._authrgpdservice.removeRgpdTokenFromLS();
         setTimeout(() => {
             this.exitRgpdSettings();
         }, 9000);
-
+        
     }
 
     /**
      * Assigner les nouveau Settings Rgpd a l objet rgpd: Rgpd
      * @param rgpd 
+     * @returns rgpd
      */
     private rgpdSettingsModifier(rgpd: Rgpd): Rgpd {
+
+        this.logger.info("RgpdComponent Log : Conversion des réglages Boolean To String F / T");
+        rgpd.rgpdDemandeDeCorrectionInformations = this.booleanValueToStringValueChanger(this.checkBox_InfoPerso_Checked);        
         rgpd.rgpdSubsComm = this.booleanValueToStringValueChanger(this.ts_Commercials_Checked);
         rgpd.rgpdSubsMailRem = this.booleanValueToStringValueChanger(this.ts_MailRdvReminder_Checked);
         rgpd.rgpdSubsNLetter = this.booleanValueToStringValueChanger(this.ts_NewsLetter_Checked);
@@ -426,6 +442,15 @@ export class RgpdComponent implements OnInit {
         return this.ts_MailRdvReminder_Checked;
     }
 
+    public getStatusOfNeedCorrection() {
+        this.cd.detectChanges();
+        if (this.disable_SendRgpdButton) {
+            this.cd.detectChanges();
+        } else {
+            this.cd.detectChanges();
+        }
+    }
+
     /**
      * Activer le bouton pour envoyer les nouveaux
      * Rgpd settings
@@ -447,8 +472,6 @@ export class RgpdComponent implements OnInit {
                 this.disable_SendRgpdButton = true;
             }
     }
-
-
 
     /**
      * A la sortie de la page Rgpd :

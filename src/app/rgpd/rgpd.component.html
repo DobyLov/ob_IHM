@@ -36,7 +36,7 @@
                                       mat-mini-fab color="primary"  
                                       (click)="goToRgpdSettings()" 
                                       matStepperNext 
-                                      matTooltip="Consulter les informations personnlles">
+                                      matTooltip="Consulter les informations personnelles">
                                 <i class="material-icons">navigate_next</i>
                               </button>
                             </span>                             
@@ -61,27 +61,27 @@
                               </div>
                               <div class="rgpdInfoPersoListeItem-Container">
                                   <span class="rgpdInfoPersoIntitule-Item">Prénom : </span>
-                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.prenomClient | FirstCharUpperPipe}}</span>
+                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.prenomClient | FirstCharUpperPipe }}</span>
                               </div>
                               <div class="rgpdInfoPersoListeItem-Container">
                                   <span class="rgpdInfoPersoIntitule-Item">Email : </span>
-                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.adresseMailClient | lowercase }}</span>
+                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.adresseMailClient | lowercase | ifIsNullSetToNonRenseignePipe}}</span>
                               </div>
                               <div class="rgpdInfoPersoListeItem-Container">
                                   <span class="rgpdInfoPersoIntitule-Item">Ligne Fixe : </span>
-                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.telephoneClient }}</span>
+                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.telephoneClient | ifIsNullSetToNonRenseignePipe }}</span>
                               </div>
                               <div class="rgpdInfoPersoListeItem-Container">
                                   <span class="rgpdInfoPersoIntitule-Item">Ligne Mob : </span>
-                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.telMobileClient }}</span>   
+                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.telMobileClient | ifIsNullSetToNonRenseignePipe }}</span>   
                               </div>
                               <div class="rgpdInfoPersoListeItem-Container">
                                   <span class="rgpdInfoPersoIntitule-Item">Genre : </span>
-                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.genreClient.genreHum | FirstCharUpperPipe }}</span>
+                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.genreClient.genreHum | FirstCharUpperPipe | ifIsNullSetToNonRenseignePipe }}</span>
                               </div>
                               <div class="rgpdInfoPersoListeItem-Container">
                                   <span class="rgpdInfoPersoIntitule-Item">Naissance : </span>
-                                  <span class="rgpdInfoPersoContenu-Item"*ngIf="requestComplete"> {{ client.dateAnniversaireClient | date: 'dd/MM/yyyy'}}</span>
+                                  <span class="rgpdInfoPersoContenu-Item"*ngIf="requestComplete"> {{ client.dateAnniversaireClient | date: 'dd/MM/yyyy' | ifIsNullSetToNonRenseignePipe }}</span>
                               </div>
                               <div class="rgpdInfoPersoTitle-Container">
                                   <span class="rgpdinfoPersoTitleIcon"><i class="material-icons">person_pin_circle</i></span>
@@ -89,15 +89,15 @@
                               </div>
                               <div class="rgpdInfoPersoListeItem-Container">
                                   <span class="rgpdInfoPersoIntitule-Item">Rue : </span>
-                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.adresse.numero }},&nbsp; {{ client.adresse.rue | FirstCharUpperPipe }}  </span>
+                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.adresse.numero }},&nbsp; {{ client.adresse.rue | FirstCharUpperPipe | ifIsNullSetToNonRenseignePipe }}  </span>
                               </div>
                               <div class="rgpdInfoPersoListeItem-Container">
                                   <span class="rgpdInfoPersoIntitule-Item">CP : </span>
-                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.adresse.zipCode }}</span>
+                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.adresse.zipCode | ifIsNullSetToNonRenseignePipe }}</span>
                               </div>
                               <div class="rgpdInfoPersoListeItem-Container">
                                   <span class="rgpdInfoPersoIntitule-Item">Ville : </span>
-                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.adresse.ville }}</span>
+                                  <span class="rgpdInfoPersoContenu-Item" *ngIf="requestComplete"> {{ client.adresse.ville | ifIsNullSetToNonRenseignePipe }}</span>
                               </div>                   
                           </div>
                           <br><mat-divider></mat-divider>
@@ -109,7 +109,7 @@
                                 [(checked)]="checkBox_InfoPerso_Checked"
                                 [labelPosition]='labelPoz'
                                 matTooltip="Demander une correction des informations"> 
-                                Correction                             
+                                Correction d'informations                          
                               </mat-checkbox>
                               <span>
                                 <button class="rgpdInfoPersoActionPrevious"
@@ -124,6 +124,7 @@
                                     mat-mini-fab 
                                     color="primary"
                                     matStepperNext
+                                    (click)="getStatusOfNeedCorrection()"
                                     matTooltip="Aller aux réglages">
                                     <i class="material-icons">navigate_next</i>
                                 </button>

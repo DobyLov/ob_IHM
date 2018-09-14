@@ -1,14 +1,18 @@
+import { Prestation } from "../prestation/prestation";
+import { Praticien } from "../praticien/praticien";
+import { Client } from "../client/client";
+import { Utilisateur } from "../utilisateur/utilisateur";
+import { LieuRdv } from "../lieuRdv/lieuRdv";
+
 export class Rdv {
-    public compteurSeances: number;
-    public dateDeSaisie: string;
-    public dateHeureDebut: string;
-    public dateHeureFin: string;
-    public devis: number;
-    public facture: number;
+
     public idRdv: number;
-    public lieuRdv: string;
-    public nom: string;
-    public prenom: string;
-    public prestation: number;
-    public produit: number
+    public dateHeureDebut: number;
+    public dateDeSaisie: number;
+    public dateHeureFin: number;
+    public prestation: Prestation;
+    public praticien: Praticien;
+    public client: Client;
+    public lieuRdv: LieuRdv;
+    public utilisateur: Utilisateur;
 }

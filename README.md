@@ -2,10 +2,7 @@
 ob_IHM est l'Interface homme machine du logiciel OpusBeauté.
 
 ## Objectif de OpusBeauté
- Web Application de gestion clientelle dans le mêtier du cosmétique. 
-
-### Version des outils de développement
-![](https://img.shields.io/badge/Node%20:-V%209.6.1-blue.svg) ![](https://img.shields.io/badge/Angular%20:-V%206.1.0-blue.svg) ![](https://img.shields.io/badge/Npm%20:-V%205.6.0-blue.svg) ![](https://img.shields.io/badge/Angular%20CLI%20:-V%206.1.1-blue.svg) ![](https://img.shields.io/badge/Chrome%20:-V%2068.0.3440.106-blue.svg) ![](https://img.shields.io/badge/Angular%20CDK%20:-V%206.4.1-blue.svg) ![](https://img.shields.io/badge/rxj%20:-V%206.2.2-blue.svg) ![](https://img.shields.io/badge/Typescript%20:-V%202.9.2-blue.svg)
+ Web Application de gestion clientelle en cosmétique. 
  
  ### Fonctionnalités
  Ci-dessous la liste des actions réalisables 
@@ -26,23 +23,23 @@ ob_IHM est l'Interface homme machine du logiciel OpusBeauté.
 
  **Rgpd:** Informe le Client de l'utilisation de ses données et règle les moyens de communication.
 
-
-
-
 ### Prérequis
 L'IHM est développée en TypeScript via le frameWork Angular et s'appuie sur des WebServices pour fonctionner.
-Ces Webservices sont proposés par un MiddleWare en java.
+Ces WebServices sont proposés par un MiddleWare développé en java.
 
 Projet en Java (MiddleWare): [OpusBeaute_MiddleWare](https://github.com/DobyLov/opusbeaute_middleware)
+
+### Version des outils de développement
+![](https://img.shields.io/badge/Node%20:-V%209.6.1-blue.svg) ![](https://img.shields.io/badge/Angular%20:-V%206.1.0-blue.svg) ![](https://img.shields.io/badge/Npm%20:-V%205.6.0-blue.svg) ![](https://img.shields.io/badge/Angular%20CLI%20:-V%206.1.1-blue.svg) ![](https://img.shields.io/badge/Chrome%20:-V%2068.0.3440.106-blue.svg) ![](https://img.shields.io/badge/Angular%20CDK%20:-V%206.4.1-blue.svg) ![](https://img.shields.io/badge/rxj%20:-V%206.2.2-blue.svg) ![](https://img.shields.io/badge/Typescript%20:-V%202.9.2-blue.svg)
 
 ### Migration
 Le projet a migré à trois reprises de angular 4 à 5 à 6
 
 ### Installation du Projet
+! Récuperer l'@IP du poste sur lequel sera installé ob_IHM !
 
-    　
     git clone https://github.com/DobyLov/ob_IHM.git
     npm install
-    ng serve --port 4200 --host 192.168.1.100 --aot　
+    ng serve --port 4200 --host @IP à renseigner --aot
 
 

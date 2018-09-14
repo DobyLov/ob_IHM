@@ -72,11 +72,13 @@ registerLocaleData( localeFr, 'fr-FR', localeFrExtra );
 import { TimeMinuteTwoDigitsPipe } from './pipe/timeMinuteTwoDigits.pipe';
 import { TimeHourTwoDigitsPipe } from './pipe/timeHourTwoDigits.pipe';
 import { FirstCharUpperPipe } from './pipe/firstCharUpperPipe.pipe';
+import { IfIsNullSetToNonRenseignePipe } from './pipe/ifIsNullSetToNonRenseigne.pipe';
 
 // Perfect ScrollBar
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+
 
 //logger
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
@@ -127,6 +129,7 @@ import {
     ForgottenPwdModalComponent,
     HeaderComponent,
     HomeComponent,
+    IfIsNullSetToNonRenseignePipe,
     LoginComponent,
     LoginModalComponent,
     PagenotfoundComponent,   

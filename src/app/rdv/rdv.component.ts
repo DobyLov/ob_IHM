@@ -3,6 +3,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 // moment pour le formatage des dates
 import * as moment from 'moment';
+import { RdvService } from './rdv.service';
+import { NGXLogger } from '../../../node_modules/ngx-logger';
 moment.locale('fr');
 
 // import { FormGroup, Validators } from '@angular/forms';
@@ -15,15 +17,7 @@ moment.locale('fr');
 
 export class RdvComponent implements OnInit {
 
-  //initialise Hdebut Hfin
-  // hDSelectedValue: string = '00';
-  // mDSelectedValue: string = '00';
-  // hFSelectedValue: string = '00';
-  // mFSelectedValue: string = '00';
-   
-  // dateSearchPanelOpenState: boolean = false;
-  // rdvInfoPanelOpenState: boolean = true;
-  // proprietes des champs Datepicker
+
   dateSelectionnee: Date = new Date();
   dateSelectionneeA: Date = new Date();
   dateSelectionneeB: Date = new Date();
@@ -93,9 +87,14 @@ export class RdvComponent implements OnInit {
   dateReservationRdvD: Date;
   dateReservationRdvF: Date;
 
-  constructor( ) { }
+  listRdv: any; 
+  constructor( private logger: NGXLogger,
+               private _rdvservice: RdvService ) { }
 
   ngOnInit() {
+
+    this._rdvservice.getRdvList();
+    
   }
 
   calculDate() {

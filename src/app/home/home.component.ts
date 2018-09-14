@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
 import { CurrentUtilisateur } from '../login/currentUtilisateur';
+import { RdvService } from '../rdv/rdv.service';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ export class HomeComponent implements OnInit {
 
   constructor( private logger: NGXLogger,
                private _utilisateurservice: UtilisateurService,
+               private _rdvservice: RdvService,
                private router: Router ) {
 
               this._utilisateurservice.getObsCurrentUtilisateur
@@ -24,7 +26,7 @@ export class HomeComponent implements OnInit {
               );    
               }
 
-  ngOnInit() {}
+  ngOnInit() { this._rdvservice.getRdvList() }
  
   getInfo() { }
 

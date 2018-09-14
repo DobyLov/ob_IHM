@@ -7,6 +7,7 @@ import { BottomSheetService } from '../service/bottomsheet.service';
 import { NGXLogger } from 'ngx-logger';
 import { Client } from '../client/client';
 import { ClientService } from '../client/client.service';
+import { AuthRgpdService } from './authRgpd.service';
 
 @Injectable(
   { providedIn: 'root' }
@@ -17,6 +18,7 @@ export class RgpdService {
   constructor(  private logger: NGXLogger,
                 private httpCli: HttpClient,
                 private _clientservice: ClientService,
+                private _authrgpdservice: AuthRgpdService,
                 private _bottomsheetservice: BottomSheetService) { }
 
   /**
@@ -39,18 +41,27 @@ export class RgpdService {
    */
   public setRgpdClientSettings(rgpd: Rgpd): void {
     
-    let body: Rgpd = rgpd;
-    this.httpCli.put(this.url + "/updatesettings/", body, { responseType: 'json' })
-      .subscribe(
-        (res: Rgpd)  => 
-        { 
-          this.openBottomSheet("Vos préférence sont enregistrées");
-          this.logger.info("rgpdService Log : Les Nouveaux Settings sont persistes");
-        },
-        err => {
-          this.openBottomSheet("Il y a eu un problème, vos préférences ne sont pas enregistrées");
-          this.logger.error("rgpdService Log : Les Nouveaux Settings n ont pas etes persistes");
-        })
+    if(this._authrgpdservice.isRgpdTokenDateIsValid(this._authrgpdservice.getRgpdTokenFromLS())) {
+
+      let body: Rgpd = rgpd;
+      this.httpCli.put(this.url + "/updatesettings/", body, { responseType: 'json' })
+        .subscribe(
+          (res: Rgpd)  => 
+          { 
+            this.openBottomSheet("Vos préférence sont enregistrées");
+            this.logger.info("rgpdService Log : Les Nouveaux Settings sont persistes");
+          },
+          err => {
+            this.openBottomSheet("Il y a eu un problème, vos préférences ne sont pas enregistrées");
+            this.logger.error("rgpdService Log : Les Nouveaux Settings n ont pas etes persistes");
+          })
+    
+    } else {
+
+          this.openBottomSheet("Votre Lien n'est plus valide, vos préférences ne sont pas enregistrées");
+
+    }
+
   }
 
   /**

@@ -262,7 +262,7 @@ export class AuthRgpdService {
 
         try{
 
-            localStorage.removeItem("Rgpd_Item");
+            localStorage.removeItem("rgpd_tkn");
             this.logger.info("AuthRgpdServcice Log : Le token a ete supprime du Localstorage");
             return true;
             

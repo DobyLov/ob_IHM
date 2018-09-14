@@ -11,6 +11,6 @@ export class Rgpd {
 	rgpdInfoCliVal: string; // boolean T=true / f=false 
 	rgpdDateCliVal: number;
 	rgpdCliCanModifyRgpdSettings: string; // boolean T=true / f=false 
-
+	rgpdDemandeDeCorrectionInformations: string; // boolean T=true / f=falses
 
 }
