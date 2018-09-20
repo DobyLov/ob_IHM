@@ -1,16 +1,64 @@
-.flex-tcontainer-centertemp {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    align-content: center;
-    justify-content: center
-}
+  .flex-container {
+      font-family: 'Montserrat', sans-serif;  
+      display: flex;
+      flex-direction: row;
+      flex-flow: nowrap;
+      justify-content: center;
+  }
 
-.flex-tcontainer-centertemp > div {
-    // background-color: #f1f1f1;
-    width: 100px;
-    margin: 10px;
+  .mat-card-cardTitle {
+    padding-left: 5px;
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 20px;
+    font-weight: 900;    
+  }
+
+  .mat-table {
+    overflow: auto;
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 16px; 
+    font-weight: bold;   
+    color: black;
+  }
+
+  .mat-header-cell {
+    // text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+//   .mat-cell .flex-stretch {
+//     display: -ms-flexbox;
+//     display: -webkit-flex;
+//     display: flex;
+//     -webkit-align-self: stretch;
+//     -ms-flex-item-align: stretch;
+//     align-self: stretch;
+//     /* align-items center so that cell content is vertically centered */
+//     -webkit-align-items: center;
+//     -ms-flex-align: center;
+//     align-items: center;
+//     margin-left: 10px;
+//     margin-right: 10px;
+// }
+
+  .mat-cell {   
+    height: 20px;
+    // text-align: center;
+    font-size: 16px;
+    font-weight: lighter;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .mat-column-numeroRdv {
+    width: 15px;
+  }
+
+  .mat-column-lieuRdv {
+    max-width: 155px;
+  }
+
+  .button-Modifier {
     text-align: center;
-    line-height: 75px;
-    font-size: 30px;
   }

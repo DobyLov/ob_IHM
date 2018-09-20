@@ -26,6 +26,7 @@ export class AuthGuardService implements CanActivate {
 
       this.logger.info("AuthGuardService Log : Le Token n est pas valide");
     this._toasterService.showToaster("veuillez vous Connectez !", "snackbarWarning", 2500);
+    this.authService.logOut;
     this.router.navigate(['/login']);
     return false;
     

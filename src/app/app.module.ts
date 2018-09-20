@@ -73,6 +73,7 @@ import { TimeMinuteTwoDigitsPipe } from './pipe/timeMinuteTwoDigits.pipe';
 import { TimeHourTwoDigitsPipe } from './pipe/timeHourTwoDigits.pipe';
 import { FirstCharUpperPipe } from './pipe/firstCharUpperPipe.pipe';
 import { IfIsNullSetToNonRenseignePipe } from './pipe/ifIsNullSetToNonRenseigne.pipe';
+import { Time24Pipe } from './pipe/time24.pipe';
 
 // Perfect ScrollBar
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -112,6 +113,7 @@ import {
   MatStepperModule,
   MatSidenavModule,
   MatSnackBarModule,
+  MatTableModule,
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule } from '@angular/material';
@@ -142,6 +144,7 @@ import {
     RgpdTokenExpiredComponent,
     RgpdUrlAlteredComponent,
     SnackBarComponent,
+    Time24Pipe,
     TimeMinuteTwoDigitsPipe,
     TimeHourTwoDigitsPipe,
     UtilisateurComponent,
@@ -177,6 +180,7 @@ import {
     MatSnackBarModule,
     MatToolbarModule,
     MatTooltipModule,
+    MatTableModule,
     MatTabsModule,  
     PerfectScrollbarModule,
     ReactiveFormsModule,

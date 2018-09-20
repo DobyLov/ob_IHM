@@ -1,10 +1,9 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
 
 // moment pour le formatage des dates
 import * as moment from 'moment';
 import { RdvService } from './rdv.service';
-import { NGXLogger } from '../../../node_modules/ngx-logger';
+import { NGXLogger } from 'ngx-logger';
 moment.locale('fr');
 
 // import { FormGroup, Validators } from '@angular/forms';
@@ -93,7 +92,7 @@ export class RdvComponent implements OnInit {
 
   ngOnInit() {
 
-    this._rdvservice.getRdvList();
+    this._rdvservice.getRdvListTotale();
     
   }
 

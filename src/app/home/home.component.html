@@ -1,26 +1,84 @@
 
-  <div class="flex-tcontainer-centertemp">
-    <p>
-      Bonjour 
-      {{ currentUtilisateur$.prenomUtilisateur  }},
-      <br>
-      vous êtes sur votre page d'accueil.
-    </p>
-    <p>
-      
-    </p>
-  </div>
-  <div>
-      <button mat-menu-item (click)="goWelcome()" class="connMenu">
-          <fa name="fas fa-adjust" size="1x"> </fa>
-          <span>goWelcome</span>
-      </button>
-  </div>
-  <div>
-      <button mat-menu-item (click)="goUnknowPage()" class="connMenu">
-          <fa name="fas fa-adjust" size="1x"> </fa>
-          <span>pageUnknow</span>
-      </button>
-  </div>
+<link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Source+Sans+Pro|Montserrat:300" rel="stylesheet">
+<div class="flex-container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <span class="mat-card-cardTitle" *ngIf="nbRdv == 0">
+                        {{ currentUtilisateur$.prenomUtilisateur  }}, vous n'avez pas de rendez-vous ce jour.
+                </span>
+                <span class="mat-card-cardTitle" *ngIf="nbRdv ==  1">
+                        {{ currentUtilisateur$.prenomUtilisateur  }}, voici votre rendez-vous ce jour :
+                </span>
+                <span class="mat-card-cardTitle" *ngIf="nbRdv > 1">
+                        {{ currentUtilisateur$.prenomUtilisateur  }}, voici vos {{ nbRdv }} rendez-vous ce jour :
+                </span>
+                
+            </mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content *ngIf="nbRdv > 0">
+            <mat-table #table mat-table [dataSource]="dataSource">
+                
+                <ng-container matColumnDef="numeroRdv">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element; let i = index ">{{ i + 1 }}</td>
+                </ng-container>    
 
+                <ng-container matColumnDef="dateHeureDebut">
+                    <th mat-header-cell *matHeaderCellDef> Heure</th>
+                    <td mat-cell *matCellDef="let element"> {{ element.dateHeureDebut | Time24Pipe }} </td>
+                </ng-container>
 
+                <ng-container matColumnDef="separation">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element"> - </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="dateHeureFin">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.dateHeureFin | Time24Pipe }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="lieuRdv">
+                    <th mat-header-cell *matHeaderCellDef> Lieu Rdv </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.lieuRdv.lieuRdv }} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="activite">
+                    <th mat-header-cell *matHeaderCellDef> Prestation </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.prestation.activite }} </td>
+                </ng-container> 
+    
+                <ng-container matColumnDef="prestation">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.prestation.soin  | FirstCharUpperPipe }} </td>
+                </ng-container>     
+                
+                <ng-container matColumnDef="nomClient">
+                    <th mat-header-cell *matHeaderCellDef> Client </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.client.nomClient }} </td>
+                </ng-container>  
+    
+                <ng-container matColumnDef="prenomClient">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.client.prenomClient }} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="idRdv">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element" class="button-Modifier"> 
+                        <button mat-icon-button 
+                                color="primary" 
+                                (click)="openRdvDetails(element.idRdv)">
+                            <i class="material-icons">edit</i>
+                        </button>
+                    </td>            
+                </ng-container>
+    
+                <tr mat-header-row *matHeaderRowDef="tabNomsColonnes"></tr>
+                <tr mat-row *matRowDef="let row; columns: tabNomsColonnes;"></tr>
+            </mat-table>
+        </mat-card-content>
+    </mat-card>
+        

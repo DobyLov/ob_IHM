@@ -22,9 +22,7 @@ export class RgpdTokenExpiredComponent implements OnInit {
     displayRgpdMailRenewalPurposal: boolean = true;
 
     constructor( private logger: NGXLogger,
-                 private _authrgpdservice: AuthRgpdService,
-                 private _bottomsheetservice: BottomSheetService,
-                 private router: Router) {
+                 private _authrgpdservice: AuthRgpdService,) {
                     this.GetInfos();
                 }
 

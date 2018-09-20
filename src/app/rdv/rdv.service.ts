@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { appConfig } from '../constant/apiOpusBeauteUrl';
 import { NGXLogger } from 'ngx-logger';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 import { Rdv } from './rdv';
+import { Observable } from 'rxjs';
 
 
 @Injectable(
@@ -17,54 +19,126 @@ export class RdvService {
 
   }
 
-  public getRdvList() {
+/**
+ * recupere la liste totale de rdv
+ */
+  public getRdvListTotale(): Observable<Rdv[]> {
 
     this.logger.info("RdvService Log : Recupere la liste totale de Rdv");
-    this.httpCli.get<Rdv>(this.url + '/list').subscribe(res =>  { JSON.stringify(res)
-      //  { 
-        console.log("listerdv : res" + res);
-      // console.log("listerdv : res" + res.client.nomClient);
-      // console.log("listerdv : res" + res.client.prenomClient);
-      // console.log("listerdv : res" + res.prestation.activite);
-      // console.log("listerdv : res" + res.prestation.soin);
-      // console.log("listerdv : res" + res.dateHeureDebut);
-      // console.log("listerdv : res" + res.dateHeureFin);
-      // console.log("listerdv : res" + res.praticien.prenomPraticien);
-      // console.log("listerdv : res" + res.lieuRdv.lieuRdv);
-      // console.log("listerdv : res" + res.lieuRdv.adresseLieuRdv.numero);
-      // console.log("listerdv : res" + res.lieuRdv.adresseLieuRdv.rue);
-      // console.log("listerdv : res" + res.lieuRdv.adresseLieuRdv.ville);
-      // console.log("listerdv : res" + res.lieuRdv.adresseLieuRdv.zipCode);
-    } 
-    );
+
+    return this.httpCli
+      .get<Rdv[]>(this.url + '/liste')
+      .pipe(map  (res  => res));
+       
+  }
+
+  /**
+   * Recupere un rdv par son id
+   * @param idRdv 
+   * @returns Observble<Rdv>
+   */
+  public getRdvById(idRdv: number): Observable<Rdv> {
+
+    this.logger.info("RdvService Log : Recupere le Rdv par son id");
+
+    return this.httpCli
+      .get<Rdv>(this.url + '/' + idRdv)
+      .pipe(map  (res  => res));
 
   }
 
-  public getRdvById() {
+  /**
+   * Recupere la liste totale de rdv via une date fournie
+   * @param dateFournie 
+   * @returns Observable<Rdv[]>
+   */
+  public getRdvListeTotaleParDate(dateFournie: string): Observable<Rdv[]> {
+
+    this.logger.info("RdvService Log : Recupere la liste totale par Date");
+
+    let myHttpParams= new HttpParams();
+    myHttpParams.append("date", `${dateFournie}`);
+
+    return this.httpCli
+      .get<Rdv[]>(this.url + '/listepardate' , { params: myHttpParams })
+      .pipe(map  (res  => res));
 
   }
 
-  public getRdvListByDate() {
+  // /**
+  //  * Recupere la liste de Rdv par praticien
+  //  * @param idPraticien
+  //  * @returns Observable<Rdv[]>
+  //  */
+  // public getRdvListTotaleParPraticien( idPraticien: number ): Observable<Rdv[]> {
+
+  //   this.logger.info("RdvService Log : Recupere la liste par Praticien de Rdv");
+
+  //   return this.httpCli
+  //     .get<Rdv[]>(this.url + '/liste/' + idPraticien)
+  //     .pipe(map  (res  => res));
+
+  // }
+/**
+ * Recupere la liste de Rdv par Date fournie et par idpraticien 
+ * @param dateFournie 
+ * @param idPraticien 
+ * @returns Observable<Rdv[]>
+ */
+  public getRdvListByByDateAndByPraticien( dateFournie: string, idPraticien: number ): Observable<Rdv[]> {
+
+    this.logger.info("RdvService Log : Recupere la liste par Date par praticien selectionne");
+
+    // let myHttpParams = new HttpParams()
+    // .append("date", `${dateFournie}`);
+    // .append("idPraticien", `${idPraticien}`);
+
+    return this.httpCli
+      // .get<Rdv[]>(this.url + '/listepardateparpraticien' , { params: myHttpParams })
+      .get<Rdv[]>(this.url + '/listepardateparpraticien' , { params: new HttpParams().append("date", `${dateFournie}`).append("idPraticien", `${idPraticien}`) })
+      .pipe(map  (res  => res));
 
   }
 
-  public getRdvListByRangOfDate() {
+  /**
+   * Recupere la liste de Rdv par plage de dates fournies et par idPratien
+   * @param dateA 
+   * @param dateB 
+   * @param idPraticien 
+   * @returns Observable<Rdv[]>
+   */
+  public getRdvListRangeOfDateADateBAndByPraticien( dateA: string, dateB: string, idPraticien: number, ): Observable<Rdv[]> {
+
+    this.logger.info("RdvService Log : Recupere la liste par plage de date et par praticien");
+
+    let myHttpParams = new HttpParams();
+    myHttpParams.append("dateA", `${dateA}`);
+    myHttpParams.append("dateB", `${dateB}`);
+    myHttpParams.append("idPraticien", `${idPraticien}`);
+
+    return this.httpCli
+      .get<Rdv[]>(this.url + '/listeparplagedateparpraticien' , { params: myHttpParams })
+      .pipe(map  (res  => res));
 
   }
 
-  public getRdvListByClientName() {
+  /**
+   * Recupere la liste de rdv par l id client
+   * @param idClient 
+   * @returns Observable<Rdv[]>
+   */
+  public getRdvListByClientName( idClient: number ): Observable<Rdv[]> {
+
+    this.logger.info("RdvService Log : Recupere la liste par l id du client");
+
+    let myHttpParams = new HttpParams();
+    myHttpParams.append("idClient", `${idClient}`);
+
+    return this.httpCli
+      .get<Rdv[]>(this.url + '/listeparplagedateparpraticien' , { params: myHttpParams })
+      .pipe(map  (res  => res));    
 
   }
 
-  public getRdvListByPraticien() {
 
-  }
-
-  public getRdvListByPrestation() {
-
-  }
-
-  public getRdvListBySoin() {
-
-  }
 }

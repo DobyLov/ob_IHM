@@ -43,11 +43,10 @@ export class AuthGuardRgpdService implements CanActivate {
       } else if (this._authrgpdservice.isRgpdTokenDateIsValid((this._authrgpdservice.urlRgpdTokenExtractor(this.url)))) {
         
         this.logger.info("AuthGuardRgpdService : Le Token est valide.");
-        return true;
         this.logger.info("AuthGuardRgpdService : Fin de la Methode Activate");
-        this.router.navigate(['./rgpd']);
-        
 
+        return true; 
+        this.router.navigate(['./rgpd']);
       } else {
 
         this.logger.info("AuthGuardRgpdService : La date du Token est perimee");

@@ -238,10 +238,9 @@ export class AuthRgpdService {
      */
     public getRgpdTokenFromLS(): string {
 
-        this.logger.info("AuthRgpdServcice Log : Recuperation du Token depuis le LocalStorage"); 
+        this.logger.info("AuthRgpdServcice Log : Recuperation du Token depuis le LocalStorage(LS)"); 
 
         try {
-
             let tokenFLs = localStorage.getItem("rgpd_tkn");
             this.logger.info("AuthRgpdServcice Log : Le Token Est trouve et recupere depuis le LocalStorage");
             return tokenFLs;

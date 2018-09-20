@@ -172,7 +172,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
    * 
    */
   logOut(): void {
-
+    
     this.logger.info("HeaderComponent Log : Deconnexion de l application");
     this._authService.changeStatusOfIsLogged(false);
     this._authService.removeGivenTokenFromLS(this.userMail);
