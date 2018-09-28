@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   // @ViewChild('matMenu') cdr: ChangeDetectorRef;
   @Input() isUserIsConnected$: boolean;
   sideNavToggle$: Boolean;
+  // @Input() isScreenIsMobile: boolean;
 
   userMail: string;
   prenom: string;
@@ -39,16 +40,17 @@ export class HeaderComponent implements OnInit, AfterViewInit {
                 private router: Router,
                 public dialog: MatDialog,
                 private cd: ChangeDetectorRef) { 
-
+                      
                       this.url = this.location.path();
+
                     }
 
   ngOnInit() {
 
-    // rsouscription de l observable Boolean du bouton de la navBar
-    this._sidebarservice.statusOfSideNavToggle.subscribe(isSideBarOpen => {
-      this.sideNavToggle$ = isSideBarOpen.valueOf();
-    })
+      // Souscription de l observable Boolean du bouton de la navBar
+      this._sidebarservice.statusOfSideNavToggle.subscribe(isSideBarOpen => {
+        this.sideNavToggle$ = isSideBarOpen.valueOf();
+      })
 
       // souscription a l orbservable isconnected
       this._authService.statusOfIsUserIsLogged.subscribe(isLoggedIn => {

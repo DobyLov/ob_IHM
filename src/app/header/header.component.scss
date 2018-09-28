@@ -7,18 +7,7 @@
     top: 0;
     left: 0;
     right: 0;
-    display: flex;
-  }
-
-  .connMenu {
-    font-family: 'Montserrat', sans-serif;  
-    font-size: 16px; 
-    font-weight: bold;   
-    color: black;
-  }
-
-  .connMenu:disabled {
-    color: rgba(78, 76, 76, 0.644);
+    font-family: 'Montserrat', sans-serif;
   }
 
   // Welcom main page
@@ -31,40 +20,121 @@
     justify-content:space-between;
   }
   
-  .flex-item1 {
-    -webkit-flex: 1 1 auto;
-    flex: 1 1 auto;
-  }  
-
-  .flex-heure {
-    -webkit-flex: 1 0 0;
-    flex: 1 0 0;
-    text-align: center;
-    font-family: 'Montserrat', sans-serif;  
-    font-size: 22px;
-    font-weight: bold;
-    color: black;
-    // font-weight: 300; // bold est plus fort
+  .sideNavBtn {
+    text-align: left;
+    // -webkit-flex: 1 1 auto;
+    flex: auto;
   }
 
-  .flex-item3 {
-    -webkit-flex: 1 0 auto;
-    flex: 1 0 0;
+  @media screen and (max-width: 370px) {
+
+    .flex-heure {  
+      // display: none;    
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: black;
+    }
+
+    .desktop {
+      display: none;
+    }
+
+    .mobile {
+      display: inline;
+    }
+
+
+    .rgpdEntry1 {
+      color: rgb(201, 144, 39);
+      font-family: 'Great vibes', cursive;
+      font-size: 32px;
+    }
+
+    .rgpdEntry2 {
+      // align-items: flex-start;
+      color: black;
+      font-family: 'Great vibes', cursive;
+      font-size: 25px;
+    }
+  }
+  
+  @media screen and (min-width: 371px) 
+  and (max-width: 500px) {
+
+    .flex-heure {      
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: black;
+    }
+
+    .mobile {
+      display: none;
+    }
+
+
+    .rgpdEntry1 {
+      color: rgb(201, 144, 39);
+      font-family: 'Great vibes', cursive;
+      font-size: 32px;
+    }
+
+    .rgpdEntry2 {
+      // align-items: flex-start;
+      color: black;
+      font-family: 'Great vibes', cursive;
+      font-size: 25px;
+    }
+
+  }
+
+  @media screen and (min-width: 501px) {
+
+    .flex-heure {      
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: black;
+    }
+
+    .mobile {
+      display: none;
+    }
+
+    .desktop {
+      display: inline;
+    }
+
+    .rgpdEntry1 {
+      color: rgb(201, 144, 39);
+      font-family: 'Great vibes', cursive;
+      font-size: 45px;
+    }
+
+    .rgpdEntry2 {
+      // align-items: flex-start;
+      color: black;
+      font-family: 'Great vibes', cursive;
+      font-size: 35px;
+    }
+  }
+
+  // LoginBtn
+  .authBtnMenu {
+    // -webkit-flex: auto;
+    flex: auto;
     // align-self: flex-end;
     text-align: right;
   }
 
-
-  // header du rgpd
-  .style1 {
-    color: rgb(201, 144, 39);
-    font-family: 'Great vibes', cursive;
-    font-size: 45px;
-  }
-  
-  .style3 {
-    // align-items: flex-start;
+  .connMenu {
+    font-size: 16px; 
+    font-weight: bold;   
     color: black;
-    font-family: 'Great vibes', cursive;
-    font-size: 30px;
   }
+
+  .connMenu:disabled {
+    color: rgba(78, 76, 76, 0.644);
+  }
+

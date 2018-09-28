@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, AfterViewChecked, AfterViewInit, AfterContentInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterViewChecked, AfterViewInit, AfterContentInit, OnDestroy, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
@@ -20,6 +20,7 @@ import { Subscription } from '../../../node_modules/rxjs';
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
+  // @Input() isScreenIsMobile$: boolean;
   currentUtilisateur$: CurrentUtilisateur;
   rdvList: Rdv[];
   tabNomsColonnes: string[] = ['numeroRdv','dateHeureDebut','separation', 'dateHeureFin', 
@@ -51,7 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                   
               }
 
-  ngOnInit() { }
+  ngOnInit() {  }
 
   ngOnDestroy() {  
     

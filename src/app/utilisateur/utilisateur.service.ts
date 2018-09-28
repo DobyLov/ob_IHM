@@ -6,7 +6,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { CurrentUtilisateur } from '../login/currentUtilisateur';
 import { Router } from '@angular/router';
 import { Observable } from '../../../node_modules/rxjs';
-import { map } from 'rxjs/operators';
 import { NGXLogger } from '../../../node_modules/ngx-logger';
 
 @Injectable()

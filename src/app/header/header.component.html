@@ -1,46 +1,47 @@
+
 <link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Source+Sans+Pro|Montserrat:300" rel="stylesheet">
- <!-- toolbar  -->
+<!-- toolbar  -->
  <mat-toolbar class="header" color="primary">
     <mat-toolbar-row class="flex-container-toolbar"> 
-        <div class="flex-item1"> 
+        <div class="sideNavBtn"> 
             <button *ngIf=!openAppFromRgpdUrl mat-icon-button [disabled]="!isUserIsConnected$" (click)="sideBarNavToggle()">
-                    <!-- <button mat-icon-button [disabled]="!isUserIsConnected$" > -->
-            <!-- <mat-icon>menu</mat-icon> -->
-            <img src="./assets/OpBLogo.svg" width="30" height="30" border="0">
-            <!-- <fa name="fas fa-bars" size="2x"></fa> -->
+            <img src="./assets/OpBLogo.svg" width="30" height="30" >
             </button>
         </div>
-        <!-- </span> -->
 
         <div *ngIf="!openAppFromRgpdUrl; else  rgpdBlock" class="flex-heure">
-            <!-- Date au milieur de la toolbar -->
-            <span >{{ dateBrute | date: 'EEEE d MMMM yyyy':'':'fr' | FirstCharUpperPipe }}</span>      
+            <!-- <span class="mobile">fred</span> -->
+            <span class="mobile">{{ dateBrute | date: 'dd / MM / yyyy':'':'fr' }}</span>
+            <span class="desktop">{{ dateBrute | date: 'EEEE d MMMM yyyy':'':'fr' | FirstCharUpperPipe }}</span> 
+ 
         </div>
+
         <ng-template #rgpdBlock>
             <p>
-                <span class="style1">La Bonbonnière</span>
-                <span class="style3">&nbsp;d'Audrey</span>
+                <span class="rgpdEntry1">La Bonbonnière</span>
+                <span class="rgpdEntry2">&nbsp;d'Audrey</span>
             </p>
         </ng-template>
  
-        <div class="flex-item3">
+        <div class="authBtnMenu">
+
             <button *ngIf=!openAppFromRgpdUrl mat-icon-button [matMenuTriggerFor]="menuLogin" (click)="forceCloseSideMenuBar()">
-                    <mat-icon>blur_on</mat-icon>
-                <!-- <fa name="fas fa-user" size="2x"></fa> -->
-            </button>      
+                    <mat-icon>menu</mat-icon>
+            </button>  
+
             <!-- // Bouton login a droite de la tootlbar -->
             <mat-menu #menuLogin="matMenu">
                 <button mat-menu-item [disabled]="isUserIsConnected$" (click)="openLogin()" class="connMenu">
-                    <fa name="fas fa-sign-in" size="1x"> </fa>
+                    <mat-icon>input</mat-icon>&nbsp;
                     <span>Connexion</span>
                 </button>
                 <button mat-menu-item [disabled]="!isUserIsConnected$" class="connMenu">
-                    <fa name="fas fa-cogs" size="1x"></fa> 
-                    <span>Paramètres</span>
+                    <mat-icon>settings</mat-icon>&nbsp;
+                    <span> Paramètres</span>
                 </button>
                 <button mat-menu-item [disabled]="!isUserIsConnected$" (click)="logOut()" class="connMenu">
-                    <fa name="fas fa-sign-out" size="1x"></fa>
-                    <span>Déconnexion</span>
+                    <mat-icon>exit_to_app</mat-icon>&nbsp;
+                    <span> Déconnexion</span>&nbsp;
                 </button>
             </mat-menu>
         </div>

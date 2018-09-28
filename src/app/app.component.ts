@@ -1,55 +1,35 @@
-import {
-  Component,
-  ViewChild,
-  HostListener,
-  OnInit,
-  OnDestroy,
-  Inject,
-  ChangeDetectionStrategy,
-  Input,
-  AfterContentInit,
-  ChangeDetectorRef,
-  OnChanges
-} from '@angular/core';
+import { Component, ViewChild, OnInit, ChangeDetectionStrategy, AfterViewInit, Input } from '@angular/core';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+// CDK_BreakPoint
+// import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
-import {
-  MatMenuTrigger,
-  MatSidenav,
-  MatSidenavContainer
-} from '@angular/material';
-
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA
-} from '@angular/material';
-
+// Material
+import { MatSidenav } from '@angular/material';
 
 import { SideBarService } from './service/sidebar.service';
 import { CurrentUtilisateur } from './login/currentUtilisateur';
 import { UtilisateurService } from './utilisateur/utilisateur.service';
 
+// Logger
+import { NGXLogger } from '../../node_modules/ngx-logger';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./app.component.scss']
+  
+  styleUrls: ['./app.component.scss'],
+  providers: [NGXLogger],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 
-export class AppComponent implements OnInit {
-
+export class AppComponent implements OnInit, AfterViewInit {
 
   // control de la sidenav
   @ViewChild('mysidenav') private mysidenav: MatSidenav;
-  // control du menu
-  // @ViewChild(MatMenuTrigger) private menutrigger: MatMenuTrigger;
-
   cUtilisateur: CurrentUtilisateur;
-  userNameConnected$ = 'toto';
+  userNameConnected$ = '';
   sideNavToggle: Boolean = false;
 
   title = 'OOPPusbeaute'
@@ -63,12 +43,12 @@ export class AppComponent implements OnInit {
   }]
 
 
-  constructor(private _sidebarservice: SideBarService,
-              public _utilisateurservice: UtilisateurService
-             
-  ) {}
+  constructor(private logger: NGXLogger,
+              private _sidebarservice: SideBarService,
+              public _utilisateurservice: UtilisateurService  ) {  }
 
   ngOnInit() {
+
     // observable pour fermer la sidebar des le clic sur le btn menu Login dans le header
     this._sidebarservice.statusOfSideNavState.subscribe(forceCloseSideBar => {
       if (forceCloseSideBar.valueOf() == true) {
@@ -82,17 +62,21 @@ export class AppComponent implements OnInit {
 
       if (sideBarButton.valueOf() == true) {
 
-        if (sideBarButton.valueOf() == true && this.mysidenav.opened.valueOf() == true) {          
+        if (sideBarButton.valueOf() == true && this.mysidenav.opened.valueOf() == true) { 
+          this.logger.info("AppComponent Log : Fermeture de SideNav");         
           this.mysidenav.close();
         } else {
+          this.logger.info("AppComponent Log : Overture de SideNav");         
           this.mysidenav.open();
         }
 
       } else {
 
         if (sideBarButton.valueOf() == false && this.mysidenav.opened.valueOf() == false) {
+          this.logger.info("AppComponent Log : Fermeture de SideNav");         
           this.mysidenav.open();
         } else {
+          this.logger.info("AppComponent Log : Fermeture de SideNav");         
           this.mysidenav.close();
         }
       }
@@ -101,14 +85,28 @@ export class AppComponent implements OnInit {
 
     // Observable pour recuperer le Current Utilisateur
     this._utilisateurservice.getObsCurrentUtilisateur.subscribe((cu: CurrentUtilisateur) => {
+      this.logger.info("AppComponent Log : Recuperation du CurrentUser");
       if (cu == null) {
+
+        this.logger.info("AppComponent Log : Utilisateur non connecte");
         this.userNameConnected$ = null;
+
       } else {
-      this.userNameConnected$ = cu.prenomUtilisateur;
-      }
+
+        this.logger.info("AppComponent Log : Utilisateur connecte");
+        this.userNameConnected$ = cu.prenomUtilisateur;
+      
+    }
     })
     
   }
+
+  ngAfterViewInit() {
+
+  }
+
+
+
 }
 
 

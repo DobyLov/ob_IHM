@@ -1,5 +1,15 @@
+// core
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
+// ResponsiveApp
+import { ResponsiveAppMediaService } from './service/responsiveAppMedia.service';
+
+//CDK
+import { LayoutModule } from '@angular/cdk/layout';
+
+// FlexLayout
+import { FlexLayoutModule } from '@angular/flex-layout'
 
 // Animations
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -157,6 +167,8 @@ import {
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    FlexLayoutModule,
+    LayoutModule,
     LoggerModule.forRoot({level: NgxLoggerLevel.INFO}),
     MatBottomSheetModule,
     MatButtonModule,
@@ -191,6 +203,7 @@ import {
   providers: [{ provide: LOCALE_ID, useValue: 'fr' },
               { provide: HTTP_INTERCEPTORS, useClass: AuthRequestOptions, multi : true },
               { provide: AuthErrorHandlerService, useClass: AuthErrorHandlerService },
+              { provide: ResponsiveAppMediaService, useClass: ResponsiveAppMediaService },
               { provide: UtilisateurService, useClass: UtilisateurService },
               { provide: SideBarService, useClass: SideBarService },
               { provide: AuthService, useClass: AuthService },
