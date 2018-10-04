@@ -5,35 +5,50 @@
     right: 0;
   }
 
-.flex-container {
-  display: flex;
-  flex-direction: row;
-  flex-flow: nowrap;
-  align-content:center;
-  justify-content:last baseline;
-  // align-items: baseline;
-  // align-items: center;
-}
-.flex-item {
-  flex: 1;
-  text-align: center;
-  vertical-align: baseline;
-  font-family: 'Pacifico';
-  font-size: 16px;
-}
+  // @media screen 
+  // // and ( min-width: 660px )
+  // and ( orientation: landscape ) {
 
-.flex-item img {
-  // position:fixed;
-  // top:30px; /* Move the image down, so its top is half way down the container */
-  // margin-top:-100px; /* Move the image back up half its height */
-}
-
-.flex-item-smallfont {
-  font-family: 'Pacifico';
-  font-size: 10px;
-}
+  //   .footer {
+  //    display: fixed;
+  //   }
 
 
+  // }
+  // Overide toolbar settings Design => 48px mobile, 56px-64px desktop 
+  .mat-toolbar {min-height: 48px}
+  .mat-toolbar-row {max-height: 48px}
 
+  .flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-flow: nowrap;
+    align-content:center;
+    // justify-content:last baseline;
+  }
+  .flex-item {
+    // flex: 1;
+    width: 100%;
+    text-align: center;
+    // vertical-align: baseline;
+    font-family: 'Pacifico';
+    font-size: 16px;
+  }
 
+  .flex-item img {
+    width: 20px;
+    height: 20px;
+    margin-bottom: -2px; 
+  }
+
+  .flex-item-smallfont {
+    font-family: 'Pacifico';
+    font-size: 10px;
+  }
+
+  .flex-item-smallfont img {
+    width: 12px;
+    height: 12px;
+    margin-bottom: -1px;  
+  }
 

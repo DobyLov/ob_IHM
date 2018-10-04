@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, ChangeDetectionStrategy, AfterViewInit, Input } from '@angular/core';
+import { Component, ViewChild, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 // CDK_BreakPoint
 // import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
@@ -24,15 +24,15 @@ import { NGXLogger } from '../../node_modules/ngx-logger';
 })
 
 
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
 
   // control de la sidenav
-  @ViewChild('mysidenav') private mysidenav: MatSidenav;
+  @ViewChild('mysidenav') public mysidenav: MatSidenav;
   cUtilisateur: CurrentUtilisateur;
   userNameConnected$ = '';
   sideNavToggle: Boolean = false;
 
-  title = 'OOPPusbeaute'
+  // title = 'OOPPusbeaute'
 
   sidenavlinks = [{
     rubrique: 'Rdv',
@@ -43,9 +43,11 @@ export class AppComponent implements OnInit, AfterViewInit {
   }]
 
 
-  constructor(private logger: NGXLogger,
+  constructor(
+              private logger: NGXLogger,
               private _sidebarservice: SideBarService,
-              public _utilisateurservice: UtilisateurService  ) {  }
+              public _utilisateurservice: UtilisateurService  
+              ) {  }
 
   ngOnInit() {
 
@@ -100,11 +102,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     })
     
   }
-
-  ngAfterViewInit() {
-
-  }
-
 
 
 }

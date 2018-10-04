@@ -1,2 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 /* configurer le fichier styles.scss */
+
+.appBody {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+}

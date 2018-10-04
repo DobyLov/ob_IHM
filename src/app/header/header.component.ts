@@ -152,7 +152,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   private checkIfATokenIsPresentInLS():void {
 
     this.logger.info("HeaderComponent Log : Verification si un Token est deja present dans le Localstorage");
-    if (this._authService.isTokenDateIsExpired() == false) {
+    if (this._authService.isTokenDateIsNotExpired() == false) {
 
         this.logOut();
         

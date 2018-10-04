@@ -21,6 +21,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+// Device Detector
+import { DeviceDetectorModule } from 'ngx-device-detector';
+
 // Components opusbeaute
 import { WelcomeComponent } from './welcome/welcome.component';
 import { HeaderComponent } from './header/header.component';
@@ -166,6 +169,7 @@ import {
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    DeviceDetectorModule.forRoot(),
     FormsModule,
     FlexLayoutModule,
     LayoutModule,

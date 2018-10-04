@@ -64,7 +64,7 @@ export class AuthService {
           if (res != null) {
             loglog = true;
             this.changeStatusOfIsLogged(loglog);   
-            this.logger.info("AuthService Log : Authentification avec succes");      
+            this.logger.info("AuthService Log : Authentification avec succès");      
             this.messageToaster('Authentification avec succès !', 'snackbarInfo', 3000);
             resolve();            
           }
@@ -75,7 +75,7 @@ export class AuthService {
           loglog = false;
           this.changeStatusOfIsLogged(loglog);
           this.logger.info("AuthService Log : Authentification Echouee");   
-          this.messageToaster("Veuillez vérifier vos crédentiels",'snackbarWarning', 2000) }
+          this.messageToaster("Veuillez vérifier vos informations",'snackbarWarning', 2000) }
         
         )
     })      
@@ -255,7 +255,7 @@ export class AuthService {
    * Verifie si la date du token est expiree
    * @returns boolean
    */
-  public isTokenDateIsExpired(): boolean {
+  public isTokenDateIsNotExpired(): boolean {
 
     this.logger.info("AuthService Log : Verification de la validite de la date fourni dans le token");
     // console.log("auth.service isTokenDateIsExpired cherche le token dans le LS");
@@ -327,7 +327,7 @@ export class AuthService {
    *  supprime le token
    * @param userMail 
    */
-  logOut(userMail): void {
+  public logOut(userMail): void {
 
     this.logger.info("AuthService Log : Deconexion de l utilisateur");
     this.changeStatusOfIsLogged(false);
@@ -344,7 +344,7 @@ export class AuthService {
    * @param timer 
    */
   // snackbarWarning, // snackbarInfo, // timer en ms  
-  messageToaster(message, style, timer) {
+  public messageToaster(message, style, timer) {
 
     this.logger.info("AuthService Log : Message a toaster : " + message);
     this._toasterService.showToaster(message, style, timer);

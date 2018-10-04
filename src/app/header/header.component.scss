@@ -1,29 +1,38 @@
 // Header standard quand l app n est pas ouverte
 // depuis le L url Rgpd
-.header {
+  .header {
     position: fixed;
-    margin: 0;
-    padding: 0;
-    top: 0;
-    left: 0;
-    right: 0;
+    width: 100%;
     font-family: 'Montserrat', sans-serif;
-  }
+    }
 
   // Welcom main page
   .flex-container-toolbar {
     display: flex;
-    display: -webkit-flex;
+    // display: -webkit-flex;
     -webkit-flex-flow: row wrap;
-    flex-flow: row wrap;
+    direction: row;
+    flex-flow: nowrap;
     -webkit-justify-content: space-between;
-    justify-content:space-between;
+    justify-content: space-between;
+  }
+
+  .flex-container-toolbar img {
+    width: 30px;
+    height: 30px;
   }
   
   .sideNavBtn {
+    flex: auto;
     text-align: left;
     // -webkit-flex: 1 1 auto;
-    flex: auto;
+  }
+
+  // Overide toolbar settings Design => 48px mobile, 56px-64px desktop 
+  .mat-toolbar {min-height: 48px}
+  .mat-toolbar-row {
+    max-height: 48px;
+    padding: 8px;
   }
 
   @media screen and (max-width: 370px) {
@@ -43,7 +52,6 @@
     .mobile {
       display: inline;
     }
-
 
     .rgpdEntry1 {
       color: rgb(201, 144, 39);

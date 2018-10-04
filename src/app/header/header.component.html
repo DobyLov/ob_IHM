@@ -1,16 +1,16 @@
 
 <link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Source+Sans+Pro|Montserrat:300" rel="stylesheet">
 <!-- toolbar  -->
+
  <mat-toolbar class="header" color="primary">
     <mat-toolbar-row class="flex-container-toolbar"> 
         <div class="sideNavBtn"> 
             <button *ngIf=!openAppFromRgpdUrl mat-icon-button [disabled]="!isUserIsConnected$" (click)="sideBarNavToggle()">
-            <img src="./assets/OpBLogo.svg" width="30" height="30" >
+            <img src="./assets/OpBLogo.svg">
             </button>
         </div>
 
         <div *ngIf="!openAppFromRgpdUrl; else  rgpdBlock" class="flex-heure">
-            <!-- <span class="mobile">fred</span> -->
             <span class="mobile">{{ dateBrute | date: 'dd / MM / yyyy':'':'fr' }}</span>
             <span class="desktop">{{ dateBrute | date: 'EEEE d MMMM yyyy':'':'fr' | FirstCharUpperPipe }}</span> 
  
@@ -27,9 +27,9 @@
 
             <button *ngIf=!openAppFromRgpdUrl mat-icon-button [matMenuTriggerFor]="menuLogin" (click)="forceCloseSideMenuBar()">
                     <mat-icon>menu</mat-icon>
-            </button>  
+            </button>
 
-            <!-- // Bouton login a droite de la tootlbar -->
+            <!-- Bouton login a droite de la tootlbar -->
             <mat-menu #menuLogin="matMenu">
                 <button mat-menu-item [disabled]="isUserIsConnected$" (click)="openLogin()" class="connMenu">
                     <mat-icon>input</mat-icon>&nbsp;
@@ -40,7 +40,7 @@
                     <span> Paramètres</span>
                 </button>
                 <button mat-menu-item [disabled]="!isUserIsConnected$" (click)="logOut()" class="connMenu">
-                    <mat-icon>exit_to_app</mat-icon>&nbsp;
+                    <mat-icon>launch</mat-icon>&nbsp;
                     <span> Déconnexion</span>&nbsp;
                 </button>
             </mat-menu>

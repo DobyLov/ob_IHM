@@ -10,14 +10,14 @@ export class AuthGuardService implements CanActivate {
 
   constructor( private logger: NGXLogger,
                private router: Router, 
-               private authService: AuthService,
+               private _authService: AuthService,
                private _toasterService: ToasterService) {}
 
   canActivate() {
 
     this.logger.info("AuthGuardService Log : Verifie le La validite du Token");
 
-    if (!this.authService.isTokenDateIsExpired() == true) {
+    if (!this._authService.isTokenDateIsNotExpired() == true) {
 
       this.logger.info("AuthGuardService Log : Le Token est valide");
       return true;
@@ -25,10 +25,10 @@ export class AuthGuardService implements CanActivate {
     } else {
 
       this.logger.info("AuthGuardService Log : Le Token n est pas valide");
-    this._toasterService.showToaster("veuillez vous Connectez !", "snackbarWarning", 2500);
-    this.authService.logOut;
-    this.router.navigate(['/login']);
-    return false;
+      this._toasterService.showToaster("Veuillez vous Connectez !", "snackbarWarning", 2500);    
+      this._authService.logOut(this._authService.getMailFromToken());
+      this.router.navigate(['/login']);
+      return false;
     
     }
   }

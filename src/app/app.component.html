@@ -1,28 +1,36 @@
+
 <app-header></app-header>
-<!-- sidenav -->
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #mysidenav role="directory" mode="over" opened="false" class="inside-sidenav" fixedTopGap=64  fixedBottomGap=64>
-        <mat-divider></mat-divider> 
-        <div>
-            <span class="userConn">{{ userNameConnected$ }} </span> 
-        </div>  
-        <div class="vertical-menu">  
-            <!-- <div> -->         
+    <mat-sidenav #mysidenav 
+                role="directory" 
+                mode="over" 
+                opened="false" 
+                class="inside-sidenav"
+
+                >
+    <!-- <menu-side-nav></menu-side-nav> -->
+    <div class="vertical-menu">           
             <h4 matSubheader><u>Menu</u></h4> 
-            <a class="btn btn-secondary" routerLink="/rdv" routerLinkActive="active" (click)="mysidenav.close()"  role="button">View details</a>
+            <a class="btn btn-secondary" 
+                routerLink="/rdv" 
+                routerLinkActive="active" 
+                (click)="mysidenav.close()"  
+                role="button">View details</a>
             <mat-divider></mat-divider>
             <h4 matSubheader><u>Rdv</u></h4> 
-            <div><a routerLink="/rdv" routerLinkActive="active" (click)="mysidenav.close()" role="button">Rdv</a></div>
+            <div><a routerLink="/rdv" routerLinkActive="active" 
+                (click)="mysidenav.close()" 
+                role="button">Rdv</a></div>
             <h4 matSubheader><u>Client</u></h4> 
-            <div><a routerLink="/client" routerLinkActive="active" (click)="mysidenav.close()">Client</a></div>
+            <div><a routerLink="/client" 
+                routerLinkActive="active" 
+                (click)="mysidenav.close()">Client</a></div>
         </div>
-    </mat-sidenav>  
-    <div>
-        <router-outlet></router-outlet> 
-    </div>
-    <div>
-        <app-footer></app-footer>
-    </div>
+        
+    </mat-sidenav> 
+    <router-outlet></router-outlet>
 
 </mat-sidenav-container>
+<app-footer></app-footer>
+
 
