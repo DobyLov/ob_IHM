@@ -1,24 +1,4 @@
-// .flex-container-root-row {
-//   display: flex;
-//   flex-direction: row;
-//   flex-wrap: nowrap;
-//   align-content: center;
-//   width: 100%;  
-//   border: 2px solid rgb(132, 31, 226);
-  
-// }
 
-// .flex.item-root-row {
-//   flex:1;
-//   // width: 350px;  /* Or whatever */
-//   // height: 300px; /* Or whatever */
-//   border: 2px solid rgb(226, 31, 80);
-//   // border-radius: 20px;
-//   // margin: auto;
-//   // width: 100%;
-//   // width: 350px;
-//   // height: 300px;
-// }
 .card-container {
   height: 80vh;
   display: flex;
@@ -32,8 +12,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  // padding: 10px;
-  // border-radius: 4px;
 }
 
 
@@ -42,19 +20,9 @@
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: flex-end;
-
     width: 350px;
-    // height: 250px; 
-    // width: 100%;
-    // height: 300px; 
-    // align-content: center;
-    // align-items:flex-start;
-    // border: 2px solid #AED581;
-    // border-radius: 30px;
-    // background-color: #AED581;
     border-right-color: #AED581;
     border-left-color: #AED581;
-
 
   }
   
@@ -67,9 +35,7 @@
     font-family: 'Montserrat', sans-serif;  
     font-size:24px;
     font-weight: bold;
-    // font-weight: 300; // bold est plus fort
     text-align: center;
-    // border: 1px solid rgb(9, 232, 240);
   }
   
   .flex-item {
@@ -78,21 +44,12 @@
     margin: 25px;
     width: 100%;
     border-right-color: chocolate;
-    // flex: none; /* make this flex item inflexible, so width property controls its width entirely */
-    // height: 40px;
   }
   
   .flex-item > * {
     width: 80%;
     height: 25px;
   }
-  
-//   .flex-item div {
-//     color: black;
-//     font-family: 'Great vibes', cursive;
-//     font-size: 20px;
-//     border: 1px solid rgb(240, 82, 9);
-//   }
   
   .flex-item-ForgottenPwd {
     
@@ -104,11 +61,6 @@
   .flex-item-bottom {
     flex:1;  
     height: 25px;
-    // margin: -25px;
-    // width: 100%;
-    // flex: none; /* make this flex item inflexible, so width property controls its width entirely */
-    // height: 40px;
-    // border: 1px solid rgb(9, 225, 240);
   }
 
   .flex-container-actionOkCancel {
@@ -116,14 +68,11 @@
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-start;
-    // text-align: center;
-    // width: 100%;
-
   }
+
   .flex-item-ActionOkCancel {
     flex:1;
     text-align: center;
-
   }
 
   

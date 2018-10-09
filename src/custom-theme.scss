@@ -20,8 +20,8 @@ $custom-theme: mat-light-theme($custom-primary, $custom-accent);
 
 
 .snackbarWarning {
-    height: 50;
-    width: 50;
+    height: 48px;
+    // width: 50px;
     color: #DD2C00;
     text-align: center;
     font-family: 'Montserrat', sans-serif;
@@ -31,8 +31,8 @@ $custom-theme: mat-light-theme($custom-primary, $custom-accent);
 }
 
 .snackbarInfo {
-    height: 50;
-    width: 50;
+    height: 48px;
+    // width: 50;
     color: #000000;
     text-align: center;
     font-family: 'Montserrat', sans-serif;
@@ -48,6 +48,7 @@ $custom-theme: mat-light-theme($custom-primary, $custom-accent);
     flex-flow: nowrap;
     justify-content: space-between;
     width: 100%;
+    height: 40px;
   }
   
   .flex-item-bottomsheet-extremity-L {
@@ -73,6 +74,7 @@ $custom-theme: mat-light-theme($custom-primary, $custom-accent);
       font-family: 'Montserrat', sans-serif; 
       font-size: 20px;
       font-weight: bold;
+
   }
 
 

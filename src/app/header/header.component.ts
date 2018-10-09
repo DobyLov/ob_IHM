@@ -173,11 +173,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
    * Deconnexion de l application
    * 
    */
-  logOut(): void {
+  public logOut(): void {
     
     this.logger.info("HeaderComponent Log : Deconnexion de l application");
     this._authService.changeStatusOfIsLogged(false);
     this._authService.removeGivenTokenFromLS(this.userMail);
+    this._authService.messageToaster("Vous êtes décconnecté(e)", 'snackbarInfo', 3000);
     this.router.navigate(['./welcome'])
 
   }
@@ -188,7 +189,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   public openLogin(): void {
 
     this.logger.info("HeaderComponent Log : Ouverture du Modal de Login");
-    this.router.navigate(['/login']);
+    this.router.navigate(['./login']);
 
   }
 

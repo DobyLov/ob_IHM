@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { FormControl, Validators } from '@angular/forms';
+import { ResponsiveAppMediaService } from '../../service/responsiveAppMedia.service';
+import { BreakpointObserver } from '../../../../node_modules/@angular/cdk/layout';
 
 @Component({
   selector: 'app-forgotten-pwd',
@@ -14,12 +16,36 @@ import { FormControl, Validators } from '@angular/forms';
 
 export class ForgottenPwdComponent implements OnInit {
 
+  // parametres des champs du modal
   emailForgottenPwd =' ';
   hide = true;
 
+  // Taille du Modal
+  modalWidth: number = 430;
+  modalHeight: number = 400; 
+  // infos pour definir le modal
+  isDeviceIsMobile: boolean;
+  isMobileOrientationLandscape: boolean;
+
   constructor( private logger: NGXLogger,
                private dialog: MatDialog,
-               private router: Router,) { }
+               private router: Router,
+               private _responsivappmediaservice: ResponsiveAppMediaService,
+              public _breakpointobserver: BreakpointObserver ) { 
+
+                this._responsivappmediaservice.isAMobilePlatform$
+                .subscribe(res => { this.isDeviceIsMobile = res.valueOf()})
+              
+              this.setModalMobilResolution()
+
+              const layoutChanges = _breakpointobserver.observe(
+                '(orientation: portrait)'
+              );
+              
+              layoutChanges.subscribe(result => {
+                this.logger.info("Logincomponent log : mode " + result.matches)
+              });
+               }
 
   ngOnInit() { 
 			    // open modal
@@ -28,11 +54,27 @@ export class ForgottenPwdComponent implements OnInit {
             this.openDialog();
           })
   }
+
+  /**
+   * Defini les dimensions du modal
+   * en fonction du Device detecte
+   */
+
+  private setModalMobilResolution() {
+
+    if (this.isDeviceIsMobile == true ) {
+      this.logger.info("LoginComponent Log : UI sur Terminal mobile");
+      this.modalWidth = 330;
+      this.modalHeight = 300;
+   } else {
+      this.logger.info("LoginComponent Log : Ui sur Desktop ");
+   }
+  }
                  
   openDialog(): void {        
     let dialogRef = this.dialog.open(ForgottenPwdModalComponent, {
-      maxWidth: '430px',
-      maxHeight: '400px',
+      maxWidth: this.modalWidth + 'px',
+      maxHeight: this.modalHeight + 'px',
         })
     
   dialogRef.afterClosed().subscribe (result => {

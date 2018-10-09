@@ -1,10 +1,12 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AuthService } from './auth.service'
 import { Router } from '@angular/router';
 import { Credentials } from './credentials';
 import { NGXLogger } from 'ngx-logger';
+import { ResponsiveAppMediaService } from '../service/responsiveAppMedia.service';
+import { BreakpointObserver } from '../../../node_modules/@angular/cdk/layout';
  
 @Component({
   selector: 'app-login',
@@ -15,15 +17,56 @@ import { NGXLogger } from 'ngx-logger';
 
 export class LoginComponent implements OnInit {
 
+  // Taille du Modal
+  modalWidth: number = 430;
+  modalHeight: number = 400; 
+  // options supplementaires du modal
+  isDeviceIsMobile: boolean;
+  isMobileOrientationLandscape: boolean;
+
   constructor( private logger: NGXLogger,
-               private router: Router,
-               public dialog: MatDialog) { }
-  
+               private router: Router,               
+               private _responsivappmediaservice: ResponsiveAppMediaService,
+               public dialog: MatDialog,
+               public _breakpointobserver: BreakpointObserver ) { 
+
+                this._responsivappmediaservice.isAMobilePlatform$
+                  .subscribe(res => { this.isDeviceIsMobile = res.valueOf()})
+                
+                this.setModalMobilResolution()
+
+                const layoutChanges = _breakpointobserver.observe(
+                  '(orientation: portrait)'
+                );
+                
+                layoutChanges.subscribe(result => {
+                  this.logger.info("Logincomponent log : mode " + result.matches)
+                });
+
+               }
+              
+
 
 	ngOnInit() {
 				setTimeout(() => {
 					this.openDialog()})
-	}
+  }
+  
+  /**
+   * Defini les dimensions du modal
+   * en fonction du Device detecte
+   */
+
+  private setModalMobilResolution() {
+
+    if (this.isDeviceIsMobile == true ) {
+      this.logger.info("LoginComponent Log : UI sur Terminal mobile");
+      this.modalWidth = 330;
+      this.modalHeight = 300;
+   } else {
+      this.logger.info("LoginComponent Log : Ui sur Desktop ");
+   }
+  }
   
   /**
    * Ouvrir le Modal de Login
@@ -31,8 +74,8 @@ export class LoginComponent implements OnInit {
   openDialog(): void {
     this.logger.info("LoginComponent Log : Ouverture du Modal ( Login )");
     let dialogRef = this.dialog.open(LoginModalComponent, {
-      width: '430px',
-      maxHeight: '400px',
+      width: this.modalWidth + 'px',
+      maxHeight: this.modalHeight + 'px',
       data: {  }
     });
 
@@ -56,9 +99,9 @@ export class LoginComponent implements OnInit {
   /**
    * Ouvre la page home
    */
-  private openHomePage(): void {
-		this.router.navigate(['./home']);
-  }
+  // private openHomePage(): void {
+	// 	this.router.navigate(['./home']);
+  // }
 
   /**
    * Deconnexion de l utilisateur
@@ -82,6 +125,8 @@ export class LoginComponent implements OnInit {
     hide = true;    
     loginForm: FormGroup;
     isUserIsConnected$: boolean;
+    isPortrait: boolean;
+    isLandscape: Boolean;
 
     constructor( private logger: NGXLogger,
                  private router: Router,
@@ -96,10 +141,13 @@ export class LoginComponent implements OnInit {
                       this.dialogRef.close();
                   } 
                 })
+ 
                 }
                 					
 		ngOnInit() {
-       this.createFromGroup();
+    
+      this.createFromGroup();
+
     }
     
     /**

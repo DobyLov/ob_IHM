@@ -332,7 +332,7 @@ export class AuthService {
     this.logger.info("AuthService Log : Deconexion de l utilisateur");
     this.changeStatusOfIsLogged(false);
     this.removeGivenTokenFromLS(userMail);
-    this.messageToaster('Vous êtes déconnecté', 'snackbarInfo', 3000);
+    this.messageToaster('Vous êtes déconnecté(e)', 'snackbarInfo', 3000);
 
   }
 

@@ -1,14 +1,12 @@
 
 <link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Roboto+Slab:700|Roboto:900|Source+Sans+Pro|Montserrat:300" rel="stylesheet">
 <div class="flex-container">    
-    <div class="flex-item">
+    <div class="flex-item-title">
         <mat-toolbar color="primary">
-          <div class="flex-item-title">
-              Demande de mot de passe
-          </div>
+          <p> Mot de passe perdu.</p>
         </mat-toolbar>
     </div>
-    <div class="flex-item-body">
+    <div class="flex-item">
         <div class="flex-item">
           <p>
             Vous avez perdu votre mot de passe pour acceder à l'application ?
@@ -17,19 +15,19 @@
             Saisissez votre e-mail afin d'en reçevoir un nouveau.
           </p>
         </div>
-        <!-- <div class="flex-item"> -->
-          <mat-form-field class="formField">
+        <div class="flex-item-email">
+          <mat-form-field class="matformfield">
             <input matInput placeholder="Email" [formControl]="emailForgottenPwd" required>
             <mat-icon matSuffix >email</mat-icon>
             <mat-error *ngIf="emailForgottenPwd.invalid">{{ getMailPwdErrorMessage() }}</mat-error>
           </mat-form-field>
-        <!-- </div> -->
+        </div>
     </div>
 
-    <div class="flex-item">
+    <div class="flex-item-action">
       <div class="flex-container-actionOkCancel">
           <mat-toolbar color="primary">   
-            <div class="flex-item-Action">             
+            <div class="flex-item-ActionOkCancel">             
               <button mat-icon-button [disabled]="!emailForgottenPwd.valid" (click)="transmitEMail()">
                 <mat-icon>
                     <i class="material-icons">check</i>
@@ -38,7 +36,7 @@
             </div> 
 
 
-            <div class="flex-item-Action">
+            <div class="flex-item-ActionOkCancel">
               <button mat-icon-button (click)="closeModal()">
                 <mat-icon>
                     <i class="material-icons">clear</i>
