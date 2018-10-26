@@ -172,7 +172,7 @@ import {
     FormsModule,
     FlexLayoutModule,
     LayoutModule,
-    LoggerModule.forRoot({level: NgxLoggerLevel.INFO}),
+    LoggerModule.forRoot({level: NgxLoggerLevel.INFO}), // TRACE|DEBUG|INFO|LOG|WARN|ERROR|OFF
     MatBottomSheetModule,
     MatButtonModule,
     MatButtonToggleModule,

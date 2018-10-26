@@ -1,5 +1,5 @@
 import { Injectable, Component, Inject } from '@angular/core';
-import { MatSnackBar, MAT_SNACK_BAR_DATA } from '@angular/material';
+import { MatSnackBar, MAT_SNACK_BAR_DATA, MatSnackBarConfig } from '@angular/material';
 
 
 @Injectable()
@@ -11,12 +11,20 @@ export class ToasterService {
   // snackStyle defini dans le custom-theme.scss => 
   // error (snackbarWarning)
   // info (snackbarInfo)
+  /**
+   * SnackBar Pour afficher les messages a l utilisateur
+   */
   showToaster(snackMessage: string, snackStyle: string, snackTimer: number) {
-      this.snackBar.openFromComponent(SnackBarComponent, { 
-        data: snackMessage,
-        duration: snackTimer,
-        panelClass: [snackStyle]
-      });      
+
+    const config: MatSnackBarConfig = new MatSnackBarConfig();
+      config.data = snackMessage,
+      config.duration = snackTimer,
+      config.politeness = 'assertive',
+      config.horizontalPosition = 'center',
+      config.verticalPosition = 'bottom',
+      config.panelClass = [snackStyle]     
+
+      this.snackBar.openFromComponent( SnackBarComponent, config );      
   }  
 
 }

@@ -1,1 +1,8 @@
 [0921/135402.182:ERROR:file_io.cc(89)] ReadExactly: expected 36, observed 0
+[1010/190208.932:ERROR:process_reader_win.cc(123)] NtOpenThread: {Accès refusé} Un processus a demandé l’accès a un objet, mais il ne bénéficie pas des autorisations nécessaires. (0xc0000022)
+[1010/190208.932:ERROR:process_reader_win.cc(123)] NtOpenThread: {Accès refusé} Un processus a demandé l’accès a un objet, mais il ne bénéficie pas des autorisations nécessaires. (0xc0000022)
+[1010/190208.932:ERROR:process_reader_win.cc(123)] NtOpenThread: {Accès refusé} Un processus a demandé l’accès a un objet, mais il ne bénéficie pas des autorisations nécessaires. (0xc0000022)
+[1010/190209.104:ERROR:exception_snapshot_win.cc(88)] thread ID 11576 not found in process
+[1010/190209.104:ERROR:exception_snapshot_win.cc(88)] thread ID 2132 not found in process
+[1010/190209.104:ERROR:exception_snapshot_win.cc(88)] thread ID 11636 not found in process
+[1010/190209.119:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Tentative d’accès à un processus en cours d’arrêt. (0xc000010a)

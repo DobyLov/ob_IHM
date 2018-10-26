@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-pagenotfound',
@@ -9,15 +10,16 @@ import { Router } from '@angular/router';
 
 export class PagenotfoundComponent implements OnInit, AfterViewInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private logger: NGXLogger) { }
 
   ngOnInit() {}
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      // console.log("re-route");
-      // this.router.navigate(['./welcome']);
-      this.router.navigateByUrl('');
-    }, 10000);
+
+    // setTimeout(() => {
+    //   this.logger.info("PagenotFound log : re-route to Welcome page");
+    //   this.router.navigateByUrl('');
+    // }, 8000);
   }
 }

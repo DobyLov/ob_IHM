@@ -35,7 +35,8 @@
     padding: 8px;
   }
 
-  @media screen and (max-width: 370px) {
+  @media screen 
+  and (max-width: 370px) {
 
     .flex-heure {  
       // display: none;    
@@ -114,17 +115,21 @@
       display: inline;
     }
 
+    .rgpdEntry {
+      margin-bottom: 14px;
+    }
+
     .rgpdEntry1 {
       color: rgb(201, 144, 39);
       font-family: 'Great vibes', cursive;
-      font-size: 45px;
+      font-size: 35px;
     }
 
     .rgpdEntry2 {
       // align-items: flex-start;
       color: black;
       font-family: 'Great vibes', cursive;
-      font-size: 35px;
+      font-size: 25px;
     }
   }
 

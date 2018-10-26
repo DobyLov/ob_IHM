@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material';
 import { AuthService } from './auth.service'
 import { Router } from '@angular/router';
 import { Credentials } from './credentials';
@@ -72,12 +72,16 @@ export class LoginComponent implements OnInit {
    * Ouvrir le Modal de Login
    */
   openDialog(): void {
-    this.logger.info("LoginComponent Log : Ouverture du Modal ( Login )");
-    let dialogRef = this.dialog.open(LoginModalComponent, {
+    const modalLogin: MatDialogConfig = {
+      id: '1',
+      hasBackdrop: true,
+      disableClose:  true,
       width: this.modalWidth + 'px',
-      maxHeight: this.modalHeight + 'px',
-      data: {  }
-    });
+      maxHeight: this.modalHeight + 'px'
+    }
+
+    this.logger.info("LoginComponent Log : Ouverture du Modal ( Login )");
+    let dialogRef = this.dialog.open(LoginModalComponent, modalLogin );
 
     dialogRef.afterClosed().subscribe(result => {
       this.logger.info("LoginComponent Log : Fermeture du Modal ( Login )");

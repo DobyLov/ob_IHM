@@ -4,6 +4,7 @@ import { NGXLogger } from 'ngx-logger';
 import { appConfig } from '../constant/apiOpusBeauteUrl';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ToasterService } from '../service/toaster.service';
+import { BottomSheetService } from '../service/bottomsheet.service'
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
 import { Credentials } from './credentials';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -24,6 +25,7 @@ export class AuthService {
   constructor( private logger: NGXLogger,
                 private httpCli: HttpClient,
                 private _toasterService: ToasterService,
+                private _bottomSheetService: BottomSheetService,
                 private _utilisateurservice: UtilisateurService) { }
 
   get statusOfIsUserIsLogged() {
@@ -65,7 +67,7 @@ export class AuthService {
             loglog = true;
             this.changeStatusOfIsLogged(loglog);   
             this.logger.info("AuthService Log : Authentification avec succès");      
-            this.messageToaster('Authentification avec succès !', 'snackbarInfo', 3000);
+            this.messageToaster('Vous êtes connecté(e)', 'snackbarInfo', 3000);
             resolve();            
           }
         }
@@ -75,7 +77,7 @@ export class AuthService {
           loglog = false;
           this.changeStatusOfIsLogged(loglog);
           this.logger.info("AuthService Log : Authentification Echouee");   
-          this.messageToaster("Veuillez vérifier vos informations",'snackbarWarning', 2000) }
+          this.messageToaster("Vérifiez vos informations",'snackbarWarning', 2000) }
         
         )
     })      
@@ -265,12 +267,12 @@ export class AuthService {
       // let decodedToken = jwt_decode(token); 
       if (new Date(jwt_decode(token).exp * 1000) > new Date()) {
 
-        this.logger.info("AuthService Log : La date du token est validite");
+        this.logger.info("AuthService Log : La date du token est valide");
         return false;
 
       } else {
 
-        this.logger.info("AuthService Log : La date du token n est pas validite");
+        this.logger.info("AuthService Log : La date du token n est pas valide");
         return true;
       }
 
@@ -313,11 +315,11 @@ export class AuthService {
     this.httpCli.post(url, this.httpOptions)
       .subscribe(
         () => { this.logger.info("AuthService Log : Mail connu de la Bdd");
-                  this.messageToaster('Vous allez reçevoir un e-mail avec votre mot de passe.', 'snackbarInfo', 6000); },
+                  this.messageToaster('E-mail envoyé.', 'snackbarInfo', 6000); },
         err => {
           if (err.status == 403) {
                     this.logger.info("AuthService Log : Mail non connu de la Bdd");
-                    this.messageToaster('Il y a un problème, le mail n est pas connu !', 'snackbarWarning', 6000)
+                    this.messageToaster('E-mail non reconnu !', 'snackbarWarning', 6000)
           }
       })
   }
@@ -332,13 +334,13 @@ export class AuthService {
     this.logger.info("AuthService Log : Deconexion de l utilisateur");
     this.changeStatusOfIsLogged(false);
     this.removeGivenTokenFromLS(userMail);
-    this.messageToaster('Vous êtes déconnecté(e)', 'snackbarInfo', 3000);
+    // this.messageToaster('Vous êtes déconnecté(e)', 'snackbarInfo', 3000);
 
   }
 
 
   /**
-   * 
+   * Affiche les message a l utilisateur
    * @param message 
    * @param style 
    * @param timer 

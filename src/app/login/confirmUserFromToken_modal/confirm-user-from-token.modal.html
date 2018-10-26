@@ -3,35 +3,39 @@
 <div class="flex-container">    
     <div class="flex-item-title">
         <mat-toolbar color="primary" >
-          <div class="flex-item-title">
-              <p>Confirmation Utilisateur </p>
-          </div>
+            <p>Confirmation Utilisateur </p>
         </mat-toolbar>
     </div>
-    <div>
-        <div class="flex-item">
-        Avant de continuer, pouvez vous<br>
-        confirmer que vous étes <br>
-        l'utilisateur <b>{{ prenom }}</b>, enregistré<br>
-        avec l'adresse <b>{{ userMail }}</b>.
-        </div>
-        <div class="flex-item">
-        <div></div>
+    <div class="flex-item">        
+        <p>Avant de continuer, <br>pouvez vous
+        <i>confirmer</i> que vous êtes
+        l'utilisateur <b>{{ prenom }}</b>, enregistré(e)
+        avec l'adresse <b>{{ data.userMail }}</b>.</p>        
     </div>
+    
 
-  <div class="flex-item-action">
-    <div class="flex-container-actionOkCancel">
-        <mat-toolbar color="primary">   
-          <div class="flex-item-ActionokCancel">             
-            <button mat-icon-button (click)="userConfirmed()">
-              <mat-icon>Oui</mat-icon>
-            </button>
-          </div> 
-          <div class="flex-item-ActionokCancel">
-            <button mat-icon-button (click)="userNotConfirmed(userMail)">
-              <mat-icon>Non</mat-icon>
-            </button>
-          </div>
-        </mat-toolbar>
+    <div class="flex-item-Action">
+        <div class="flex-container-actionOkCancel">
+            <mat-toolbar color="primary">   
+            <div class="flex-item-ActionOkCancel">             
+                <button mat-icon-button 
+                        alt="Oui je confirme"
+                        (click)="userConfirmed()">
+                    <mat-icon>
+                        <i class="material-icons">check</i>
+                    </mat-icon>
+                </button>
+            </div> 
+            <div class="flex-item-ActionOkCancel">
+                <button mat-icon-button 
+                        alt="Non, je ne confirme pas"
+                        (click)="userNotConfirmed()">
+                    <mat-icon>
+                        <i class="material-icons">clear</i>
+                    </mat-icon>
+                </button>
+            </div>
+            </mat-toolbar>
+        </div>
     </div>
 </div>

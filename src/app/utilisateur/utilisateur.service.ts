@@ -45,7 +45,7 @@ export class UtilisateurService {
   }
 
   /**
-   * Recherche un utilisateur vi son Email
+   * Recherche un utilisateur via son Email
    * et l assigne comme CurrentUtilsateur
    * @param email 
    */

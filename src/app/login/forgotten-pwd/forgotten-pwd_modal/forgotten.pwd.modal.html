@@ -9,7 +9,7 @@
     <div class="flex-item">
         <div class="flex-item">
           <p>
-            Vous avez perdu votre mot de passe pour acceder à l'application ?
+            Vous avez perdu votre mot de passe d'accès à l'application ?
           </p>
           <p>
             Saisissez votre e-mail afin d'en reçevoir un nouveau.
@@ -17,27 +17,30 @@
         </div>
         <div class="flex-item-email">
           <mat-form-field class="matformfield">
-            <input matInput placeholder="Email" [formControl]="emailForgottenPwd" required>
+            <input matInput placeholder="Email" 
+                  [formControl]="emailForgottenPwd" required>
             <mat-icon matSuffix >email</mat-icon>
             <mat-error *ngIf="emailForgottenPwd.invalid">{{ getMailPwdErrorMessage() }}</mat-error>
           </mat-form-field>
         </div>
     </div>
-
-    <div class="flex-item-action">
-      <div class="flex-container-actionOkCancel">
+    <div class="flex-item-Action">
+      <div class="flex-container-ActionOkCancel">
           <mat-toolbar color="primary">   
+
             <div class="flex-item-ActionOkCancel">             
-              <button mat-icon-button [disabled]="!emailForgottenPwd.valid" (click)="transmitEMail()">
+              <button mat-icon-button 
+                      [disabled]="!emailForgottenPwd.valid" 
+                      (click)="transmitEMail()">
                 <mat-icon>
                     <i class="material-icons">check</i>
                 </mat-icon>
               </button>
             </div> 
 
-
             <div class="flex-item-ActionOkCancel">
-              <button mat-icon-button (click)="closeModal()">
+              <button mat-icon-button 
+                      (click)="closeModal()">
                 <mat-icon>
                     <i class="material-icons">clear</i>
                 </mat-icon>
@@ -45,5 +48,5 @@
             </div>
           </mat-toolbar>
       </div>
-
+    </div>
 </div>

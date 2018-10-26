@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatDialogConfig } from '@angular/material';
 import { FormControl, Validators } from '@angular/forms';
 import { ResponsiveAppMediaService } from '../../service/responsiveAppMedia.service';
 import { BreakpointObserver } from '../../../../node_modules/@angular/cdk/layout';
@@ -33,10 +33,8 @@ export class ForgottenPwdComponent implements OnInit {
                private _responsivappmediaservice: ResponsiveAppMediaService,
               public _breakpointobserver: BreakpointObserver ) { 
 
-                this._responsivappmediaservice.isAMobilePlatform$
-                .subscribe(res => { this.isDeviceIsMobile = res.valueOf()})
-              
-              this.setModalMobilResolution()
+              this._responsivappmediaservice.isAMobilePlatform$
+              .subscribe(res => { this.isDeviceIsMobile = res.valueOf()})            
 
               const layoutChanges = _breakpointobserver.observe(
                 '(orientation: portrait)'
@@ -45,6 +43,8 @@ export class ForgottenPwdComponent implements OnInit {
               layoutChanges.subscribe(result => {
                 this.logger.info("Logincomponent log : mode " + result.matches)
               });
+
+              this.setModalMobilResolution();
                }
 
   ngOnInit() { 
@@ -59,30 +59,36 @@ export class ForgottenPwdComponent implements OnInit {
    * Defini les dimensions du modal
    * en fonction du Device detecte
    */
-
   private setModalMobilResolution() {
 
     if (this.isDeviceIsMobile == true ) {
       this.logger.info("LoginComponent Log : UI sur Terminal mobile");
       this.modalWidth = 330;
-      this.modalHeight = 300;
+      this.modalHeight = 370;
    } else {
       this.logger.info("LoginComponent Log : Ui sur Desktop ");
    }
   }
                  
-  openDialog(): void {        
-    let dialogRef = this.dialog.open(ForgottenPwdModalComponent, {
-      maxWidth: this.modalWidth + 'px',
-      maxHeight: this.modalHeight + 'px',
-        })
+  openDialog(): void {    
     
-  dialogRef.afterClosed().subscribe (result => {
-      this.emailForgottenPwd = result,
-      this.logger.info("ForgottenPwdComponnent Log : Fermeture du Modal (Mot de passe oublie)");
-      this.router.navigate(['./login']) })
-      
-  }}
+    const modalForgottenPwd: MatDialogConfig = {
+      id: '2',
+      hasBackdrop: true,
+      disableClose:  true,
+      width: this.modalWidth + 'px',
+      maxHeight: this.modalHeight + 'px'
+    }
+
+    let dialogRef = this.dialog.open(ForgottenPwdModalComponent, modalForgottenPwd)
+    
+    dialogRef.afterClosed().subscribe (result => {
+        this.emailForgottenPwd = result,
+        this.logger.info("ForgottenPwdComponnent Log : Fermeture du Modal (Mot de passe oublie)");
+        this.router.navigate(['./login']) })
+        
+  }
+}
 
 
 // ***********************************
@@ -117,8 +123,8 @@ export class ForgottenPwdModalComponent {
      */
   public getMailPwdErrorMessage(): string {
     return this.emailForgottenPwd.hasError('required') ? 'valeur obligatoire' :
-        this.emailForgottenPwd.hasError('email') ? 'Format d\'email non valide ! (xyz@xyz.xyz)' :
-        this.emailForgottenPwd.hasError('pattern') ? 'Format d\'email non valide ! (xyz@xyz.xyz)' :
+        this.emailForgottenPwd.hasError('email') ? 'Format d\'email non valide !' :
+        this.emailForgottenPwd.hasError('pattern') ? 'Format d\'email non valide !' :
         this.emailForgottenPwd.hasError('maxlength') ? '30 caractères maximum !' :
             '';
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Inject, ChangeDetectorRef, AfterViewInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatDialogConfig } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
@@ -7,6 +7,8 @@ import { NGXLogger } from 'ngx-logger';
 import { AuthService } from '../login/auth.service';
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
 import { SideBarService } from '../service/sidebar.service';
+import { ResponsiveAppMediaService } from '../service/responsiveAppMedia.service';
+import { BreakpointObserver } from '../../../node_modules/@angular/cdk/layout';
 
 @Component({
   selector: 'app-header',
@@ -18,11 +20,18 @@ import { SideBarService } from '../service/sidebar.service';
 export class HeaderComponent implements OnInit, AfterViewInit {
 
   // @ViewChild('matMenu') cdr: ChangeDetectorRef;
-  @Input() isUserIsConnected$: boolean;
+  @Input() isUserIsConnected$: boolean = false;
   sideNavToggle$: Boolean;
   // @Input() isScreenIsMobile: boolean;
 
-  userMail: string;
+  // Taille du Modal de Confirmation de l utilisateur
+  modalWidth: number = 430;
+  modalHeight: number = 400; 
+  // infos pour definir le modal
+  isDeviceIsMobile: boolean;
+  isMobileOrientationLandscape: boolean;
+
+  userMailFromTkn: string;
   prenom: string;
   dateBrute: Date = new Date();
   btnLoginState = false;
@@ -39,14 +48,25 @@ export class HeaderComponent implements OnInit, AfterViewInit {
                 public _sidebarservice: SideBarService,
                 private router: Router,
                 public dialog: MatDialog,
-                private cd: ChangeDetectorRef) { 
+                private _responsivappmediaservice: ResponsiveAppMediaService,
+                private cd: ChangeDetectorRef,
+                public _breakpointobserver: BreakpointObserver
+                ) { 
                       
                       this.url = this.location.path();
-
+                            // si rgpd dans url supprime le token de l utilisateur si il y en a un
+                      if(this.searchRgpdMgmtInsideUrl()) {        
+                        let userMail = this._authService.getMailFromToken()
+                        this._authService.removeGivenTokenFromLS(this._authService.getMailFromToken());
+                        this.openAppFromRgpdUrl = true;
+                      } else {
+                        this.openAppFromRgpdUrl = false;
+                      }
+                      
                     }
 
-  ngOnInit() {
-
+  ngOnInit() {   
+      this.checkIfUrlIsAKnewRoute();
       // Souscription de l observable Boolean du bouton de la navBar
       this._sidebarservice.statusOfSideNavToggle.subscribe(isSideBarOpen => {
         this.sideNavToggle$ = isSideBarOpen.valueOf();
@@ -56,10 +76,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this._authService.statusOfIsUserIsLogged.subscribe(isLoggedIn => {
       this.isUserIsConnected$ = isLoggedIn.valueOf();
 
-      // Utilise le changeDetector
-      this.cd.detectChanges();
-
       if (this.isUserIsConnected$.valueOf() == true) {
+
         this.btnLoginState = !this.btnLoginState;
         this.btnParametersState = !this.btnParametersState;
         this.btnSideBarState = !this.btnSideBarState;
@@ -68,29 +86,46 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       };
 
       if (this.isUserIsConnected$.valueOf() == false) {
+
         this.btnLoginState = false;
         this.btnParametersState = true;
         this.btnSideBarState = true;
         this.btnLogoutState = true;
+
       }
+
     })
+
+    // this.checkIfATokenIsPresentInLS();
+    this._responsivappmediaservice.isAMobilePlatform$
+    .subscribe(res => { this.isDeviceIsMobile = res.valueOf()})            
+
+    const layoutChanges = this._breakpointobserver.observe(
+      '(orientation: portrait)'
+    );
+    
+    layoutChanges.subscribe(result => {
+      this.logger.info("Logincomponent log : mode " + result.matches)
+    });
+    
+    this.setModalMobilResolution();
 
   }
 
   ngAfterViewInit() {
 
     this.logger.info("HeaderComponent Log : Detection du point d entree de L application");
-    if (!this.searchRgpdMgmtInsideUrl()) {
+    if ( !this.openAppFromRgpdUrl ) {
 
-      this.checkIfATokenIsPresentInLS();
-      this.openAppFromRgpdUrl = false;
-      this.logger.info("HeaderComponent Log : APP ouverture par la racine (entree standard)");      
-    
+      if (this.checkIfUrlIsAKnewRoute() === true ) {
+        this.checkIfATokenIsPresentInLS();
+      }      
+      this.logger.info("HeaderComponent Log : APP ouverture par la racine (entree standard)");   
+
     } else {
-
-      this.openAppFromRgpdUrl = true;
+          
       this.logger.info("HeaderComponent Log : APP ouverture par la page Rgpd");
-
+   
     }
 
   }
@@ -110,6 +145,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     let regexRgpdPageNotFounded = new RegExp('rgpdpagenotfound');
 
     if ( this.url.search(regexTkn) !=-1 || 
+          this.url.search('rgpd') !=-1 ||
           this.url.search(regexRgpdUrlAltered) !=-1 || 
           this.url.search(regexRgpdPageNotFounded) !=-1 || 
           this.url.search(regexRgpdTokenExpired) !=-1 ) {
@@ -129,15 +165,49 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   /**
+   * Defini les dimensions du modal
+   * en fonction du Device detecte
+   */
+  private setModalMobilResolution() {
+
+    if (this.isDeviceIsMobile == true ) {
+      this.logger.info("LoginComponent Log : UI sur Terminal mobile");
+      this.modalWidth = 330;
+      this.modalHeight = 250;
+   } else {
+      this.logger.info("LoginComponent Log : Ui sur Desktop ");
+   }
+  }
+
+  /**
    * Ouverture du Modal ( confirmation utilisateur )
    */
-  openDialog(): void {
+  public openDialog(): void {
+
+    let modalConfFPwd = new MatDialogConfig(); 
+    
+    // methode #1 de declaration de MatDialogConfig
+    modalConfFPwd.id ='2';
+    modalConfFPwd.hasBackdrop = true;
+    modalConfFPwd.disableClose = true;
+    modalConfFPwd.maxWidth = this.modalWidth + 'px';
+    modalConfFPwd.maxHeight = this.modalHeight + 'px';
+    modalConfFPwd.data = { userMail: this.userMailFromTkn, url: this.url };
+    modalConfFPwd.backdropClass = 'modalConfUser';
+    
+    // methode #1 de declaration de MatDialogConfig
+    // modalConfFPwd = {
+    //   id: '2',
+    //   hasBackdrop: true,
+    //   disableClose:  true,
+    //   maxWidth: this.modalWidth + 'px',
+    //   maxHeight: this.modalHeight + 'px',
+    //   data: { userMail: this.userMailFromTkn }
+    // };
+
 
     this.logger.info("HeaderComponent Log : Ouverture du Modal ( Confirmation utilisateur )");
-    let dialogRef = this.dialog.open( ConfimrUserFromTokenModalComponent, {
-      width: '450px',
-      data: { userMail: this.userMail }
-    });
+    let dialogRef = this.dialog.open( ConfimrUserFromTokenModalComponent, modalConfFPwd);
 
     dialogRef.afterClosed().subscribe(result => {
       this.logger.info("HeaderComponent Log : Fermeture du Modal de Login");
@@ -154,10 +224,15 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.logger.info("HeaderComponent Log : Verification si un Token est deja present dans le Localstorage");
     if (this._authService.isTokenDateIsNotExpired() == false) {
 
-        this.logOut();
+        this.logger.info("HeaderComponent Log : le token dans le LS n est pas bon");
+        // this.logOut();
+        this.logger.info("HeaderComponent Log : Deconnexion de l application");
+        this._authService.changeStatusOfIsLogged(false);
+        this._authService.removeGivenTokenFromLS(this.userMailFromTkn);
+        // this._authService.messageToaster('Vous êtes déconnecté(e).', 'snackbarInfo', 3000);
         
-        if (this.isUserIsConnected$.valueOf() == false)
-          this.userMail = this._authService.getMailFromToken();
+        if (this.isUserIsConnected$ == false)
+          this.userMailFromTkn = this._authService.getMailFromToken();
 
         setTimeout(() => {
           this.logger.info("HeaderComponent Log : Un Token valide a ete trouve dans le LocalStorage"); 
@@ -170,15 +245,15 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Deconnexion de l application
+   * Deconnexion de l application depuis le menuheader
    * 
    */
   public logOut(): void {
     
     this.logger.info("HeaderComponent Log : Deconnexion de l application");
     this._authService.changeStatusOfIsLogged(false);
-    this._authService.removeGivenTokenFromLS(this.userMail);
-    this._authService.messageToaster("Vous êtes décconnecté(e)", 'snackbarInfo', 3000);
+    this._authService.removeGivenTokenFromLS(this.userMailFromTkn);
+    this._authService.messageToaster('Vous êtes déconnecté(e).', 'snackbarInfo', 3000);
     this.router.navigate(['./welcome'])
 
   }
@@ -214,6 +289,41 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   }
 
+  
+
+  /**
+   * Cherche si l url est connue par la route
+   */
+  private checkIfUrlIsAKnewRoute():boolean {
+
+    let urlWithoutSlash: string = this.url.replace('/', '');
+    let routeKnewed: boolean = false;
+
+    for ( let j = 0; j < this.router.config.length; j++ ) {
+
+      if (this.router.config[j].path === urlWithoutSlash) {
+
+        this.logger.info("header log : Route: "  + this.router.config[j].path  + " detectee en position: " + j +" du router.");
+        routeKnewed = true;
+        break;
+
+      } else {
+        
+        routeKnewed = false;
+
+      }
+
+    }
+
+    if (routeKnewed === false) {
+      this.logger.info("header log : Route: "  + urlWithoutSlash  + " non detectee dans le router");
+    } 
+
+    return routeKnewed;
+
+  }
+
+
 }
 
 @Component({
@@ -225,7 +335,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
 export class ConfimrUserFromTokenModalComponent implements OnInit {
 
-  userMail: string = "ricodoby@hotmail.com";
+  // userMail: string; 
   prenom: string;
   token: string;
   isUserIsLogged$: Observable<boolean>;
@@ -235,10 +345,9 @@ export class ConfimrUserFromTokenModalComponent implements OnInit {
                private _authService: AuthService,
                public dialogRef: MatDialogRef<ConfimrUserFromTokenModalComponent>,
                private _utilisateurService: UtilisateurService,
-               @Inject(MAT_DIALOG_DATA) public data: any) {
-
-      this.token = this._authService.getOBTokenViaMailFromLS(this.userMail);
-      this.prenom = this._authService.getPrenomFromGivedToken(this.token);
+               @Inject(MAT_DIALOG_DATA) public data) {
+                this.token = this._authService.getOBTokenViaMailFromLS(this.data.userMail);
+                this.prenom = this._authService.getPrenomFromGivedToken(this.token);
 
   }
 
@@ -252,22 +361,27 @@ export class ConfimrUserFromTokenModalComponent implements OnInit {
    */
   public userConfirmed(): void {
     this.logger.info("ConfimrUserFromTokenModalComponent Log : L Utilisateur Confime le token");
-    this._authService.changeStatusOfIsLogged(true);
+    
     this.dialogRef.close();
+    this._authService.changeStatusOfIsLogged(true);
     this._authService.messageToaster('Bienvenue ' + this.prenom, 'snackbarInfo', 3000);
-    this._utilisateurService.setCurrentUtilisateur(this.userMail);
+    this._utilisateurService.setCurrentUtilisateur(this.data.userMail);
+    this.router.navigate(['./']);
     
     setTimeout(() => {
-      this.router.navigate(['./home']);
+      console.log("le modal renvoie sur la route " + this.data.url);
+      this.router.navigate(['./' + this.data.url])
+      // this.router.navigate(['./home']);
     }, 2000);
   }
 
   /**
    * Fermeture du Modal ( Confirmation Utilisateur )
    */
-  private onNoClick() {
-		this.logger.info("ConfimrUserFromTokenModalComponent Log : Fermeture du Modal ( Confirmeation Utilisateur )");
-    this.router.navigate(['./welcome']);
+  onNoClick() {
+		this.logger.info("ConfimrUserFromTokenModalComponent Log : onNoclick Fermeture du Modal ( Confirmation Utilisateur )");
+    // this.router.navigate(['./welcome']);
+    this.userNotConfirmed();  
     this.dialogRef.close();
   }
 
@@ -276,14 +390,14 @@ export class ConfimrUserFromTokenModalComponent implements OnInit {
    * proprietaire du token valide dans le Localstorage
    * @param userMail 
    */
-  public userNotConfirmed(userMail): void {
+  public userNotConfirmed(): void {
     this.logger.info("ConfimrUserFromTokenModalComponent Log : L Utilisateur ne Confime pas le token");
     this._authService.changeStatusOfIsLogged(false);
-    this._authService.removeGivenTokenFromLS(this.userMail);
+    this._authService.removeGivenTokenFromLS(this.data.userMail);
     this.dialogRef.close();
     
     setTimeout(() => {
-      this._authService.messageToaster('Merci de vous connecter avec vos crédentiels', 'snackbarInfo', 3000);
+      this._authService.messageToaster('Connectez vous.', 'snackbarInfo', 3000);
     }, 1000);
     
     setTimeout(() => {
@@ -291,4 +405,5 @@ export class ConfimrUserFromTokenModalComponent implements OnInit {
       this.router.navigate(['/login']);
     }, 1000);
   }
+
 }
