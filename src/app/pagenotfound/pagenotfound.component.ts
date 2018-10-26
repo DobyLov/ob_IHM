@@ -14,6 +14,7 @@ export class PagenotfoundComponent implements OnInit, AfterViewInit {
               private logger: NGXLogger) { }
 
   ngOnInit() {
+    // blabla
     this.logger.info("PagenotFound log : Ouverture de la PageNotFound");
   }
 
