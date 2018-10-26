@@ -13,13 +13,15 @@ export class PagenotfoundComponent implements OnInit, AfterViewInit {
   constructor(private router: Router,
               private logger: NGXLogger) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.logger.info("PagenotFound log : Ouverture de la PageNotFound");
+  }
 
   ngAfterViewInit() {
-
-    // setTimeout(() => {
-    //   this.logger.info("PagenotFound log : re-route to Welcome page");
-    //   this.router.navigateByUrl('');
-    // }, 8000);
+    
+    setTimeout(() => {
+      this.logger.info("PagenotFound log : re-route to Welcome page");
+      this.router.navigateByUrl('');
+    }, 6000);
   }
 }
