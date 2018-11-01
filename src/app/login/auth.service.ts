@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
 import { NGXLogger } from 'ngx-logger';
 import { appConfig } from '../constant/apiOpusBeauteUrl';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { ToasterService } from '../service/toaster.service';
 import { BottomSheetService } from '../service/bottomsheet.service'
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
@@ -73,11 +73,16 @@ export class AuthService {
         }
         )
         .then( res => this._utilisateurservice.setCurrentUtilisateur(credz.email) )
-        .catch((err) => {
+        .catch((err:HttpErrorResponse) => {
           loglog = false;
+          // console.log("AuthService log : " + err.status);
+          // if (err.statusText === "Unknown Error") {
+          //   this.messageToaster("Serveur HS",'snackbarWarning', 2000);
+          // }
           this.changeStatusOfIsLogged(loglog);
           this.logger.info("AuthService Log : Authentification Echouee");   
-          this.messageToaster("Vérifiez vos informations",'snackbarWarning', 2000) }
+          // this.messageToaster("Vérifiez vos informations",'snackbarWarning', 2000) 
+        }
         
         )
     })      
@@ -111,12 +116,25 @@ export class AuthService {
             resolve();
           }
         })
-        .catch(() => { 
-            this.logger.info("AuthService Log :  Le Middleware n a pas valide les credentiels");
-            resultatToken = null;
-            reject();
-          
+        .catch( (err: HttpErrorResponse) => { 
+
+            console.log("AuthService Log : erreur : " + err.statusText);  
+            if ( err.statusText === "Unknown Error")  {
+              this.logger.info("AuthService Log :  Le serveur ne repond pas");
+              resultatToken = null;
+              this.messageToaster("Probleme Serveur",'snackbarWarning', 2000);
+              reject();
+
+            } else {    
+
+              this.logger.info("AuthService Log :  Le Middleware n a pas valide les credentiels");
+              resultatToken = null;
+              this.messageToaster("Vérifiez vos informations",'snackbarWarning', 2000);
+              reject(); 
+            }         
         })
+
+        
     })
 
     return resultatToken;

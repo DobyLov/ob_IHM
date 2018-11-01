@@ -1,0 +1,1202 @@
+// ********************
+// Portrait
+// ********************
+
+/* iphone 4 */
+@media only screen 
+and (min-device-width: 320px) 
+and (max-device-height: 480px) 
+and (-webkit-device-pixel-ratio: 2) 
+{ 
+    .containerH {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .containerV {
+        display: flex;
+        flex-direction: column;  
+        font-family: 'Montserrat', sans-serif;
+        max-width: calc( 320px - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .titre {
+        margin-top: 20px;
+        margin-bottom: -5px;
+        font-size:  14px;
+        text-decoration: underline;
+        color: black;
+        font-weight: bolder;
+    }
+
+    .containerH dt {
+        height: 14px;
+        font-size: 14px;
+        font-weight: 900; 
+    }
+
+    .containerV div > dl > dd {
+        font-size: 12px;  
+        margin-top: 5px;
+        text-align: justify;  
+        // font-weight: 600;
+    }
+
+    .containerV div > dl > dd > p {
+        margin-bottom: 5px;
+        font-size: 12px;
+        text-indent: 20px;
+    }
+
+    .containerV div > dl > dd > span {
+        font-size: 12px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration:none;
+    }
+
+    .mat-icon {
+        font-size: 12px;
+        vertical-align: sub;    
+    }
+
+    .boutonFermer {
+        text-align: center;
+        // margin-bottom: 60px;
+        margin-bottom: 20px;
+        // box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .containerV > div > span {
+        font-size: 12px;
+        font-weight: 900;
+    }
+}
+
+/* iphone 5 */
+@media only screen 
+and (min-device-width: 320px) 
+and (max-device-height: 568px) 
+and (-webkit-device-pixel-ratio: 2) 
+{
+    .containerH {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .containerV {
+        display: flex;
+        flex-direction: column;  
+        font-family: 'Montserrat', sans-serif;
+        max-width: calc( 320px - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .titre {
+        margin-top: 20px;
+        margin-bottom: -5px;
+        font-size:  16px;
+        text-decoration: underline;
+        color: black;
+        font-weight: bolder;
+    }
+
+    .containerH dt {
+        height: 14px;
+        font-size: 14px;
+        font-weight: 900; 
+    }
+
+    .containerV div > dl > dd {
+        font-size: 14px;  
+        margin-top: 5px;
+        text-align: justify;  
+        // font-weight: 600;
+    }
+
+    .containerV div > dl > dd > p {
+        margin-bottom: 5px;
+        font-size: 12px;
+        text-indent: 20px;
+    }
+
+    .containerV div > dl > dd > span {
+        font-size: 14px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration:none;
+    }
+
+    .mat-icon {
+        font-size: 14px;
+        vertical-align: sub;    
+    }
+
+    .boutonFermer {
+        text-align: center;
+        // margin-bottom: 60px;
+        margin-bottom: 20px;
+        // box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .containerV > div > span {
+        font-size: 14px;
+        font-weight: 900;
+    }
+}
+
+/* iphone 6, 6s, 7, 8 */
+@media only screen 
+and (min-device-width: 375px) 
+and (max-device-height: 667px)
+and (-webkit-device-pixel-ratio: 2) 
+{
+    .containerH {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .containerV {
+        display: flex;
+        flex-direction: column;  
+        font-family: 'Montserrat', sans-serif;
+        max-width: calc( 375px - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .titre {
+        margin-top: 20px;
+        margin-bottom: -5px;
+        font-size:  22px;
+        text-decoration: underline;
+        color: black;
+        font-weight: bolder;
+    }
+
+    .containerH dt {
+        height: 14px;
+        font-size: 16px;
+        font-weight: 900; 
+    }
+
+    .containerV div > dl > dd {
+        font-size: 16px;  
+        margin-top: 5px;
+        text-align: justify;  
+        // font-weight: 600;
+    }
+
+    .containerV div > dl > dd > p {
+        margin-bottom: 5px;
+        font-size: 16px;
+        text-indent: 20px;
+    }
+
+    .containerV div > dl > dd > span {
+        font-size: 16px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration:none;
+    }
+
+    .mat-icon {
+        font-size: 16px;
+        vertical-align: sub;    
+    }
+
+    .boutonFermer {
+        text-align: center;
+        // margin-bottom: 60px;
+        margin-bottom: 20px;
+        // box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .containerV > div > span {
+        font-size: 16px;
+        font-weight: 900;
+    }
+
+}
+
+/* iphone 6+, 6s+, 7+, 8+ */
+@media only screen 
+and (min-device-width: 414px) 
+and (max-device-height: 736px) 
+and (-webkit-device-pixel-ratio: 3) 
+{
+    .containerH {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .containerV {
+        display: flex;
+        flex-direction: column;  
+        font-family: 'Montserrat', sans-serif;
+        max-width: calc( 375px - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .titre {
+        margin-top: 20px;
+        margin-bottom: -5px;
+        font-size:  22px;
+        text-decoration: underline;
+        color: black;
+        font-weight: bolder;
+    }
+
+    .containerH dt {
+        height: 14px;
+        font-size: 16px;
+        font-weight: 900; 
+    }
+
+    .containerV div > dl > dd {
+        font-size: 16px;  
+        margin-top: 5px;
+        text-align: justify;  
+        // font-weight: 600;
+    }
+
+    .containerV div > dl > dd > p {
+        margin-bottom: 5px;
+        font-size: 16px;
+        text-indent: 20px;
+    }
+
+    .containerV div > dl > dd > span {
+        font-size: 16px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration:none;
+    }
+
+    .mat-icon {
+        font-size: 16px;
+        vertical-align: sub;    
+    }
+
+    .boutonFermer {
+        text-align: center;
+        // margin-bottom: 60px;
+        margin-bottom: 20px;
+        // box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .containerV > div > span {
+        font-size: 16px;
+        font-weight: 900;
+    }
+}
+
+/* iphone X */
+@media only screen 
+and (min-device-width: 375px) 
+and (max-device-height: 812px) 
+and (-webkit-device-pixel-ratio: 3) 
+{
+    .containerH {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .containerV {
+        display: flex;
+        flex-direction: column;  
+        font-family: 'Montserrat', sans-serif;
+        max-width: calc( 375px - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .titre {
+        margin-top: 20px;
+        margin-bottom: -5px;
+        font-size:  22px;
+        text-decoration: underline;
+        color: black;
+        font-weight: bolder;
+    }
+
+    .containerH dt {
+        height: 14px;
+        font-size: 16px;
+        font-weight: 900; 
+    }
+
+    .containerV div > dl > dd {
+        font-size: 16px;  
+        margin-top: 5px;
+        text-align: justify;  
+        // font-weight: 600;
+    }
+
+    .containerV div > dl > dd > p {
+        margin-bottom: 5px;
+        font-size: 16px;
+        text-indent: 20px;
+    }
+
+    .containerV div > dl > dd > span {
+        font-size: 16px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration:none;
+    }
+
+    .mat-icon {
+        font-size: 16px;
+        vertical-align: sub;    
+    }
+
+    .boutonFermer {
+        text-align: center;
+        // margin-bottom: 60px;
+        margin-bottom: 20px;
+        // box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .containerV > div > span {
+        font-size: 12px;
+        font-weight: 900;
+    }
+ }
+
+// Portrait ipad
+@media screen 
+// and ( orientation: portrait )
+and ( min-width: 768px )
+and ( max-height: 1024px ) 
+{
+    .containerH {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .containerV {
+        display: flex;
+        flex-direction: column;  
+        font-family: 'Montserrat', sans-serif;
+        max-width: calc( 600px - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .titre {
+        margin-top: 20px;
+        margin-bottom: -5px;
+        font-size:  24px;
+        text-decoration: underline;
+        color: black;
+        font-weight: bolder;
+    }
+
+    .containerH dt {
+        height: 20px;
+        font-size: 20px;
+        font-weight: 900; 
+    }
+
+    .containerV div > dl > dd {
+        font-size: 20px;  
+        margin-top: 5px;
+        text-align: justify;  
+        // font-weight: 600;
+    }
+
+    .containerV div > dl > dd > p {
+        margin-bottom: 5px;
+        font-size: 20px;
+        text-indent: 20px;
+    }
+
+    .containerV div > dl > dd > span {
+        font-size: 20px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration:none;
+    }
+
+    .mat-icon {
+        font-size: 20px;
+        vertical-align: sub;    
+    }
+
+    .boutonFermer {
+        text-align: center;
+        // margin-bottom: 60px;
+        margin-bottom: 20px;
+        // box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .containerV > div > span {
+        font-size: 20px;
+        font-weight: 900;
+    }
+ }
+
+// Portrait Web and ipad pro
+@media screen 
+and ( min-width: 1024px )
+and ( min-height: 1366px ) 
+{
+    .containerH {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .containerV {
+        display: flex;
+        flex-direction: column;  
+        font-family: 'Montserrat', sans-serif;
+        max-width: calc( 800px - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .titre {
+        margin-top: 20px;
+        margin-bottom: -5px;
+        font-size:  28px;
+        text-decoration: underline;
+        color: black;
+        font-weight: bolder;
+    }
+
+    .containerH dt {
+        height: 20px;
+        font-size: 22px;
+        font-weight: 900; 
+    }
+
+    .containerV div > dl > dd {
+        font-size: 22px;  
+        margin-top: 5px;
+        text-align: justify;  
+        // font-weight: 600;
+    }
+
+    .containerV div > dl > dd > p {
+        margin-bottom: 5px;
+        font-size: 22px;
+        text-indent: 20px;
+    }
+
+    .containerV div > dl > dd > span {
+        font-size: 22px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration:none;
+    }
+
+    .mat-icon {
+        font-size: 22px;
+        vertical-align: sub;    
+    }
+
+    .boutonFermer {
+        text-align: center;
+        // margin-bottom: 60px;
+        margin-bottom: 20px;
+        // box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .containerV > div > span {
+        font-size: 22px;
+        font-weight: 900;
+    }
+ }
+
+
+
+@media screen 
+and ( max-width: 600px )
+{
+    .containerH {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .containerV {
+        display: flex;
+        flex-direction: column;  
+        font-family: 'Montserrat', sans-serif;
+        max-width: calc( 800px - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .titre {
+        margin-top: 20px;
+        margin-bottom: -5px;
+        font-size:  20px;
+        text-decoration: underline;
+        color: black;
+        font-weight: bolder;
+    }
+
+    .containerH dt {
+        height: 20px;
+        font-size: 18px;
+        font-weight: 900; 
+    }
+
+    .containerV div > dl > dd {
+        font-size: 14px;  
+        margin-top: 5px;
+        text-align: justify;  
+        // font-weight: 600;
+    }
+
+    .containerV div > dl > dd > p {
+        margin-bottom: 5px;
+        font-size: 14px;
+        text-indent: 20px;
+    }
+
+    .containerV div > dl > dd > span {
+        font-size: 14px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration:none;
+    }
+
+    .mat-icon {
+        font-size: 14px;
+        vertical-align: sub;    
+    }
+
+    .boutonFermer {
+        text-align: center;
+        // margin-bottom: 60px;
+        margin-bottom: 20px;
+        // box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .containerV > div > span {
+        font-size: 14px;
+        font-weight: 900;
+    }
+}
+
+ // web 
+ @media screen
+ and ( min-width: 601px )
+ and ( max-width: 768px )
+ {
+
+    .containerH {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .containerV {
+        display: flex;
+        flex-direction: column;  
+        font-family: 'Montserrat', sans-serif;
+        max-width: calc( 600px - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .titre {
+        margin-top: 20px;
+        margin-bottom: -5px;
+        font-size:  24px;
+        text-decoration: underline;
+        color: black;
+        font-weight: bolder;
+    }
+
+    .containerH dt {
+        height: 20px;
+        font-size: 20px;
+        font-weight: 900; 
+    }
+
+    .containerV div > dl > dd {
+        font-size: 20px;  
+        margin-top: 5px;
+        text-align: justify;  
+        // font-weight: 600;
+    }
+
+    .containerV div > dl > dd > p {
+        margin-bottom: 5px;
+        font-size: 20px;
+        text-indent: 20px;
+    }
+
+    .containerV div > dl > dd > span {
+        font-size: 20px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration:none;
+    }
+
+    .mat-icon {
+        font-size: 20px;
+        vertical-align: sub;    
+    }
+
+    .boutonFermer {
+        text-align: center;
+        // margin-bottom: 60px;
+        margin-bottom: 20px;
+        // box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .containerV > div > span {
+        font-size: 20px;
+        font-weight: 900;
+    }
+ }
+
+ @media screen
+ and ( min-width: 768px )
+ {
+    .containerH {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .containerV {
+        display: flex;
+        flex-direction: column;  
+        font-family: 'Montserrat', sans-serif;
+        max-width: calc( 800px - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .titre {
+        margin-top: 20px;
+        margin-bottom: -5px;
+        font-size:  28px;
+        text-decoration: underline;
+        color: black;
+        font-weight: bolder;
+    }
+
+    .containerH dt {
+        height: 20px;
+        font-size: 22px;
+        font-weight: 900; 
+    }
+
+    .containerV div > dl > dd {
+        font-size: 22px;  
+        margin-top: 5px;
+        text-align: justify;  
+        // font-weight: 600;
+    }
+
+    .containerV div > dl > dd > p {
+        margin-bottom: 5px;
+        font-size: 22px;
+        text-indent: 20px;
+    }
+
+    .containerV div > dl > dd > span {
+        font-size: 22px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration:none;
+    }
+
+    .mat-icon {
+        font-size: 22px;
+        vertical-align: sub;    
+    }
+
+    .boutonFermer {
+        text-align: center;
+        // margin-bottom: 60px;
+        margin-bottom: 20px;
+        // box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .containerV > div > span {
+        font-size: 22px;
+        font-weight: 900;
+    }
+ }
+
+
+// ********************
+// Landscape
+// ********************
+
+/* iphone 4 */
+@media only screen 
+and (min-device-width: 480px) 
+and (max-device-height: 320px) 
+and (-webkit-device-pixel-ratio: 2) 
+{
+    .containerH {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .containerV {
+        display: flex;
+        flex-direction: column;  
+        font-family: 'Montserrat', sans-serif;
+        max-width: calc( 480px - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .titre {
+        margin-top: 20px;
+        margin-bottom: -5px;
+        font-size:  18px;
+        text-decoration: underline;
+        color: black;
+        font-weight: bolder;
+    }
+
+    .containerH dt {
+        height: 16px;
+        font-size: 16px;
+        font-weight: 900; 
+    }
+
+    .containerV div > dl > dd {
+        font-size: 16px;  
+        margin-top: 5px;
+        text-align: justify;  
+        // font-weight: 600;
+    }
+
+    .containerV div > dl > dd > p {
+        margin-bottom: 5px;
+        font-size: 16px;
+        text-indent: 20px;
+    }
+
+    .containerV div > dl > dd > span {
+        font-size: 16px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration:none;
+    }
+
+    .mat-icon {
+        font-size: 16px;
+        vertical-align: sub;    
+    }
+
+    .boutonFermer {
+        text-align: center;
+        // margin-bottom: 60px;
+        vertical-align: top;
+        height: 80px;
+        // box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .containerV > div > span {
+        font-size: 16px;
+        font-weight: 900;
+    }
+ }
+
+/* iphone 5 */
+@media only screen 
+and (min-device-width: 568px) 
+and (max-device-height: 320px) 
+and (-webkit-device-pixel-ratio: 2) 
+{
+    .containerH {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .containerV {
+        display: flex;
+        flex-direction: column;  
+        font-family: 'Montserrat', sans-serif;
+        max-width: calc( 568px - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .titre {
+        margin-top: 20px;
+        margin-bottom: -5px;
+        font-size:  18px;
+        text-decoration: underline;
+        color: black;
+        font-weight: bolder;
+    }
+
+    .containerH dt {
+        height: 14px;
+        font-size: 14px;
+        font-weight: 900; 
+    }
+
+    .containerV div > dl > dd {
+        font-size: 14px;  
+        margin-top: 5px;
+        text-align: justify;  
+        // font-weight: 600;
+    }
+
+    .containerV div > dl > dd > p {
+        margin-bottom: 5px;
+        font-size: 14px;
+        text-indent: 20px;
+    }
+
+    .containerV div > dl > dd > span {
+        font-size: 14px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration:none;
+    }
+
+    .mat-icon {
+        font-size: 14px;
+        vertical-align: sub;    
+    }
+
+    .boutonFermer {
+        text-align: center;
+        // margin-bottom: 60px;
+        // margin-bottom: 20px;
+        vertical-align: top;
+        height: 80px;
+        // box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .containerV > div > span {
+        font-size: 14px;
+        font-weight: 900;
+    }
+
+ }
+
+/* iphone 6, 6s, 7, 8 */
+@media only screen 
+and (min-device-width: 667px) 
+and (max-device-height: 375px)
+and (-webkit-device-pixel-ratio: 2) 
+{
+    .containerH {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .containerV {
+        display: flex;
+        flex-direction: column;  
+        font-family: 'Montserrat', sans-serif;
+        max-width: calc( 620px - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .titre {
+        margin-top: 20px;
+        margin-bottom: -5px;
+        font-size:  22px;
+        text-decoration: underline;
+        color: black;
+        font-weight: bolder;
+    }
+
+    .containerH dt {
+        height: 14px;
+        font-size: 16px;
+        font-weight: 900; 
+    }
+
+    .containerV div > dl > dd {
+        font-size: 16px;  
+        margin-top: 5px;
+        text-align: justify;  
+        // font-weight: 600;
+    }
+
+    .containerV div > dl > dd > p {
+        margin-bottom: 5px;
+        font-size: 16px;
+        text-indent: 20px;
+    }
+
+    .containerV div > dl > dd > span {
+        font-size: 16px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration:none;
+    }
+
+    .mat-icon {
+        font-size: 16px;
+        vertical-align: sub;    
+    }
+
+    .boutonFermer {
+        text-align: center;
+        // margin-bottom: 60px;
+        margin-bottom: 20px;
+        vertical-align: top;
+        height: 80px;
+        
+        // box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .containerV > div > span {
+        font-size: 16px;
+        font-weight: 900;
+    }
+ }
+
+/* iphone 6+, 6s+, 7+, 8+ */
+@media only screen 
+and (min-device-width: 736px) 
+and (max-device-height: 414px) 
+and (-webkit-device-pixel-ratio: 3) 
+{
+    .containerH {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .containerV {
+        display: flex;
+        flex-direction: column;  
+        font-family: 'Montserrat', sans-serif;
+        max-width: calc( 700px - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .titre {
+        margin-top: 20px;
+        margin-bottom: -5px;
+        font-size:  22px;
+        text-decoration: underline;
+        color: black;
+        font-weight: bolder;
+    }
+
+    .containerH dt {
+        height: 14px;
+        font-size: 16px;
+        font-weight: 900; 
+    }
+
+    .containerV div > dl > dd {
+        font-size: 16px;  
+        margin-top: 5px;
+        text-align: justify;  
+        // font-weight: 600;
+    }
+
+    .containerV div > dl > dd > p {
+        margin-bottom: 5px;
+        font-size: 16px;
+        text-indent: 20px;
+    }
+
+    .containerV div > dl > dd > span {
+        font-size: 16px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration:none;
+    }
+
+    .mat-icon {
+        font-size: 16px;
+        vertical-align: sub;    
+    }
+
+    .boutonFermer {
+        text-align: center;
+        // margin-bottom: 60px;
+        margin-bottom: 20px;
+        vertical-align: top;
+        height: 80px;
+        // box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .containerV > div > span {
+        font-size: 16px;
+        font-weight: 900;
+    }
+
+ }
+
+/* iphone X */
+@media only screen 
+and (min-device-width: 812px) 
+and (max-device-height: 375px) 
+and (-webkit-device-pixel-ratio: 3) 
+{
+
+    .containerH {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .containerV {
+        display: flex;
+        flex-direction: column;  
+        font-family: 'Montserrat', sans-serif;
+        max-width: calc( 750px - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .titre {
+        margin-top: 20px;
+        margin-bottom: -5px;
+        font-size:  22px;
+        text-decoration: underline;
+        color: black;
+        font-weight: bolder;
+    }
+
+    .containerH dt {
+        height: 14px;
+        font-size: 16px;
+        font-weight: 900; 
+    }
+
+    .containerV div > dl > dd {
+        font-size: 16px;  
+        margin-top: 5px;
+        text-align: justify;  
+        // font-weight: 600;
+    }
+
+    .containerV div > dl > dd > p {
+        margin-bottom: 5px;
+        font-size: 16px;
+        text-indent: 20px;
+    }
+
+    .containerV div > dl > dd > span {
+        font-size: 16px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration:none;
+    }
+
+    .mat-icon {
+        font-size: 16px;
+        vertical-align: sub;    
+    }
+
+    .boutonFermer {
+        text-align: center;
+        // margin-bottom: 60px;
+        margin-bottom: 20px;
+        vertical-align: top;
+        height: 80px;
+        // box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .containerV > div > span {
+        font-size: 12px;
+        font-weight: 900;
+    }
+ }

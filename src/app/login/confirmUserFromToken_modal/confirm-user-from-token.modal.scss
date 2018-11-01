@@ -3,552 +3,613 @@
 .mat-toolbar { height: 48px }
 .mat-toolbar-row { height: 48px } 
 
+// FLEX Container du Modal
 .flex-container {
   display: flex;
-  
-//   width: 430px;   
-//   max-height: 400px;
-  flex-direction: column;  
-  font-family: 'Montserrat', sans-serif; 
-} 
-
-.mat-form-field {
-  font-weight: 900;
-  font-family: 'Montserrat', sans-serif;
-}
-
-.flex-item-title {
+  flex-direction: column;
+  align-content: space-between;
   width: 100%;
+  height: 100%;
+  font-family: 'Montserrat', sans-serif; 
+}
+
+.flex-item-title * {
   color: black;
+  font-family: 'Montserrat', sans-serif;  
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.items {
+  width: 100%;
+}
+
+.items p {
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.flex-item-Action {
+  // flex:1;
+  width: 100%;
+}
+
+.flex-container-ActionOkCancel {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+
+.flex-item-ActionOkCancel {
+  flex:1;
+  text-align: center;
 }
 
 
-// Portrait iphone 5
-@media screen 
-// and ( orientation: portrait) 
-and ( min-device-width: 320px )  
-and ( max-device-height: 568px )
-// and (-webkit-device-pixel-ratio : 2) 
-{
-  
-  .flex-container {
-    display: flex;
-    // width: 300px;
-    // height: 250px;
-    flex-direction: column;
-    justify-content: space-between;
-    font-family: 'Montserrat', sans-serif; 
-  } 
-
-  .flex-item-title p {
-    font-size: 20px;
-    font-weight: bold;
-    font-family: 'Montserrat', sans-serif;
-  }
-
-  .flex-item { 
-    // height: 154px; 
-    width: 100%;        
-  }
-
-  .flex-item p {
-    // margin-top: 20px;
-    margin-left: 20px; 
-    margin-right: 20px;  
-    text-align: left;
-    font-size: 17px; 
-  }
-
-  .flex-item-Action {
-    width: 100%;
-  }
-  
-  .flex-container-actionOkCancel {
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-  }
-  
-  .flex-item-ActionOkCancel {
-    width: 100%;
-  }
-
-}
-
-// Portrait iphone 6-7-8
-@media only screen 
-// and ( orientation: portrait) 
-and ( min-device-width: 375px )
-and ( max-device-height: 667px )
-// and (-webkit-device-pixel-ratio : 2) 
-{
-  
-  .flex-container {
-    display: flex;
-    // display: -webkit-flex;
-    width: 330px;
-    height: 250px;
-    // flex-direction: column;
-    // -webkit-flex-direction: column;
-    justify-content: space-between;
-    font-family: 'Montserrat', sans-serif; 
-  } 
-
-  .flex-item-title p {
-    font-size: 24px;
-    font-weight: bold;
-    font-family: 'Montserrat', sans-serif;
-  }
-
-  .flex-item { 
-    margin-top: 0px;
-    // height: 154px; 
-    width: 100%;        
-  }
-
-  .flex-item p {
-    margin-left: 20px;
-    margin-right: 20px;
-    font-size: 18px; 
-  }
-
-  .flex-item-Action {
-    width: 100%;
-  }
-  
-  .flex-container-actionOkCancel {
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-  }
-  
-  .flex-item-ActionOkCancel {
-    width: 100%;
-  }
-
-}
-
-// Portrait iphone  6+-7+8+
-@media only screen 
-// and ( orientation: portrait) 
-and ( min-device-width: 414px )  
-and ( max-device-height: 736px )
-// and (-webkit-device-pixel-ratio : 3) 
-{
-  
-  .flex-container {
-    display: flex;
-    // width: 330px;
-    // height: 250px;
-    flex-direction: column;
-    justify-content: space-between;
-    font-family: 'Montserrat', sans-serif; 
-  } 
-
-  .flex-item-title p {
-    font-size: 20px;
-    font-weight: bold;
-    font-family: 'Montserrat', sans-serif;
-  }
-
-  .flex-item { 
-    // height: 154px; 
-    width: 100%;        
-  }
-
-  .flex-item p {
-    // align-content: space-around;
-    margin-left: 20px;
-    margin-right: 20px;
-    font-size: 18px; 
-  }
-
-  .flex-item-Action {
-    width: 100%;
-  }
-  
-  .flex-container-actionOkCancel {
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-  }
-  
-  .flex-item-ActionOkCancel {
-    width: 100%;
-  }
-
-}
-
-// Portrait iphone X
-@media only screen 
-// and ( orientation: portrait) 
-// and ( min-width: 321px)
-and ( min-device-width: 375px )
-and ( max-device-height: 812px ) 
-// and (-webkit-device-pixel-ratio : 3) 
+// min 300px portrait
+@media screen
+and ( max-width: 300px) 
 {
 
-  .flex-container {
-    display: flex;
-    // width: 300px;
-    // height: 350px;
-    flex-direction: column;
-    justify-content: space-between;
-    // font-family: 'Montserrat', sans-serif; 
-  } 
-
-  .flex-item-title p {
-    font-size: 22px;
+  .flex-item-title * {
+    color: black;
+    font-family: 'Montserrat', sans-serif;  
+    font-size: 18px;
     font-weight: bold;
-    font-family: 'Montserrat', sans-serif;
-  }
-
-  .flex-item { 
-    // margin-top: 0px;
-    // height: 154px; 
-    width: 100%;        
-  }
-
-  .flex-item p {
-    margin-left: 20px;
-    margin-right: 20px;
-    font-size: 18px; 
-  }
-
-  .flex-item-Action {
-    width: 100%;
-  }
-  
-  .flex-container-actionOkCancel {
-    display: flex;
-    flex-direction: row;
     text-align: center;
-  }
-  
-  .flex-item-ActionOkCancel {
-    width: 100%;
   }
 
 }
 
-// Portrait ipad
-@media screen 
-// and ( orientation: portrait )
-and ( min-width: 768px )
-and ( max-height: 1024px ) {
 
-    .flex-container {
-        display: flex;
-        // width: 430px;   
-        // height: 330px;
-        flex-direction: column;
-        justify-content: space-between;
-        font-family: 'Montserrat', sans-serif; 
-        } 
 
-        .mat-form-field {
-        font-weight: 900;
-        font-family: 'Montserrat', sans-serif;
-        }
+// .flex-container {
+//   display: flex;
+  
+// //   width: 430px;   
+// //   max-height: 400px;
+//   flex-direction: column;  
+//   font-family: 'Montserrat', sans-serif; 
+// } 
 
-        .flex-item-title {
-        width: 100%;
-        color: black;
-        }
+// .mat-form-field {
+//   font-weight: 900;
+//   font-family: 'Montserrat', sans-serif;
+// }
 
-        .flex-item-title p {
-        font-size: 24px;
-        font-weight: bold;
-        font-family: 'Montserrat', sans-serif;
-        }
+// .flex-item-title {
+//   width: 100%;
+//   color: black;
+// }
 
-        .flex-item { 
-        width: 100%;
-        // max-height: 294px;  
-        }
 
-        .flex-item > p {  
-        margin-left: 30px; 
-        margin-right: 30px;   
-        font-size: 22px;
-        text-align: left;
-        }
+// // Portrait iphone 5
+// @media screen 
+// // and ( orientation: portrait) 
+// and ( min-device-width: 320px )  
+// and ( max-device-height: 568px )
+// // and (-webkit-device-pixel-ratio : 2) 
+// {
+  
+//   .flex-container {
+//     display: flex;
+//     // width: 300px;
+//     // height: 250px;
+//     flex-direction: column;
+//     justify-content: space-between;
+//     font-family: 'Montserrat', sans-serif; 
+//   } 
 
-        .flex-item-Action {
-            width: 100%;
-            }
+//   .flex-item-title p {
+//     font-size: 20px;
+//     font-weight: bold;
+//     font-family: 'Montserrat', sans-serif;
+//   }
+
+//   .flex-item { 
+//     // height: 154px; 
+//     width: 100%;        
+//   }
+
+//   .flex-item p {
+//     // margin-top: 20px;
+//     margin-left: 20px; 
+//     margin-right: 20px;  
+//     text-align: left;
+//     font-size: 17px; 
+//   }
+
+//   .flex-item-Action {
+//     width: 100%;
+//   }
+  
+//   .flex-container-actionOkCancel {
+//     display: flex;
+//     flex-direction: row;
+//     text-align: center;
+//   }
+  
+//   .flex-item-ActionOkCancel {
+//     width: 100%;
+//   }
+
+// }
+
+// // Portrait iphone 6-7-8
+// @media only screen 
+// // and ( orientation: portrait) 
+// and ( min-device-width: 375px )
+// and ( max-device-height: 667px )
+// // and (-webkit-device-pixel-ratio : 2) 
+// {
+  
+//   .flex-container {
+//     display: flex;
+//     // display: -webkit-flex;
+//     width: 330px;
+//     height: 250px;
+//     // flex-direction: column;
+//     // -webkit-flex-direction: column;
+//     justify-content: space-between;
+//     font-family: 'Montserrat', sans-serif; 
+//   } 
+
+//   .flex-item-title p {
+//     font-size: 24px;
+//     font-weight: bold;
+//     font-family: 'Montserrat', sans-serif;
+//   }
+
+//   .flex-item { 
+//     margin-top: 0px;
+//     // height: 154px; 
+//     width: 100%;        
+//   }
+
+//   .flex-item p {
+//     margin-left: 20px;
+//     margin-right: 20px;
+//     font-size: 18px; 
+//   }
+
+//   .flex-item-Action {
+//     width: 100%;
+//   }
+  
+//   .flex-container-actionOkCancel {
+//     display: flex;
+//     flex-direction: row;
+//     text-align: center;
+//   }
+  
+//   .flex-item-ActionOkCancel {
+//     width: 100%;
+//   }
+
+// }
+
+// // Portrait iphone  6+-7+8+
+// @media only screen 
+// // and ( orientation: portrait) 
+// and ( min-device-width: 414px )  
+// and ( max-device-height: 736px )
+// // and (-webkit-device-pixel-ratio : 3) 
+// {
+  
+//   .flex-container {
+//     display: flex;
+//     // width: 330px;
+//     // height: 250px;
+//     flex-direction: column;
+//     justify-content: space-between;
+//     font-family: 'Montserrat', sans-serif; 
+//   } 
+
+//   .flex-item-title p {
+//     font-size: 20px;
+//     font-weight: bold;
+//     font-family: 'Montserrat', sans-serif;
+//   }
+
+//   .flex-item { 
+//     // height: 154px; 
+//     width: 100%;        
+//   }
+
+//   .flex-item p {
+//     // align-content: space-around;
+//     margin-left: 20px;
+//     margin-right: 20px;
+//     font-size: 18px; 
+//   }
+
+//   .flex-item-Action {
+//     width: 100%;
+//   }
+  
+//   .flex-container-actionOkCancel {
+//     display: flex;
+//     flex-direction: row;
+//     text-align: center;
+//   }
+  
+//   .flex-item-ActionOkCancel {
+//     width: 100%;
+//   }
+
+// }
+
+// // Portrait iphone X
+// @media only screen 
+// // and ( orientation: portrait) 
+// // and ( min-width: 321px)
+// and ( min-device-width: 375px )
+// and ( max-device-height: 812px ) 
+// // and (-webkit-device-pixel-ratio : 3) 
+// {
+
+//   .flex-container {
+//     display: flex;
+//     // width: 300px;
+//     // height: 350px;
+//     flex-direction: column;
+//     justify-content: space-between;
+//     // font-family: 'Montserrat', sans-serif; 
+//   } 
+
+//   .flex-item-title p {
+//     font-size: 22px;
+//     font-weight: bold;
+//     font-family: 'Montserrat', sans-serif;
+//   }
+
+//   .flex-item { 
+//     // margin-top: 0px;
+//     // height: 154px; 
+//     width: 100%;        
+//   }
+
+//   .flex-item p {
+//     margin-left: 20px;
+//     margin-right: 20px;
+//     font-size: 18px; 
+//   }
+
+//   .flex-item-Action {
+//     width: 100%;
+//   }
+  
+//   .flex-container-actionOkCancel {
+//     display: flex;
+//     flex-direction: row;
+//     text-align: center;
+//   }
+  
+//   .flex-item-ActionOkCancel {
+//     width: 100%;
+//   }
+
+// }
+
+// // Portrait ipad
+// @media screen 
+// // and ( orientation: portrait )
+// and ( min-width: 768px )
+// and ( max-height: 1024px ) {
+
+//     .flex-container {
+//         display: flex;
+//         // width: 430px;   
+//         // height: 330px;
+//         flex-direction: column;
+//         justify-content: space-between;
+//         font-family: 'Montserrat', sans-serif; 
+//         } 
+
+//         .mat-form-field {
+//         font-weight: 900;
+//         font-family: 'Montserrat', sans-serif;
+//         }
+
+//         .flex-item-title {
+//         width: 100%;
+//         color: black;
+//         }
+
+//         .flex-item-title p {
+//         font-size: 24px;
+//         font-weight: bold;
+//         font-family: 'Montserrat', sans-serif;
+//         }
+
+//         .flex-item { 
+//         width: 100%;
+//         // max-height: 294px;  
+//         }
+
+//         .flex-item > p {  
+//         margin-left: 30px; 
+//         margin-right: 30px;   
+//         font-size: 22px;
+//         text-align: left;
+//         }
+
+//         .flex-item-Action {
+//             width: 100%;
+//             }
             
-            .flex-container-actionOkCancel {
-            display: flex;
-            flex-direction: row;
-            text-align: center;
-            }
+//             .flex-container-actionOkCancel {
+//             display: flex;
+//             flex-direction: row;
+//             text-align: center;
+//             }
             
-            .flex-item-ActionOkCancel {
-            width: 100%;
-            }
-}
+//             .flex-item-ActionOkCancel {
+//             width: 100%;
+//             }
+// }
 
-// Prtrait web and ipad pro
-@media screen 
-// and ( orientation: portrait )
-and ( min-width: 1024px )
-and ( min-height: 1366px ) {
+// // Prtrait web and ipad pro
+// @media screen 
+// // and ( orientation: portrait )
+// and ( min-width: 1024px )
+// and ( min-height: 1366px ) {
 
-    .flex-container {
-        display: flex;
-        // width: 430px;   
-        // height: 330px;
-        flex-direction: column;
-        justify-content: space-between;
-        font-family: 'Montserrat', sans-serif; 
-        } 
+//     .flex-container {
+//         display: flex;
+//         // width: 430px;   
+//         // height: 330px;
+//         flex-direction: column;
+//         justify-content: space-between;
+//         font-family: 'Montserrat', sans-serif; 
+//         } 
 
-        .mat-form-field {
-        font-weight: 900;
-        font-family: 'Montserrat', sans-serif;
-        }
+//         .mat-form-field {
+//         font-weight: 900;
+//         font-family: 'Montserrat', sans-serif;
+//         }
 
-        .flex-item-title {
-        width: 100%;
-        color: black;
-        }
+//         .flex-item-title {
+//         width: 100%;
+//         color: black;
+//         }
 
-        .flex-item-title p {
-        font-size: 24px;
-        font-weight: bold;
-        font-family: 'Montserrat', sans-serif;
-        }
+//         .flex-item-title p {
+//         font-size: 24px;
+//         font-weight: bold;
+//         font-family: 'Montserrat', sans-serif;
+//         }
 
-        .flex-item { 
-        width: 100%;
-        // max-height: 294px;  
-        }
+//         .flex-item { 
+//         width: 100%;
+//         // max-height: 294px;  
+//         }
 
-        .flex-item > p {  
-        margin-left: 30px; 
-        margin-right: 30px;   
-        font-size: 22px;
-        text-align: left;
-        }
+//         .flex-item > p {  
+//         margin-left: 30px; 
+//         margin-right: 30px;   
+//         font-size: 22px;
+//         text-align: left;
+//         }
 
-        .flex-item-Action {
-        width: 100%;
-        }
+//         .flex-item-Action {
+//         width: 100%;
+//         }
 
-        .flex-container-actionOkCancel {
-        display: flex;
-        flex-direction: row;
-        text-align: center;
-        }
+//         .flex-container-actionOkCancel {
+//         display: flex;
+//         flex-direction: row;
+//         text-align: center;
+//         }
 
-        .flex-item-ActionOkCancel {
-        // flex:1;
-        width: 100%;
-        } 
-}
+//         .flex-item-ActionOkCancel {
+//         // flex:1;
+//         width: 100%;
+//         } 
+// }
 
-// Landscape iphone 5
-@media only screen 
-// and ( orientation: landscape) 
-and ( min-device-width: 568px )  
-and ( max-device-height: 320px )
-// and (-webkit-device-pixel-ratio : 2) 
-{
+// // Landscape iphone 5
+// @media only screen 
+// // and ( orientation: landscape) 
+// and ( min-device-width: 568px )  
+// and ( max-device-height: 320px )
+// // and (-webkit-device-pixel-ratio : 2) 
+// {
   
-  .flex-container {
-    display: flex;
-    // max-width: 330px;
-    // height: 330px;
-    flex-direction: column;
-    justify-content: space-between;
-    // font-family: 'Montserrat', sans-serif; 
-  } 
+//   .flex-container {
+//     display: flex;
+//     // max-width: 330px;
+//     // height: 330px;
+//     flex-direction: column;
+//     justify-content: space-between;
+//     // font-family: 'Montserrat', sans-serif; 
+//   } 
 
-  .flex-item-title p {
-    font-size: 20px;
-    font-weight: bold;
-    font-family: 'Montserrat', sans-serif;
-  }
+//   .flex-item-title p {
+//     font-size: 20px;
+//     font-weight: bold;
+//     font-family: 'Montserrat', sans-serif;
+//   }
 
-  .flex-item { 
-    margin-top: 0px;
-    // height: 154px; 
-    width: 100%;        
-  }
+//   .flex-item { 
+//     margin-top: 0px;
+//     // height: 154px; 
+//     width: 100%;        
+//   }
 
-  .flex-item p {
-    // margin-top: 25px;
-    margin-left: 20px;
-    margin-right: 20px;
-    font-size: 17px; 
-    text-align: left;
-  }
+//   .flex-item p {
+//     // margin-top: 25px;
+//     margin-left: 20px;
+//     margin-right: 20px;
+//     font-size: 17px; 
+//     text-align: left;
+//   }
 
-  .flex-item-Action {
-    // flex:0;
-    width: 100%;
-  }
+//   .flex-item-Action {
+//     // flex:0;
+//     width: 100%;
+//   }
 
-  .flex-container-actionOkCancel {
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-  }
+//   .flex-container-actionOkCancel {
+//     display: flex;
+//     flex-direction: row;
+//     text-align: center;
+//   }
   
-  .flex-item-ActionOkCancel {
-    width: 100%;
-  }
+//   .flex-item-ActionOkCancel {
+//     width: 100%;
+//   }
 
-}
+// }
 
-// Landscape iphone > 6-7-8
-@media only screen 
-// and ( orientation: landscape) 
-and ( min-device-width: 667px )  
-and ( max-device-height: 375px )
-// and (-webkit-device-pixel-ratio : 2) 
-{
+// // Landscape iphone > 6-7-8
+// @media only screen 
+// // and ( orientation: landscape) 
+// and ( min-device-width: 667px )  
+// and ( max-device-height: 375px )
+// // and (-webkit-device-pixel-ratio : 2) 
+// {
   
-  .flex-container {
-    display: flex;
-    // width: 330px;
-    // height: 350px;
-    flex-direction: column;
-    justify-content: space-between;
-    // font-family: 'Montserrat', sans-serif; 
-  } 
+//   .flex-container {
+//     display: flex;
+//     // width: 330px;
+//     // height: 350px;
+//     flex-direction: column;
+//     justify-content: space-between;
+//     // font-family: 'Montserrat', sans-serif; 
+//   } 
 
-  .flex-item-title p {
-    font-size: 24px;
-    font-weight: bold;
-    font-family: 'Montserrat', sans-serif;
-  }
+//   .flex-item-title p {
+//     font-size: 24px;
+//     font-weight: bold;
+//     font-family: 'Montserrat', sans-serif;
+//   }
 
-  .flex-item { 
-    // margin-top: 0px;
-    // height: 154px; 
-    width: 100%;        
-  }
+//   .flex-item { 
+//     // margin-top: 0px;
+//     // height: 154px; 
+//     width: 100%;        
+//   }
 
-  .flex-item p {
-    margin-left: 20px;
-    margin-right: 20px;
-    font-size: 18px; 
-  }
+//   .flex-item p {
+//     margin-left: 20px;
+//     margin-right: 20px;
+//     font-size: 18px; 
+//   }
 
-  .flex-item-Action {
-    width: 100%;
-  }
+//   .flex-item-Action {
+//     width: 100%;
+//   }
   
-  .flex-container-actionOkCancel {
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-  }
+//   .flex-container-actionOkCancel {
+//     display: flex;
+//     flex-direction: row;
+//     text-align: center;
+//   }
   
-  .flex-item-ActionOkCancel {
-    width: 100%;
-  }
+//   .flex-item-ActionOkCancel {
+//     width: 100%;
+//   }
 
-}
+// }
 
-// Landscape iphone > 6+-7+ 8+
-@media only screen 
-// and ( orientation: landscape) 
-and ( min-device-width: 736px )  
-and ( max-device-height: 414px )
-// and (-webkit-device-pixel-ratio : 3) 
-{
+// // Landscape iphone > 6+-7+ 8+
+// @media only screen 
+// // and ( orientation: landscape) 
+// and ( min-device-width: 736px )  
+// and ( max-device-height: 414px )
+// // and (-webkit-device-pixel-ratio : 3) 
+// {
   
-  .flex-container {
-    display: flex;
-    // width: 330px;
-    // height: 350px;
-    flex-direction: column;
-    justify-content: space-between;
-    // font-family: 'Montserrat', sans-serif; 
-  } 
+//   .flex-container {
+//     display: flex;
+//     // width: 330px;
+//     // height: 350px;
+//     flex-direction: column;
+//     justify-content: space-between;
+//     // font-family: 'Montserrat', sans-serif; 
+//   } 
 
-  .flex-item-title p {
-    font-size: 24px;
-    font-weight: bold;
-    font-family: 'Montserrat', sans-serif;
-  }
+//   .flex-item-title p {
+//     font-size: 24px;
+//     font-weight: bold;
+//     font-family: 'Montserrat', sans-serif;
+//   }
 
-  .flex-item { 
-    width: 100%;        
-  }
+//   .flex-item { 
+//     width: 100%;        
+//   }
 
-  .flex-item p {
-    margin-left: 20px;
-    margin-right: 20px;
-    font-size: 18px; 
-  }
+//   .flex-item p {
+//     margin-left: 20px;
+//     margin-right: 20px;
+//     font-size: 18px; 
+//   }
 
-  .flex-item-Action {
-    width: 100%;
-  }
+//   .flex-item-Action {
+//     width: 100%;
+//   }
   
-  .flex-container-actionOkCancel {
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-  }
+//   .flex-container-actionOkCancel {
+//     display: flex;
+//     flex-direction: row;
+//     text-align: center;
+//   }
   
-  .flex-item-ActionOkCancel {
-    width: 100%;
-  }
+//   .flex-item-ActionOkCancel {
+//     width: 100%;
+//   }
 
-}
+// }
 
 
-// Landscape iphone X
-@media only screen 
-// and ( orientation: landscape) 
-and ( min-device-width: 812px )
-and ( max-device-height: 375px )  
-// and (-webkit-device-pixel-ratio : 3) 
-{
+// // Landscape iphone X
+// @media only screen 
+// // and ( orientation: landscape) 
+// and ( min-device-width: 812px )
+// and ( max-device-height: 375px )  
+// // and (-webkit-device-pixel-ratio : 3) 
+// {
   
-  .flex-container {
-    display: flex;
-    // width: 400px;
-    // height: 350px;
-    flex-direction: column;
-    justify-content: space-between;
-    // font-family: 'Montserrat', sans-serif; 
-  } 
+//   .flex-container {
+//     display: flex;
+//     // width: 400px;
+//     // height: 350px;
+//     flex-direction: column;
+//     justify-content: space-between;
+//     // font-family: 'Montserrat', sans-serif; 
+//   } 
 
-  .flex-item-title p {
-    font-size: 22px;
-    font-weight: bold;
-    font-family: 'Montserrat', sans-serif;
-  }
+//   .flex-item-title p {
+//     font-size: 22px;
+//     font-weight: bold;
+//     font-family: 'Montserrat', sans-serif;
+//   }
 
-  .flex-item {     
-    height: 120px; 
-    width: 100%;  
-    font-size: 16px;      
-}
+//   .flex-item {     
+//     height: 120px; 
+//     width: 100%;  
+//     font-size: 16px;      
+// }
 
-  .flex-item p {
-    font-size: 16px; 
-  }
+//   .flex-item p {
+//     font-size: 16px; 
+//   }
 
-  .flex-item-Action {
-    width: 100%;
-  }
+//   .flex-item-Action {
+//     width: 100%;
+//   }
   
-  .flex-container-actionOkCancel {
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-  }
+//   .flex-container-actionOkCancel {
+//     display: flex;
+//     flex-direction: row;
+//     text-align: center;
+//   }
   
-  .flex-item-ActionOkCancel {
-    width: 100%;
-  }
+//   .flex-item-ActionOkCancel {
+//     width: 100%;
+//   }
 
-}
+// }
 

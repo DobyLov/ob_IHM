@@ -19,7 +19,9 @@ export class LoginComponent implements OnInit {
 
   // Taille du Modal
   modalWidth: number = 430;
-  modalHeight: number = 400; 
+  // modalWidth: number = 330;
+  modalHeight: number = 400;
+  // modalHeight: number = 350; 
   // options supplementaires du modal
   isDeviceIsMobile: boolean;
   isMobileOrientationLandscape: boolean;

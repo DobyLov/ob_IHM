@@ -1,5 +1,4 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy, Input } from '@angular/core';
-import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
 import { CurrentUtilisateur } from '../login/currentUtilisateur';

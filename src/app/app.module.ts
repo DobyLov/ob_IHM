@@ -21,6 +21,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+// Fragment Routing
+import { SmoothScrollDirective } from './directives/smooth-scroll.directive';
+
 // Device Detector
 import { DeviceDetectorModule } from 'ngx-device-detector';
 
@@ -39,6 +42,8 @@ import { Utilisateur } from './utilisateur/utilisateur';
 import { UtilisateurService } from './utilisateur/utilisateur.service';
 import { UtilisateurComponent } from './utilisateur/utilisateur.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { SupportComponent } from './support/support.component';
+import { InformationsComponent } from './informations/informations.component';
 
 // Authentification
 import { Credentials } from './login/credentials';
@@ -71,6 +76,9 @@ import { ToasterService } from './service/toaster.service';
 import { SnackBarComponent } from './service/toaster.service';
 import { BottomSheetService } from './service/bottomsheet.service';
 import { BottomSheetComponent } from './service/bottomsheet.service';
+
+// Verification si serveur est en ligne
+import { ReachServerService } from './service/reachServer.service';
 
 // Import Locale_Fr
 import { registerLocaleData } from '@angular/common';
@@ -144,6 +152,7 @@ import {
     HeaderComponent,
     HomeComponent,
     IfIsNullSetToNonRenseignePipe,
+    InformationsComponent,
     LoginComponent,
     LoginModalComponent,
     PagenotfoundComponent,   
@@ -156,11 +165,13 @@ import {
     RgpdTokenExpiredComponent,
     RgpdUrlAlteredComponent,
     SnackBarComponent,
+    SupportComponent,
     Time24Pipe,
     TimeMinuteTwoDigitsPipe,
     TimeHourTwoDigitsPipe,
     UtilisateurComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    SmoothScrollDirective
   ],
 
   imports: [    
@@ -215,6 +226,7 @@ import {
               { provide: AuthGuardService, useClass: AuthGuardService },
               { provide: ToasterService, useClass: ToasterService },
               { provide: BottomSheetService, useClass: BottomSheetService },
+              { provide: ReachServerService, useClass: ReachServerService },
               { provide: Credentials, useClass: Credentials },
               { provide: Utilisateur, useClass: Utilisateur },
               { provide: ClientService, useClass: ClientService },

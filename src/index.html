@@ -16,8 +16,6 @@
             @media screen 
             and ( orientation: portrait) { 
                 .pre-bootstrap {
-                    /* background-color: #262626; */
-                    /* background-color: #aed581; */
                     bottom: 0px;
                     left: 0px;
                     position: fixed;
@@ -35,32 +33,19 @@
                     right: 0px;
                     text-align: center;
                     top: 50%;
-                    /* -webkit-animation: pre-bootstrap 2s 1;
-                    -moz-animation: pre-bootstrap 2s 1; */
                 }
         
-                /* .bkgGnd-fade {
-                    -webkit-animation: pre-bootstrap 2s 1;
-                    -moz-animation: pre-bootstrap 2s 1;
-                } */
 
                 @-webkit-keyframes pre-bootstrap {
                     0% { background-color: #aed581; }
                     100% { background-color: #FFFFFF; }
                 }
-
-                /* @-moz-keyframes pre-bootstrap {
-                    0% { background-color: #aed581; }
-                    100% { background-color: #FFFFFF; }
-                } */
 
             }
       
             @media screen 
             and ( orientation: landscape ) { 
                 .pre-bootstrap {
-                    /* background-color: #262626; */
-                    /* background-color: #aed581; */
                     bottom: 0px;
                     left: 0px;
                     position: fixed;
@@ -78,24 +63,13 @@
                     right: 0px;
                     text-align: center;
                     top: 50%;
-                    /* -webkit-animation: pre-bootstrap 2s 1;
-                    -moz-animation: pre-bootstrap 2s 1; */
                 }
-        
-                /* .bkgGnd-fade {
-                    -webkit-animation: pre-bootstrap 2s 1;
-                    -moz-animation: pre-bootstrap 2s 1;
-                } */
 
                 @-webkit-keyframes pre-bootstrap {
                     0% { background-color: #aed581; }
+                    /* 0% { background-color: #FFFFFF; } */
                     100% { background-color: #FFFFFF; }
                 }
-
-                /* @-moz-keyframes pre-bootstrap {
-                    0% { background-color: #aed581; }
-                    100% { background-color: #FFFFFF; }
-                } */
 
             }
 
@@ -105,7 +79,17 @@
         <div class="messaging">
                 <img class="image" src="./assets/OpBLogo.svg">  
         </div>
+        <!-- <div class="messaging">
+            
+            <mat-progress-spinner
+                class="progressSpinner"
+                [color]="accent"
+                [mode]="indeterminate">
+            </mat-progress-spinner>
+         
+        </div> -->
     </div>
+
     </app-root>
   </body>
 </html>

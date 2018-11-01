@@ -9,6 +9,9 @@ import { UtilisateurService } from '../utilisateur/utilisateur.service';
 import { SideBarService } from '../service/sidebar.service';
 import { ResponsiveAppMediaService } from '../service/responsiveAppMedia.service';
 import { BreakpointObserver } from '../../../node_modules/@angular/cdk/layout';
+import { ToasterService } from '../service/toaster.service';
+import { ReachServerService } from '../service/reachServer.service';
+import { InternalFormsSharedModule } from '@angular/forms/src/directives';
 
 @Component({
   selector: 'app-header',
@@ -20,9 +23,9 @@ import { BreakpointObserver } from '../../../node_modules/@angular/cdk/layout';
 export class HeaderComponent implements OnInit, AfterViewInit {
 
   // @ViewChild('matMenu') cdr: ChangeDetectorRef;
-  @Input() isUserIsConnected$: boolean = false;
+  @Input() isUserIsConnected$: boolean = true;
+  @Input() isSrvIsOnLine$: boolean = true;
   sideNavToggle$: Boolean;
-  // @Input() isScreenIsMobile: boolean;
 
   // Taille du Modal de Confirmation de l utilisateur
   modalWidth: number = 430;
@@ -44,17 +47,27 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   constructor(  private logger: NGXLogger,
                 private location: Location,
                 private _authService: AuthService,
+                private _toasterService: ToasterService,
                 public _utilisateurservice: UtilisateurService,
                 public _sidebarservice: SideBarService,
+                public _reachServerService: ReachServerService,
                 private router: Router,
                 public dialog: MatDialog,
                 private _responsivappmediaservice: ResponsiveAppMediaService,
                 private cd: ChangeDetectorRef,
                 public _breakpointobserver: BreakpointObserver
-                ) { 
-                      
+                ) {  
+
+                    //souscription pour verifier si le serveur est en ligne
+                    this._reachServerService.isServerOnLine$.subscribe( isSrvIsOnLine => {
+                      this.isSrvIsOnLine$ = isSrvIsOnLine.valueOf();
+                      // 
+                      // this.logger.info("HeaderComponent Log : Constructor Etat du serveur Online : " + this.isSrvIsOnLine$.valueOf())
+                    }) 
+
                       this.url = this.location.path();
-                            // si rgpd dans url supprime le token de l utilisateur si il y en a un
+
+                      // si rgpd dans url supprime le token de l utilisateur si il y en a un
                       if(this.searchRgpdMgmtInsideUrl()) {        
                         let userMail = this._authService.getMailFromToken()
                         this._authService.removeGivenTokenFromLS(this._authService.getMailFromToken());
@@ -62,10 +75,14 @@ export class HeaderComponent implements OnInit, AfterViewInit {
                       } else {
                         this.openAppFromRgpdUrl = false;
                       }
-                      
-                    }
 
-  ngOnInit() {   
+
+                      
+                }
+
+  ngOnInit() {  
+
+      
       this.checkIfUrlIsAKnewRoute();
       // Souscription de l observable Boolean du bouton de la navBar
       this._sidebarservice.statusOfSideNavToggle.subscribe(isSideBarOpen => {
@@ -96,6 +113,17 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
     })
 
+    this._reachServerService.getStatusofServerOnLine().subscribe(res => {  
+      this.logger.info("HeaderComponent log : avant le vrai etat de isSrvIsOnLine : " + this.isSrvIsOnLine$.valueOf());      
+      this.isSrvIsOnLine$ = res.valueOf();
+      this.logger.info("HeaderComponent log : Le vrai etat de isSrvIsOnLine : " + this.isSrvIsOnLine$.valueOf());
+    
+
+      this.cd.detectChanges();
+    })
+
+  
+
     // this.checkIfATokenIsPresentInLS();
     this._responsivappmediaservice.isAMobilePlatform$
     .subscribe(res => { this.isDeviceIsMobile = res.valueOf()})            
@@ -109,6 +137,18 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     });
     
     this.setModalMobilResolution();
+
+    if ( this.isSrvIsOnLine$.valueOf() === true ) {
+      
+      this.btnLoginState = true;
+      this.logger.info("changement de l état du btn connexion ");
+      // this._toasterService.showToaster('Serveur Ok','snackbarInfo',2000);  
+    } else {
+      this.btnLoginState = false;
+      this.logger.info("ReachServer log : Serveur non joignable");
+      this.logger.info("Etat du btn connexion : " + this.btnLoginState); 
+      // this._toasterService.showToaster('Serveur Injoignable , appelez le support','snackbarWarning',5000);
+    }
 
   }
 
@@ -129,6 +169,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     }
 
   }
+
 
   /**
    * detection de la partie RGPD dans l URL de la page 
@@ -173,7 +214,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     if (this.isDeviceIsMobile == true ) {
       this.logger.info("LoginComponent Log : UI sur Terminal mobile");
       this.modalWidth = 330;
-      this.modalHeight = 250;
+      this.modalHeight = 300;
    } else {
       this.logger.info("LoginComponent Log : Ui sur Desktop ");
    }
@@ -303,7 +344,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
       if (this.router.config[j].path === urlWithoutSlash) {
 
-        this.logger.info("header log : Route: "  + this.router.config[j].path  + " detectee en position: " + j +" du router.");
+        this.logger.info("HeaderComponent log : Route: "  + this.router.config[j].path  + " detectee en position: " + j +" du router.");
         routeKnewed = true;
         break;
 
@@ -322,6 +363,37 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     return routeKnewed;
 
   }
+
+  /**
+   * Ouvre la page Informations
+   */
+  public openInformations() {
+
+    this.router.navigate(['./informations', { fragment: 'description' } ]);
+  }
+
+  /**
+   * Ouvre la page support
+   */
+  public openSupport() {
+
+    this.router.navigate(['./support'])
+  }
+
+
+    /**
+   * Affiche les message a l utilisateur
+   * @param message 
+   * @param style 
+   * @param timer 
+   */
+  // snackbarWarning, // snackbarInfo, // timer en ms  
+  public messageToaster(message, style, timer) {
+
+    this.logger.info("AuthService Log : Message a toaster : " + message);
+    this._toasterService.showToaster(message, style, timer);
+
+  } 
 
 
 }

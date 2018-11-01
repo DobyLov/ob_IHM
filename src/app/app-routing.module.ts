@@ -21,6 +21,8 @@ import { AuthGuardRgpdService } from './rgpd/authGuardRgpd.service';
 import { RgpdPageNotFoundComponent } from './rgpd/rgpdpagenotfound.component';
 import { RgpdTokenExpiredComponent } from './rgpd/rgpdtokenexpired.component';
 import { RgpdUrlAlteredComponent } from './rgpd/rgpdUrlAltered.component';
+import { SupportComponent } from './support/support.component';
+import { InformationsComponent } from './informations/informations.component';
 
 
 const routes: Routes = [
@@ -41,6 +43,8 @@ const routes: Routes = [
   { path: 'loginmodal', component: LoginModalComponent },
   { path: 'forgottenpwd', component: ForgottenPwdComponent },
   { path: 'forgottenpwdmodal', component: ForgottenPwdModalComponent },
+  { path: 'support', component: SupportComponent },
+  { path: 'informations', component: InformationsComponent },
   { path: 'rgpd', component: RgpdComponent, canActivate: [AuthGuardRgpdService] },
   { path: 'rgpdpagenotfound', component: RgpdPageNotFoundComponent },
   { path: 'rgpdtokenexpired', component: RgpdTokenExpiredComponent},
@@ -51,7 +55,7 @@ const routes: Routes = [
 
 @NgModule({
 
-  imports: [ RouterModule.forRoot(routes) ],
+  imports: [ RouterModule.forRoot(routes, {anchorScrolling: 'enabled'}) ],
   exports: [ RouterModule ],
 
 })

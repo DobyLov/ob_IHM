@@ -2,11 +2,16 @@
 <link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Source+Sans+Pro|Montserrat:300" rel="stylesheet">
 <!-- toolbar  -->
 
- <mat-toolbar class="header" color="primary">
-    <mat-toolbar-row class="flex-container-toolbar"> 
+ <mat-toolbar class="header" color=primary >
+    <mat-toolbar-row class="flex-container-toolbar" > 
         <div class="sideNavBtn"> 
-            <button *ngIf=!openAppFromRgpdUrl mat-icon-button [disabled]="!isUserIsConnected$" (click)="sideBarNavToggle()">
-            <img src="./assets/OpBLogo.svg">
+            <button *ngIf=!openAppFromRgpdUrl 
+                class="mat-elevation-z0"
+                mat-icon-button 
+                [disabled]="!isUserIsConnected$" 
+                (click)="sideBarNavToggle()">
+                <!-- <button *ngIf='displayButtons' mat-icon-button [disabled]="!isUserIsConnected$" (click)="sideBarNavToggle()"> -->
+                <img src="./assets/OpBLogo.svg">
             </button>
         </div>
 
@@ -25,13 +30,18 @@
  
         <div class="authBtnMenu">
 
-            <button *ngIf=!openAppFromRgpdUrl mat-icon-button [matMenuTriggerFor]="menuLogin" (click)="forceCloseSideMenuBar()">
-                    <mat-icon>menu</mat-icon>
+            <button *ngIf=!openAppFromRgpdUrl 
+                    class="mat-elevation-z0"
+                    mat-icon-button 
+                    [matMenuTriggerFor]="menuLogin" 
+                    (click)="forceCloseSideMenuBar()">
+                    <mat-icon *ngIf=isSrvIsOnLine$>menu</mat-icon>
+                    <mat-icon color="accent" *ngIf=!isSrvIsOnLine$>menu</mat-icon>
             </button>
 
             <!-- Bouton login a droite de la tootlbar -->
             <mat-menu #menuLogin="matMenu">
-                <button mat-menu-item [disabled]="isUserIsConnected$" (click)="openLogin()" class="connMenu">
+                <button mat-menu-item [disabled]='isUserIsConnected$ || !isSrvIsOnLine$' (click)="openLogin()" class="connMenu">
                     <mat-icon>input</mat-icon>&nbsp;
                     <span>Connexion</span>
                 </button>
@@ -42,6 +52,14 @@
                 <button mat-menu-item [disabled]="!isUserIsConnected$" (click)="logOut()" class="connMenu">
                     <mat-icon>launch</mat-icon>&nbsp;
                     <span> Déconnexion</span>&nbsp;
+                </button>
+                <button *ngIf='isSrvIsOnLine$' mat-menu-item  (click)="openInformations()" class="connMenu">
+                    <mat-icon>info</mat-icon>&nbsp;
+                    <span> Informations</span>&nbsp;
+                </button>
+                <button *ngIf='!isSrvIsOnLine$' mat-menu-item (click)="openSupport()" class="connMenu">
+                    <mat-icon>contact_support</mat-icon>&nbsp;
+                    <span> Support</span>&nbsp;
                 </button>
             </mat-menu>
         </div>

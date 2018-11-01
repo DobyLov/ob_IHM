@@ -17,10 +17,9 @@ $custom-theme: mat-light-theme($custom-primary, $custom-accent);
     padding: 0px !important;    
 }
 
-
-
 .snackbarWarning {    
-    height: 48px;
+    // height: 48px;
+    height: auto;
     width: 90%;
     color: #DD2C00;
     text-align: center;
@@ -31,7 +30,8 @@ $custom-theme: mat-light-theme($custom-primary, $custom-accent);
 }
 
 .snackbarInfo {
-    height: 48px;
+    // height: 48px;
+    height: auto;
     width: 90%;
     color: #000000;
     text-align: center;

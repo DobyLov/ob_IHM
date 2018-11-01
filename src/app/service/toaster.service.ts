@@ -12,7 +12,9 @@ export class ToasterService {
   // error (snackbarWarning)
   // info (snackbarInfo)
   /**
-   * SnackBar Pour afficher les messages a l utilisateur
+   * SnackBar Pour afficher les messages a l utilisateur :
+   * error (snackbarWarning)
+   * info (snackbarInfo)
    */
   showToaster(snackMessage: string, snackStyle: string, snackTimer: number) {
 

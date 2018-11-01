@@ -64,7 +64,7 @@ export class ForgottenPwdComponent implements OnInit {
     if (this.isDeviceIsMobile == true ) {
       this.logger.info("LoginComponent Log : UI sur Terminal mobile");
       this.modalWidth = 330;
-      this.modalHeight = 370;
+      this.modalHeight = 300;
    } else {
       this.logger.info("LoginComponent Log : Ui sur Desktop ");
    }
