@@ -3,6 +3,7 @@ import { appConfig } from '../constant/apiOpusBeauteUrl';
 import { BehaviorSubject } from 'rxjs';
 import { ToasterService } from './toaster.service';
 import { NGXLogger } from 'ngx-logger';
+import { reject } from 'q';
 
 @Injectable()
 export class ReachServerService  {
@@ -25,25 +26,40 @@ export class ReachServerService  {
         this.logger.info("ReachServer log : Verification de la disponnibilite du serveur"); 
         let xhr = new XMLHttpRequest();
           
-        return new Promise((resolve, reject)=>{   
+        return new Promise((resolve,reject)=>{   
           
           xhr.open('GET', this.url );
-          xhr.send();         
+          xhr.send();    
+          
           xhr.onload = ( () => {
-              this.isServerOnLine$.next(true);
-              this.logger.info("ReachServer log : Serveur en ligne");
-              this._toasterService.showToaster('Serveur Ok','snackbarInfo',2000);      
+              
+            //   this.logger.info("ReachServer log : Serveur en ligne");
+            //   this._toasterService.showToaster('Serveur Ok','snackbarInfo',2000);      
               resolve();
           })
           xhr.onerror = ( () => {
-              this.isServerOnLine$.next(false);
-              this.logger.info("ReachServer log : Serveur non joignable");    
-              this._toasterService.showToaster('Serveur Injoignable , appelez le support','snackbarWarning',5000);
-            //   reject();    
-          })           
+              
+            //   this.logger.info("ReachServer log : Serveur non joignable");    
+            //   this._toasterService.showToaster('Serveur Injoignable , appelez le support','snackbarWarning',5000);
+              reject();    
+          })  
+                   
         })
+        .then( ()  => {
+            this.isServerOnLine$.next(true);
+            this.logger.info("ReachServer log : Serveur en ligne");
+            this._toasterService.showToaster('Serveur Ok', 'snackbarInfo', 1000);   
+            // resolve();
+        })
+        .catch( () => {
+            this.isServerOnLine$.next(false);            
+            this.logger.info("ReachServer log : Serveur non joignable "); 
+            // this._toasterService.showToaster('Serveur Injoignable , appelez le support','snackbarWarning',5000);
+            // this.message_toaster('Serveur injoignable, contactez le support','snackbarWarning',5000);
+            reject();
+        })
+        
     }
-
     
     /**
      * Retourne le status du serveur Middleware,
@@ -53,14 +69,13 @@ export class ReachServerService  {
     public getStatusofServerOnLine() {
         return this.isServerOnLine$.asObservable();
     } 
+
+
+    private message_toaster( msg: string, msgType: string, timeOut: number ) {
+        
+        this._toasterService.showToaster( msg, msgType, timeOut );
+    }
   
-    // private getSrvStatus() {
-    //     this.checkSrvOnLine().then(() => {
-    //         this.logger.info("HeaderComponent Log : Serveur en ligne");
-    //     }).catch(() => {
-    //       this.logger.error("HeaderComponent Log : Serveur non joignable catch");
-    //         this._toasterService.openBottomSheet("Serveur non joignable");
-    //     });
-    // }
+   
 
 }

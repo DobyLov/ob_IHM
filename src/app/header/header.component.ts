@@ -11,7 +11,6 @@ import { ResponsiveAppMediaService } from '../service/responsiveAppMedia.service
 import { BreakpointObserver } from '../../../node_modules/@angular/cdk/layout';
 import { ToasterService } from '../service/toaster.service';
 import { ReachServerService } from '../service/reachServer.service';
-import { InternalFormsSharedModule } from '@angular/forms/src/directives';
 
 @Component({
   selector: 'app-header',
@@ -25,6 +24,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   // @ViewChild('matMenu') cdr: ChangeDetectorRef;
   @Input() isUserIsConnected$: boolean = true;
   @Input() isSrvIsOnLine$: boolean = true;
+ 
   sideNavToggle$: Boolean;
 
   // Taille du Modal de Confirmation de l utilisateur
@@ -57,7 +57,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
                 private cd: ChangeDetectorRef,
                 public _breakpointobserver: BreakpointObserver
                 ) {  
-
+                    
                     //souscription pour verifier si le serveur est en ligne
                     this._reachServerService.isServerOnLine$.subscribe( isSrvIsOnLine => {
                       this.isSrvIsOnLine$ = isSrvIsOnLine.valueOf();
@@ -74,14 +74,13 @@ export class HeaderComponent implements OnInit, AfterViewInit {
                         this.openAppFromRgpdUrl = true;
                       } else {
                         this.openAppFromRgpdUrl = false;
-                      }
+                      }  
 
-
-                      
+                      // methode uniquement pour les mobiles
+                      this.popupMsgSrvStatus();
                 }
 
-  ngOnInit() {  
-
+  ngOnInit() { 
       
       this.checkIfUrlIsAKnewRoute();
       // Souscription de l observable Boolean du bouton de la navBar
@@ -113,13 +112,14 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
     })
 
+    // presence du chnageDetector pour prendre en compte le changement d etat du serveur MW
     this._reachServerService.getStatusofServerOnLine().subscribe(res => {  
-      this.logger.info("HeaderComponent log : avant le vrai etat de isSrvIsOnLine : " + this.isSrvIsOnLine$.valueOf());      
+
+      this.logger.info("HeaderComponent log : avant le vrai etat de isSrvIsOnLine : " + this.isSrvIsOnLine$.valueOf());   
       this.isSrvIsOnLine$ = res.valueOf();
       this.logger.info("HeaderComponent log : Le vrai etat de isSrvIsOnLine : " + this.isSrvIsOnLine$.valueOf());
-    
-
       this.cd.detectChanges();
+
     })
 
   
@@ -152,8 +152,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngAfterViewInit() {
 
+  ngAfterViewInit() {
+    // this.cd.detectChanges()
     this.logger.info("HeaderComponent Log : Detection du point d entree de L application");
     if ( !this.openAppFromRgpdUrl ) {
 
@@ -166,6 +167,22 @@ export class HeaderComponent implements OnInit, AfterViewInit {
           
       this.logger.info("HeaderComponent Log : APP ouverture par la page Rgpd");
    
+    } 
+  }
+
+  /**
+   * Affiche le popUp d etat du serveur non joignable
+   * L etat joignable du serveur et situé dans le service ReachSrerver
+   * et gere le popup ou acces ok au serveur
+   */
+  private popupMsgSrvStatus():void {
+
+    console.log("retour de l etat srv : " + this.isSrvIsOnLine$.valueOf);
+
+    if (!this.isSrvIsOnLine$.valueOf()) {
+
+      this._toasterService.showToaster("Serveur injoignable, contactez le support",  'snackbarWarning', 10000);
+
     }
 
   }

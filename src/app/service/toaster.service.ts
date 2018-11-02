@@ -19,7 +19,7 @@ export class ToasterService {
   showToaster(snackMessage: string, snackStyle: string, snackTimer: number) {
 
     const config: MatSnackBarConfig = new MatSnackBarConfig();
-      config.data = snackMessage,
+      config.data = { snackMessage },
       config.duration = snackTimer,
       config.politeness = 'assertive',
       config.horizontalPosition = 'center',
@@ -38,5 +38,5 @@ export class ToasterService {
   // styles: ['../service/snackbar/snackbar.scss']
 })
 export class SnackBarComponent {
-constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) {}
- }
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) {}
+}

@@ -17,16 +17,43 @@ $custom-theme: mat-light-theme($custom-primary, $custom-accent);
     padding: 0px !important;    
 }
 
-.snackbarWarning {    
-    // height: 48px;
-    height: auto;
-    width: 90%;
-    color: #DD2C00;
-    text-align: center;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 18px;
-    font-weight: bold;
-    background: #aed581;
+.snackBarContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+@media screen
+and ( max-width: 414px)
+{
+    .snackbarWarning {    
+        // height: 48px;
+        height: auto;
+        width: 90%;
+        color: #DD2C00;
+        text-align: center;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        background: #aed581;
+    }
+}
+
+@media screen
+and ( min-width: 415px)
+{
+    .snackbarWarning {    
+        // height: 48px;
+        height: auto;
+        width: 90%;
+        color: #DD2C00;
+        text-align: center;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 18px;
+        font-weight: bold;
+        background: #aed581;
+    }
 }
 
 .snackbarInfo {
