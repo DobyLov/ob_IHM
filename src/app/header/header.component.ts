@@ -177,7 +177,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
    */
   private popupMsgSrvStatus():void {
 
-    console.log("retour de l etat srv : " + this.isSrvIsOnLine$.valueOf);
+    this.logger.info("HeaderComponent log : Retour de l etat Du serveur MW : " + this.isSrvIsOnLine$.valueOf);
 
     if (!this.isSrvIsOnLine$.valueOf()) {
 
@@ -294,7 +294,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
         setTimeout(() => {
           this.logger.info("HeaderComponent Log : Un Token valide a ete trouve dans le LocalStorage"); 
-          this.openDialog()
+          this.openDialog();
         })
         
       }
@@ -422,12 +422,13 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   providers: [ NGXLogger ]
 })
 
-export class ConfimrUserFromTokenModalComponent implements OnInit {
+export class ConfimrUserFromTokenModalComponent implements OnInit, AfterViewInit {
 
   // userMail: string; 
   prenom: string;
   token: string;
   isUserIsLogged$: Observable<boolean>;
+  urlAsked = this.router.url;
 
   constructor( private logger: NGXLogger,
                private router: Router,
@@ -435,34 +436,42 @@ export class ConfimrUserFromTokenModalComponent implements OnInit {
                public dialogRef: MatDialogRef<ConfimrUserFromTokenModalComponent>,
                private _utilisateurService: UtilisateurService,
                @Inject(MAT_DIALOG_DATA) public data) {
+                this.urlAsked = this.router.url;
                 this.token = this._authService.getOBTokenViaMailFromLS(this.data.userMail);
+                this._authService.changeStatusOfIsLogged(true);
                 this.prenom = this._authService.getPrenomFromGivedToken(this.token);
+                this._utilisateurService.setCurrentUtilisateur(this.data.userMail);
 
   }
 
   ngOnInit() {
     this.logger.info("ConfimrUserFromTokenModalComponent Log : Ouverture du Modal ( Confirmation Utilisateur )");
-   }
+    
+  }
+
+  ngAfterViewInit() {
+    this.router.navigate(['./welcome']);
+  }
+
 
   /**
    * Confirmation que l utilisateur est bien
    * propretaire du token en cours de validite
    */
   public userConfirmed(): void {
-    this.logger.info("ConfimrUserFromTokenModalComponent Log : L Utilisateur Confime le token");
-    
-    this.dialogRef.close();
+    this.logger.info("ConfimrUserFromTokenModalComponent Log : L utilisateur Confime le token");
+        
     this._authService.changeStatusOfIsLogged(true);
     this._authService.messageToaster('Bienvenue ' + this.prenom, 'snackbarInfo', 3000);
     this._utilisateurService.setCurrentUtilisateur(this.data.userMail);
-    this.router.navigate(['./']);
-    
+    this.dialogRef.close();
+    // this.router.navigate([this.urlAsked]);
     setTimeout(() => {
-      console.log("le modal renvoie sur la route " + this.data.url);
-      this.router.navigate(['./' + this.data.url])
-      // this.router.navigate(['./home']);
+      this.logger.info("ConfirmUserModalComponent log : Redirection vers la route demandee : " + this.urlAsked);
+      this.router.navigate([this.urlAsked]);
     }, 2000);
   }
+    
 
   /**
    * Fermeture du Modal ( Confirmation Utilisateur )

@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { appConfig } from '../constant/apiOpusBeauteUrl';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { CurrentUtilisateur } from '../login/currentUtilisateur';
-import { Router } from '@angular/router';
+import { Router, ResolveEnd } from '@angular/router';
 import { Observable } from '../../../node_modules/rxjs';
 import { NGXLogger } from '../../../node_modules/ngx-logger';
 
@@ -20,7 +20,7 @@ export class UtilisateurService {
 
   public cUtilisateur$ = new BehaviorSubject<CurrentUtilisateur>(null);
 
-  get getObsCurrentUtilisateur(): Observable<CurrentUtilisateur> {
+  get getObjCurrentUtilisateur(): Observable<CurrentUtilisateur> {
     return this.cUtilisateur$.asObservable();
   }
 
@@ -49,20 +49,21 @@ export class UtilisateurService {
    * et l assigne comme CurrentUtilsateur
    * @param email 
    */
-  public setCurrentUtilisateur(email): void {
-
+  public setCurrentUtilisateur(email: string): void {
+    // let urlAsked = this.router.url;
     this.logger.info("Utilisateurservice Log : Demande au MW l utilisateur : " + email); 
     let promise = new Promise<Utilisateur>((resolve, reject) => {      
       this.httpCli.get<Utilisateur>(this.url + '/finduserbymail/' + email)
         .toPromise()
         .then(resultaUtilisateur => {
-          this.logger.info("Utilisateurservice Log : utilisateur trouve");
+          this.logger.info("UtilisateurService Log : utilisateur trouve");
           let cUz = this.mapUtilisateurToCurrentUtilisateur(resultaUtilisateur);
           this.changeObsStatusOfCurrentUser(cUz);
+          // resolve(); // ajouté le 03/11
         })
-        .then(res => this.router.navigate(['./home']))
         .catch((err) => {
-          this.logger.info("Utilisateurservice Log : Erreure de la promesse");
+          this.logger.info("UtilisateurService Log : Erreure de la promesse");
+          // reject();// ajouté le 03/11
         })
 
     })

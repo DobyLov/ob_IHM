@@ -16,7 +16,7 @@ import { AuthService } from '../login/auth.service';
   styleUrls: ['./home.component.scss'],
   providers : [ NGXLogger]
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy, OnDestroy {
 
   @Input() isScreenIsMobile$: boolean;
   @Input() isUserIsConnected$: boolean = false;
@@ -29,6 +29,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   praticien: Praticien;
   nbRdv: number;
   cUtilisateur = new Subscription();  
+  listRdv: any;
+  emailUserConnected: string;
 
   constructor( private logger: NGXLogger,
                private _utilisateurService: UtilisateurService,
@@ -38,13 +40,19 @@ export class HomeComponent implements OnInit, OnDestroy {
                private _praticienService: PraticienService,
                private _dateService: Dateservice) 
                {
+                  
+                // this.detectIfPageFromF5OrNavigation();
+                this.emailUserConnected = this._authService.getMailFromToken();
+                this._utilisateurService.setCurrentUtilisateur(this.emailUserConnected); 
                 this.getIsUserIsConnected();
-                this.detectIfPageFromF5OrNavigation();            
                 }
 
-  ngOnInit() {  
-
-      
+  ngOnInit() {      
+          
+    setTimeout(() => {
+      this.getCurrentUtilisateur();
+    }, 1000);
+     
   }
 
   /**
@@ -59,29 +67,31 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   }
 
+  ngOnDestroy() {
+
+    if ( this.cUtilisateur != null ) { this.cUtilisateur.unsubscribe()} 
+    if ( this.listRdv != null ) { this.listRdv.unsubscribe()}
+    // this._cd.detach();
+    
+  }
+
   /**
    * recupere les infos de l utilisateur en fonction
    * de la navigation ou adresse depuis la barre de recherche
    */
   private detectIfPageFromF5OrNavigation() {
-    // this._cd.detectChanges();
-    this.logger.info("***********************************************");
-    this.logger.info("***********************************************");
-    this.logger.info("***********************************************");
-    this.logger.info("***********************************************");
 
     this.logger.info("homeComponent Log : etat de isUserIsConnected : " + this.isUserIsConnected$.valueOf());
 
     if ( this.isUserIsConnected$.valueOf() == true ) {
-
+      // this._authService.getMailFromToken();
       this.logger.info("homeComponent Log : etat de isUserIsConnected(true) : " + this.isUserIsConnected$.valueOf());
       this.getCurrentUtilisateur();
 
     } else {
 
       this.logger.info("homeComponent Log : etat de isUserIsConnected(false) : " + this.isUserIsConnected$.valueOf());
-      // this._authService.getMailFromToken();
-      // this._utilisateurService.setCurrentUtilisateur(this.currentUtilisateur$.adresseMailUtilisateur);
+      this._authService.getMailFromToken();
       this._utilisateurService.setCurrentUtilisateur(this._authService.getMailFromToken());
     }
 
@@ -90,24 +100,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   /**
    * Recupere l utilisateur loggé
    */
-  private getCurrentUtilisateur() {
+  private getCurrentUtilisateur(): void {
 
-    this.cUtilisateur = this._utilisateurService.getObsCurrentUtilisateur
+    this.logger.info("Homecomponent log : Recuperation du currentuser ");
+    this.cUtilisateur = this._utilisateurService.getObjCurrentUtilisateur
     .subscribe( (cUtilisateur: CurrentUtilisateur) => 
-    { this.currentUtilisateur$ = cUtilisateur;
-            this._praticienService.getPraticienByEmail( this.currentUtilisateur$.adresseMailUtilisateur ) 
-            .subscribe( (res: Praticien) => 
-            { this.praticien = res;
-              this.getRdvListParDateParIdPraticien(this._dateService.setDateToStringYYYYMMDD(new Date()), this.praticien.idPraticien);
-              }); 
+    {
+      this.currentUtilisateur$ = cUtilisateur;
+      setTimeout(() => {
+        this._praticienService.getPraticienByEmail( this.currentUtilisateur$.adresseMailUtilisateur ) 
+      .subscribe( (res: Praticien) => 
+      { this.praticien = res;
+        this.getRdvListParDateParIdPraticien(this._dateService.setDateToStringYYYYMMDD(new Date()), this.praticien.idPraticien);
+        });
+      }, 100);             
     } ); 
 
-  }
-
-  ngOnDestroy() {  
-    
-    this.cUtilisateur.unsubscribe(); 
-    
   }  
 
 /**
@@ -119,12 +127,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.currentUtilisateur$;
     this.rdvList = null;
     this.logger.info("HomeComponent Log : Recuperation dela liste totale des Rdv's");
-    this._rdvService.getRdvListByByDateAndByPraticien(dateJj, idPraticien)
+    this.listRdv = this._rdvService.getRdvListByByDateAndByPraticien(dateJj, idPraticien)
       .subscribe( res => {  this.rdvList = res;
                             this.dataSource = this.rdvList;  
-                            this.nbRdv = this.rdvList.length;                               
-                            this._cd.detectChanges();
+                            this.nbRdv = this.rdvList.length;  
+                            this._cd.markForCheck();                             
+                           
                           } );
+                                           
 
   }
 

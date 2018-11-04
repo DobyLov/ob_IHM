@@ -8,6 +8,7 @@ import { BottomSheetService } from '../service/bottomsheet.service'
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
 import { Credentials } from './credentials';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Router } from '@angular/router';
 
 
 @Injectable()
@@ -25,7 +26,7 @@ export class AuthService {
   constructor( private logger: NGXLogger,
                 private httpCli: HttpClient,
                 private _toasterService: ToasterService,
-                private _bottomSheetService: BottomSheetService,
+                private router: Router,
                 private _utilisateurservice: UtilisateurService) { }
 
   get statusOfIsUserIsLogged() {
@@ -72,7 +73,10 @@ export class AuthService {
           }
         }
         )
-        .then( res => this._utilisateurservice.setCurrentUtilisateur(credz.email) )
+        .then( res => { 
+          this._utilisateurservice.setCurrentUtilisateur(credz.email);
+          this.router.navigate(['./home']);
+        })
         .catch((err:HttpErrorResponse) => {
           loglog = false;
           // console.log("AuthService log : " + err.status);
@@ -145,7 +149,7 @@ export class AuthService {
    * @param credz 
    * @param resultat 
    */
-  setTokenToLocalStorage(credz: Credentials, resultat: string):void {
+  private setTokenToLocalStorage(credz: Credentials, resultat: string):void {
 
     this.logger.info("AuthService Log : Persiste le Token Dans le LocalStorage");
     localStorage.setItem('ObTkn_' + credz.email, resultat);

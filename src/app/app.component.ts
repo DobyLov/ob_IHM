@@ -28,19 +28,20 @@ export class AppComponent implements OnInit {
 
   // control de la sidenav
   @ViewChild('mysidenav') public mysidenav: MatSidenav;
+  // @ViewChild(MatSidenav) sidenav: MatSidenav;
   cUtilisateur: CurrentUtilisateur;
   userNameConnected$ = '';
   sideNavToggle: Boolean = false;
 
   // title = 'OOPPusbeaute'
 
-  sidenavlinks = [{
-    rubrique: 'Rdv',
-    liste1: 'Liste des rdv\'s',
-    routingListe1: './rdv',
-    ajout1: 'Ajouter un Rdv',
-    routingAjout1: '[./rdvadd]'
-  }]
+  // sidenavlinks = [{
+  //   rubrique: 'Rdv',
+  //   liste1: 'Liste des rdv\'s',
+  //   routingListe1: './rdv',
+  //   ajout1: 'Ajouter un Rdv',
+  //   routingAjout1: '[./rdvadd]'
+  // }]
 
 
   constructor(
@@ -86,7 +87,7 @@ export class AppComponent implements OnInit {
     })
 
     // Observable pour recuperer le Current Utilisateur
-    this._utilisateurservice.getObsCurrentUtilisateur.subscribe((cu: CurrentUtilisateur) => {
+    this._utilisateurservice.getObjCurrentUtilisateur.subscribe((cu: CurrentUtilisateur) => {
       this.logger.info("AppComponent Log : Recuperation du CurrentUser");
       if (cu == null) {
 
@@ -101,6 +102,14 @@ export class AppComponent implements OnInit {
     }
     })
     
+  }
+
+  /**
+   * Fermeture du sideNav
+   */
+  public closeSideNav() {
+    this.logger.info("AppComponent Log : Fermeture du sideNav");
+    this.mysidenav.close();
   }
 
 
