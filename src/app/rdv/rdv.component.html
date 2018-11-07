@@ -1,20 +1,14 @@
-<div class="flex-container-parent-row">
-	<!-- Colonne de gauche -->
+<!-- <div class="flex-container-parent-row">
 	<div class="flex-item-parent-row">
 		<div class="flex-container-card-row">
-			<!-- <mat-card class="flex-item-card-row"> -->
-				<!-- <mat-card-content class="card-content"> -->
 					<div class="card-title">
 						<ng-container *ngIf="showSimpleDateOrRangeDate ; then showSimpleDate; else showRangeDate"></ng-container>
 						<ng-template #showSimpleDate>
 							Liste des RDV's
 							<span class="card-content">
-								<!-- RDV du jour : -->
-								<!-- du {{ dateSelectionnee | date:'EEEE dd MMMM':'':'fr' | DateFirstCharUpper }} -->
 								du {{ dateSelectionnee | date: 'dd / MM' }}
 							</span>
 						</ng-template>
-						<!-- <div class="card-title" *ngIf="show; else avecDateB"> -->
 						<ng-template #showRangeDate>
 							Liste des RDV's
 							<span class="card-content">
@@ -30,14 +24,10 @@
 							DATEHeure D Date, NomPrenom, Soin, Lieu, MODIFIER
 						</p>
 					</div>
-				<!-- </mat-card-content> -->
-			<!-- </mat-card> -->
 		</div>
 	</div>
-	<!-- Colonne de droite -->
 	<div class="flex-item-parent-row">
 		<div clas="flex-container-child-col">
-			<!-- Colonne Haut -->
 			<div class="flex-item-child-child-col">
 				<mat-accordion>
 					<mat-expansion-panel>
@@ -63,7 +53,6 @@
 								</mat-form-field>
 								<button mat-icon-button (click)="rechercherSimpleDate()">
 										<i class="material-icons">search</i>
-											<!-- Rechercher -->
 								</button>
 							</mat-tab>
 							<mat-tab label="Plage de date">
@@ -90,7 +79,6 @@
 					</mat-expansion-panel>
 				</mat-accordion>
 			</div>
-			<!-- Colonne du bas -->
 			<div clas="flex-item-child-col">
 				<mat-accordion>
 					<mat-expansion-panel [expanded]="true">
@@ -149,13 +137,13 @@
 														<span>
 																<u>Rdv Fin</u>
 															</span>	
-															<!-- <span>{{ hFSelectedValue }}:{{ mFSelectedValue }} </span> -->
+															
 															<br>
 															<div class="flex-container-item-row">
 																	<span class="flex-item-row-client-content">
 																			<mat-form-field class="items">
 																					<mat-select placeholder="Heures"  [(ngModel)]="hFSelectedValue" name="heure">
-																							<!-- <mat-select placeholder="Heures"  [(ngModel)]="hFSelectedValue" name="heure"> -->
+																						
 																						<mat-option class="items" *ngFor="let heure of heures"[value]="heure.value">
 																							{{ heure.viewValue }}</mat-option>
 																					</mat-select>	
@@ -164,7 +152,7 @@
 																	<span class="flex-item-row-client-content">
 																			<mat-form-field class="items">
 																					<mat-select placeholder="Minutes" [(ngModel)]="mFSelectedValue" name="minute">
-																							<!-- <mat-select placeholder="Minutes" [(ngModel)]="mFSelectedValue" name="minute"> -->
+																							
 																						<mat-option class="items" *ngFor="let minute of minutes" [value]="minute.value">
 																							{{ minute.viewValue }}</mat-option>
 																					</mat-select>	
@@ -172,11 +160,6 @@
 																	</span>
 															</div>
 												</span>
-												<!-- <span class="flex-item-row-button">
-														<button mat-icon-button (click)="dateTimeValider(dateReservationRdv)">	
-																<i class="material-icons">done</i>	
-																</button>
-												</span> -->
 									</div>
 								<mat-divider></mat-divider>
 								<u>Client(e)</u>
@@ -247,7 +230,6 @@
 										<span class="flex-item-row-btnvalider">
 												<button color="primary" mat-raised-button 
 												(click)="dateTimeValider(dateReservationRdv)">	
-														<!-- <i class="material-icons">done</i> -->
 													Valider
 												</button>
 										</span>
@@ -260,4 +242,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->

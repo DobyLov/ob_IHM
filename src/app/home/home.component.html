@@ -2,85 +2,87 @@
 <link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Source+Sans+Pro|Montserrat:300" rel="stylesheet">
 
 <div class="flex-container" *ngIf="isUserIsConnected$">
-    
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>
-                <span class="mat-card-cardTitle" *ngIf="nbRdv == 0">
-                        {{ currentUtilisateur$.prenomUtilisateur  }}, vous n'avez pas de rendez-vous ce jour.
-                </span>
-                <span class="mat-card-cardTitle" *ngIf="nbRdv ==  1">
-                        {{ currentUtilisateur$.prenomUtilisateur  }}, voici votre rendez-vous ce jour :
-                </span>
-                <span class="mat-card-cardTitle" *ngIf="nbRdv > 1">
-                        {{ currentUtilisateur$.prenomUtilisateur  }}, voici vos {{ nbRdv }} rendez-vous ce jour :
-                </span>
-                
-            </mat-card-title>
-        </mat-card-header>
+    <div class="item-titre">
+        <span *ngIf="nbRdv == -1">
+                ------ Patientez ------
+        </span>
+        <span  *ngIf="nbRdv == 0">
+            {{ currentUtilisateur$.prenomUtilisateur | FirstCharUpperPipe }}, vous n'avez pas de rendez-vous de plannifé ce jour. |
+        </span>
+        <span *ngIf="nbRdv ==  1">
+                {{ currentUtilisateur$.prenomUtilisateur | FirstCharUpperPipe }}, voici votre rendez-vous de ce jour:
+        </span>
+        <span *ngIf="nbRdv > 1">
+                {{ currentUtilisateur$.prenomUtilisateur | FirstCharUpperPipe }}, voici vos {{ nbRdv }} rendez-vous plannifiés dans la journée:
+        </span>
+    </div>
+
+    <div>
         <mat-divider></mat-divider>
-        <mat-card-content *ngIf="nbRdv > 0">
-            <mat-table #table mat-table [dataSource]="dataSource">
+    </div>   
+    
+    <div class="table" *ngIf="nbRdv != 0">
+        <mat-table #table mat-table [dataSource]="dataSource">
                 
-                <ng-container matColumnDef="numeroRdv">
-                    <th mat-header-cell *matHeaderCellDef> </th>
-                    <td mat-cell *matCellDef="let element; let i = index ">{{ i + 1 }}</td>
-                </ng-container>    
+            <ng-container matColumnDef="numeroRdv">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element; let i = index ">{{ i + 1 }}/</td>
+            </ng-container>    
 
-                <ng-container matColumnDef="dateHeureDebut">
-                    <th mat-header-cell *matHeaderCellDef> Heure</th>
-                    <td mat-cell *matCellDef="let element"> {{ element.dateHeureDebut | Time24Pipe }} </td>
-                </ng-container>
+            <ng-container matColumnDef="dateHeureDebut">
+                <th mat-header-cell *matHeaderCellDef>Heure début</th>
+                <td mat-cell *matCellDef="let element"> {{ element.dateHeureDebut | Time24Pipe }} </td>
+            </ng-container>
 
-                <ng-container matColumnDef="separation">
-                    <th mat-header-cell *matHeaderCellDef> </th>
-                    <td mat-cell *matCellDef="let element"> - </td>
-                </ng-container>
-    
-                <ng-container matColumnDef="dateHeureFin">
-                    <th mat-header-cell *matHeaderCellDef> </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.dateHeureFin | Time24Pipe }} </td>
-                </ng-container>
+            <ng-container matColumnDef="separation">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element"> - </td>
+            </ng-container>
 
-                <ng-container matColumnDef="lieuRdv">
-                    <th mat-header-cell *matHeaderCellDef> Lieu Rdv </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.lieuRdv.lieuRdv }} </td>
-                </ng-container>
-    
-                <ng-container matColumnDef="activite">
-                    <th mat-header-cell *matHeaderCellDef> Prestation </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.prestation.activite }} </td>
-                </ng-container> 
-    
-                <ng-container matColumnDef="prestation">
-                    <th mat-header-cell *matHeaderCellDef> </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.prestation.soin  | FirstCharUpperPipe }} </td>
-                </ng-container>     
-                
-                <ng-container matColumnDef="nomClient">
-                    <th mat-header-cell *matHeaderCellDef> Client </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.client.nomClient }} </td>
-                </ng-container>  
-    
-                <ng-container matColumnDef="prenomClient">
-                    <th mat-header-cell *matHeaderCellDef> </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.client.prenomClient }} </td>
-                </ng-container>
-    
-                <ng-container matColumnDef="idRdv">
-                    <th mat-header-cell *matHeaderCellDef> </th>
-                    <td mat-cell *matCellDef="let element" class="button-Modifier"> 
-                        <button mat-icon-button 
-                                color="primary" 
-                                (click)="openRdvDetails(element.idRdv)">
-                            <i class="material-icons">edit</i>
-                        </button>
-                    </td>            
-                </ng-container>
-    
-                <tr mat-header-row *matHeaderRowDef="tabNomsColonnes"></tr>
-                <tr mat-row *matRowDef="let row; columns: tabNomsColonnes;"></tr>
-            </mat-table>
-        </mat-card-content>
-    </mat-card>
+            <ng-container matColumnDef="dateHeureFin">
+                <th mat-header-cell *matHeaderCellDef>Heure fin</th>
+                <td mat-cell *matCellDef="let element"> {{ element.dateHeureFin | Time24Pipe }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lieuRdv">
+                <th mat-header-cell *matHeaderCellDef>Lieu Rdv</th>
+                <td mat-cell *matCellDef="let element"> {{ element.lieuRdv.lieuRdv }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="activite">
+                <th mat-header-cell *matHeaderCellDef>Activité</th>
+                <td mat-cell *matCellDef="let element"> {{ element.prestation.activite }} </td>
+            </ng-container> 
+
+            <ng-container matColumnDef="prestation">
+                <th mat-header-cell *matHeaderCellDef>Prestation</th>
+                <td mat-cell *matCellDef="let element" class="presta"> {{ element.prestation.soin  | FirstCharUpperPipe }} </td>
+            </ng-container>     
+            
+            <ng-container matColumnDef="nomClient">
+                <th mat-header-cell *matHeaderCellDef>Nom </th>
+                <td mat-cell *matCellDef="let element"> {{ element.client.nomClient }} </td>
+            </ng-container>  
+
+            <ng-container matColumnDef="prenomClient">
+                <th mat-header-cell *matHeaderCellDef>Prénom</th>
+                <td mat-cell *matCellDef="let element"> {{ element.client.prenomClient }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="idRdv">
+                <th mat-header-cell *matHeaderCellDef>Détails</th>
+                <td mat-cell *matCellDef="let element" class="button-Details"> 
+                    <button mat-icon-button 
+                            color="primary" 
+                            (click)="openRdvDetails(element.idRdv)">
+                        <i class="material-icons">remove_red_eye</i>
+                    </button>
+                </td>            
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="tabNomsColonnes"></tr>
+            <tr mat-row *matRowDef="let row; columns: tabNomsColonnes;"></tr>
+        </mat-table>
+    </div>
+</div>
         

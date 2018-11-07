@@ -9,6 +9,7 @@ import { PraticienService } from '../praticien/praticien.service';
 import { Dateservice } from '../client/date/date.service';
 import { Subscription } from '../../../node_modules/rxjs';
 import { AuthService } from '../login/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy, OnDestroy {
                 'lieuRdv', 'activite', 'prestation', 'nomClient', 'prenomClient', 'idRdv' ];
   dataSource;
   praticien: Praticien;
-  nbRdv: number;
+  nbRdv: number = -1;
   cUtilisateur = new Subscription();  
   listRdv: any;
   emailUserConnected: string;
@@ -36,6 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy, OnDestroy {
                private _utilisateurService: UtilisateurService,
                private _rdvService: RdvService,
                private _authService: AuthService,
+               private router: Router,
                private _cd: ChangeDetectorRef,
                private _praticienService: PraticienService,
                private _dateService: Dateservice) 
@@ -48,10 +50,10 @@ export class HomeComponent implements OnInit, OnDestroy, OnDestroy {
                 }
 
   ngOnInit() {      
-          
+    this.getCurrentUtilisateur();  
     setTimeout(() => {
       this.getCurrentUtilisateur();
-    }, 1000);
+    }, 500);
      
   }
 
@@ -79,31 +81,31 @@ export class HomeComponent implements OnInit, OnDestroy, OnDestroy {
    * recupere les infos de l utilisateur en fonction
    * de la navigation ou adresse depuis la barre de recherche
    */
-  private detectIfPageFromF5OrNavigation() {
+  // private detectIfPageFromF5OrNavigation() {
 
-    this.logger.info("homeComponent Log : etat de isUserIsConnected : " + this.isUserIsConnected$.valueOf());
+  //   this.logger.info("homeComponent Log : etat de isUserIsConnected : " + this.isUserIsConnected$.valueOf());
 
-    if ( this.isUserIsConnected$.valueOf() == true ) {
-      // this._authService.getMailFromToken();
-      this.logger.info("homeComponent Log : etat de isUserIsConnected(true) : " + this.isUserIsConnected$.valueOf());
-      this.getCurrentUtilisateur();
+  //   if ( this.isUserIsConnected$.valueOf() == true ) {
+  //     // this._authService.getMailFromToken();
+  //     this.logger.info("homeComponent Log : etat de isUserIsConnected(true) : " + this.isUserIsConnected$.valueOf());
+  //     this.getCurrentUtilisateur();
 
-    } else {
+  //   } else {
 
-      this.logger.info("homeComponent Log : etat de isUserIsConnected(false) : " + this.isUserIsConnected$.valueOf());
-      this._authService.getMailFromToken();
-      this._utilisateurService.setCurrentUtilisateur(this._authService.getMailFromToken());
-    }
+  //     this.logger.info("homeComponent Log : etat de isUserIsConnected(false) : " + this.isUserIsConnected$.valueOf());
+  //     this._authService.getMailFromToken();
+  //     this._utilisateurService.setCurrentUtilisateur(this._authService.getMailFromToken());
+  //   }
 
-  }
+  // }
 
   /**
    * Recupere l utilisateur loggé
    */
-  private getCurrentUtilisateur(): void {
+  private async getCurrentUtilisateur() {
 
-    this.logger.info("Homecomponent log : Recuperation du currentuser ");
-    this.cUtilisateur = this._utilisateurService.getObjCurrentUtilisateur
+    this.logger.info("HomeComponent log : Recuperation du currentuser ");
+    this.cUtilisateur = await this._utilisateurService.getObjCurrentUtilisateur
     .subscribe( (cUtilisateur: CurrentUtilisateur) => 
     {
       this.currentUtilisateur$ = cUtilisateur;
@@ -113,7 +115,7 @@ export class HomeComponent implements OnInit, OnDestroy, OnDestroy {
       { this.praticien = res;
         this.getRdvListParDateParIdPraticien(this._dateService.setDateToStringYYYYMMDD(new Date()), this.praticien.idPraticien);
         });
-      }, 100);             
+      }, 2000);             
     } ); 
 
   }  
@@ -146,7 +148,7 @@ export class HomeComponent implements OnInit, OnDestroy, OnDestroy {
   public openRdvDetails(idRdv: number): void {
 
     this.logger.info("HomeComponenet Log : ouverture du detail idRdv: " + idRdv);
-
+    this.router.navigate(['./rdv-detail',idRdv]);
   }
 
 }

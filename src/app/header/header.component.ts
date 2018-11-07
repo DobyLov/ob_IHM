@@ -66,10 +66,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
                     }) 
 
                       this.url = this.location.path();
-
+                      let userMailFromTkn = this._authService.getMailFromToken()
                       // si rgpd dans url supprime le token de l utilisateur si il y en a un
                       if(this.searchRgpdMgmtInsideUrl()) {        
-                        let userMail = this._authService.getMailFromToken()
+                        
                         this._authService.removeGivenTokenFromLS(this._authService.getMailFromToken());
                         this.openAppFromRgpdUrl = true;
                       } else {
@@ -81,7 +81,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
                 }
 
   ngOnInit() { 
-      
+    
       this.checkIfUrlIsAKnewRoute();
       // Souscription de l observable Boolean du bouton de la navBar
       this._sidebarservice.statusOfSideNavToggle.subscribe(isSideBarOpen => {
@@ -122,9 +122,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
     })
 
-  
 
-    // this.checkIfATokenIsPresentInLS();
     this._responsivappmediaservice.isAMobilePlatform$
     .subscribe(res => { this.isDeviceIsMobile = res.valueOf()})            
 
@@ -169,6 +167,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
    
     } 
   }
+
 
   /**
    * Affiche le popUp d etat du serveur non joignable
@@ -269,7 +268,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.logger.info("HeaderComponent Log : Fermeture du Modal de Login");
-      this.ngOnInit();
+      // this.ngOnInit();
     });
 
   }
@@ -277,7 +276,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   /**
    * Detection d un token dans le LocalStorage
    */
-  private checkIfATokenIsPresentInLS():void {
+  private checkIfATokenIsPresentInLS() {
 
     this.logger.info("HeaderComponent Log : Verification si un Token est deja present dans le Localstorage");
     if (this._authService.isTokenDateIsNotExpired() == false) {
@@ -289,8 +288,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         this._authService.removeGivenTokenFromLS(this.userMailFromTkn);
         // this._authService.messageToaster('Vous êtes déconnecté(e).', 'snackbarInfo', 3000);
         
-        if (this.isUserIsConnected$ == false)
+        if ( this.isUserIsConnected$ == false )
           this.userMailFromTkn = this._authService.getMailFromToken();
+
 
         setTimeout(() => {
           this.logger.info("HeaderComponent Log : Un Token valide a ete trouve dans le LocalStorage"); 

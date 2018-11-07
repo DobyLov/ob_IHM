@@ -22,7 +22,7 @@ export class RdvComponent implements OnInit {
   dateSelectionneeB: Date = new Date();
   showSimpleDateOrRangeDate: boolean = true;
   startDate = new Date(this.dateSelectionnee);
-  // minDate = new Date();
+  minDate = new Date();
 
   heures = [
     {value: '08', viewValue: '08'},

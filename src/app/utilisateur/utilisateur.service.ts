@@ -49,10 +49,10 @@ export class UtilisateurService {
    * et l assigne comme CurrentUtilsateur
    * @param email 
    */
-  public setCurrentUtilisateur(email: string): void {
+  public async setCurrentUtilisateur(email: string) {
     // let urlAsked = this.router.url;
     this.logger.info("Utilisateurservice Log : Demande au MW l utilisateur : " + email); 
-    let promise = new Promise<Utilisateur>((resolve, reject) => {      
+    let promise = await new Promise<Utilisateur>((resolve, reject) => {      
       this.httpCli.get<Utilisateur>(this.url + '/finduserbymail/' + email)
         .toPromise()
         .then(resultaUtilisateur => {
@@ -114,7 +114,7 @@ export class UtilisateurService {
    */
   private getUserById(idUser: number) {
 
-    return  this.httpCli.get<Utilisateur>(this.url + '/idUtilisateur/' + idUser)
+    return this.httpCli.get<Utilisateur>(this.url + '/idUtilisateur/' + idUser)
       .subscribe( data => { console.log("utilisateur connecte :" + data) } );
   }
 

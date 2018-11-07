@@ -109,3 +109,43 @@ and ( min-width: 415px)
     background: #aed581;
     // transition: opacity 5400ms cubic-bezier(0.25, 0.8, 0.25, 1);
 }
+
+
+
+
+// panel-header ferme
+.accordionMenuSideBar .mat-expansion-panel-header {
+    padding-left: 16px;
+    background-color: #aed581;
+}
+
+// panel-header ouver
+.accordionMenuSideBar .mat-expansion-panel-header.mat-expanded:focus, .mat-expansion-panel-header.mat-expanded:hover {
+
+    background-color: #9bbe73;
+}
+
+// panel Body
+.accordionMenuSideBar .mat-expansion-panel-body {
+    background-color: #9bbe73;
+}
+
+// panel survol 
+.accordionMenuSideBar .mat-expansion-panel-header:hover {
+    background-color: #9bbe73;
+}
+
+// panel survol selectionne
+.accordionMenuSideBar .mat-expansion-panel-header .mat-expanded:hover {
+    background-color: #9bbe73;
+}
+
+// pannel non selectionne
+.accordionMenuSideBar .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']):hover {
+    background-color: #9bbe73;
+}
+
+.accordionMenuSideBar .mat-expansion-panel .mat-expansion-panel-header:hover {
+    background-color: #9bbe73;
+} 
+

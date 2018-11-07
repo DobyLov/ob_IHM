@@ -1,10 +1,10 @@
-import { Component, ViewChild, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewChild, OnInit, ChangeDetectionStrategy, Output } from '@angular/core';
 
 // CDK_BreakPoint
 // import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 // Material
-import { MatSidenav } from '@angular/material';
+import { MatSidenav, MatAccordion } from '@angular/material';
 
 import { SideBarService } from './service/sidebar.service';
 import { CurrentUtilisateur } from './login/currentUtilisateur';
@@ -28,20 +28,11 @@ export class AppComponent implements OnInit {
 
   // control de la sidenav
   @ViewChild('mysidenav') public mysidenav: MatSidenav;
-  // @ViewChild(MatSidenav) sidenav: MatSidenav;
+  // controle de l accordeon / expand
+  @ViewChild('navAccordion') myPanels: MatAccordion;
   cUtilisateur: CurrentUtilisateur;
   userNameConnected$ = '';
   sideNavToggle: Boolean = false;
-
-  // title = 'OOPPusbeaute'
-
-  // sidenavlinks = [{
-  //   rubrique: 'Rdv',
-  //   liste1: 'Liste des rdv\'s',
-  //   routingListe1: './rdv',
-  //   ajout1: 'Ajouter un Rdv',
-  //   routingAjout1: '[./rdvadd]'
-  // }]
 
 
   constructor(
@@ -56,6 +47,7 @@ export class AppComponent implements OnInit {
     this._sidebarservice.statusOfSideNavState.subscribe(forceCloseSideBar => {
       if (forceCloseSideBar.valueOf() == true) {
         this.mysidenav.close()
+        this.myPanels.closeAll();
       }
     })
 
@@ -66,20 +58,27 @@ export class AppComponent implements OnInit {
       if (sideBarButton.valueOf() == true) {
 
         if (sideBarButton.valueOf() == true && this.mysidenav.opened.valueOf() == true) { 
-          this.logger.info("AppComponent Log : Fermeture de SideNav");         
+          this.logger.info("AppComponent Log : Fermeture de SideNav");      
+          this.myPanels.closeAll();   
           this.mysidenav.close();
+          
         } else {
-          this.logger.info("AppComponent Log : Overture de SideNav");         
+          this.logger.info("AppComponent Log : Overture de SideNav");  
+          this.myPanels.closeAll();       
           this.mysidenav.open();
+          
         }
 
       } else {
 
         if (sideBarButton.valueOf() == false && this.mysidenav.opened.valueOf() == false) {
-          this.logger.info("AppComponent Log : Fermeture de SideNav");         
+          this.logger.info("AppComponent Log : Fermeture de SideNav");   
+          this.myPanels.closeAll();      
           this.mysidenav.open();
+          
         } else {
-          this.logger.info("AppComponent Log : Fermeture de SideNav");         
+          this.logger.info("AppComponent Log : Fermeture de SideNav"); 
+          this.myPanels.closeAll();        
           this.mysidenav.close();
         }
       }
@@ -107,9 +106,24 @@ export class AppComponent implements OnInit {
   /**
    * Fermeture du sideNav
    */
-  public closeSideNav() {
+  public closeSideNav(): void {
     this.logger.info("AppComponent Log : Fermeture du sideNav");
+    this.myPanels.closeAll();
     this.mysidenav.close();
+  }
+
+  /**
+   * Activation depuis le backdrop du SideNav
+   * -Refermer les accordeons du menu sideBar
+   */
+  public close() {
+    console.log("fermeture du SideNav depuis le backdrop");
+    this.myPanels.multi = true;
+    this.myPanels.closeAll();
+    this.myPanels.multi = false;
+
+    
+    console.log("myPanelList: " );
   }
 
 

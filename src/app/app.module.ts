@@ -33,6 +33,7 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { RdvComponent } from './rdv/rdv.component';
+import { RdvDetailComponent } from './rdv/rdv-detail/rdv-detail.component';
 import { RdvListComponent } from './rdv/rdv-list/rdv-list.component';
 import { RdvAddComponent } from './rdv/rdv-add/rdv-add.component';
 import { ClientComponent } from './client/client.component';
@@ -137,6 +138,7 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule } from '@angular/material';
+import { SuiviActiviteComponent } from './suivi-activite/suivi-activite.component';
 
 
 @NgModule({
@@ -159,6 +161,7 @@ import {
     PrestationComponent,
     RdvAddComponent,
     RdvComponent,
+    RdvDetailComponent,
     RdvListComponent,
     RgpdComponent,
     RgpdPageNotFoundComponent, 
@@ -171,7 +174,8 @@ import {
     TimeHourTwoDigitsPipe,
     UtilisateurComponent,
     WelcomeComponent,
-    SmoothScrollDirective
+    SmoothScrollDirective,
+    SuiviActiviteComponent
   ],
 
   imports: [    
@@ -183,7 +187,7 @@ import {
     FormsModule,
     FlexLayoutModule,
     LayoutModule,
-    LoggerModule.forRoot({level: NgxLoggerLevel.OFF}), // TRACE|DEBUG|INFO|LOG|WARN|ERROR|OFF
+    LoggerModule.forRoot({level: NgxLoggerLevel.DEBUG}), // TRACE|DEBUG|INFO|LOG|WARN|ERROR|OFF
     MatBottomSheetModule,
     MatButtonModule,
     MatButtonToggleModule,

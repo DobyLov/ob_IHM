@@ -44,7 +44,6 @@ export class RdvService {
     return this.httpCli
       .get<Rdv>(this.url + '/' + idRdv)
       .pipe(map  (res  => res));
-
   }
 
   /**

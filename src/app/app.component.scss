@@ -19,6 +19,7 @@
       // height:100%;
     }
 
+
 }
 
   @media screen 
@@ -33,12 +34,11 @@
       // height:100%;
     }
 
-
   }
 
     .inside-sidenav {
       display: flex;
-      width: 100px;
+      width: 140px;
       background: #AED581;
       // background: #C5E1A5;
     }
@@ -92,7 +92,13 @@
       color: rgb(201, 144, 39);
     }
 
-  // }
+    .iconSize {
+      font-size: 20px;
+    }
+
+
+
+
 
 
  
