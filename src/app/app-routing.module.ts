@@ -9,9 +9,9 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 // Rdv
 import { RdvComponent } from './rdv/rdv.component';
-import { RdvDetailComponent } from './rdv/rdv-detail/rdv-detail.component';
-import { RdvListComponent } from './rdv/rdv-list/rdv-list.component';
-import { RdvAddComponent } from './rdv/rdv-add/rdv-add.component';
+import { RdvDetailsComponent } from './rdvdetails/rdvdetails.component';
+import { RdvListComponent } from './rdv-list/rdv-list.component';
+import { RdvAddComponent } from './rdv-add/rdv-add.component';
 
 // Client
 import { ClientComponent } from './client/client.component';
@@ -53,7 +53,7 @@ const routes: Routes = [
   { path: 'prestation', component: PrestationComponent, canActivate: [AuthGuardService] },
   { path: 'utilisateur', component: UtilisateurComponent, canActivate: [AuthGuardService] },
   { path: 'rdvlist', component: RdvListComponent, canActivate: [AuthGuardService] },
-  { path: 'rdv-detail/:idRdv', component: RdvDetailComponent, canActivate: [AuthGuardService] },
+  { path: 'rdvdetails/:idRdv', component: RdvDetailsComponent, canActivate: [AuthGuardService] },
   { path: 'rdvadd', component: RdvAddComponent, canActivate: [AuthGuardService] },
   { path: 'confirmusermodal', component: ConfimrUserFromTokenModalComponent, canActivate: [AuthGuardService] },
   { path: 'suivi-activite', component: SuiviActiviteComponent, canActivate: [AuthGuardService] },

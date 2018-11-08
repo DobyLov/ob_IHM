@@ -1,0 +1,19 @@
+<div class="container">
+    <div *ngIf="rdvExistant; else nonTrouve">
+        <span>
+            {{ this.rdvExistant }} Details du rendez-vous id : {{ idRdv }}
+        </span> 
+        <br>
+    </div>
+    <ng-template #nonTrouve>
+      <span>
+          {{ this.rdvExistant }} Le Rdv {{ idRdv }} n'a pas été trouvé
+      </span>
+    </ng-template>
+  
+    <div *ngIf="rdvRecupere">
+        ngIF_{{ this.rdv.client.nomClient }}
+        ngIF_{{ this.rdv.client.prenomClient }}
+    </div>
+  
+  </div>

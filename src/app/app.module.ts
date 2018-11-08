@@ -27,21 +27,29 @@ import { SmoothScrollDirective } from './directives/smooth-scroll.directive';
 // Device Detector
 import { DeviceDetectorModule } from 'ngx-device-detector';
 
-// Components opusbeaute
-import { WelcomeComponent } from './welcome/welcome.component';
+// Components OpusBeaute
 import { HeaderComponent } from './header/header.component';
-import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { HomeComponent } from './home/home.component';
+
+// Rdv
 import { RdvComponent } from './rdv/rdv.component';
-import { RdvDetailComponent } from './rdv/rdv-detail/rdv-detail.component';
-import { RdvListComponent } from './rdv/rdv-list/rdv-list.component';
-import { RdvAddComponent } from './rdv/rdv-add/rdv-add.component';
+import { RdvDetailsComponent } from './rdvdetails/rdvdetails.component'
+import { RdvListComponent } from './rdv-list/rdv-list.component';
+import { RdvAddComponent } from './rdv-add/rdv-add.component';
+
+// Client
 import { ClientComponent } from './client/client.component';
 import { ClientService } from './client/client.service';
 import { PrestationComponent } from './prestation/prestation.component';
+
+// Utilisateur
 import { Utilisateur } from './utilisateur/utilisateur';
 import { UtilisateurService } from './utilisateur/utilisateur.service';
 import { UtilisateurComponent } from './utilisateur/utilisateur.component';
+
+// divers
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { SupportComponent } from './support/support.component';
 import { InformationsComponent } from './informations/informations.component';
@@ -73,6 +81,7 @@ import { AuthRequestOptions } from './login/authRequestOptions';
 import { AuthErrorHandlerService } from './login/authErrorHandler.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+// Modal / bottom pour passer les infos visuellement a l'utilisateur
 import { ToasterService } from './service/toaster.service';
 import { SnackBarComponent } from './service/toaster.service';
 import { BottomSheetService } from './service/bottomsheet.service';
@@ -161,7 +170,7 @@ import { SuiviActiviteComponent } from './suivi-activite/suivi-activite.componen
     PrestationComponent,
     RdvAddComponent,
     RdvComponent,
-    RdvDetailComponent,
+    RdvDetailsComponent,
     RdvListComponent,
     RgpdComponent,
     RgpdPageNotFoundComponent, 

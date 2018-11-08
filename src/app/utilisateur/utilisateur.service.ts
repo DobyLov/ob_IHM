@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { appConfig } from '../constant/apiOpusBeauteUrl';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { CurrentUtilisateur } from '../login/currentUtilisateur';
-import { Router, ResolveEnd } from '@angular/router';
 import { Observable } from '../../../node_modules/rxjs';
 import { NGXLogger } from '../../../node_modules/ngx-logger';
 
@@ -15,7 +14,6 @@ export class UtilisateurService {
 
   constructor(private logger: NGXLogger, 
               private httpCli: HttpClient,
-              private router: Router,
               public utilisateur: Utilisateur) { }
 
   public cUtilisateur$ = new BehaviorSubject<CurrentUtilisateur>(null);

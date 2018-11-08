@@ -7,7 +7,7 @@
                 ------ Patientez ------
         </span>
         <span  *ngIf="nbRdv == 0">
-            {{ currentUtilisateur$.prenomUtilisateur | FirstCharUpperPipe }}, vous n'avez pas de rendez-vous de plannifé ce jour. |
+            {{ currentUtilisateur$.prenomUtilisateur | FirstCharUpperPipe }}, vous n'avez pas de rendez-vous de plannifé ce jour.
         </span>
         <span *ngIf="nbRdv ==  1">
                 {{ currentUtilisateur$.prenomUtilisateur | FirstCharUpperPipe }}, voici votre rendez-vous de ce jour:

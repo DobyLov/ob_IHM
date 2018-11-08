@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy, Input, AfterViewInit } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
 import { CurrentUtilisateur } from '../login/currentUtilisateur';
@@ -7,9 +7,10 @@ import { Rdv } from '../rdv/rdv';
 import { Praticien } from '../praticien/praticien';
 import { PraticienService } from '../praticien/praticien.service';
 import { Dateservice } from '../client/date/date.service';
-import { Subscription } from '../../../node_modules/rxjs';
+import { Subscription, Observable } from '../../../node_modules/rxjs';
 import { AuthService } from '../login/auth.service';
 import { Router } from '@angular/router';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -17,10 +18,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
   providers : [ NGXLogger]
 })
-export class HomeComponent implements OnInit, OnDestroy, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() isScreenIsMobile$: boolean;
   @Input() isUserIsConnected$: boolean = false;
+
+  refreshTimer: any;
+  timersubscription: any;
 
   currentUtilisateur$: CurrentUtilisateur;
   rdvList: Rdv[];
@@ -46,10 +50,12 @@ export class HomeComponent implements OnInit, OnDestroy, OnDestroy {
                 // this.detectIfPageFromF5OrNavigation();
                 this.emailUserConnected = this._authService.getMailFromToken();
                 this._utilisateurService.setCurrentUtilisateur(this.emailUserConnected); 
+                
                 this.getIsUserIsConnected();
                 }
 
-  ngOnInit() {      
+  ngOnInit() {    
+
     this.getCurrentUtilisateur();  
     setTimeout(() => {
       this.getCurrentUtilisateur();
@@ -68,36 +74,31 @@ export class HomeComponent implements OnInit, OnDestroy, OnDestroy {
     });
 
   }
+  ngAfterViewInit(): void {
+
+    this.logger.info("HomeComponent log : Fin d initialisation de la vue:");
+    this.logger.info("HomeComponent log : Premie rtick dans 30 puis toutes les 30s:");
+
+    // timer(numberA, numberB)
+    // numberA => Every t
+    // numberB => start at
+    // this.refreshTimer = timer(5*60*1000,5*60*10000);   
+    this.refreshTimer = timer(15000,15000); 
+    this.timersubscription = new Observable();  
+    this.timersubscription = this.refreshTimer.subscribe( t => {    
+    this.logger.info("HomeComponent log : Timer => Recuperation des Rdv depuis la BDD : ");  
+    this.getRdvListParDateParIdPraticien(this._dateService.setDateToStringYYYYMMDD(new Date()), this.praticien.idPraticien); 
+    this.logger.info("HomeComponent log : Timer => Rdv récupérés :");
+    });
+  }
 
   ngOnDestroy() {
 
-    if ( this.cUtilisateur != null ) { this.cUtilisateur.unsubscribe()} 
-    if ( this.listRdv != null ) { this.listRdv.unsubscribe()}
-    // this._cd.detach();
-    
+    if ( this.cUtilisateur ) { this.cUtilisateur };
+    if ( this.listRdv ) { this.listRdv.unsubscribe };
+    if (this.refreshTimer.unsubscribe) { this.refreshTimer.unsubscribe };
+    this.timersubscription.unsubscribe();
   }
-
-  /**
-   * recupere les infos de l utilisateur en fonction
-   * de la navigation ou adresse depuis la barre de recherche
-   */
-  // private detectIfPageFromF5OrNavigation() {
-
-  //   this.logger.info("homeComponent Log : etat de isUserIsConnected : " + this.isUserIsConnected$.valueOf());
-
-  //   if ( this.isUserIsConnected$.valueOf() == true ) {
-  //     // this._authService.getMailFromToken();
-  //     this.logger.info("homeComponent Log : etat de isUserIsConnected(true) : " + this.isUserIsConnected$.valueOf());
-  //     this.getCurrentUtilisateur();
-
-  //   } else {
-
-  //     this.logger.info("homeComponent Log : etat de isUserIsConnected(false) : " + this.isUserIsConnected$.valueOf());
-  //     this._authService.getMailFromToken();
-  //     this._utilisateurService.setCurrentUtilisateur(this._authService.getMailFromToken());
-  //   }
-
-  // }
 
   /**
    * Recupere l utilisateur loggé
@@ -133,10 +134,8 @@ export class HomeComponent implements OnInit, OnDestroy, OnDestroy {
       .subscribe( res => {  this.rdvList = res;
                             this.dataSource = this.rdvList;  
                             this.nbRdv = this.rdvList.length;  
-                            this._cd.markForCheck();                             
-                           
-                          } );
-                                           
+                            this._cd.markForCheck();
+                          } );                                          
 
   }
 
@@ -148,7 +147,7 @@ export class HomeComponent implements OnInit, OnDestroy, OnDestroy {
   public openRdvDetails(idRdv: number): void {
 
     this.logger.info("HomeComponenet Log : ouverture du detail idRdv: " + idRdv);
-    this.router.navigate(['./rdv-detail',idRdv]);
+    this.router.navigate(['./rdvdetails',idRdv]);
   }
 
 }
