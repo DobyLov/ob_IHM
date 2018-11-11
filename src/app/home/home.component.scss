@@ -6,7 +6,7 @@
 @media only screen 
 and (max-device-width: 320px) 
 and (max-device-height: 480px) 
-and (-webkit-device-pixel-ratio: 2) 
+// and (-webkit-device-pixel-ratio: 2) 
 {
   Config du Container
   .flex-container {
@@ -77,7 +77,8 @@ and (-webkit-device-pixel-ratio: 2)
 
   .mat-column-lieuRdv {
     padding-left: 5px;
-    text-align: left;
+    // text-align: left;
+    text-align: center;
   }
 
   .mat-column-activite {
@@ -425,6 +426,7 @@ and (-webkit-device-pixel-ratio: 3)
   }
 
   .mat-column-separation {
+    // width:auto;
     // display: none;
     padding-left: 5px;
     // width: auto;
@@ -432,6 +434,7 @@ and (-webkit-device-pixel-ratio: 3)
   }
 
   .mat-column-dateHeureFin {
+    width: auto;
     // display: none;
     padding-left: 5px;
     font-weight: 600;
@@ -605,18 +608,18 @@ and (-webkit-device-pixel-ratio: 3)
 
 // Portrait ipad
 @media screen 
-// and ( orientation: portrait )
-and ( min-width: 768px )
-and ( max-height: 1024px ) 
+and ( orientation: portrait )
+and ( min-device-height: 1024px ) 
+and ( max-device-width: 768px )
+
 { 
   // Config du Container
   .flex-container {
     font-family: 'Montserrat', sans-serif;  
     display: flex;
+    flex-flow: nowrap;
     flex-direction: column; 
     justify-content: center;
-    // max-width: 375px;
-    // margin-left: calc(50% - 95%/2);
   }
 
   .item-titre {
@@ -639,11 +642,6 @@ and ( max-height: 1024px )
     text-align: center;
     padding: 10px;
   }
-
-  .mat-table { 
-    display: initial;
-  }
-
 
   // titre des colonnes
   .mat-header-cell {
@@ -684,7 +682,7 @@ and ( max-height: 1024px )
   .mat-column-lieuRdv {
     // font-size: 12px;
     padding-left: 5px;
-    text-align: left;
+    text-align: center;
   }
 
   .mat-column-activite {
@@ -733,8 +731,8 @@ and ( max-height: 1024px )
 
 // Portrait Web and ipad pro
 @media screen 
-and ( min-width: 1024px )
-and ( min-height: 1366px ) 
+and ( min-device-width: 1024px )
+and ( min-device-height: 1366px ) 
 { 
   // Config du Container
   .flex-container {
@@ -767,11 +765,6 @@ and ( min-height: 1366px )
     padding: 10px;
   }
 
-  .mat-table { 
-    display: initial;
-  }
-
-
   // titre des colonnes
   .mat-header-cell {
     font-family: 'Montserrat', sans-serif;
@@ -789,7 +782,6 @@ and ( min-height: 1366px )
   }
 
   .mat-column-dateHeureDebut {
-    // width: auto;
     font-weight: 600;
     text-align: center;
   }
@@ -797,7 +789,6 @@ and ( min-height: 1366px )
   .mat-column-separation {
     // display: none;
     padding-left: 5px;
-    // width: auto;
     text-align: center;
   }
 
@@ -809,8 +800,9 @@ and ( min-height: 1366px )
   }
 
   .mat-column-lieuRdv {
+    width: auto;
     padding-left: 5px;
-    text-align: left;
+    text-align: center;
   }
 
   .mat-column-activite {
@@ -843,17 +835,17 @@ and ( min-height: 1366px )
   }
 
   td.mat-cell:first-of-type {
-    width: 25px;
+    // width: 25px;
     text-align: center;
     padding-left: 5px;
   }
 
   th.mat-header-cell:last-of-type {
-    padding-left: 5px;
+    padding-left: 20px;
   }
 
   .button-Details {
-    width: 20px;
+    // width: 20px;
     text-align: center;
   }
 }
@@ -868,7 +860,7 @@ and ( min-height: 1366px )
 @media only screen 
 and (min-device-width: 480px) 
 and (max-device-height: 320px) 
-and (-webkit-device-pixel-ratio: 2) 
+// and (-webkit-device-pixel-ratio: 2) 
 { 
   // Config du Container
   .flex-container {
@@ -879,8 +871,8 @@ and (-webkit-device-pixel-ratio: 2)
   }
 
   .item-titre {
-    height: 40px;
-    font-size: 20px;
+    height: 30px;
+    font-size: 14px;
     text-align: center;    
     font-weight: normal;
     color: black;
@@ -889,18 +881,19 @@ and (-webkit-device-pixel-ratio: 2)
   }
 
   .item-titre > span {
-    vertical-align: -webkit-baseline-middle;
+    // vertical-align: -webkit-baseline-middle;
     text-align: center;
   }
 
   .table {
-    // padding: 15px;
+    padding: 5px;
   }
+
 
   // titre des colonnes
   .mat-header-cell {
     font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
+    font-size: 12px;
     color: black;
     font-weight: 600;
     text-align: center;
@@ -908,7 +901,7 @@ and (-webkit-device-pixel-ratio: 2)
 
   // Contenu des cellules
   .mat-cell {   
-    font-size: 14px;
+    font-size: 12px;
     font-family: 'Montserrat', sans-serif;
     text-align: justify;
   }
@@ -952,6 +945,7 @@ and (-webkit-device-pixel-ratio: 2)
   }
 
   .mat-column-prenomClient {
+    display: none;
     padding-left: 5px;
     text-align: center;
   }
@@ -977,754 +971,857 @@ and (-webkit-device-pixel-ratio: 2)
   }
 }
 
-// L
-/* iphone 5 */
-@media only screen  
-and (max-device-width: 568px) 
-and (min-device-height: 480px)
-and (max-device-height: 320px) 
-and (-webkit-device-pixel-ratio: 2) 
-{ 
-  // Config du Container
-  .flex-container {
-    font-family: 'Montserrat', sans-serif;  
-    display: flex;
-    flex-direction: column; 
-    justify-content: center;
-  }
+// // L
+// /* iphone 5 */
+// @media only screen  
+// and (max-device-width: 568px) 
+// and (min-device-height: 320px) 
+// // and (max-device-height: 480px)
+// // and (-webkit-device-pixel-ratio: 2) 
+// { 
+//   // Config du Container
+//   .flex-container {
+//     font-family: 'Montserrat', sans-serif;  
+//     display: flex;
+//     flex-direction: column; 
+//     justify-content: center;
+//   }
 
-  .item-titre {
-    height: 40px;
-    font-size: 20px;
-    text-align: center;    
-    font-weight: normal;
-    color: black;
-    padding: 15px 15px;
-    font-family: 'Montserrat', sans-serif;
-  }
+//   .item-titre {
+//     height: 40px;
+//     font-size: 20px;
+//     text-align: center;    
+//     font-weight: normal;
+//     color: black;
+//     padding: 15px 15px;
+//     font-family: 'Montserrat', sans-serif;
+//   }
 
-  .item-titre > span {
-    vertical-align: -webkit-baseline-middle;
-    text-align: center;
-  }
+//   .item-titre > span {
+//     vertical-align: -webkit-baseline-middle;
+//     text-align: center;
+//   }
 
-  .table {
-    // padding: 15px;
-  }
+//   // titre des colonnes
+//   .mat-header-cell {
+//     font-family: 'Montserrat', sans-serif;
+//     font-size: 16px;
+//     color: black;
+//     font-weight: 600;
+//     text-align: center;
+//   }
 
-  // titre des colonnes
-  .mat-header-cell {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
-    color: black;
-    font-weight: 600;
-    text-align: center;
-  }
+//   // Contenu des cellules
+//   .mat-cell {   
+//     font-size: 14px;
+//     font-family: 'Montserrat', sans-serif;
+//     text-align: justify;
+//   }
 
-  // Contenu des cellules
-  .mat-cell {   
-    font-size: 14px;
-    font-family: 'Montserrat', sans-serif;
-    text-align: justify;
-  }
+//   .mat-column-dateHeureDebut {
+//     font-weight: 600;
+//     text-align: center;
+//     max-width: 50px;
+//   }
 
-  .mat-column-dateHeureDebut {
-    font-weight: 600;
-    text-align: center;
-    max-width: 50px;
-  }
+//   .mat-column-separation {
+//     padding-left: 5px;
+//     text-align: center;
+//   }
 
-  .mat-column-separation {
-    padding-left: 5px;
-    text-align: center;
-  }
+//   .mat-column-dateHeureFin {
+//     padding-left: 5px;
+//     font-weight: 600;
+//     text-align: center;
+//     max-width: 50px;
+//   }
 
-  .mat-column-dateHeureFin {
-    padding-left: 5px;
-    font-weight: 600;
-    text-align: center;
-    max-width: 50px;
-  }
+//   .mat-column-lieuRdv {
+//     padding-left: 5px;
+//     text-align: Left;
+//   }
 
-  .mat-column-lieuRdv {
-    padding-left: 5px;
-    text-align: Left;
-  }
+//   .mat-column-activite {
+//     padding-left: 5px;
+//     text-align: center;
+//   }
 
-  .mat-column-activite {
-    padding-left: 5px;
-    text-align: center;
-  }
+//   .mat-column-prestation {
+//     padding-left: 5px;
+//     text-align: center;
+//   }
 
-  .mat-column-prestation {
-    padding-left: 5px;
-    text-align: center;
-  }
+//   .mat-column-nomClient {
+//     padding-left: 5px;
+//     text-align: center;
+//   }
 
-  .mat-column-nomClient {
-    padding-left: 5px;
-    text-align: center;
-  }
+//   .mat-column-prenomClient {
+//     padding-left: 5px;
+//     text-align: center;
+//   }
 
-  .mat-column-prenomClient {
-    padding-left: 5px;
-    text-align: center;
-  }
+//   th.mat-header-cell:first-of-type {
+//     margin-top: 10px;
+//     text-align: center;
+//     padding-left: 5px;
+//   }
+//   td.mat-cell:first-of-type {
+//     width: 25px;
+//     text-align: center;
+//     padding-left: 5px;
+//   }
 
-  th.mat-header-cell:first-of-type {
-    margin-top: 10px;
-    text-align: center;
-    padding-left: 5px;
-  }
-  td.mat-cell:first-of-type {
-    width: 25px;
-    text-align: center;
-    padding-left: 5px;
-  }
+//   th.mat-header-cell:last-of-type {
+//     padding-left: 5px;
+//   }
 
-  th.mat-header-cell:last-of-type {
-    padding-left: 5px;
-  }
+//   .button-Details {
+//     width: 20px;
+//     text-align: center;
+//   }
+// }
 
-  .button-Details {
-    width: 20px;
-    text-align: center;
-  }
-}
+// // L
+// /* iphone 6, 6s, 7, 8 */
+// @media only screen 
+// and (min-device-width: 667px) 
+// and (min-device-height: 320px)
+// and (max-device-height: 375px)
+// // and (-webkit-device-pixel-ratio: 2) 
+// {
+//   // Config du Container
+//   .flex-container {
+//     font-family: 'Montserrat', sans-serif;  
+//     display: flex;
+//     flex-direction: column; 
+//     justify-content: center;
+//   }
 
-// L
-/* iphone 6, 6s, 7, 8 */
-@media only screen 
-and (min-device-width: 667px) 
-and (min-device-height: 320px)
-and (max-device-height: 375px)
-and (-webkit-device-pixel-ratio: 2) 
-{
-  // Config du Container
-  .flex-container {
-    font-family: 'Montserrat', sans-serif;  
-    display: flex;
-    flex-direction: column; 
-    justify-content: center;
-  }
+//   .item-titre {
+//     height: 40px;
+//     font-size: 20px;
+//     text-align: center;    
+//     font-weight: normal;
+//     color: black;
+//     padding: 15px 15px;
+//     font-family: 'Montserrat', sans-serif;
+//   }
 
-  .item-titre {
-    height: 40px;
-    font-size: 20px;
-    text-align: center;    
-    font-weight: normal;
-    color: black;
-    padding: 15px 15px;
-    font-family: 'Montserrat', sans-serif;
-  }
+//   .item-titre > span {
+//     vertical-align: -webkit-baseline-middle;
+//     text-align: center;
+//   }
 
-  .item-titre > span {
-    vertical-align: -webkit-baseline-middle;
-    text-align: center;
-  }
+//   // titre des colonnes
+//   .mat-header-cell {
+//     font-family: 'Montserrat', sans-serif;
+//     font-size: 16px;
+//     color: black;
+//     font-weight: 600;
+//     text-align: center;
+//   }
 
-  .table {
-    // padding: 15px;
-  }
+//   // Contenu des cellules
+//   .mat-cell {   
+//     font-size: 14px;
+//     font-family: 'Montserrat', sans-serif;
+//     text-align: justify;
+//   }
 
-  // titre des colonnes
-  .mat-header-cell {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
-    color: black;
-    font-weight: 600;
-    text-align: center;
-  }
+//   .mat-column-dateHeureDebut {
+//     font-weight: 600;
+//     text-align: center;
+//     max-width: 50px;
+//   }
 
-  // Contenu des cellules
-  .mat-cell {   
-    font-size: 14px;
-    font-family: 'Montserrat', sans-serif;
-    text-align: justify;
-  }
+//   .mat-column-separation {
+//     padding-left: 5px;
+//     text-align: center;
+//   }
 
-  .mat-column-dateHeureDebut {
-    font-weight: 600;
-    text-align: center;
-    max-width: 50px;
-  }
+//   .mat-column-dateHeureFin {
+//     padding-left: 5px;
+//     font-weight: 600;
+//     text-align: center;
+//     max-width: 50px;
+//   }
 
-  .mat-column-separation {
-    padding-left: 5px;
-    text-align: center;
-  }
+//   .mat-column-lieuRdv {
+//     padding-left: 5px;
+//     text-align: Left;
+//   }
 
-  .mat-column-dateHeureFin {
-    padding-left: 5px;
-    font-weight: 600;
-    text-align: center;
-    max-width: 50px;
-  }
+//   .mat-column-activite {
+//     padding-left: 5px;
+//     text-align: center;
+//   }
 
-  .mat-column-lieuRdv {
-    padding-left: 5px;
-    text-align: Left;
-  }
+//   .mat-column-prestation {
+//     padding-left: 5px;
+//     text-align: center;
+//   }
 
-  .mat-column-activite {
-    padding-left: 5px;
-    text-align: center;
-  }
+//   .mat-column-nomClient {
+//     padding-left: 5px;
+//     text-align: center;
+//   }
 
-  .mat-column-prestation {
-    padding-left: 5px;
-    text-align: center;
-  }
+//   .mat-column-prenomClient {
+//     padding-left: 5px;
+//     text-align: center;
+//   }
 
-  .mat-column-nomClient {
-    padding-left: 5px;
-    text-align: center;
-  }
+//   th.mat-header-cell:first-of-type {
+//     margin-top: 10px;
+//     text-align: center;
+//     padding-left: 5px;
+//   }
+//   td.mat-cell:first-of-type {
+//     width: 25px;
+//     text-align: center;
+//     padding-left: 5px;
+//   }
 
-  .mat-column-prenomClient {
-    padding-left: 5px;
-    text-align: center;
-  }
+//   th.mat-header-cell:last-of-type {
+//     padding-left: 5px;
+//   }
 
-  th.mat-header-cell:first-of-type {
-    margin-top: 10px;
-    text-align: center;
-    padding-left: 5px;
-  }
-  td.mat-cell:first-of-type {
-    width: 25px;
-    text-align: center;
-    padding-left: 5px;
-  }
+//   .button-Details {
+//     width: 20px;
+//     text-align: center;
+//   }
 
-  th.mat-header-cell:last-of-type {
-    padding-left: 5px;
-  }
+// }
 
-  .button-Details {
-    width: 20px;
-    text-align: center;
-  }
+// // / L
+// // /* iphone 6, 6s, 7, 8 */
+// // @media only screen 
+// // and (min-device-width: 667px) 
+// // and (min-device-height: 320px)
+// // and (max-device-height: 375px)
 
-}
 
-// L
-/* iphone 6+, 6s+, 7+, 8+ */
-@media only screen 
-and (min-device-width: 736px) 
-and (max-device-height: 414px) 
-and (-webkit-device-pixel-ratio: 3) 
-{
-  
-}
+// // L
+// /* iphone 6+, 6s+, 7+, 8+ */
+// @media only screen 
+// and (max-device-width: 736px) 
+// and (max-device-height: 375px)
+// // and (max-device-height: 414px) 
+// // and (-webkit-device-pixel-ratio: 3) 
+// {
+//   // Config du Container
+//   .flex-container {
+//     font-family: 'Montserrat', sans-serif;  
+//     display: flex;
+//     flex-flow: nowrap;
+//     flex-direction: column; 
+//     justify-content: center;
+//   }
+
+//   .item-titre {
+//     height: 40px;
+//     font-size: 20px;
+//     text-align: center;    
+//     font-weight: normal;
+//     color: black;
+//     padding: 15px 15px;
+//     font-family: 'Montserrat', sans-serif;
+//   }
+
+//   .item-titre > span {
+//     vertical-align: -webkit-baseline-middle;
+//     text-align: center;
+//   }
+
+//   // titre des colonnes
+//   .mat-header-cell {
+//     font-family: 'Montserrat', sans-serif;
+//     font-size: 16px;
+//     color: black;
+//     font-weight: 600;
+//     text-align: center;
+//   }
+
+//   // Contenu des cellules
+//   .mat-cell {   
+//     font-size: 14px;
+//     font-family: 'Montserrat', sans-serif;
+//     text-align: justify;
+//   }
+
+//   .mat-column-dateHeureDebut {
+//     font-weight: 600;
+//     text-align: center;
+//     max-width: 50px;
+//   }
+
+//   .mat-column-separation {
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-dateHeureFin {
+//     padding-left: 5px;
+//     font-weight: 600;
+//     text-align: center;
+//     max-width: 50px;
+//   }
+
+//   .mat-column-lieuRdv {
+//     padding-left: 5px;
+//     text-align: Left;
+//   }
+
+//   .mat-column-activite {
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-prestation {
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-nomClient {
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-prenomClient {
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   th.mat-header-cell:first-of-type {
+//     margin-top: 10px;
+//     text-align: center;
+//     padding-left: 5px;
+//   }
+//   td.mat-cell:first-of-type {
+//     width: 25px;
+//     text-align: center;
+//     padding-left: 5px;
+//   }
+
+//   th.mat-header-cell:last-of-type {
+//     padding-left: 5px;
+//   }
+
+//   .button-Details {
+//     width: 20px;
+//     text-align: center;
+//   }
+// }
 
 // L
 /* iphone X */
 @media only screen 
 and (min-device-width: 812px) 
 and (max-device-height: 375px) 
-and (-webkit-device-pixel-ratio: 3) { }  
-
-
-// Desktop
-@media screen 
-and ( max-width: 800px )
-{ 
-  // Config du Container
-  .flex-container {
-    font-family: 'Montserrat', sans-serif;  
-    display: flex;
-    flex-direction: column; 
-    justify-content: center;
-    // max-width: 375px;
-    margin-left: auto;
-  }
-
-  .item-titre {
-    height: 40px;
-    font-size: 18px;
-    // text-decoration: underline;
-    text-align: center;    
-    font-weight: normal;
-    color: black;
-    padding: 10px 10px;
-    font-family: 'Montserrat', sans-serif;
-  }
-
-  .item-titre > span {
-    // vertical-align: -webkit-baseline-middle;
-    text-align: justify;
-  }
-
-  .table {
-    text-align: center;
-    padding: 10px;
-  }
-
-  .mat-table { 
-    display: initial;
-  }
-
-
-  // titre des colonnes
-  .mat-header-cell {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    color: black;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  // Contenu des cellules
-  .mat-cell {   
-    font-size: 12px;
-    font-family: 'Montserrat', sans-serif;
-    text-align: justify;
-  }
-
-  .mat-column-dateHeureDebut {
-    // width: auto;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  .mat-column-separation {
-    display: none;
-    padding-left: 5px;
-    // width: auto;
-    text-align: center;
-  }
-
-  .mat-column-dateHeureFin {
-    display: none;
-    padding-left: 5px;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  .mat-column-lieuRdv {
-    // font-size: 12px;
-    padding-left: 5px;
-    text-align: center;
-  }
-
-  .mat-column-activite {
-    display: none;
-    padding-left: 5px;
-    text-align: center;
-  }
-
-  .mat-column-prestation {
-    // padding-left: 5px;
-    text-align: center;
-  }
-
-  .mat-column-nomClient {
-    display: none;
-    padding-left: 5px;
-    text-align: center;
-  }
-
-  .mat-column-prenomClient {
-    // display: none;
-    padding-left: 5px;
-    text-align: center;
-  }
-
-  th.mat-header-cell:first-of-type {
-    margin-top: 10px;
-    text-align: center;
-    padding-left: 5px;
-  }
-  td.mat-cell:first-of-type {
-    width: 25px;
-    text-align: center;
-    padding-left: 5px;
-  }
-
-  th.mat-header-cell:last-of-type {
-    padding-left: 5px;
-  }
-
-  .button-Details {
-    width: 20px;
-    text-align: center;
-  }
-}
-
-// Desktop
-@media screen 
-and ( max-width: 620px )
-{ 
-  // Config du Container
-  .flex-container {
-    font-family: 'Montserrat', sans-serif;  
-    display: flex;
-    flex-direction: column; 
-    justify-content: center;
-    // max-width: 375px;
-    margin-left: auto;
-  }
-
-  .item-titre {
-    height: 40px;
-    font-size: 18px;
-    // text-decoration: underline;
-    text-align: center;    
-    font-weight: normal;
-    color: black;
-    padding: 10px 10px;
-    font-family: 'Montserrat', sans-serif;
-  }
-
-  .item-titre > span {
-    // vertical-align: -webkit-baseline-middle;
-    text-align: justify;
-  }
-
-  .table {
-    text-align: center;
-    padding: 10px;
-  }
-
-  .mat-table { 
-    display: initial;
-  }
-
-
-  // titre des colonnes
-  .mat-header-cell {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    color: black;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  // Contenu des cellules
-  .mat-cell {   
-    font-size: 12px;
-    font-family: 'Montserrat', sans-serif;
-    text-align: justify;
-  }
-
-  .mat-column-dateHeureDebut {
-    // width: auto;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  .mat-column-separation {
-    // display: none;
-    padding-left: 5px;
-    // width: auto;
-    text-align: center;
-  }
-
-  .mat-column-dateHeureFin {
-    // display: none;
-    padding-left: 5px;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  .mat-column-lieuRdv {
-    // font-size: 12px;
-    padding-left: 5px;
-    text-align: center;
-  }
-
-  .mat-column-activite {
-    display: none;
-    padding-left: 5px;
-    text-align: center;
-  }
-
-  .mat-column-prestation {
-    padding-left: 5px;
-    text-align: center;
-  }
-
-  .mat-column-nomClient {
-    // display: none;
-    padding-left: 5px;
-    text-align: center;
-  }
-
-  .mat-column-prenomClient {
-    display: none;
-    padding-left: 5px;
-    text-align: center;
-  }
-
-  th.mat-header-cell:first-of-type {
-    margin-top: 10px;
-    text-align: center;
-    padding-left: 5px;
-  }
-  td.mat-cell:first-of-type {
-    width: 25px;
-    text-align: center;
-    padding-left: 5px;
-  }
-
-  th.mat-header-cell:last-of-type {
-    padding-left: 5px;
-  }
-
-  .button-Details {
-    width: 20px;
-    text-align: center;
-  }
-}
-
-// Desktop
-@media screen 
-and ( max-width: 800px )
-{ 
-  // Config du Container
-  .flex-container {
-    font-family: 'Montserrat', sans-serif;  
-    display: flex;
-    flex-direction: column; 
-    justify-content: center;
-    // max-width: 375px;
-    margin-left: auto;
-  }
-
-  .item-titre {
-    height: 40px;
-    font-size: 18px;
-    // text-decoration: underline;
-    text-align: center;    
-    font-weight: normal;
-    color: black;
-    padding: 10px 10px;
-    font-family: 'Montserrat', sans-serif;
-  }
-
-  .item-titre > span {
-    // vertical-align: -webkit-baseline-middle;
-    text-align: justify;
-  }
-
-  .table {
-    text-align: center;
-    padding: 10px;
-  }
-
-  .mat-table { 
-    display: initial;
-  }
-
-
-  // titre des colonnes
-  .mat-header-cell {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    color: black;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  // Contenu des cellules
-  .mat-cell {   
-    font-size: 12px;
-    font-family: 'Montserrat', sans-serif;
-    text-align: justify;
-  }
-
-  .mat-column-dateHeureDebut {
-    // width: auto;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  .mat-column-separation {
-    // display: none;
-    padding-left: 5px;
-    // width: auto;
-    text-align: center;
-  }
-
-  .mat-column-dateHeureFin {
-    // display: none;
-    padding-left: 5px;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  .mat-column-lieuRdv {
-    // font-size: 12px;
-    padding-left: 5px;
-    text-align: center;
-  }
-
-  .mat-column-activite {
-    // display: none;
-    padding-left: 5px;
-    text-align: center;
-  }
-
-  .mat-column-prestation {
-    padding-left: 5px;
-    text-align: center;
-  }
-
-  .mat-column-nomClient {
-    // display: none;
-    padding-left: 5px;
-    text-align: center;
-  }
-
-  .mat-column-prenomClient {
-    // display: none;
-    padding-left: 5px;
-    text-align: center;
-  }
-
-  th.mat-header-cell:first-of-type {
-    margin-top: 10px;
-    text-align: center;
-    padding-left: 5px;
-  }
-  td.mat-cell:first-of-type {
-    width: 25px;
-    text-align: center;
-    padding-left: 5px;
-  }
-
-  th.mat-header-cell:last-of-type {
-    padding-left: 5px;
-  }
-
-  .button-Details {
-    width: 20px;
-    text-align: center;
-  }
-}
-
-// Desktop 
-@media screen 
-and ( min-width: 768px )
-{ 
-  // Config du Container
-  .flex-container {
-    font-family: 'Montserrat', sans-serif;  
-    display: flex;
-    flex-direction: column; 
-    justify-content: center;
-    // max-width: 375px;
-    margin-left: auto;
-  }
-
-  .item-titre {
-    height: 40px;
-    font-size: 22px;
-    // text-decoration: underline;
-    text-align: center;    
-    font-weight: normal;
-    color: black;
-    padding: 10px 10px;
-    font-family: 'Montserrat', sans-serif;
-  }
-
-  .item-titre > span {
-    // vertical-align: -webkit-baseline-middle;
-    text-align: justify;
-  }
-
-  .table {
-    text-align: center;
-    padding: 10px;
-  }
-
-  .mat-table { 
-    display: initial;
-  }
-
-  // titre des colonnes
-  .mat-header-cell {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
-    color: black;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  // Contenu des cellules
-  .mat-cell {   
-    font-size: 16px;
-    font-family: 'Montserrat', sans-serif;
-    text-align: justify;
-  }
-
-  .mat-column-dateHeureDebut {
-    // width: auto;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  .mat-column-separation {
-    // display: none;
-    padding-left: 5px;
-    // width: auto;
-    text-align: center;
-  }
-
-  .mat-column-dateHeureFin {
-    // display: none;
-    padding-left: 5px;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  .mat-column-lieuRdv {
-    // font-size: 12px;
-    padding-left: 5px;
-    text-align: left;
-  }
-
-  .mat-column-activite {
-    // display: none;
-    padding-left: 5px;
-    text-align: center;
-  }
-
-  .mat-column-prestation {
-    padding-left: 5px;
-    text-align: center;
-  }
-
-  .mat-column-nomClient {
-    // display: none;
-    padding-left: 5px;
-    text-align: center;
-  }
-
-  .mat-column-prenomClient {
-    // display: none;
-    padding-left: 5px;
-    text-align: center;
-  }
-
-  th.mat-header-cell:first-of-type {
-    margin-top: 10px;
-    text-align: center;
-    padding-left: 5px;
-  }
-  td.mat-cell:first-of-type {
-    width: 25px;
-    text-align: center;
-    padding-left: 5px;
-  }
-
-  th.mat-header-cell:last-of-type {
-    padding-left: 5px;
-  }
-
-  .button-Details {
-    width: 20px;
-    text-align: center;
-  }
-} 
+// and (-webkit-device-pixel-ratio: 3) 
+{ }  
+
+
+// // Desktop
+// @media screen 
+// and ( max-width: 800px )
+// { 
+//   // Config du Container
+//   .flex-container {
+//     font-family: 'Montserrat', sans-serif;  
+//     display: flex;
+//     flex-direction: column; 
+//     justify-content: center;
+//     // max-width: 375px;
+//     margin-left: auto;
+//   }
+
+//   .item-titre {
+//     height: 40px;
+//     font-size: 18px;
+//     // text-decoration: underline;
+//     text-align: center;    
+//     font-weight: normal;
+//     color: black;
+//     padding: 10px 10px;
+//     font-family: 'Montserrat', sans-serif;
+//   }
+
+//   .item-titre > span {
+//     // vertical-align: -webkit-baseline-middle;
+//     text-align: justify;
+//   }
+
+//   .table {
+//     text-align: center;
+//     padding: 10px;
+//   }
+
+//   .mat-table { 
+//     display: initial;
+//   }
+
+
+//   // titre des colonnes
+//   .mat-header-cell {
+//     font-family: 'Montserrat', sans-serif;
+//     font-size: 12px;
+//     color: black;
+//     font-weight: 600;
+//     text-align: center;
+//   }
+
+//   // Contenu des cellules
+//   .mat-cell {   
+//     font-size: 12px;
+//     font-family: 'Montserrat', sans-serif;
+//     text-align: justify;
+//   }
+
+//   .mat-column-dateHeureDebut {
+//     // width: auto;
+//     font-weight: 600;
+//     text-align: center;
+//   }
+
+//   .mat-column-separation {
+//     display: none;
+//     padding-left: 5px;
+//     // width: auto;
+//     text-align: center;
+//   }
+
+//   .mat-column-dateHeureFin {
+//     display: none;
+//     padding-left: 5px;
+//     font-weight: 600;
+//     text-align: center;
+//   }
+
+//   .mat-column-lieuRdv {
+//     // font-size: 12px;
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-activite {
+//     display: none;
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-prestation {
+//     // padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-nomClient {
+//     display: none;
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-prenomClient {
+//     // display: none;
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   th.mat-header-cell:first-of-type {
+//     margin-top: 10px;
+//     text-align: center;
+//     padding-left: 5px;
+//   }
+//   td.mat-cell:first-of-type {
+//     width: 25px;
+//     text-align: center;
+//     padding-left: 5px;
+//   }
+
+//   th.mat-header-cell:last-of-type {
+//     padding-left: 5px;
+//   }
+
+//   .button-Details {
+//     width: 20px;
+//     text-align: center;
+//   }
+// }
+
+// // Desktop
+// @media screen 
+// and ( max-width: 620px )
+// { 
+//   // Config du Container
+//   .flex-container {
+//     font-family: 'Montserrat', sans-serif;  
+//     display: flex;
+//     flex-direction: column; 
+//     justify-content: center;
+//     // max-width: 375px;
+//     margin-left: auto;
+//   }
+
+//   .item-titre {
+//     height: 40px;
+//     font-size: 18px;
+//     // text-decoration: underline;
+//     text-align: center;    
+//     font-weight: normal;
+//     color: black;
+//     padding: 10px 10px;
+//     font-family: 'Montserrat', sans-serif;
+//   }
+
+//   .item-titre > span {
+//     // vertical-align: -webkit-baseline-middle;
+//     text-align: justify;
+//   }
+
+//   .table {
+//     text-align: center;
+//     padding: 10px;
+//   }
+
+//   .mat-table { 
+//     display: initial;
+//   }
+
+
+//   // titre des colonnes
+//   .mat-header-cell {
+//     font-family: 'Montserrat', sans-serif;
+//     font-size: 12px;
+//     color: black;
+//     font-weight: 600;
+//     text-align: center;
+//   }
+
+//   // Contenu des cellules
+//   .mat-cell {   
+//     font-size: 12px;
+//     font-family: 'Montserrat', sans-serif;
+//     text-align: justify;
+//   }
+
+//   .mat-column-dateHeureDebut {
+//     // width: auto;
+//     font-weight: 600;
+//     text-align: center;
+//   }
+
+//   .mat-column-separation {
+//     // display: none;
+//     padding-left: 5px;
+//     // width: auto;
+//     text-align: center;
+//   }
+
+//   .mat-column-dateHeureFin {
+//     // display: none;
+//     padding-left: 5px;
+//     font-weight: 600;
+//     text-align: center;
+//   }
+
+//   .mat-column-lieuRdv {
+//     // font-size: 12px;
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-activite {
+//     display: none;
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-prestation {
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-nomClient {
+//     // display: none;
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-prenomClient {
+//     display: none;
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   th.mat-header-cell:first-of-type {
+//     margin-top: 10px;
+//     text-align: center;
+//     padding-left: 5px;
+//   }
+//   td.mat-cell:first-of-type {
+//     width: 25px;
+//     text-align: center;
+//     padding-left: 5px;
+//   }
+
+//   th.mat-header-cell:last-of-type {
+//     padding-left: 5px;
+//   }
+
+//   .button-Details {
+//     width: 20px;
+//     text-align: center;
+//   }
+// }
+
+// // Desktop
+// @media screen 
+// and ( max-width: 800px )
+// { 
+//   // Config du Container
+//   .flex-container {
+//     font-family: 'Montserrat', sans-serif;  
+//     display: flex;
+//     flex-direction: column; 
+//     justify-content: center;
+//     // max-width: 375px;
+//     margin-left: auto;
+//   }
+
+//   .item-titre {
+//     height: 40px;
+//     font-size: 18px;
+//     // text-decoration: underline;
+//     text-align: center;    
+//     font-weight: normal;
+//     color: black;
+//     padding: 10px 10px;
+//     font-family: 'Montserrat', sans-serif;
+//   }
+
+//   .item-titre > span {
+//     // vertical-align: -webkit-baseline-middle;
+//     text-align: justify;
+//   }
+
+//   .table {
+//     text-align: center;
+//     padding: 10px;
+//   }
+
+//   .mat-table { 
+//     display: initial;
+//   }
+
+
+//   // titre des colonnes
+//   .mat-header-cell {
+//     font-family: 'Montserrat', sans-serif;
+//     font-size: 12px;
+//     color: black;
+//     font-weight: 600;
+//     text-align: center;
+//   }
+
+//   // Contenu des cellules
+//   .mat-cell {   
+//     font-size: 12px;
+//     font-family: 'Montserrat', sans-serif;
+//     text-align: justify;
+//   }
+
+//   .mat-column-dateHeureDebut {
+//     // width: auto;
+//     font-weight: 600;
+//     text-align: center;
+//   }
+
+//   .mat-column-separation {
+//     // display: none;
+//     padding-left: 5px;
+//     // width: auto;
+//     text-align: center;
+//   }
+
+//   .mat-column-dateHeureFin {
+//     // display: none;
+//     padding-left: 5px;
+//     font-weight: 600;
+//     text-align: center;
+//   }
+
+//   .mat-column-lieuRdv {
+//     // font-size: 12px;
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-activite {
+//     // display: none;
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-prestation {
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-nomClient {
+//     // display: none;
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-prenomClient {
+//     // display: none;
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   th.mat-header-cell:first-of-type {
+//     margin-top: 10px;
+//     text-align: center;
+//     padding-left: 5px;
+//   }
+//   td.mat-cell:first-of-type {
+//     width: 25px;
+//     text-align: center;
+//     padding-left: 5px;
+//   }
+
+//   th.mat-header-cell:last-of-type {
+//     padding-left: 5px;
+//   }
+
+//   .button-Details {
+//     width: 20px;
+//     text-align: center;
+//   }
+// }
+
+// // Desktop 
+// @media screen 
+// and ( min-width: 768px )
+// { 
+//   // Config du Container
+//   .flex-container {
+//     font-family: 'Montserrat', sans-serif;  
+//     display: flex;
+//     flex-direction: column; 
+//     justify-content: center;
+//     // max-width: 375px;
+//     margin-left: auto;
+//   }
+
+//   .item-titre {
+//     height: 40px;
+//     font-size: 22px;
+//     // text-decoration: underline;
+//     text-align: center;    
+//     font-weight: normal;
+//     color: black;
+//     padding: 10px 10px;
+//     font-family: 'Montserrat', sans-serif;
+//   }
+
+//   .item-titre > span {
+//     // vertical-align: -webkit-baseline-middle;
+//     text-align: justify;
+//   }
+
+//   .table {
+//     text-align: center;
+//     padding: 10px;
+//   }
+
+//   .mat-table { 
+//     display: initial;
+//   }
+
+//   // titre des colonnes
+//   .mat-header-cell {
+//     font-family: 'Montserrat', sans-serif;
+//     font-size: 16px;
+//     color: black;
+//     font-weight: 600;
+//     text-align: center;
+//   }
+
+//   // Contenu des cellules
+//   .mat-cell {   
+//     font-size: 16px;
+//     font-family: 'Montserrat', sans-serif;
+//     text-align: justify;
+//   }
+
+//   .mat-column-dateHeureDebut {
+//     // width: auto;
+//     font-weight: 600;
+//     text-align: center;
+//   }
+
+//   .mat-column-separation {
+//     // display: none;
+//     padding-left: 5px;
+//     // width: auto;
+//     text-align: center;
+//   }
+
+//   .mat-column-dateHeureFin {
+//     // display: none;
+//     padding-left: 5px;
+//     font-weight: 600;
+//     text-align: center;
+//   }
+
+//   .mat-column-lieuRdv {
+//     // font-size: 12px;
+//     padding-left: 5px;
+//     text-align: left;
+//   }
+
+//   .mat-column-activite {
+//     // display: none;
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-prestation {
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-nomClient {
+//     // display: none;
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   .mat-column-prenomClient {
+//     // display: none;
+//     padding-left: 5px;
+//     text-align: center;
+//   }
+
+//   th.mat-header-cell:first-of-type {
+//     margin-top: 10px;
+//     text-align: center;
+//     padding-left: 5px;
+//   }
+//   td.mat-cell:first-of-type {
+//     width: 25px;
+//     text-align: center;
+//     padding-left: 5px;
+//   }
+
+//   th.mat-header-cell:last-of-type {
+//     padding-left: 5px;
+//   }
+
+//   .button-Details {
+//     width: 20px;
+//     text-align: center;
+//   }
+// } 

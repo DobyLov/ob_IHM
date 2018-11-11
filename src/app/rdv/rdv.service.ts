@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { appConfig } from '../constant/apiOpusBeauteUrl';
 import { NGXLogger } from 'ngx-logger';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpParams, HttpHeaderResponse } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
 import { Rdv } from './rdv';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 
 @Injectable(
@@ -64,20 +64,7 @@ export class RdvService {
 
   }
 
-  // /**
-  //  * Recupere la liste de Rdv par praticien
-  //  * @param idPraticien
-  //  * @returns Observable<Rdv[]>
-  //  */
-  // public getRdvListTotaleParPraticien( idPraticien: number ): Observable<Rdv[]> {
 
-  //   this.logger.info("RdvService Log : Recupere la liste par Praticien de Rdv");
-
-  //   return this.httpCli
-  //     .get<Rdv[]>(this.url + '/liste/' + idPraticien)
-  //     .pipe(map  (res  => res));
-
-  // }
 /**
  * Recupere la liste de Rdv par Date fournie et par idpraticien 
  * @param dateFournie 
@@ -93,9 +80,9 @@ export class RdvService {
     // .append("idPraticien", `${idPraticien}`);
 
     return this.httpCli
-      // .get<Rdv[]>(this.url + '/listepardateparpraticien' , { params: myHttpParams })
+
       .get<Rdv[]>(this.url + '/listepardateparpraticien' , { params: new HttpParams().append("date", `${dateFournie}`).append("idPraticien", `${idPraticien}`) })
-      .pipe(map  (res  => res));
+      .pipe(map  (res => res), catchError ( (e:HttpHeaderResponse) => throwError(e) ) );
 
   }
 

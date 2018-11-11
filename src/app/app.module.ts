@@ -148,6 +148,8 @@ import {
   MatToolbarModule,
   MatTooltipModule } from '@angular/material';
 import { SuiviActiviteComponent } from './suivi-activite/suivi-activite.component';
+import { DateService } from './service/dateservice.service';
+import { ErrorHandlerService } from './service/errorHandler.service';
 
 
 @NgModule({
@@ -196,7 +198,7 @@ import { SuiviActiviteComponent } from './suivi-activite/suivi-activite.componen
     FormsModule,
     FlexLayoutModule,
     LayoutModule,
-    LoggerModule.forRoot({level: NgxLoggerLevel.DEBUG}), // TRACE|DEBUG|INFO|LOG|WARN|ERROR|OFF
+    LoggerModule.forRoot({level: NgxLoggerLevel.INFO}), // TRACE|DEBUG|INFO|LOG|WARN|ERROR|OFF
     MatBottomSheetModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -230,6 +232,8 @@ import { SuiviActiviteComponent } from './suivi-activite/suivi-activite.componen
   providers: [{ provide: LOCALE_ID, useValue: 'fr' },
               { provide: HTTP_INTERCEPTORS, useClass: AuthRequestOptions, multi : true },
               { provide: AuthErrorHandlerService, useClass: AuthErrorHandlerService },
+              { provide: ErrorHandlerService, useClass: ErrorHandlerService },
+              { provide: DateService, useClass: DateService },
               { provide: ResponsiveAppMediaService, useClass: ResponsiveAppMediaService },
               { provide: UtilisateurService, useClass: UtilisateurService },
               { provide: SideBarService, useClass: SideBarService },

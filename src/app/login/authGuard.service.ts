@@ -15,21 +15,32 @@ export class AuthGuardService implements CanActivate {
 
   canActivate() {
 
-    this.logger.info("AuthGuardService Log : Verifie le La validite du Token");
+    this.logger.info("AuthGuardService Log : Verifie la validite du Token");
 
-    if (!this._authService.isTokenDateIsNotExpired() == true) {
+    if ( this._authService.IsThereAnObtknInLs() ) {
 
-      this.logger.info("AuthGuardService Log : Le Token est valide");
-      return true;
+      if ( this._authService.isTokenDateIsValid() == true ) {
+
+        this.logger.info("AuthGuardService Log : Le Token est valide");
+
+        return true;
+  
+      } else {
+  
+        this.logger.info("AuthGuardService Log : Le Token n est pas valide");
+        this._toasterService.showToaster("Veuillez vous Connectez !", "snackbarWarning", 2500);    
+        this._authService.logOut(this._authService.getMailFromToken());
+        this.router.navigate(['/login']);
+
+        return false;
+      
+      }
 
     } else {
 
-      this.logger.info("AuthGuardService Log : Le Token n est pas valide");
-      this._toasterService.showToaster("Veuillez vous Connectez !", "snackbarWarning", 2500);    
-      this._authService.logOut(this._authService.getMailFromToken());
       this.router.navigate(['/login']);
-      return false;
-    
+
     }
+    
   }
 }

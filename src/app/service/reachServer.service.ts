@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ChangeDetectorRef } from '@angular/core';
 import { appConfig } from '../constant/apiOpusBeauteUrl';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ToasterService } from './toaster.service';
 import { NGXLogger } from 'ngx-logger';
 import { reject } from 'q';
@@ -9,57 +9,119 @@ import { reject } from 'q';
 export class ReachServerService  {
 
     url: string = appConfig.apiOpusBeauteUrl + '/wadl';
-    isServerOnLine$ = new BehaviorSubject<boolean>(false); 
+    isServerOnLine$ = new BehaviorSubject<boolean>(true); 
+
+    srvOnLine: boolean;
+    nbDisplaySrvOneLine: number = 0;
 
     constructor( private logger: NGXLogger,
-                 private _toasterService: ToasterService)  
-                    {
-                         
-                        this.checkSrvOnLine();
-                    }
+                 private _toasterService: ToasterService) { }
+
+    // /**
+    //  * Detection si le MiddleWare est accessible retourne un Observable
+    //  * @returns Observable
+    //  */
+    // public checkSrvOnLine() {
+
+    //     this.logger.info("ReachServerService log : Verification de la disponnibilite du serveur"); 
+    //     let xhr = new XMLHttpRequest();
+          
+    //     return new Promise((resolve,reject)=>{   
+          
+    //       xhr.open('GET', this.url );
+    //       xhr.send();    
+          
+    //       xhr.onload = ( () => {
+                   
+    //           resolve();
+    //       })
+    //       xhr.onerror = ( () => {
+              
+    //           reject();    
+    //       })  
+                   
+    //     })
+    //     .then( ()  => {
+
+    //         this.isServerOnLine$.next(true);
+
+    //         this.logger.info("ReachServerService log : Serveur en ligne");
+            
+    //         // Cette boucle sert a n afficher qu une seule fois le message
+    //         // informantque le serveur est bien OnLine
+    //         if ( this.nbDisplaySrvOneLine === 0) {
+
+    //             this._toasterService.showToaster('Serveur Ok', 'snackbarInfo', 1000);
+    //             this.nbDisplaySrvOneLine++;
+
+    //         }
+               
+    //         // resolve();
+    //     })
+    //     .catch( () => {
+
+    //         this.isServerOnLine$.next(false);   
+
+    //         this.logger.error("ReachServerService log : Serveur non joignable "); 
+    //         // Sert à faire le reset de la boucle d affichage afin d afficher le message
+    //         // d information que le serveur est bien en ligne
+    //         this.nbDisplaySrvOneLine = 0;
+    //         this._toasterService.showToaster('Serveur Injoignable , appelez le support','snackbarWarning',5000);
+    //         reject();
+    //     })
+        
+    // }
 
     /**
-     * Detection si le MiddleWare est accessible
+     * Detection si le MiddleWare est accessible retourne un Observable
+     * @returns boolean
      */
-    private checkSrvOnLine() {
+    public srvJoignableOuPas() :boolean {
 
-        this.logger.info("ReachServer log : Verification de la disponnibilite du serveur"); 
+        this.logger.info("ReachServerService log : Verification de la disponnibilite du serveur"); 
         let xhr = new XMLHttpRequest();
           
-        return new Promise((resolve,reject)=>{   
+        let join = new Promise((resolve,reject)=>{   
           
           xhr.open('GET', this.url );
           xhr.send();    
           
-          xhr.onload = ( () => {
-              
-            //   this.logger.info("ReachServer log : Serveur en ligne");
-            //   this._toasterService.showToaster('Serveur Ok','snackbarInfo',2000);      
+          xhr.onload = ( () => {      
               resolve();
           })
           xhr.onerror = ( () => {
-              
-            //   this.logger.info("ReachServer log : Serveur non joignable");    
-            //   this._toasterService.showToaster('Serveur Injoignable , appelez le support','snackbarWarning',5000);
               reject();    
           })  
                    
         })
         .then( ()  => {
-            this.isServerOnLine$.next(true);
-            this.logger.info("ReachServer log : Serveur en ligne");
-            this._toasterService.showToaster('Serveur Ok', 'snackbarInfo', 1000);   
-            // resolve();
+
+            this.isServerOnLine$.next(true); 
+            this.srvOnLine = true;
+            this.logger.info("ReachServerService log : Serveur en ligne");
+            
+            if ( this.nbDisplaySrvOneLine === 0) {
+
+                this._toasterService.showToaster('Serveur Ok', 'snackbarInfo', 1000);
+                this.nbDisplaySrvOneLine++;
+
+            }            
+
         })
+
         .catch( () => {
-            this.isServerOnLine$.next(false);            
-            this.logger.info("ReachServer log : Serveur non joignable "); 
-            // this._toasterService.showToaster('Serveur Injoignable , appelez le support','snackbarWarning',5000);
-            // this.message_toaster('Serveur injoignable, contactez le support','snackbarWarning',5000);
-            reject();
+
+            this.isServerOnLine$.next(false);
+            this.srvOnLine = false;        
+            this.logger.error("ReachServerService log : Serveur non joignable ");
+            this.nbDisplaySrvOneLine = 0;
+            this._toasterService.showToaster('Serveur Injoignable , appelez le support','snackbarWarning',5000);
+
         })
-        
+
+        return this.srvOnLine;
     }
+
     
     /**
      * Retourne le status du serveur Middleware,
@@ -69,12 +131,6 @@ export class ReachServerService  {
     public getStatusofServerOnLine() {
         return this.isServerOnLine$.asObservable();
     } 
-
-
-    private message_toaster( msg: string, msgType: string, timeOut: number ) {
-        
-        this._toasterService.showToaster( msg, msgType, timeOut );
-    }
   
    
 

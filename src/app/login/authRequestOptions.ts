@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { AuthService } from './auth.service';
 import { AuthRgpdService } from '../rgpd/authRgpd.service';
 import { NGXLogger } from 'ngx-logger';
+import { Router } from '@angular/router';
 
 // const AUTH_HEADER_KEY = 'Authorization';
 // const AUTH_PREFIX = 'Bearer';
@@ -13,7 +14,8 @@ import { NGXLogger } from 'ngx-logger';
 
    constructor ( private logger: NGXLogger,
                  private _authservice: AuthService,
-                 public _authrgpdservice: AuthRgpdService) {}
+                 public _authrgpdservice: AuthRgpdService,
+                 private router: Router ) {}
 
     /**
      * Intercepte les requètes pour les filtrer:
@@ -34,9 +36,10 @@ import { NGXLogger } from 'ngx-logger';
 
       } else  {
         
-        if (this.isRgpdSpecialStringIsInsideUrl()) {
 
-          this.logger.info("AuthRequestOptions Log : Injection du Token Rgpd dans la requete");
+        if ( this.isRgpdSpecialStringIsInsideUrl() ) {
+
+          this.logger.info("AuthRequestOptions Log : Injection du Token RGPD dans la requete");
           let rgpdToken: string = this._authrgpdservice.getRgpdTokenFromLS();
           let headers = new HttpHeaders().append("Authorization", "Bearer" +  rgpdToken);
           const newReq = req.clone({headers});
@@ -44,12 +47,34 @@ import { NGXLogger } from 'ngx-logger';
 
         } else {
 
-          let tokenNamdGetter = this._authservice.getOBTokenFromLocalStorage(); 
-          let headers = new HttpHeaders().append("Authorization", "Bearer" +  tokenNamdGetter);  
-          this.logger.info("AuthRequestOptions Log : Injection du Token Utilisateur/Praticien dans la requete"); 
-          const newReq = req.clone({headers});
-          return next.handle(newReq);
-          
+          if ( this.chercheTokenDansLS ) {
+            this.logger.info("AuthRequestoption log : Il y a bien un token dans le LS");
+
+            if ( this.tokenIsValid ) {
+
+              this.logger.info("AuthRequestoption log : Le token trouvé dans le Ls est valide.");
+
+              let tokenNamdGetter = this._authservice.getOBTokenFromLocalStorage(); 
+              let headers = new HttpHeaders().append("Authorization", "Bearer" +  tokenNamdGetter);  
+              this.logger.info("AuthRequestOptions Log : Injection du Token Utilisateur/Praticien dans la requete"); 
+              const newReq = req.clone({headers});
+              return next.handle(newReq);
+
+            } else {
+
+              this.logger.info("AuthRequestoption log : Le token trouvé n'est plus valide.");
+              this._authservice.logOut(this._authservice.getMailFromToken());
+              this.router.navigate(['/login']);
+
+            }
+
+          } else  {
+
+            this.logger.info("AuthRequestoption log : Il n'y a pas de token dans le LS");
+            this._authservice.logOut(this._authservice.getMailFromToken());
+            this.router.navigate(['/login']);
+
+          }          
         } 
       }
   }
@@ -75,6 +100,43 @@ import { NGXLogger } from 'ngx-logger';
     }
 
     return isTknIsPresentIntoTheString;
+  }
+
+  /**
+   * Retourne un boolean si un token est trouve dans le LS
+   * @returns boolean
+   */
+  private chercheTokenDansLS(): boolean {
+
+    if ( this._authservice.IsThereAnObtknInLs() ) {
+
+      return true;
+
+    } else {
+
+      return false;
+
+    }
+  }
+
+  /**
+   * Retourne un boolean de la validite du token
+   * @returns boolean
+   */
+  private tokenIsValid(): boolean {
+
+    if ( this._authservice.isTokenDateIsValid()) {
+
+      return true;
+
+    } else  {
+
+      this._authservice.removeGivenTokenFromLS(this._authservice.getMailFromToken());
+
+      return false;
+
+    }
+
   }
 
 

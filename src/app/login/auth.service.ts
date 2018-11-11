@@ -4,11 +4,11 @@ import { NGXLogger } from 'ngx-logger';
 import { appConfig } from '../constant/apiOpusBeauteUrl';
 import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { ToasterService } from '../service/toaster.service';
-import { BottomSheetService } from '../service/bottomsheet.service'
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
 import { Credentials } from './credentials';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Router } from '@angular/router';
+import { DateService } from '../service/dateservice.service';
 
 
 @Injectable()
@@ -27,6 +27,7 @@ export class AuthService {
                 private httpCli: HttpClient,
                 private _toasterService: ToasterService,
                 private router: Router,
+                private _datesService: DateService,
                 private _utilisateurservice: UtilisateurService) { }
 
   get statusOfIsUserIsLogged() {
@@ -37,7 +38,7 @@ export class AuthService {
    * Modifie le status de l utilisateur 
    * Connecte ou deconnecte
    */
-  changeStatusOfIsLogged(status: boolean): void {
+  public changeStatusOfIsLogged(status: boolean): void {
 
     if (status === true) {
 
@@ -126,7 +127,7 @@ export class AuthService {
             if ( err.statusText === "Unknown Error")  {
               this.logger.info("AuthService Log :  Le serveur ne repond pas");
               resultatToken = null;
-              this.messageToaster("Probleme Serveur",'snackbarWarning', 2000);
+              this.messageToaster("Problème Serveur",'snackbarWarning', 2000);
               reject();
 
             } else {    
@@ -279,30 +280,64 @@ export class AuthService {
    * Verifie si la date du token est expiree
    * @returns boolean
    */
-  public isTokenDateIsNotExpired(): boolean {
+  public isTokenDateIsValid(): boolean {
 
     this.logger.info("AuthService Log : Verification de la validite de la date fourni dans le token");
     // console.log("auth.service isTokenDateIsExpired cherche le token dans le LS");
-    let token = this.getOBTokenFromLocalStorage();
-    if (token != null) {
-      // console.log("auth.service isTokenDateIsExpired token trouve");
-      // let decodedToken = jwt_decode(token); 
-      if (new Date(jwt_decode(token).exp * 1000) > new Date()) {
 
-        this.logger.info("AuthService Log : La date du token est valide");
-        return false;
+    if (this.getOBTokenFromLocalStorage() != null) {
+
+      let instant = new Date();
+      this.logger.info("AuthService Log : Date de l'instant check tokenDates : " + instant);
+      this.logger.info("AuthService Log : Date d'expiration du token : " + 
+      new Date(jwt_decode(this.getOBTokenFromLocalStorage()).exp * 1000));
+      
+      // savoir si la date du token est superieur a l instant meme du test
+      if (this._datesService.compareDates(new Date(jwt_decode(this.getOBTokenFromLocalStorage()).exp * 1000),new Date()) === 1 ) {
+        
+        return true;
 
       } else {
 
-        this.logger.info("AuthService Log : La date du token n est pas valide");
-        return true;
+        return false;
       }
 
     } else {
 
-      return true;
+      return false;
+    };
 
-    }
+  }
+
+  public IsThereAnObtknInLs(): boolean {
+
+      this.logger.info("AuthService Log : Recherche la presence de Obtkn dans le LocalStorage");
+      let stringToFound = 'ObTkn_';
+
+      if (localStorage.length > 0) {
+
+        for (let i = 0; i <= localStorage.length -1; i++) {
+          this.logger.info("AuthService log : Key du token : " + localStorage.key(i));
+          
+          if ((localStorage.key(i).search(stringToFound)) === 0 ) {
+            
+            this.logger.info("AuthService log : Token commencant par " + stringToFound + "  trouvé");
+            return true;
+
+          } else {
+
+            this.logger.info("AuthService log : Token commencant par " + stringToFound + " non trouvé");
+            return false;
+
+          }
+      
+        } 
+        
+      } else {
+
+          return false;
+
+      }
   }
 
   /**

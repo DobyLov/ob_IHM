@@ -11,6 +11,7 @@ import { ResponsiveAppMediaService } from '../service/responsiveAppMedia.service
 import { BreakpointObserver } from '../../../node_modules/@angular/cdk/layout';
 import { ToasterService } from '../service/toaster.service';
 import { ReachServerService } from '../service/reachServer.service';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +24,16 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   // @ViewChild('matMenu') cdr: ChangeDetectorRef;
   @Input() isUserIsConnected$: boolean = true;
-  @Input() isSrvIsOnLine$: boolean = true;
+  // @Input() isSrvIsOnLine$: boolean = true;
+  
+  isSrvIsOnLine$: boolean = true;
+
+  // timer
+  refreshTimer: any;
+  timerSubscription: any;
+  // 5 minutes => 5*60*10000
+  timeToWaitToStartTimer: number = (20*1000);
+  tickTimerFrequency: number = (20*1000);  
  
   sideNavToggle$: Boolean;
 
@@ -57,16 +67,16 @@ export class HeaderComponent implements OnInit, AfterViewInit {
                 private cd: ChangeDetectorRef,
                 public _breakpointobserver: BreakpointObserver
                 ) {  
-                    
-                    //souscription pour verifier si le serveur est en ligne
-                    this._reachServerService.isServerOnLine$.subscribe( isSrvIsOnLine => {
-                      this.isSrvIsOnLine$ = isSrvIsOnLine.valueOf();
-                      // 
-                      // this.logger.info("HeaderComponent Log : Constructor Etat du serveur Online : " + this.isSrvIsOnLine$.valueOf())
-                    }) 
 
+                      // toute premiere détection du serveur MW
+                      this._reachServerService.srvJoignableOuPas();
+
+                      // Declanchement du timer qui check la presence du serveur MW
+                      this.timer();
+                      
+                      // Recuperation de l adresse URL
                       this.url = this.location.path();
-                      let userMailFromTkn = this._authService.getMailFromToken()
+
                       // si rgpd dans url supprime le token de l utilisateur si il y en a un
                       if(this.searchRgpdMgmtInsideUrl()) {        
                         
@@ -76,18 +86,17 @@ export class HeaderComponent implements OnInit, AfterViewInit {
                         this.openAppFromRgpdUrl = false;
                       }  
 
-                      // methode uniquement pour les mobiles
-                      this.popupMsgSrvStatus();
                 }
 
   ngOnInit() { 
-    
-      this.checkIfUrlIsAKnewRoute();
+
       // Souscription de l observable Boolean du bouton de la navBar
       this._sidebarservice.statusOfSideNavToggle.subscribe(isSideBarOpen => {
-        this.sideNavToggle$ = isSideBarOpen.valueOf();
-      })
 
+        this.sideNavToggle$ = isSideBarOpen.valueOf();
+
+      })
+      
       // souscription a l orbservable isconnected
       this._authService.statusOfIsUserIsLogged.subscribe(isLoggedIn => {
       this.isUserIsConnected$ = isLoggedIn.valueOf();
@@ -110,16 +119,17 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
       }
 
+      
     })
 
     // presence du chnageDetector pour prendre en compte le changement d etat du serveur MW
-    this._reachServerService.getStatusofServerOnLine().subscribe(res => {  
+    this._reachServerService.getStatusofServerOnLine().subscribe( res => {  
 
-      this.logger.info("HeaderComponent log : avant le vrai etat de isSrvIsOnLine : " + this.isSrvIsOnLine$.valueOf());   
+      // this.logger.info("HeaderComponent log : avant le vrai etat de isSrvIsOnLine : " + this.isSrvIsOnLine$.valueOf());   
       this.isSrvIsOnLine$ = res.valueOf();
-      this.logger.info("HeaderComponent log : Le vrai etat de isSrvIsOnLine : " + this.isSrvIsOnLine$.valueOf());
+      // this.logger.info("HeaderComponent log : Le vrai etat de isSrvIsOnLine : " + this.isSrvIsOnLine$.valueOf());
+      
       this.cd.detectChanges();
-
     })
 
 
@@ -135,30 +145,19 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     });
     
     this.setModalMobilResolution();
-
-    if ( this.isSrvIsOnLine$.valueOf() === true ) {
-      
-      this.btnLoginState = true;
-      this.logger.info("changement de l état du btn connexion ");
-      // this._toasterService.showToaster('Serveur Ok','snackbarInfo',2000);  
-    } else {
-      this.btnLoginState = false;
-      this.logger.info("ReachServer log : Serveur non joignable");
-      this.logger.info("Etat du btn connexion : " + this.btnLoginState); 
-      // this._toasterService.showToaster('Serveur Injoignable , appelez le support','snackbarWarning',5000);
-    }
-
+    // this.cd.detectChanges();
   }
 
 
   ngAfterViewInit() {
-    // this.cd.detectChanges()
+
     this.logger.info("HeaderComponent Log : Detection du point d entree de L application");
     if ( !this.openAppFromRgpdUrl ) {
 
       if (this.checkIfUrlIsAKnewRoute() === true ) {
         this.checkIfATokenIsPresentInLS();
-      }      
+      }  
+
       this.logger.info("HeaderComponent Log : APP ouverture par la racine (entree standard)");   
 
     } else {
@@ -166,24 +165,54 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.logger.info("HeaderComponent Log : APP ouverture par la page Rgpd");
    
     } 
+ 
+    this.changeLoginBtnStateDutoSrvState();
+    this.cd.detectChanges();
   }
 
+    /**
+   * Modifier l'etat du bouton de login men en fonction de l etat du serveur middleware.
+   */
+  private changeLoginBtnStateDutoSrvState(): void {
+
+    if ( this.isSrvIsOnLine$.valueOf() === true ) {
+      
+      this.btnLoginState = true;
+
+      this.logger.info("changement de l état du btn connexion ");
+      // this._toasterService.showToaster('Zi Serveur Ok','snackbarInfo',2000);  
+    
+    } else {
+
+      this.btnLoginState = false;
+
+      this.logger.info("ReachServer log : Serveur non joignable");
+      this.logger.info("Etat du btn connexion : " + this.btnLoginState); 
+      this._toasterService.showToaster('Zi Serveur Injoignable , appelez le support','snackbarWarning',5000);
+      
+    }
+  }
 
   /**
-   * Affiche le popUp d etat du serveur non joignable
-   * L etat joignable du serveur et situé dans le service ReachSrerver
-   * et gere le popup ou acces ok au serveur
+   * Timer pour lancer la methode reachServerMw()
    */
-  private popupMsgSrvStatus():void {
+  private timer(): void {
 
-    this.logger.info("HeaderComponent log : Retour de l etat Du serveur MW : " + this.isSrvIsOnLine$.valueOf);
+    this.logger.info("HeaderComponent log : Premier tick dans 30 puis toutes les 30s:");
 
-    if (!this.isSrvIsOnLine$.valueOf()) {
+    // timer(numberA, numberB)
+    // numberA => Every t
+    // numberB => start at
+    // this.refreshTimer = timer(5*60*1000,5*60*10000);   
+    this.refreshTimer = timer(this.tickTimerFrequency,this.timeToWaitToStartTimer); 
+    this.timerSubscription = new Observable();  
+    this.timerSubscription = this.refreshTimer.subscribe( t => {  
 
-      this._toasterService.showToaster("Serveur injoignable, contactez le support",  'snackbarWarning', 10000);
+      this.logger.info("HeaderComponent log : Tick pour joindre le serveur MW");
+      this.isSrvIsOnLine$ = this._reachServerService.srvJoignableOuPas();
+      this.cd.detectChanges(); 
 
-    }
-
+    });
   }
 
 
@@ -225,7 +254,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
    * Defini les dimensions du modal
    * en fonction du Device detecte
    */
-  private setModalMobilResolution() {
+  private setModalMobilResolution():void {
 
     if (this.isDeviceIsMobile == true ) {
       this.logger.info("LoginComponent Log : UI sur Terminal mobile");
@@ -251,17 +280,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     modalConfFPwd.maxHeight = this.modalHeight + 'px';
     modalConfFPwd.data = { userMail: this.userMailFromTkn, url: this.url };
     modalConfFPwd.backdropClass = 'modalConfUser';
-    
-    // methode #1 de declaration de MatDialogConfig
-    // modalConfFPwd = {
-    //   id: '2',
-    //   hasBackdrop: true,
-    //   disableClose:  true,
-    //   maxWidth: this.modalWidth + 'px',
-    //   maxHeight: this.modalHeight + 'px',
-    //   data: { userMail: this.userMailFromTkn }
-    // };
-
 
     this.logger.info("HeaderComponent Log : Ouverture du Modal ( Confirmation utilisateur )");
     let dialogRef = this.dialog.open( ConfimrUserFromTokenModalComponent, modalConfFPwd);
@@ -279,26 +297,22 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   private checkIfATokenIsPresentInLS() {
 
     this.logger.info("HeaderComponent Log : Verification si un Token est deja present dans le Localstorage");
-    if (this._authService.isTokenDateIsNotExpired() == false) {
+   
+    if ( this._authService.IsThereAnObtknInLs() ) {
 
-        this.logger.info("HeaderComponent Log : le token dans le LS n est pas bon");
-        // this.logOut();
-        this.logger.info("HeaderComponent Log : Deconnexion de l application");
+      if (this._authService.isTokenDateIsValid() == true ) {
+
         this._authService.changeStatusOfIsLogged(false);
-        this._authService.removeGivenTokenFromLS(this.userMailFromTkn);
-        // this._authService.messageToaster('Vous êtes déconnecté(e).', 'snackbarInfo', 3000);
+        this.userMailFromTkn = this._authService.getMailFromToken();
         
-        if ( this.isUserIsConnected$ == false )
-          this.userMailFromTkn = this._authService.getMailFromToken();
-
-
         setTimeout(() => {
           this.logger.info("HeaderComponent Log : Un Token valide a ete trouve dans le LocalStorage"); 
           this.openDialog();
         })
-        
-      }
 
+      } 
+    }
+      
       this.logger.info("HeaderComponent Log : Il n y a pas de token Valide dans  le LocalStorage");
   }
 
@@ -347,21 +361,21 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   }
 
-  
-
   /**
    * Cherche si l url est connue par la route
    */
   private checkIfUrlIsAKnewRoute():boolean {
+  
+    this.logger.info("HeaderComponent log : Route dans l'url : " + this.url);
 
-    let urlWithoutSlash: string = this.url.replace('/', '');
+    let urlWithoutSlash: string = this.url.replace( '/', '' );
     let routeKnewed: boolean = false;
 
     for ( let j = 0; j < this.router.config.length; j++ ) {
 
-      if (this.router.config[j].path === urlWithoutSlash) {
+      if (this.router.config[j].path === urlWithoutSlash  ||
+        this.url.search('/rdvdetails/').valueOf() === 0 ) {
 
-        this.logger.info("HeaderComponent log : Route: "  + this.router.config[j].path  + " detectee en position: " + j +" du router.");
         routeKnewed = true;
         break;
 
@@ -374,7 +388,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     }
 
     if (routeKnewed === false) {
-      this.logger.info("header log : Route: "  + urlWithoutSlash  + " non detectee dans le router");
+      this.logger.info("HeaderComponent log : Route: "  + urlWithoutSlash  + " non detectee dans le router");
     } 
 
     return routeKnewed;

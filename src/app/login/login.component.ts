@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
    */
   openDialog(): void {
     const modalLogin: MatDialogConfig = {
-      id: '1',
+      // id: '1',
       hasBackdrop: true,
       disableClose:  true,
       width: this.modalWidth + 'px',

@@ -5,6 +5,7 @@ import { RdvService } from '../rdv/rdv.service';
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
 import { Rdv } from '../rdv/rdv';
 import { AuthService } from '../login/auth.service';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-rdvdetails',
@@ -28,7 +29,8 @@ export class RdvDetailsComponent implements OnInit {
                 private _rdvService: RdvService,
                 private _utilisateurService: UtilisateurService,
                 private _authService: AuthService,
-                private _cd: ChangeDetectorRef) {
+                private _cd: ChangeDetectorRef,
+                public _location: Location) {
   
                     this.getRdv(this.getUrlParamId());
   
@@ -53,13 +55,12 @@ export class RdvDetailsComponent implements OnInit {
     }
   
     ngOnDestroy() {
-  
-      this._cd.detach(); 
-  
+
+      this._cd.detach();   
     }
   
     ngAfterViewChecked() {
-      this._cd.detectChanges();
+      // this._cd.detectChanges();
     }
   
   
@@ -94,14 +95,14 @@ export class RdvDetailsComponent implements OnInit {
             this.rdvRecupere = true;
             this.logger.info("Rdv-DetailComponenet log : Rdv id: " + id + " trouvé dans la Bdd");
             this._cd.markForCheck();
-            this._cd.detectChanges();
+            // this._cd.detectChanges();
           },
   
           (err) => {
             this.rdvExistant = false;
             this.logger.info("Rdv-DetailComponent log : Rdv id: " + id + " non trouvé dans la Bdd");
             this._cd.markForCheck();
-            this._cd.detectChanges();
+            // this._cd.detectChanges();
           }
         )
     }
@@ -116,6 +117,13 @@ export class RdvDetailsComponent implements OnInit {
         this.isUserIsConnected$ = isLoggedIn.valueOf();
       });
   
+    }
+
+    /**
+     * Retourne à la page precedente
+     */
+    public returnPreviousPage() {
+      this._location.back()
     }
   
   }

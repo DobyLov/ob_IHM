@@ -117,13 +117,12 @@ export class AppComponent implements OnInit {
    * -Refermer les accordeons du menu sideBar
    */
   public close() {
-    console.log("fermeture du SideNav depuis le backdrop");
+    
+    this.logger.info("AppComponent log : Fermeture du SideNav depuis le backdrop");
     this.myPanels.multi = true;
+    this.logger.info("AppComponent log : Collapse du MenuList dans la sideNav");
     this.myPanels.closeAll();
     this.myPanels.multi = false;
-
-    
-    console.log("myPanelList: " );
   }
 
 

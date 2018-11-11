@@ -6,11 +6,12 @@ import { RdvService } from '../rdv/rdv.service';
 import { Rdv } from '../rdv/rdv';
 import { Praticien } from '../praticien/praticien';
 import { PraticienService } from '../praticien/praticien.service';
-import { Dateservice } from '../client/date/date.service';
 import { Subscription, Observable } from '../../../node_modules/rxjs';
 import { AuthService } from '../login/auth.service';
 import { Router } from '@angular/router';
 import { timer } from 'rxjs';
+import { DateService } from '../service/dateservice.service';
+import { ErrorHandlerService } from '../service/errorHandler.service';
 
 @Component({
   selector: 'app-home',
@@ -18,13 +19,18 @@ import { timer } from 'rxjs';
   styleUrls: ['./home.component.scss'],
   providers : [ NGXLogger]
 })
+
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() isScreenIsMobile$: boolean;
   @Input() isUserIsConnected$: boolean = false;
 
+  // timer
   refreshTimer: any;
-  timersubscription: any;
+  timerSubscription: any;
+  // 5 minutes => 5*60*10000
+  timeToWaitToStartTimer: number = (30*1000);
+  tickTimerFrequency: number = (30*1000);
 
   currentUtilisateur$: CurrentUtilisateur;
   rdvList: Rdv[];
@@ -44,7 +50,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
                private router: Router,
                private _cd: ChangeDetectorRef,
                private _praticienService: PraticienService,
-               private _dateService: Dateservice) 
+               private _dateService: DateService,
+               private _errorHandlerService: ErrorHandlerService ) 
                {
                   
                 // this.detectIfPageFromF5OrNavigation();
@@ -74,18 +81,19 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
   }
+
   ngAfterViewInit(): void {
 
     this.logger.info("HomeComponent log : Fin d initialisation de la vue:");
-    this.logger.info("HomeComponent log : Premie rtick dans 30 puis toutes les 30s:");
+    this.logger.info("HomeComponent log : Premier tick dans 30 puis toutes les 30s:");
 
     // timer(numberA, numberB)
     // numberA => Every t
     // numberB => start at
     // this.refreshTimer = timer(5*60*1000,5*60*10000);   
-    this.refreshTimer = timer(15000,15000); 
-    this.timersubscription = new Observable();  
-    this.timersubscription = this.refreshTimer.subscribe( t => {    
+    this.refreshTimer = timer(this.tickTimerFrequency,this.timeToWaitToStartTimer); 
+    this.timerSubscription = new Observable();  
+    this.timerSubscription = this.refreshTimer.subscribe( t => {    
     this.logger.info("HomeComponent log : Timer => Recuperation des Rdv depuis la BDD : ");  
     this.getRdvListParDateParIdPraticien(this._dateService.setDateToStringYYYYMMDD(new Date()), this.praticien.idPraticien); 
     this.logger.info("HomeComponent log : Timer => Rdv récupérés :");
@@ -97,7 +105,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     if ( this.cUtilisateur ) { this.cUtilisateur };
     if ( this.listRdv ) { this.listRdv.unsubscribe };
     if (this.refreshTimer.unsubscribe) { this.refreshTimer.unsubscribe };
-    this.timersubscription.unsubscribe();
+    this.timerSubscription.unsubscribe();
   }
 
   /**
@@ -110,11 +118,14 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     .subscribe( (cUtilisateur: CurrentUtilisateur) => 
     {
       this.currentUtilisateur$ = cUtilisateur;
-      setTimeout(() => {
+      setTimeout( () => {
         this._praticienService.getPraticienByEmail( this.currentUtilisateur$.adresseMailUtilisateur ) 
       .subscribe( (res: Praticien) => 
       { this.praticien = res;
         this.getRdvListParDateParIdPraticien(this._dateService.setDateToStringYYYYMMDD(new Date()), this.praticien.idPraticien);
+        },
+        (err: Error ) => {
+         this.logger.error("HomeComponent log : La requete n a pas fonctionnée");
         });
       }, 2000);             
     } ); 
@@ -122,7 +133,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }  
 
 /**
- * recupere la liste totale de Rdv
+ * recupere la liste des RDv par dDte et par Praticien
  */
   private getRdvListParDateParIdPraticien(dateJj: string, idPraticien: number) {
     
@@ -135,8 +146,13 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
                             this.dataSource = this.rdvList;  
                             this.nbRdv = this.rdvList.length;  
                             this._cd.markForCheck();
-                          } );                                          
-
+                          },
+                          ( (e) => { 
+                            // => vers le Gestionnaire d'érreur
+                            this._errorHandlerService.handleError(e);
+                            }
+                          )
+                  );    
   }
 
   /**
@@ -149,5 +165,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.logger.info("HomeComponenet Log : ouverture du detail idRdv: " + idRdv);
     this.router.navigate(['./rdvdetails',idRdv]);
   }
+
+  
 
 }
