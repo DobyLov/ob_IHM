@@ -8,7 +8,7 @@ import { Praticien } from '../praticien/praticien';
 import { PraticienService } from '../praticien/praticien.service';
 import { Subscription, Observable } from '../../../node_modules/rxjs';
 import { AuthService } from '../login/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { timer } from 'rxjs';
 import { DateService } from '../service/dateservice.service';
 import { ErrorHandlerService } from '../service/errorHandler.service';
@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.getIsUserIsConnected();
                 }
 
-  ngOnInit() {    
+  ngOnInit() {  
 
     this.getCurrentUtilisateur();  
     setTimeout(() => {

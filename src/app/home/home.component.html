@@ -1,8 +1,8 @@
 
 <link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Source+Sans+Pro|Montserrat:300" rel="stylesheet">
 
-<div class="flex-container" *ngIf="isUserIsConnected$">
-    <div class="item-titre">
+<div class="flex-container" *ngIf="isUserIsConnected$" SmoothScroll>
+    <div id="hautDePage" class="item-titre">
         <span *ngIf="nbRdv == -1">
                 ------ Patientez ------
         </span>
@@ -83,6 +83,11 @@
 
 
         </mat-table>
+    </div>
+    <div class="boutonRemonter" mat-elevation-z20>
+        <!-- <a routerLink="./" fragment="hautDePage">
+            <button mat-raised-button color="primary">Remonter</button>
+        </a> -->
     </div>
 </div>
         

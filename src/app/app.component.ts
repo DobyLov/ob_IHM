@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, ChangeDetectionStrategy, Output } from '@angular/core';
+import { Component, ViewChild, OnInit, ChangeDetectionStrategy, Output, AfterViewInit } from '@angular/core';
 
 // CDK_BreakPoint
 // import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
@@ -24,7 +24,7 @@ import { NGXLogger } from '../../node_modules/ngx-logger';
 })
 
 
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
 
   // control de la sidenav
   @ViewChild('mysidenav') public mysidenav: MatSidenav;
@@ -47,7 +47,9 @@ export class AppComponent implements OnInit {
     this._sidebarservice.statusOfSideNavState.subscribe(forceCloseSideBar => {
       if (forceCloseSideBar.valueOf() == true) {
         this.mysidenav.close()
+        this.myPanels.multi = true;   
         this.myPanels.closeAll();
+        this.myPanels.multi = false;
       }
     })
 
@@ -59,26 +61,36 @@ export class AppComponent implements OnInit {
 
         if (sideBarButton.valueOf() == true && this.mysidenav.opened.valueOf() == true) { 
           this.logger.info("AppComponent Log : Fermeture de SideNav");      
-          this.myPanels.closeAll();   
+          this.myPanels.multi = true;   
+          this.myPanels.closeAll();
+          this.myPanels.multi = false;   
           this.mysidenav.close();
           
         } else {
           this.logger.info("AppComponent Log : Overture de SideNav");  
-          this.myPanels.closeAll();       
+     
           this.mysidenav.open();
+          this.myPanels.multi = true;   
+          this.myPanels.closeAll();
+          this.myPanels.multi = false; 
           
         }
 
       } else {
 
         if (sideBarButton.valueOf() == false && this.mysidenav.opened.valueOf() == false) {
-          this.logger.info("AppComponent Log : Fermeture de SideNav");   
-          this.myPanels.closeAll();      
+          this.logger.info("AppComponent Log : Fermeture de SideNav");
+      
           this.mysidenav.open();
+          this.myPanels.multi = true;   
+          this.myPanels.closeAll();
+          this.myPanels.multi = false;
           
         } else {
           this.logger.info("AppComponent Log : Fermeture de SideNav"); 
-          this.myPanels.closeAll();        
+          this.myPanels.multi = true;   
+          this.myPanels.closeAll();
+          this.myPanels.multi = false;       
           this.mysidenav.close();
         }
       }
@@ -103,12 +115,24 @@ export class AppComponent implements OnInit {
     
   }
 
+  ngAfterViewInit(): void {
+    //Called after every check of the component's view. Applies to components only.
+    //Add 'implements AfterViewChecked' to the class.
+
+    this.myPanels.multi = true;   
+    this.myPanels.closeAll();
+    this.myPanels.multi = false; 
+    
+  }
+
   /**
    * Fermeture du sideNav
    */
   public closeSideNav(): void {
     this.logger.info("AppComponent Log : Fermeture du sideNav");
+    this.myPanels.multi = true;
     this.myPanels.closeAll();
+    this.myPanels.multi = false;
     this.mysidenav.close();
   }
 
