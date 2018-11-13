@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   timerSubscription: any;
   // 5 minutes => 5*60*10000
   timeToWaitToStartTimer: number = (20*1000);
-  tickTimerFrequency: number = (20*1000);  
+  tickTimerFrequency: number = (5*60*1000);  
  
   sideNavToggle$: Boolean;
 
