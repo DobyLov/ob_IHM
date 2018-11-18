@@ -28,12 +28,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   
   isSrvIsOnLine$: boolean = true;
 
+  // Subscription timer
+  refreshTimer;
+  timerSubscription;
   // timer
-  refreshTimer: any;
-  timerSubscription: any;
-  // 5 minutes => 5*60*10000
-  timeToWaitToStartTimer: number = (20*1000);
-  tickTimerFrequency: number = (5*60*1000);  
+  timeToWaitToStartTimer: number = (1*1000);
+  tickTimerFrequency: number = (5*60*1000); 
  
   sideNavToggle$: Boolean;
 
@@ -198,17 +198,17 @@ export class HeaderComponent implements OnInit, AfterViewInit {
    */
   private timer(): void {
 
-    this.logger.info("HeaderComponent log : Premier tick dans 30 puis toutes les 30s:");
+    this.logger.info("HeaderComponent log : Timer slow Premier tick dans puis toutes les 5 minutess:");
 
     // timer(numberA, numberB)
     // numberA => Every t
     // numberB => start at
     // this.refreshTimer = timer(5*60*1000,5*60*10000);   
-    this.refreshTimer = timer(this.tickTimerFrequency,this.timeToWaitToStartTimer); 
+    this.refreshTimer = timer(this.timeToWaitToStartTimer,this.tickTimerFrequency); 
     this.timerSubscription = new Observable();  
     this.timerSubscription = this.refreshTimer.subscribe( t => {  
 
-      this.logger.info("HeaderComponent log : Tick pour joindre le serveur MW");
+      this.logger.info("HeaderComponent logTimer : Tick pour joindre le serveur MW");
       this.isSrvIsOnLine$ = this._reachServerService.srvJoignableOuPas();
       this.cd.detectChanges(); 
 

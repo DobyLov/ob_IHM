@@ -52,7 +52,7 @@ export class DateService {
      */
     public setDateToStringYYYYMMDD(date: Date): string {
 
-      this.logger.info("Dateservice Log : date a convertir : " + date);
+      this.logger.info("Dateservice Log : Convertir Date: " + date);
       let dateFormatee: string;
 
       let yyyy = date.getUTCFullYear();
@@ -81,11 +81,29 @@ export class DateService {
 
       }
 
-      this.logger.info("Dateservice Log : date a convertir : " + dateFormatee);
+      this.logger.info("Dateservice Log : date convertie au format YYYY-MM-DD : " + dateFormatee);
 
       return dateFormatee.toString();
 
   }
 
+/**
+ * Convertir Date serialisee en string
+ * @param date
+ * @returns String
+ */
+  public setSerialDateToStringYYYYMMDD(date: any): string {
+
+    this.logger.info("Dateservice log : Date serialisée typeOf: " + typeof(date));
+    this.logger.info("Dateservice log : Date serialisée : " + date);
+
+    let dateFormatee = this.setDateToStringYYYYMMDD(new Date(date));
+    
+
+    this.logger.info("Dateservice log : conversion de la Date serialisée en string : " + dateFormatee);
+    
+    return dateFormatee;
+
+  }
 
 }

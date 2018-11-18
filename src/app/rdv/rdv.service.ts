@@ -81,7 +81,10 @@ export class RdvService {
 
     return this.httpCli
 
-      .get<Rdv[]>(this.url + '/listepardateparpraticien' , { params: new HttpParams().append("date", `${dateFournie}`).append("idPraticien", `${idPraticien}`) })
+      .get<Rdv[]>(this.url + '/listepardateparpraticien' , { 
+          params: new HttpParams()
+            .append("date", `${dateFournie}`)
+            .append("idPraticien", `${idPraticien}`) })
       .pipe(map  (res => res), catchError ( (e:HttpHeaderResponse) => throwError(e) ) );
 
   }
@@ -93,18 +96,18 @@ export class RdvService {
    * @param idPraticien 
    * @returns Observable<Rdv[]>
    */
-  public getRdvListRangeOfDateADateBAndByPraticien( dateA: string, dateB: string, idPraticien: number, ): Observable<Rdv[]> {
+  public getRdvListRangeOfDateADateBAndByPraticien( dateA: string, dateB: string, idPraticien: number ): Observable<Rdv[]> {
 
     this.logger.info("RdvService Log : Recupere la liste par plage de date et par praticien");
 
-    let myHttpParams = new HttpParams();
-    myHttpParams.append("dateA", `${dateA}`);
-    myHttpParams.append("dateB", `${dateB}`);
-    myHttpParams.append("idPraticien", `${idPraticien}`);
-
     return this.httpCli
-      .get<Rdv[]>(this.url + '/listeparplagedateparpraticien' , { params: myHttpParams })
-      .pipe(map  (res  => res));
+      .get<Rdv[]>(this.url + '/listeparplagedateparpraticien' , { 
+        params: new HttpParams()
+        .append("dateA", `${dateA}`)
+        .append("dateB", `${dateB}`)
+        .append("idPraticien", `${idPraticien}`) })
+
+      .pipe(map  (res => res ), catchError ( (e:HttpHeaderResponse) => throwError(e) ) );
 
   }
 

@@ -20,6 +20,7 @@ export class RdvDetailsComponent implements OnInit {
     rdvExistant: boolean = true;
     rdvRecupere: boolean = false;
     rdv: Rdv = null;
+
   
     emailUserConnected: string;
   

@@ -17,6 +17,10 @@ $custom-theme: mat-light-theme($custom-primary, $custom-accent);
     padding: 0px !important;    
 }
 
+.mat-datepicker-content-touch .mat-calendar {
+    padding: 20px;
+}
+
 .snackBarContainer {
     display: flex;
     flex-wrap: wrap;

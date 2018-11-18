@@ -93,6 +93,8 @@ import { ReachServerService } from './service/reachServer.service';
 // Import Locale_Fr
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 // the second parameter 'fr' is optional
 registerLocaleData(localeFr, 'fr');
@@ -150,6 +152,7 @@ import {
 import { SuiviActiviteComponent } from './suivi-activite/suivi-activite.component';
 import { DateService } from './service/dateservice.service';
 import { ErrorHandlerService } from './service/errorHandler.service';
+import { DateAndTime24Pipe } from './pipe/dateAndTime24.pipe';
 
 
 @NgModule({
@@ -158,6 +161,7 @@ import { ErrorHandlerService } from './service/errorHandler.service';
     BottomSheetComponent,
     ClientComponent,
     ConfimrUserFromTokenModalComponent,
+    DateAndTime24Pipe,
     FirstCharUpperPipe, 
     FooterComponent,
     ForgottenPwdComponent,
@@ -230,6 +234,8 @@ import { ErrorHandlerService } from './service/errorHandler.service';
   ],
   entryComponents: [BottomSheetComponent],
   providers: [{ provide: LOCALE_ID, useValue: 'fr' },
+              {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+              {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
               { provide: HTTP_INTERCEPTORS, useClass: AuthRequestOptions, multi : true },
               { provide: AuthErrorHandlerService, useClass: AuthErrorHandlerService },
               { provide: ErrorHandlerService, useClass: ErrorHandlerService },

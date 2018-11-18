@@ -25,23 +25,33 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() isScreenIsMobile$: boolean;
   @Input() isUserIsConnected$: boolean = false;
 
-  // timer
+  // timer de rafraichissement
   refreshTimer: any;
   timerSubscription: any;
   // 5 minutes => 5*60*10000
-  timeToWaitToStartTimer: number = (30*1000);
-  tickTimerFrequency: number = (30*1000);
+  timeToWaitToStartTimer: number = (1*1000);
+  tickTimerFrequency: number = (5*60*1000);
+
+  // parametres pour recupererle sinfos utilisateu praticien
+  emailUserConnected: string;
+  praticien: Praticien;
 
   currentUtilisateur$: CurrentUtilisateur;
+  cUtilisateur = new Subscription();  
+  
+  // paramtres pour Rdv
+  listRdv: any;
   rdvList: Rdv[];
+
+  // Formatage de la table
   tabNomsColonnes: string[] = ['numeroRdv','dateHeureDebut','separation', 'dateHeureFin', 
                 'lieuRdv', 'activite', 'prestation', 'nomClient', 'prenomClient', 'idRdv' ];
-  dataSource;
-  praticien: Praticien;
+  dataSource: Rdv[];
+
   nbRdv: number = -1;
-  cUtilisateur = new Subscription();  
-  listRdv: any;
-  emailUserConnected: string;
+
+  
+
 
   constructor( private logger: NGXLogger,
                private _utilisateurService: UtilisateurService,
@@ -54,7 +64,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
                private _errorHandlerService: ErrorHandlerService ) 
                {
                   
-                // this.detectIfPageFromF5OrNavigation();
+                
                 this.emailUserConnected = this._authService.getMailFromToken();
                 this._utilisateurService.setCurrentUtilisateur(this.emailUserConnected); 
                 
@@ -63,22 +73,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {  
 
-    this.getCurrentUtilisateur();  
-    setTimeout(() => {
-      this.getCurrentUtilisateur();
-    }, 500);
-     
-  }
-
-  /**
-   * Souscription a l orbservable isconnected
-   */
-  private getIsUserIsConnected(){
-
-    // Souscription a l orbservable isconnected
-    this._authService.statusOfIsUserIsLogged.subscribe(isLoggedIn => {
-      this.isUserIsConnected$ = isLoggedIn.valueOf() 
-    });
+    this.getCurrentUtilisateur();
 
   }
 
@@ -106,8 +101,22 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     if ( this.listRdv ) { this.listRdv.unsubscribe };
     if (this.refreshTimer.unsubscribe) { this.refreshTimer.unsubscribe };
     this.timerSubscription.unsubscribe();
+  
   }
 
+    /**
+   * Souscription a l orbservable isconnected
+   */
+  private getIsUserIsConnected(){
+
+    // Souscription a l orbservable isconnected
+    this._authService.statusOfIsUserIsLogged.subscribe(isLoggedIn => {
+      this.isUserIsConnected$ = isLoggedIn.valueOf() 
+    });
+
+  }
+  
+  
   /**
    * Recupere l utilisateur loggé
    */
@@ -131,6 +140,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     } ); 
 
   }  
+  
 
 /**
  * recupere la liste des RDv par dDte et par Praticien
@@ -154,6 +164,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
                           )
                   );    
   }
+
 
   /**
    * Ouvre le detail du Rdv selectionné

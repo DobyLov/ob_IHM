@@ -1735,3 +1735,627 @@ and (min-device-height: 1024px)
   }
 
 }
+
+// *********************************
+// *********************************
+// Desktop s
+@media screen 
+// and ( min-width: 100px)
+and ( max-width: 300px)
+{
+
+  //Config du Container
+  .flex-container {
+    font-family: 'Montserrat', sans-serif;  
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    margin-left: 0px;
+  }
+
+  .item-titre {
+    height: 70px;
+    font-size: 12px;
+    text-align: center;    
+    font-weight: normal;
+    color: black;
+    padding: 2px 2px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .item-titre > span {
+    // vertical-align: -webkit-baseline-middle;
+    text-align: justify;
+  }
+
+  .table {
+    padding: 20px;
+  }
+
+  // titre des colonnes
+  .mat-header-cell {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: black;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  // Contenu des cellules
+  .mat-cell {   
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    text-align: justify;
+  }
+
+  .mat-column-dateHeureDebut {
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .mat-column-separation {
+    display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-dateHeureFin {
+    display: none;
+    padding-left: 5px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .mat-column-lieuRdv {
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-activite {
+    display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-prestation {
+    display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-nomClient {
+    display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-prenomClient {
+    display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  th.mat-header-cell:first-of-type {
+    margin-top: 10px;
+    text-align: center;
+    padding-left: 5px;
+  }
+  td.mat-cell:first-of-type {
+    width: 25px;
+    text-align: center;
+    padding-left: 5px;
+  }
+
+  th.mat-header-cell:last-of-type {
+    padding-left: 5px;
+  }
+
+  .button-Details {
+    width: 20px;
+    text-align: center;
+  }
+
+  .boutonRemonter {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+  }
+}
+
+// *********************************
+// *********************************
+// Desktop M
+@media screen 
+// and ( min-width: 100px)
+and ( max-width: 600px)
+{
+
+  //Config du Container
+  .flex-container {
+    font-family: 'Montserrat', sans-serif;  
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    margin-left: 0px;
+  }
+
+  .item-titre {
+    height: 70px;
+    font-size: 18px;
+    text-align: center;    
+    font-weight: normal;
+    color: black;
+    padding: 2px 2px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .item-titre > span {
+    // vertical-align: -webkit-baseline-middle;
+    text-align: justify;
+  }
+
+  .table {
+    padding: 20px;
+  }
+
+  // titre des colonnes
+  .mat-header-cell {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    color: black;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  // Contenu des cellules
+  .mat-cell {   
+    font-size: 18px;
+    font-family: 'Montserrat', sans-serif;
+    text-align: justify;
+  }
+
+  .mat-column-dateHeureDebut {
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .mat-column-separation {
+    display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-dateHeureFin {
+    display: none;
+    padding-left: 5px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .mat-column-lieuRdv {
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-activite {
+    display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-prestation {
+    // display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-nomClient {
+    display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-prenomClient {
+    // display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  th.mat-header-cell:first-of-type {
+    margin-top: 10px;
+    text-align: center;
+    padding-left: 5px;
+  }
+  td.mat-cell:first-of-type {
+    width: 25px;
+    text-align: center;
+    padding-left: 5px;
+  }
+
+  th.mat-header-cell:last-of-type {
+    padding-left: 5px;
+  }
+
+  .button-Details {
+    width: 20px;
+    text-align: center;
+  }
+
+  .boutonRemonter {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+  }
+}
+
+// Desktop L
+@media screen 
+// and ( min-width: 100px)
+and ( max-width: 800px)
+{
+
+  //Config du Container
+  .flex-container {
+    font-family: 'Montserrat', sans-serif;  
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    margin-left: 0px;
+  }
+
+  .item-titre {
+    height: 70px;
+    font-size: 20px;
+    text-align: center;    
+    font-weight: normal;
+    color: black;
+    padding: 2px 2px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .item-titre > span {
+    // vertical-align: -webkit-baseline-middle;
+    text-align: justify;
+  }
+
+  .table {
+    padding: 20px;
+  }
+
+  // titre des colonnes
+  .mat-header-cell {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    color: black;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  // Contenu des cellules
+  .mat-cell {   
+    font-size: 18px;
+    font-family: 'Montserrat', sans-serif;
+    text-align: justify;
+  }
+
+  .mat-column-dateHeureDebut {
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .mat-column-separation {
+    display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-dateHeureFin {
+    display: none;
+    padding-left: 5px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .mat-column-lieuRdv {
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-activite {
+    // display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-prestation {
+    // display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-nomClient {
+    // display: none;
+    text-align: center;
+  }
+
+  .mat-column-prenomClient {
+    // display: none;
+    text-align: center;
+  }
+
+  th.mat-header-cell:first-of-type {
+    margin-top: 10px;
+    text-align: center;
+    padding-left: 5px;
+  }
+  td.mat-cell:first-of-type {
+    width: 25px;
+    text-align: center;
+    padding-left: 5px;
+  }
+
+  th.mat-header-cell:last-of-type {
+    padding-left: 5px;
+  }
+
+  .button-Details {
+    width: 20px;
+    text-align: center;
+  }
+
+  .boutonRemonter {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+  }
+}
+
+
+// *********************************
+// *********************************
+// Desktop M
+@media screen 
+// and ( min-width: 100px)
+and ( max-width: 600px)
+{
+
+  //Config du Container
+  .flex-container {
+    font-family: 'Montserrat', sans-serif;  
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    margin-left: 0px;
+  }
+
+  .item-titre {
+    height: 40px;
+    font-size: 18px;
+    text-align: center;    
+    font-weight: normal;
+    color: black;
+    padding: 2px 2px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .item-titre > span {
+    // vertical-align: -webkit-baseline-middle;
+    text-align: justify;
+  }
+
+  .table {
+    padding: 20px;
+  }
+
+  // titre des colonnes
+  .mat-header-cell {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    color: black;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  // Contenu des cellules
+  .mat-cell {   
+    font-size: 18px;
+    font-family: 'Montserrat', sans-serif;
+    text-align: justify;
+  }
+
+  .mat-column-dateHeureDebut {
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .mat-column-separation {
+    display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-dateHeureFin {
+    display: none;
+    padding-left: 5px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .mat-column-lieuRdv {
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-activite {
+    // display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-prestation {
+    // display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-nomClient {
+    // display: none;
+    text-align: center;
+  }
+
+  .mat-column-prenomClient {
+    // display: none;
+    text-align: center;
+  }
+
+  th.mat-header-cell:first-of-type {
+    margin-top: 10px;
+    text-align: center;
+    padding-left: 5px;
+  }
+  td.mat-cell:first-of-type {
+    width: 25px;
+    text-align: center;
+    padding-left: 5px;
+  }
+
+  th.mat-header-cell:last-of-type {
+    padding-left: 5px;
+  }
+
+  .button-Details {
+    width: 20px;
+    text-align: center;
+  }
+
+  .boutonRemonter {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+  }
+}
+
+// Desktop XL
+@media screen 
+// and ( min-width: 100px)
+and ( min-width: 800px)
+{
+
+  //Config du Container
+  .flex-container {
+    font-family: 'Montserrat', sans-serif;  
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    margin-left: 0px;
+  }
+
+  .item-titre {
+    height: 70px;
+    font-size: 22px;
+    text-align: center;    
+    font-weight: normal;
+    color: black;
+    padding: 2px 2px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .item-titre > span {
+    // vertical-align: -webkit-baseline-middle;
+    text-align: justify;
+  }
+
+  .table {
+    padding: 20px;
+    text-align: -webkit-center;
+  }
+
+  // titre des colonnes
+  .mat-header-cell {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    color: black;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  // Contenu des cellules
+  .mat-cell {   
+    font-size: 22px;
+    font-family: 'Montserrat', sans-serif;
+    text-align: justify;
+  }
+
+  .mat-column-dateHeureDebut {
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .mat-column-separation {
+    // display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-dateHeureFin {
+    // display: none;
+    padding-left: 5px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .mat-column-lieuRdv {
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-activite {
+    // display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-prestation {
+    // display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-nomClient {
+    // display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .mat-column-prenomClient {
+    // display: none;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  th.mat-header-cell:first-of-type {
+    margin-top: 10px;
+    text-align: center;
+    padding-left: 5px;
+  }
+  td.mat-cell:first-of-type {
+    width: 25px;
+    text-align: center;
+    padding-left: 5px;
+  }
+
+  th.mat-header-cell:last-of-type {
+    padding-left: 5px;
+  }
+
+  .button-Details {
+    width: 20px;
+    text-align: center;
+  }
+
+  .boutonRemonter {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+  }
+}

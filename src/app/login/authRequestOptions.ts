@@ -56,7 +56,7 @@ import { Router } from '@angular/router';
 
               let tokenNamdGetter = this._authservice.getOBTokenFromLocalStorage(); 
               let headers = new HttpHeaders().append("Authorization", "Bearer" +  tokenNamdGetter);  
-              this.logger.info("AuthRequestOptions Log : Injection du Token Utilisateur/Praticien dans la requete"); 
+              this.logger.info("AuthRequestOptions Log : Injection du Token Utilisateur dans la requete"); 
               const newReq = req.clone({headers});
               return next.handle(newReq);
 
