@@ -420,7 +420,7 @@ export class AuthService {
    */
   public checkIfItsaRootToken(): boolean {
 
-    this.logger.info("AuthService log : Verification si c est un token utilisateur root"):
+    this.logger.info("AuthService log : Verification si c est un token utilisateur root");
     let token = this.getOBTokenFromLocalStorage();
 
     if (this.getRoleFromToken(token).toLocaleLowerCase().match('root') 

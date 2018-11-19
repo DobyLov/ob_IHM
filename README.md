@@ -30,10 +30,16 @@ Ces WebServices sont proposés par un MiddleWare développé en java.
 Projet en Java (MiddleWare): [OpusBeaute_MiddleWare](https://github.com/DobyLov/opusbeaute_middleware)
 
 ### Version des outils de développement
-![](https://img.shields.io/badge/Node%20:-V%209.6.1-blue.svg) ![](https://img.shields.io/badge/Angular%20:-V%207.0-blue.svg) ![](https://img.shields.io/badge/Npm%20:-V%206.4.1-blue.svg) ![](https://img.shields.io/badge/@Angular%20CLI%20:-V%207.0.1-blue.svg) ![]
-(https://img.shields.io/badge/@Angular%20flex-layout%20:-V%207.0.0-beta.19-blue.svg) ![](https://img.shields.io/badge/Chrome%20:-V%2068.0.3440.106-blue.svg) ![](https://img.shields.io/badge/Angular%20CDK%20:-V%207.0.1-blue.svg) ![](https://img.shields.io/badge/rxjs%20:-V%206.3.3-blue.svg) ![]
-(https://img.shields.io/badge/webpack%20:-V%204.21.0-blue.svg) ![]
-(https://img.shields.io/badge/Typescript%20:-V%203.1.3-blue.svg)
+![](https://img.shields.io/badge/Node%20:-V%209.6.1-blue.svg) 
+![](https://img.shields.io/badge/Angular%20:-V%207.0-blue.svg) 
+![](https://img.shields.io/badge/Npm%20:-V%206.4.1-blue.svg) 
+![](https://img.shields.io/badge/@Angular%20CLI%20:-V%207.0.1-blue.svg)
+![](https://img.shields.io/badge/@Angular%20flex-layout%20:-V%207.0.0-beta.19-blue.svg)
+![](https://img.shields.io/badge/Chrome%20:-V%2068.0.3440.106-blue.svg)
+![](https://img.shields.io/badge/Angular%20CDK%20:-V%207.0.1-blue.svg) 
+![](https://img.shields.io/badge/rxjs%20:-V%206.3.3-blue.svg)
+![](https://img.shields.io/badge/webpack%20:-V%204.21.0-blue.svg) 
+![](https://img.shields.io/badge/Typescript%20:-V%203.1.3-blue.svg)
 
 ### Migration
 Le projet a migré à 4 reprises de angular 4 à 5 à 6 et 7
