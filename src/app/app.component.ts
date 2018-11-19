@@ -12,6 +12,7 @@ import { UtilisateurService } from './utilisateur/utilisateur.service';
 
 // Logger
 import { NGXLogger } from '../../node_modules/ngx-logger';
+import { HistoryRoutingService } from './service/historyRouting.service';
 
 
 @Component({
@@ -35,11 +36,13 @@ export class AppComponent implements OnInit, AfterViewInit {
   sideNavToggle: Boolean = false;
 
 
-  constructor(
-              private logger: NGXLogger,
+  constructor(private logger: NGXLogger,
               private _sidebarservice: SideBarService,
-              public _utilisateurservice: UtilisateurService  
-              ) {  }
+              public _utilisateurservice: UtilisateurService,
+              private _historyRouting: HistoryRoutingService
+              ) { 
+                this._historyRouting.loadRouting();
+               }
 
   ngOnInit() {
 

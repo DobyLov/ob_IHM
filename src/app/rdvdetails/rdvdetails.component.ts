@@ -1,11 +1,12 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { RdvService } from '../rdv/rdv.service';
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
 import { Rdv } from '../rdv/rdv';
 import { AuthService } from '../login/auth.service';
 import { Location } from '@angular/common';
+import { HistoryRoutingService } from '../service/historyRouting.service';
 
 @Component({
     selector: 'app-rdvdetails',
@@ -15,13 +16,11 @@ import { Location } from '@angular/common';
 export class RdvDetailsComponent implements OnInit {
 
     @Input() isUserIsConnected$: boolean = false;
-  
+    previousRoute: string;
     idRdv: number;
     rdvExistant: boolean = true;
     rdvRecupere: boolean = false;
-    rdv: Rdv = null;
-
-  
+    rdv: Rdv = null;  
     emailUserConnected: string;
   
   
@@ -31,16 +30,22 @@ export class RdvDetailsComponent implements OnInit {
                 private _utilisateurService: UtilisateurService,
                 private _authService: AuthService,
                 private _cd: ChangeDetectorRef,
-                public _location: Location) {
+                private _historyRouting: HistoryRoutingService) {
   
                     this.getRdv(this.getUrlParamId());
   
                     this.emailUserConnected = this._authService.getMailFromToken();
                     this._utilisateurService.setCurrentUtilisateur(this.emailUserConnected);
+                    
   
     }
   
-    ngOnInit() { }
+    ngOnInit() {
+
+        this.previousRoute = this._historyRouting.getPreviousUrl();
+
+        this.logger.info("rdvdetailComponent log : etat du previusRoute : " + this.previousRoute)
+     }
   
     /**
      * Extrait le parametre idRdv de l url
@@ -120,12 +125,12 @@ export class RdvDetailsComponent implements OnInit {
   
     }
 
-    /**
-     * Retourne à la page precedente
-     */
-    public returnPreviousPage() {
-      this._location.back()
-    }
+    // /**
+    //  * Retourne à la page precedente
+    //  */
+    // public returnPreviousPage() {
+    //   this._router.navigate([this.previousRoute]);
+    // }
   
   }
   

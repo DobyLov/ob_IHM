@@ -12,6 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { timer } from 'rxjs';
 import { DateService } from '../service/dateservice.service';
 import { ErrorHandlerService } from '../service/errorHandler.service';
+import { HistoryRoutingService } from '../service/historyRouting.service';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() isScreenIsMobile$: boolean;
   @Input() isUserIsConnected$: boolean = false;
+  previusRoute:  string;
 
   // timer de rafraichissement
   refreshTimer: any;
@@ -61,7 +63,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
                private _cd: ChangeDetectorRef,
                private _praticienService: PraticienService,
                private _dateService: DateService,
-               private _errorHandlerService: ErrorHandlerService ) 
+               private _errorHandlerService: ErrorHandlerService)
                {
                   
                 
@@ -69,12 +71,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
                 this._utilisateurService.setCurrentUtilisateur(this.emailUserConnected); 
                 
                 this.getIsUserIsConnected();
+                
                 }
 
   ngOnInit() {  
 
     this.getCurrentUtilisateur();
-
   }
 
   ngAfterViewInit(): void {

@@ -12,6 +12,7 @@ import { DateService } from '../service/dateservice.service';
 import { ErrorHandlerService } from '../service/errorHandler.service';
 import { RdvService } from '../rdv/rdv.service';
 import * as moment from 'moment';
+import { HistoryRoutingService } from '../service/historyRouting.service';
 moment.locale('fr');
 
 @Component({
@@ -68,14 +69,15 @@ export class RdvAddComponent implements OnInit {
 
 
   constructor(private logger: NGXLogger,
-    private router: Router,
-    private _praticienService: PraticienService,
-    private _dateService: DateService,
-    private _authService: AuthService,
-    private _rdvService: RdvService,
-    private _utilisateurService: UtilisateurService,
-    private _errorHandlerService: ErrorHandlerService,
-    private _cd: ChangeDetectorRef) {
+              private router: Router,
+              private _praticienService: PraticienService,
+              private _dateService: DateService,
+              private _authService: AuthService,
+              private _rdvService: RdvService,
+              private _utilisateurService: UtilisateurService,
+              private _errorHandlerService: ErrorHandlerService,
+              private _cd: ChangeDetectorRef,
+              private _historyRouting: HistoryRoutingService) {
 
     this.emailUserConnected = this._authService.getMailFromToken();
     this._utilisateurService.setCurrentUtilisateur(this.emailUserConnected);
