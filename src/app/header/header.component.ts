@@ -82,8 +82,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
                         
                         this._authService.removeGivenTokenFromLS(this._authService.getMailFromToken());
                         this.openAppFromRgpdUrl = true;
+
                       } else {
+
                         this.openAppFromRgpdUrl = false;
+
                       }  
 
                 }
@@ -124,10 +127,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
     // presence du chnageDetector pour prendre en compte le changement d etat du serveur MW
     this._reachServerService.getStatusofServerOnLine().subscribe( res => {  
-
-      // this.logger.info("HeaderComponent log : avant le vrai etat de isSrvIsOnLine : " + this.isSrvIsOnLine$.valueOf());   
+  
       this.isSrvIsOnLine$ = res.valueOf();
-      // this.logger.info("HeaderComponent log : Le vrai etat de isSrvIsOnLine : " + this.isSrvIsOnLine$.valueOf());
       
       this.cd.detectChanges();
     })
@@ -180,7 +181,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.btnLoginState = true;
 
       this.logger.info("changement de l état du btn connexion ");
-      // this._toasterService.showToaster('Zi Serveur Ok','snackbarInfo',2000);  
     
     } else {
 
@@ -294,9 +294,21 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   /**
    * Detection d un token dans le LocalStorage
    */
-  private checkIfATokenIsPresentInLS() {
+  private checkIfATokenIsPresentInLS(): void {
 
     this.logger.info("HeaderComponent Log : Verification si un Token est deja present dans le Localstorage");
+
+    if(this._authService.IsThereAnObtknInLs()) {
+
+      if (this._authService.checkIfItsaRootToken()) {
+
+        this._authService.changeStatusOfIsLogged(false);
+        this.userMailFromTkn = this._authService.getMailFromToken();
+        this._authService.removeGivenTokenFromLS(this.userMailFromTkn)
+
+      }
+
+    }
    
     if ( this._authService.IsThereAnObtknInLs() ) {
 

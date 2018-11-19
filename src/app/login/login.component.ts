@@ -58,7 +58,6 @@ export class LoginComponent implements OnInit {
    * Defini les dimensions du modal
    * en fonction du Device detecte
    */
-
   private setModalMobilResolution() {
 
     if (this.isDeviceIsMobile == true ) {
@@ -101,13 +100,6 @@ export class LoginComponent implements OnInit {
 	private openWelcomePage(): void {
 		this.router.navigate(['./welcome']);
   }
-  
-  /**
-   * Ouvre la page home
-   */
-  // private openHomePage(): void {
-	// 	this.router.navigate(['./home']);
-  // }
 
   /**
    * Deconnexion de l utilisateur

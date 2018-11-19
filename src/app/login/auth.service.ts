@@ -76,20 +76,25 @@ export class AuthService {
         )
         .then( res => { 
           this._utilisateurservice.setCurrentUtilisateur(credz.email);
-          this.router.navigate(['./home']);
+
+          if ( this.getPrenomFromGivedToken(this.getOBTokenFromLocalStorage()).toLocaleLowerCase().match('root')) {
+
+            this.logger.info("AuthService log : Ouverture d ela page Welcome car c'est root qui s'est logué");
+            this.router.navigate(['./welcome']);  
+
+          } else {
+
+            this.router.navigate(['./home']);  
+            this.logger.info("AuthService log : Ouverture de la page Home car c est un utilisateur.");
+
+          }
+            
         })
         .catch((err:HttpErrorResponse) => {
           loglog = false;
-          // console.log("AuthService log : " + err.status);
-          // if (err.statusText === "Unknown Error") {
-          //   this.messageToaster("Serveur HS",'snackbarWarning', 2000);
-          // }
           this.changeStatusOfIsLogged(loglog);
           this.logger.info("AuthService Log : Authentification Echouee");   
-          // this.messageToaster("Vérifiez vos informations",'snackbarWarning', 2000) 
-        }
-        
-        )
+        })
     })      
     
   }
@@ -395,7 +400,6 @@ export class AuthService {
 
   }
 
-
   /**
    * Affiche les message a l utilisateur
    * @param message 
@@ -409,4 +413,41 @@ export class AuthService {
     this._toasterService.showToaster(message, style, timer);
 
   } 
+
+  /**
+   * Verifie si c est token utilisateur root
+   * @returns boolean
+   */
+  public checkIfItsaRootToken(): boolean {
+
+    this.logger.info("AuthService log : Verification si c est un token utilisateur root"):
+    let token = this.getOBTokenFromLocalStorage();
+
+    if (this.getRoleFromToken(token).toLocaleLowerCase().match('root') 
+      && this.getPrenomFromGivedToken(token).toLowerCase().match("root")) {
+
+      this.logger.info("AuthService log : C' est token utilisateur root");
+      return true;
+
+    } else {
+
+      this.logger.info("AuthService log : Ce n'est pas un token utilisateur root");
+      return false;
+
+    }
+
+   
+ }
+
+ /**
+  * Extraction du role depuis le Token fourni
+  * @returns string
+  * @param token 
+  */
+ private getRoleFromToken(token: string): string {
+   
+  return jwt_decode(token).role;
+
+ }
+
 }
