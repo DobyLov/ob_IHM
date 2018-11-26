@@ -1,10 +1,10 @@
 import { Injectable } from "../../../node_modules/@angular/core";
 import { NGXLogger } from "../../../node_modules/ngx-logger";
 import { Observable } from "../../../node_modules/rxjs";
-import { Praticien } from "./praticien";
 import { appConfig } from "../constant/apiOpusBeauteUrl";
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Praticien } from "./praticien";
 
 @Injectable(
     { providedIn: 'root' }

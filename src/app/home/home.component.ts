@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   refreshTimer: any;
   timerSubscription: any;
   // 5 minutes => 5*60*10000
-  timeToWaitToStartTimer: number = (1*1000);
+  timeToWaitToStartTimer: number = (5*60*1000);
   tickTimerFrequency: number = (5*60*1000);
 
   // parametres pour recupererle sinfos utilisateu praticien

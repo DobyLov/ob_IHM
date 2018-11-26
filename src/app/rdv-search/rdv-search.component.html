@@ -1,0 +1,216 @@
+<link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Source+Sans+Pro|Montserrat:300"
+ rel="stylesheet">
+<div class="body-container">
+	<div class="left-container">
+		<mat-card>
+			<mat-card-content class="mat-card-titre-liste-rdv">
+				Liste de Rdv
+			</mat-card-content>
+		</mat-card>
+		<mat-card>
+			<mat-card-content class="mat-card-content-info-singleRdvOrRangeRdv">
+				<ng-container *ngIf="activeTabIndex === 0; then showSimpleDate ; else showRangeDate"></ng-container>
+				<ng-template #showSimpleDate>
+					<span>Rendez-vous du {{ dateSelectionneeA | date: 'dd / MM' }}</span>
+				</ng-template>
+				<ng-template #showRangeDate>
+					<span>Rendez-vous du {{ dateSelectionneeA | date: 'dd / MM' }} au {{ dateSelectionneeB | date: 'dd
+						/
+						MM' }}</span>
+				</ng-template>
+			</mat-card-content>
+		</mat-card>
+		<mat-card>
+			<mat-card-content class="mat-card-content-info-noRdv" *ngIf="this.currentUtilisateur$">
+				<ng-container *ngIf="indexRdv == 1; then displaySelectPratAndDate; else displayContent"></ng-container>
+				<ng-template #displaySelectPratAndDate>
+					<ng-container *ngIf="!praticienSelected; then displaySelectPraticien; else displaySelectADate"></ng-container>
+					<ng-template #displaySelectPraticien>
+						<span class="pas-de-date">{{ this.currentUtilisateur$.prenomUtilisateur }}, sélectionnez un praticien =></span>
+					</ng-template>
+					<ng-template #displaySelectADate>
+						<ng-container *ngIf="praticienSelected; then date;"></ng-container>
+						<ng-template #date>
+							<ng-container *ngIf="activeTabIndex === 0; then simpleDate; else rOfDates"></ng-container>
+							<ng-template #simpleDate>
+								<span class="pas-de-date"> Changez la date et/ou validez ...</span>
+							</ng-template>s
+							<ng-template #rOfDates>
+								<ng-container *ngIf="!dateSelectionneeB; then selDateFin; else rodValidez"></ng-container>
+								<ng-template #selDateFin>
+									<span class="pas-de-date"> Selectionnez une date de fin ...</span>
+								</ng-template>
+								<ng-template #rodValidez>
+									<span class="pas-de-date"> Validez ...</span>
+								</ng-template>
+							</ng-template>
+						</ng-template>
+					</ng-template>
+				</ng-template>
+				<ng-template #displayContent>
+					<ng-container *ngIf="indexRdv == 0; then noRdv; else displayRdvTable"></ng-container>
+					<ng-template #noRdv>
+						<ng-container *ngIf="activeTabIndex === 0; then showSimpleDate; else rangeOfDate"></ng-container>
+						<ng-template #showSimpleDate>
+							<span class="pas-de-date">Pas de Rdv pour cette date.</span>
+						</ng-template>
+						<ng-template #rangeOfDate>
+							<span class="pas-de-date">Pas de rendez-vous pour cette plage de dates.</span>
+						</ng-template>
+					</ng-template>
+
+					<ng-template #displayRdvTable>
+						<mat-table #table mat-table [dataSource]="dataSource" *ngIf="nbRdv != 0">
+							<tr mat-header-row *matHeaderRowDef="tabNomsColonnes"></tr>
+							<tr mat-row *matRowDef="let row; columns: tabNomsColonnes;"></tr>
+
+							<ng-container matColumnDef="numeroRdv">
+								<th mat-header-cell *matHeaderCellDef> </th>
+								<td mat-cell *matCellDef="let element; let i = index ">{{ i + 1 }}/</td>
+							</ng-container>
+
+							<ng-container matColumnDef="dateHeureDebut">
+								<th mat-header-cell *matHeaderCellDef>
+									<span *ngIf="activeTabIndex == 0">Heure début</span>
+									<span *ngIf="activeTabIndex == 1">Date/Heure début</span>
+								</th>
+								<td mat-cell *matCellDef="let element">
+									<span *ngIf="activeTabIndex == 0">{{ element.dateHeureDebut | Time24Pipe }} </span>
+									<span *ngIf="activeTabIndex == 1">{{ element.dateHeureDebut | DateAndTime24Pipe }} </span>
+								</td>
+							</ng-container>
+
+							<ng-container matColumnDef="separation">
+								<th mat-header-cell *matHeaderCellDef></th>
+								<td mat-cell *matCellDef="let element"> - </td>
+							</ng-container>
+
+							<ng-container matColumnDef="dateHeureFin">
+								<th mat-header-cell *matHeaderCellDef>Heure fin</th>
+								<td mat-cell *matCellDef="let element"> {{ element.dateHeureFin | Time24Pipe}} </td>
+							</ng-container>
+
+							<ng-container matColumnDef="lieuRdv">
+								<th mat-header-cell *matHeaderCellDef>Lieu Rdv</th>
+								<td mat-cell *matCellDef="let element"> {{ element.lieuRdv.lieuRdv }} </td>
+							</ng-container>
+
+							<ng-container matColumnDef="activite">
+								<th mat-header-cell *matHeaderCellDef>Activité</th>
+								<td mat-cell *matCellDef="let element"> {{ element.prestation.activite }} </td>
+							</ng-container>
+
+							<ng-container matColumnDef="prestation">
+								<th mat-header-cell *matHeaderCellDef>Prestation</th>
+								<td mat-cell *matCellDef="let element" class="presta"> {{ element.prestation.soin |
+									FirstCharUpperPipe }} </td>
+							</ng-container>
+
+							<ng-container matColumnDef="nomClient">
+								<th mat-header-cell *matHeaderCellDef>Nom </th>
+								<td mat-cell *matCellDef="let element"> {{ element.client.nomClient }} </td>
+							</ng-container>
+
+							<ng-container matColumnDef="prenomClient">
+								<th mat-header-cell *matHeaderCellDef>Prénom</th>
+								<td mat-cell *matCellDef="let element"> {{ element.client.prenomClient }} </td>
+							</ng-container>
+
+							<ng-container matColumnDef="nomPraticien">
+								<th mat-header-cell *matHeaderCellDef>Praticien</th>
+								<td mat-cell *matCellDef="let element"> {{ element.praticien.nomPraticien }} </td>
+							</ng-container>
+							<ng-container matColumnDef="idRdv">
+								<th mat-header-cell *matHeaderCellDef>Détails</th>
+								<td mat-cell *matCellDef="let element" class="button-Details">
+									<button mat-icon-button color="primary" [routerLink]="['/rdvdetails', element.idRdv]">
+										<i class="material-icons">remove_red_eye</i>
+									</button>
+								</td>
+							</ng-container>
+						</mat-table>
+					</ng-template>
+				</ng-template>
+			</mat-card-content>
+		</mat-card>
+	</div>
+	<div class="boutonRemonter" mat-elevation-z20>
+	</div>
+	<div class="right-container">
+		<div>
+			<mat-card class="mat-card-cherche-rdv">
+				<mat-card-content class="mat-card-cherche-rdv-content-titre">
+					Rechercher un Rdv
+				</mat-card-content>
+			</mat-card>
+		</div>
+		<div>
+			<mat-card class="mat-card-cherche-rdv">
+				<mat-card-header class="mat-card-cherche-rdv-header-choisirPraticien">
+					Sélectionner un praticien :
+				</mat-card-header>
+				<mat-card-content>
+					<mat-select class="mat-card-cherche-rdv-mat-select" placeholder="Sélectionner un praticien" [(ngModel)]="praticienSelected"
+					 name="praticien">
+						<mat-option *ngFor="let praticien of praticienList" [value]="praticien">
+							{{ praticien.prenomPraticien }} {{ praticien.nomPraticien }}
+						</mat-option>
+					</mat-select>
+				</mat-card-content>
+			</mat-card>
+		</div>
+		<div>
+			<mat-card class="mat-card-cherche-rdv">
+				<mat-card-header class="mat-card-cherche-rdv-dateSelection">
+					Choisissez une ou deux dates :
+				</mat-card-header>
+				<mat-card-content>
+					<mat-tab-group #stepperTab [(selectedIndex)]="activeTabIndex">
+						<mat-tab id="sd" label="Simple date" active="selectedSimpleDateTab" [disabled]="!praticienSelected">
+							<ng-template matStepLabel></ng-template>
+							<div class="tab-container">
+								<div class="tab-simpleDate">
+									<mat-form-field>
+										<input matInput [matDatepicker]="picker" [(ngModel)]="dateSelectionneeA" placeholder="Selectionner une date"
+										 disabled>
+										<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+										<mat-datepicker #picker disabled="false" touchUi="true" #picker [startAt]="dateSelectionneeA" [disabled]="!praticienSelected">
+										</mat-datepicker>
+									</mat-form-field>
+								</div>
+								<div class="tab-Btn">
+									<button [disabled]="!praticienSelected" color="primary" class="simpleDate-search-btn" mat-mini-fab (click)="getRdvListParDateParIdPraticien(dateSelectionneeA, praticienSelected.idPraticien)">
+										<mat-icon>search</mat-icon>
+									</button>
+								</div>
+							</div>
+
+						</mat-tab>
+						<mat-tab id="rod" label="Plage de date" active="selectedRangeOfDateTab" [disabled]="!praticienSelected">
+							<div class="tab-rangeOFDate">
+								<mat-form-field>
+									<input class="tab-rangeOfDate-DateA" matInput [matDatepicker]="pickerA" [(ngModel)]="dateSelectionneeA"
+									 placeholder="Date Début" disabled>
+									<mat-datepicker-toggle matSuffix [for]="pickerA"></mat-datepicker-toggle>
+									<mat-datepicker #pickerA disabled="false" touchUi="true" #pickerA [startAt]="dateSelectionneeA">
+									</mat-datepicker>
+								</mat-form-field>
+								<mat-form-field class="tab-rangeOfDate-DateB">
+									<input class="tab-rangeOfDate-DateA" [min]="dateSelectionneeA" matInput [matDatepicker]="pickerB" [(ngModel)]="dateSelectionneeB"
+									 placeholder="Date Fin" disabled>
+									<mat-datepicker-toggle matSuffix [for]="pickerB"></mat-datepicker-toggle>
+									<mat-datepicker #pickerB disabled="false" touchUi="true" [startAt]="dateSelectionneeA" #pickerB [startAt]="dateSelectionneeB">
+									</mat-datepicker>
+								</mat-form-field>
+								<button class="tab-rangeOfDate-btn" color="primary" mat-mini-fab [disabled]="!dateSelectionneeB" (click)="getRdvListParPlageDeDateParIdPraticien(dateSelectionneeA, dateSelectionneeB, praticienSelected.idPraticien)">
+									<mat-icon>search</mat-icon>
+								</button>
+							</div>
+						</mat-tab>
+					</mat-tab-group>
+
+				</mat-card-content>
+			</mat-card>
+		</div>
+		<mat-tab-group></mat-tab-group>
+	</div>

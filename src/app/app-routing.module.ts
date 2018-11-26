@@ -10,8 +10,8 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 // Rdv
 import { RdvComponent } from './rdv/rdv.component';
 import { RdvDetailsComponent } from './rdvdetails/rdvdetails.component';
-import { RdvListComponent } from './rdv-list/rdv-list.component';
 import { RdvAddComponent } from './rdv-add/rdv-add.component';
+import { RdvSearchComponent } from './rdv-search/rdv-search.component';
 
 // Client
 import { ClientComponent } from './client/client.component';
@@ -52,9 +52,9 @@ const routes: Routes = [
   { path: 'client', component: ClientComponent, canActivate: [AuthGuardService] },
   { path: 'prestation', component: PrestationComponent, canActivate: [AuthGuardService] },
   { path: 'utilisateur', component: UtilisateurComponent, canActivate: [AuthGuardService] },
-  { path: 'rdvlist', component: RdvListComponent, canActivate: [AuthGuardService] },
   { path: 'rdvdetails/:idRdv', component: RdvDetailsComponent, canActivate: [AuthGuardService] },
   { path: 'rdvadd', component: RdvAddComponent, canActivate: [AuthGuardService] },
+  { path: 'rdvsearch', component: RdvSearchComponent, canActivate: [AuthGuardService] },
   { path: 'confirmusermodal', component: ConfimrUserFromTokenModalComponent, canActivate: [AuthGuardService] },
   { path: 'suivi-activite', component: SuiviActiviteComponent, canActivate: [AuthGuardService] },
   { path: '', redirectTo: '/WelcomeComponent', pathMatch: 'full' },

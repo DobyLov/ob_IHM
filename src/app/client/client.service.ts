@@ -1,9 +1,10 @@
-import { Injectable } from "@angular/core";
-import { Client } from "./client";
+import { Injectable } from "../../../node_modules/@angular/core";
+import { NGXLogger } from "../../../node_modules/ngx-logger";
+import { Observable } from "../../../node_modules/rxjs";
 import { appConfig } from "../constant/apiOpusBeauteUrl";
-import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
-import { Observable } from "rxjs";
-import { NGXLogger } from 'ngx-logger';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Client } from "./client";
 
 @Injectable(
     { providedIn: 'root' }
@@ -46,6 +47,20 @@ export class ClientService {
     }
 
     // recupereer la liste des clients
+    /**
+     * Recupere la liste complete de client
+     */
+    public getClientList(): Observable<Client[]> {
+
+        this.logger.info("CleintService Log : Recupere la liste totale des Clients");
+
+        return this.httpCli
+          .get<Client[]>(this.url + '/list')
+          .pipe(map  (res  => res));
+  
+    }
+    
+
     // liste des clients par Genre
 
 

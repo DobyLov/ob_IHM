@@ -8,6 +8,14 @@
     // height:100%;
   }
 
+  // ::ng-deep .accordionMenuSideBar .mat-expansion-panel-body {
+  //   padding: 0 40px;
+  // }
+
+  ::ng-deep .mat-list, .mat-nav-list, .mat-selection-list {
+      padding-top: 8px;
+      display:inherit;
+  }
 
   @media screen 
   // and ( min-width: 1200px )
@@ -53,10 +61,22 @@
     }
   
     // Lorsque l utilisateur est connecte
+    .navlist-userConn {
+      display: flex;
+      flex-direction: row;    
+      padding-left: 12px;
+      max-width: 132px;
+      height: 34px;
+      margin-top: 7px;
+      
+    }
     .userConn {
-      font-family: 'Great vibes', cursive;
-      font-size: 25px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
       color: black;
+      font-weight: bold;
+      margin-top: 5px;
+      margin-left: 5px;
       
     }
   
@@ -96,6 +116,7 @@
       font-size: 20px;
     }
 
+  
 
 
 

@@ -17,6 +17,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Forms
 import { MatFormFieldModule } from '@angular/material/form-field';
 
+// AutoComplete
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
 // Routing
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -35,26 +38,35 @@ import { HomeComponent } from './home/home.component';
 
 // Rdv
 import { RdvComponent } from './rdv/rdv.component';
-import { RdvDetailsComponent } from './rdvdetails/rdvdetails.component'
-import { RdvListComponent } from './rdv-list/rdv-list.component';
+import { RdvDetailsComponent } from './rdvdetails/rdvdetails.component';
 import { RdvAddComponent } from './rdv-add/rdv-add.component';
+import { RdvSearchComponent } from './rdv-search/rdv-search.component';
+import { RdvService } from './rdv/rdv.service';
 
 // Client
 import { ClientComponent } from './client/client.component';
-import { ClientService } from './client/client.service';
 import { PrestationComponent } from './prestation/prestation.component';
+import { ClientService } from './client/client.service';
 
 // Utilisateur
 import { Utilisateur } from './utilisateur/utilisateur';
-import { UtilisateurService } from './utilisateur/utilisateur.service';
 import { UtilisateurComponent } from './utilisateur/utilisateur.component';
+import { UtilisateurService } from './utilisateur/utilisateur.service';
+
+// Praticien
+import { PraticienService } from './praticien/praticien.service';
+
+// Prestation
+import { PrestationService } from './prestation/prestation.service';
 
 // divers
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { SupportComponent } from './support/support.component';
 import { InformationsComponent } from './informations/informations.component';
+import { SuiviActiviteComponent } from './suivi-activite/suivi-activite.component';
+import { ErrorHandlerService } from './service/errorHandler.service';
 
-// Authentification
+// Autentification
 import { Credentials } from './login/credentials';
 import { AuthService } from './login/auth.service';
 import { AuthGuardService } from './login/authGuard.service';
@@ -64,6 +76,13 @@ import { LoginModalComponent } from './login/login.component';
 import { ForgottenPwdComponent } from './login/forgotten-pwd/forgotten-pwd.component';
 import { ForgottenPwdModalComponent } from './login/forgotten-pwd/forgotten-pwd.component';
 import { ConfimrUserFromTokenModalComponent } from './header/header.component';
+
+// Services 
+// Genre
+import { GenreService } from './genre/genre.service';
+
+// LieuRdv
+import { LieuRdvService } from './lieuRdv/lieurdv.service';
 
 // Rgpd
 import { RgpdComponent } from './rgpd/rgpd.component';
@@ -76,7 +95,7 @@ import { AuthGuardRgpdService } from './rgpd/authGuardRgpd.service';
 // FontAwsome angular
 import { Angular2FontawesomeModule } from 'angular2-fontawesome'
 
-// Authentification
+// Autentification
 import { AuthRequestOptions } from './login/authRequestOptions';
 import { AuthErrorHandlerService } from './login/authErrorHandler.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -89,6 +108,9 @@ import { BottomSheetComponent } from './service/bottomsheet.service';
 
 // Verification si serveur est en ligne
 import { ReachServerService } from './service/reachServer.service';
+
+// Date
+import { DateService } from './service/dateservice.service';
 
 // Import Locale_Fr
 import { registerLocaleData } from '@angular/common';
@@ -106,12 +128,16 @@ import { TimeMinuteTwoDigitsPipe } from './pipe/timeMinuteTwoDigits.pipe';
 import { TimeHourTwoDigitsPipe } from './pipe/timeHourTwoDigits.pipe';
 import { FirstCharUpperPipe } from './pipe/firstCharUpperPipe.pipe';
 import { IfIsNullSetToNonRenseignePipe } from './pipe/ifIsNullSetToNonRenseigne.pipe';
+import { DateAndTime24Pipe } from './pipe/dateAndTime24.pipe';
 import { Time24Pipe } from './pipe/time24.pipe';
 
 // Perfect ScrollBar
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+
+// TimePicker
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 //logger
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
@@ -149,10 +175,10 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule } from '@angular/material';
-import { SuiviActiviteComponent } from './suivi-activite/suivi-activite.component';
-import { DateService } from './service/dateservice.service';
-import { ErrorHandlerService } from './service/errorHandler.service';
-import { DateAndTime24Pipe } from './pipe/dateAndTime24.pipe';
+
+
+
+
 
 
 @NgModule({
@@ -177,7 +203,7 @@ import { DateAndTime24Pipe } from './pipe/dateAndTime24.pipe';
     RdvAddComponent,
     RdvComponent,
     RdvDetailsComponent,
-    RdvListComponent,
+    RdvSearchComponent,
     RgpdComponent,
     RgpdPageNotFoundComponent, 
     RgpdTokenExpiredComponent,
@@ -203,6 +229,7 @@ import { DateAndTime24Pipe } from './pipe/dateAndTime24.pipe';
     FlexLayoutModule,
     LayoutModule,
     LoggerModule.forRoot({level: NgxLoggerLevel.INFO}), // TRACE|DEBUG|INFO|LOG|WARN|ERROR|OFF
+    MatAutocompleteModule,
     MatBottomSheetModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -227,6 +254,7 @@ import { DateAndTime24Pipe } from './pipe/dateAndTime24.pipe';
     MatTooltipModule,
     MatTableModule,
     MatTabsModule,  
+    NgxMaterialTimepickerModule.forRoot(),
     PerfectScrollbarModule,
     ReactiveFormsModule,
     HttpClientModule   
@@ -234,14 +262,20 @@ import { DateAndTime24Pipe } from './pipe/dateAndTime24.pipe';
   ],
   entryComponents: [BottomSheetComponent],
   providers: [{ provide: LOCALE_ID, useValue: 'fr' },
-              {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-              {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+              { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+              { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
               { provide: HTTP_INTERCEPTORS, useClass: AuthRequestOptions, multi : true },
               { provide: AuthErrorHandlerService, useClass: AuthErrorHandlerService },
               { provide: ErrorHandlerService, useClass: ErrorHandlerService },
               { provide: DateService, useClass: DateService },
               { provide: ResponsiveAppMediaService, useClass: ResponsiveAppMediaService },
               { provide: UtilisateurService, useClass: UtilisateurService },
+              { provide: GenreService, useClass: GenreService },
+              { provide: PraticienService, useClass: PraticienService },
+              { provide: ClientService, useClass: ClientService },
+              { provide: RdvService, useClass: RdvService },
+              { provide: PrestationService, useClass: PrestationService },
+              { provide: LieuRdvService, useClass: LieuRdvService },
               { provide: SideBarService, useClass: SideBarService },
               { provide: AuthService, useClass: AuthService },
               { provide: AuthRgpdService, useClass: AuthRgpdService },
@@ -252,7 +286,6 @@ import { DateAndTime24Pipe } from './pipe/dateAndTime24.pipe';
               { provide: ReachServerService, useClass: ReachServerService },
               { provide: Credentials, useClass: Credentials },
               { provide: Utilisateur, useClass: Utilisateur },
-              { provide: ClientService, useClass: ClientService },
               { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG }
               ],
 

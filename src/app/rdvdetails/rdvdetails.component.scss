@@ -1,11 +1,367 @@
-.container {
+// conf generique
+
+.body-containerR {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    min-width: 300px;
+}
+
+.body-containerC {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    padding-top: 2px; 
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 50px;
+    width: 600px;
+}
+
+.items-containerR {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+.title {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-color: #b3b3b3fc;
+}
+
+.title-content {
+    font-size: 24px;   
+    font-weight: Bolder;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+// calendrier
+.calendar-section {
+    flex: 1 1;
+    min-width: 200px;
+    // max-width: 300px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #ddddddfc;
+    margin-bottom: 5px;
+}
+
+.calendar-header {
+    font-size: 20px;
+    text-align: right;    
+    font-weight: Bolder;
+}
+
+.calendar-content {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.input-calendar {
+    font-size: 16px;
+    width: 200px;
+}
+
+// Clock
+.time-section {
+    flex: 1 1;
+    min-width: 200px;
+    // max-width: 300px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #ddddddfc;
+    margin-bottom: 5px;
+}
+
+.time-header {
+    font-size: 20px;
+    text-align: right;    
+    font-weight: Bolder;
+}
+
+.time-content {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.timePicker-containerR {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+}
+
+.intitule-timePicker {
+    font-size: 16px;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.timePicker-containerC {
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly; 
+}
+
+.input-timePicker-container {
+    font-size: 14px;
+    display: flex;
+    flex-flow: row nowrap;
     justify-content: center;
     text-align: center;
 }
 
+.timePicker {
+    font-size: 16px;
+}
 
-.container > span {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+.icon-timePicker {
+    font-size: 14px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+}
+
+
+
+// Activite
+.activite-section {
+    flex: 1 1;
+    min-width: 200px;
+    // max-width: 300px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #ddddddfc;
+    margin-bottom: 5px;
+}
+
+.activite-header {
+    font-size: 20px;
+    text-align: right;    
+    font-weight: Bolder;
+}
+
+.activite-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+
+// Forfait
+.forfait-section {
+    flex: 1 1;
+    min-width: 200px;
+    // max-width: 300px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #ddddddfc;
+    margin-bottom: 5px;
+}
+
+.forfait-header {
+    font-size: 20px;
+    text-align: right;    
+    font-weight: Bolder;
+}
+
+.forfait-content {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.forfait-content-slider {
+    text-align: right;
+}
+
+// Clientelle
+.clientele-section {
+    flex: 1 1;
+    min-width: 200px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #ddddddfc;
+    margin-bottom: 5px;
+}
+
+.clientele-header {
+    font-size: 20px;
+    text-align: right;    
+    font-weight: Bolder;
+}
+
+.clientele-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.clientele-content-genre {
+    font-size: 18px;
+    text-align: right;  
+     
+}
+
+.clientele-section-selectclient {
+    font-size: 18px;
+    text-align: right;   
+}
+
+// Prestation
+.prestation-section {
+    flex: 1 1;
+    min-width: 200px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #ddddddfc;
+    margin-bottom: 5px;
+}
+
+.prestation-header {
+    font-size: 20px;
+    text-align: right;    
+    font-weight: Bolder;
+}
+
+.prestation-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.prestation-content-activite {
+    font-size: 18px;
+    text-align: right;   
+}
+
+.prestation-content-selectionPrestation {
+    font-size: 18px;
+    text-align: right;   
+}
+
+// Praticien
+.praticien-section {
+    flex: 1 1;
+    min-width: 200px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #ddddddfc;
+    margin-bottom: 5px;
+}
+
+.praticien-header {
+    font-size: 20px;
+    text-align: right;    
+    font-weight: Bolder;
+}
+
+.praticien-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.praticien-content-selectionPraticien {
+    font-size: 18px;
+    text-align: right;   
+}
+
+// LieurRdv
+.lieuRdv-section {
+    flex: 1 1;
+    min-width: 200px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #ddddddfc;
+    margin-bottom: 5px;
+}
+
+.lieuRdv-header {
+    font-size: 20px;
+    text-align: right;    
+    font-weight: Bolder;
+}
+
+.lieuRdv-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.lieuRdv-content-selectionLieuRdv {
+    font-size: 18px;
+    text-align: right;   
+}
+
+// RdvAnnulé
+.cancelledRdv-section-activated {
+    flex: 1;
+    background-color: #fbf1e3fc;
+    font-family: 'Montserrat', sans-serif;
+    // display: flex;
+    // flex-direction: row;
+    // justify-content: flex-end;
+}
+
+.cancelledRdv-section-disabled {
+    flex: 1;
+    background-color: #ddddddfc;
+    font-family: 'Montserrat', sans-serif;
+    // display: flex;
+    // flex-direction: row;
+    // justify-content: flex-end;
+}
+
+.cancelledRdv-header {
+    font-size: 20px;
+    text-align: right;    
+    font-weight: Bolder;
+}
+
+.cancelledRdv-content {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-end;
+}
+
+.cancelledRdv-slider {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+
+// Action
+.action-section {
+    background-color: #ddddddfc;
+    // margin-bottom: 5px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+::ng-deep .mat-mini-fab {
+    margin-top: -3px;
+    margin-bottom: -4px;
+}
+
+::ng-deep .mat-card-header {
+    text-align: right;
+    justify-content: space-between;
+}
+
+.mat-card-subtitle, .mat-card-content {
+    margin-top: 10px;
+}
+
+.mat-select {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+}
+
+.mat-form-field {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    width: 100%;
+
 }
