@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { appConfig } from '../constant/apiOpusBeauteUrl';
 import { NGXLogger } from 'ngx-logger';
-import { HttpClient, HttpParams, HttpHeaderResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaderResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Rdv } from './rdv';
 import { Observable, throwError } from 'rxjs';
@@ -126,6 +126,29 @@ export class RdvService {
     return this.httpCli
       .get<Rdv[]>(this.url + '/listeparplagedateparpraticien' , { params: myHttpParams })
       .pipe(map  (res  => res));    
+
+  }
+
+  /**
+   * Ajouter un Rdv
+   * @param rdv 
+   */
+  public postRdv(rdv: Rdv) {
+
+    this.logger.info("RdvService Log : Ajouter le  Rdv");
+    this.logger.info("RdvService Log : Rdv a persister : " + JSON.stringify(rdv));
+    let myHeaders = new HttpHeaders().set('Content-Type', 'application/json'); 
+    let option = {headers: myHeaders}
+
+    
+    return this.httpCli
+    //
+      // ------------------------------------------------
+      .post<Rdv>(this.url + '/add', rdv, option)
+      .subscribe()
+      // ------------------------------------------------
+      // .post<Rdv>(this.url + '/add', rdv,  option);
+      // .pipe( map( (res: Rdv)  => res ));      
 
   }
 

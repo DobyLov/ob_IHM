@@ -64,7 +64,12 @@
 
 .input-calendar {
     font-size: 16px;
+    font-weight: bolder;
     width: 200px;
+}
+
+.datePicker-button {
+    font-size: 24px;
 }
 
 // Clock
@@ -125,8 +130,6 @@
     flex-flow: row nowrap;
     justify-content: center;
 }
-
-
 
 // Activite
 .activite-section {
