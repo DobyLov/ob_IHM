@@ -1,40 +1,40 @@
-import { Component, OnInit, ChangeDetectorRef, Input, EventEmitter, Output, OnChanges } from '@angular/core';
-import { Praticien } from '../praticien/praticien';
+import { ChangeDetectorRef, Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NGXLogger } from 'ngx-logger';
+import { RdvService } from '../rdv/rdv.service';
+import { UtilisateurService } from '../utilisateur/utilisateur.service';
+import { Rdv } from '../rdv/rdv';
+import { AuthService } from '../login/auth.service';
+import { Location } from '@angular/common';
+import { HistoryRoutingService } from '../service/historyRouting.service';
 import { CurrentUtilisateur } from '../login/currentUtilisateur';
 import { Subscription, Observable } from 'rxjs';
-import { Rdv } from '../rdv/rdv';
-import { NGXLogger } from 'ngx-logger';
-import { AuthService } from '../login/auth.service';
-import { UtilisateurService } from '../utilisateur/utilisateur.service';
-import { PraticienService } from '../praticien/praticien.service';
-import { DateService } from '../service/dateservice.service';
-import { RdvService } from '../rdv/rdv.service';
-import { HistoryRoutingService } from '../service/historyRouting.service';
-import { Genre } from '../genre/genre';
-import { GenreService } from '../genre/genre.service';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Client } from '../client/client';
 import { Prestation } from '../prestation/prestation';
+import { Genre } from '../genre/genre';
+import { Praticien } from '../praticien/praticien';
 import { LieuRdv } from '../lieuRdv/lieuRdv';
+import { GenreService } from '../genre/genre.service';
 import { ClientService } from '../client/client.service';
 import { PrestationService } from '../prestation/prestation.service';
+import { PraticienService } from '../praticien/praticien.service';
 import { LieuRdvService } from '../lieuRdv/lieurdv.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { DateService } from '../service/dateservice.service';
+import { ErrorHandlerService } from '../service/errorHandler.service';
 import { startWith, map } from 'rxjs/operators';
-import { MatOptionSelectionChange } from '@angular/material';
-import { Utilisateur } from '../utilisateur/utilisateur';
+import { MatSlideToggleChange, MatOptionSelectionChange } from '@angular/material';
 import { ToasterService } from '../service/toaster.service';
+import { Utilisateur } from '../utilisateur/utilisateur';
+
 import * as moment from 'moment';
 
-
-moment.locale('fr');
-
 @Component({
-  selector: 'app-rdvadd',
-  templateUrl: './rdv-add.component.html',
-  styleUrls: ['./rdv-add.component.scss'],
-
+  selector: 'app-rdvdetails',
+  templateUrl: './rdvdetails.component.html',
+  styleUrls: ['./rdvdetails.component.scss']
 })
-export class RdvAddComponent implements OnInit, OnChanges {
+export class RdvDetailsComponent implements OnInit {
 
   // RouterHistory
   previousRoute: string;
@@ -63,6 +63,7 @@ export class RdvAddComponent implements OnInit, OnChanges {
   filteredSoins: Observable<Prestation[]>;
   // Rdv
   rdv = new Rdv();
+  rdvAnnuleColor:string = "warn"
   // Genre
   selectedGenre: string = "FEMME";
   genre: Genre = new Genre();
@@ -192,8 +193,8 @@ export class RdvAddComponent implements OnInit, OnChanges {
   }
 
   /**
- * Recupere la liste de lieuRdv
- */
+  * Recupere la liste de lieuRdv
+  */
   private getLieurRdvList() {
     this.logger.info("RdvAddComponent log : Recuperation de la liste des LieuRdv.");
     this._lieuRdvService.getLieuRdvList().subscribe(
@@ -288,9 +289,9 @@ export class RdvAddComponent implements OnInit, OnChanges {
   }
 
   /**
- * Genere la liste de soins en fonction des 
- * options choisies => filtres
- */
+  * Genere la liste de soins en fonction des 
+  * options choisies => filtres
+  */
   private soinListFiltree() {
 
     this.soinList = null;
@@ -481,8 +482,8 @@ export class RdvAddComponent implements OnInit, OnChanges {
   }
 
   /**
- * Attirbue le praticien selectionne
- */
+  * Attirbue le praticien selectionne
+  */
   public praticienSelectionne(praticien: Praticien) {
 
     this.logger.info("RdvAddComponent log : Praticien selectionne Id Priatien: " + praticien.idPraticien);
@@ -683,17 +684,21 @@ export class RdvAddComponent implements OnInit, OnChanges {
             + "\nRdv Praticien" + res.praticien.prenomPraticien
             + "\nRdv lieRdv: " + res.lieuRdv.lieuRdv;
 
-          this.toasterMessage(messageRdvOk,'snackbarInfo',35000);
+          this.toasterMessage(messageRdvOk, 'snackbarInfo', 35000);
           this.logger.info("rgpdService Log : Nouveau rendez-vous persistes");
         },
         err => {
           let messageRdvNOk: string = "Il y a eu un problème,"
             + "\nle rendez-vous saisi n'a pas été enregistré"
             + "\nVérifiez les dates et heures ..."
-          this.toasterMessage(messageRdvNOk,'snackbarWarning', 5000);
+          this.toasterMessage(messageRdvNOk, 'snackbarWarning', 5000);
           this.logger.error("rgpdService Log : Le rendez-vous n'a pas été enregistré");
         })
 
+  }
+
+  public changeStatusOfRdvCancelled($event) {
+    
   }
 
 
@@ -702,5 +707,7 @@ export class RdvAddComponent implements OnInit, OnChanges {
     this._toasterService.showToaster(snackMessage, snackStyle, snackTimer)
   }
 
-}
 
+
+
+}

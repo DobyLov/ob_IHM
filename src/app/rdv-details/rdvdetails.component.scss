@@ -64,7 +64,12 @@
 
 .input-calendar {
     font-size: 16px;
+    font-weight: bolder;
     width: 200px;
+}
+
+.datePicker-button {
+    font-size: 24px;
 }
 
 // Clock
@@ -126,8 +131,6 @@
     justify-content: center;
 }
 
-
-
 // Activite
 .activite-section {
     flex: 1 1;
@@ -150,6 +153,9 @@
     justify-content: flex-end;
 }
 
+.activite-content, .mat-select-value {
+    padding-top: 25px;
+}
 
 // Forfait
 .forfait-section {
@@ -171,7 +177,10 @@
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
+    padding-top: 25px;
 }
+
+
 
 .forfait-content-slider {
     text-align: right;
@@ -196,6 +205,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    width: 100%;
 }
 
 .clientele-content-genre {
@@ -244,6 +254,7 @@
 .praticien-section {
     flex: 1 1;
     min-width: 200px;
+    // max-width: 300px;
     font-family: 'Montserrat', sans-serif;
     background-color: #ddddddfc;
     margin-bottom: 5px;
@@ -270,6 +281,7 @@
 .lieuRdv-section {
     flex: 1 1;
     min-width: 200px;
+    // max-width: 300px;
     font-family: 'Montserrat', sans-serif;
     background-color: #ddddddfc;
     margin-bottom: 5px;
@@ -290,6 +302,50 @@
 .lieuRdv-content-selectionLieuRdv {
     font-size: 18px;
     text-align: right;   
+}
+
+// Action
+.action-section {
+    background-color: #ddddddfc;
+    // margin-bottom: 5px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+::ng-deep .mat-mini-fab {
+    // margin-top: -5px;
+    margin-top: -3px;
+    margin-bottom: -4px;
+}
+
+// ::ng-deep .mat-card-subtitle, .mat-card-content {
+//     font-size: 18px;
+// }
+
+
+::ng-deep .mat-card-header {
+    text-align: right;
+    justify-content: space-between;
+}
+
+.mat-card-subtitle, .mat-card-content {
+    margin-top: 10px;
+}
+
+.mat-select {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    // font-weight: bold;
+}
+
+.mat-form-field {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    width: 100%
+    // font-weight: bold;
+
 }
 
 // RdvAnnulé

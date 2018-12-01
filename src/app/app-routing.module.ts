@@ -9,7 +9,7 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 // Rdv
 import { RdvComponent } from './rdv/rdv.component';
-import { RdvDetailsComponent } from './rdvdetails/rdvdetails.component';
+import { RdvDetailsComponent } from './rdv-details/rdvdetails.component';
 import { RdvAddComponent } from './rdv-add/rdv-add.component';
 import { RdvSearchComponent } from './rdv-search/rdv-search.component';
 
