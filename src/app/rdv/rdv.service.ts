@@ -4,7 +4,8 @@ import { NGXLogger } from 'ngx-logger';
 import { HttpClient, HttpParams, HttpHeaderResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Rdv } from './rdv';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, Subscription } from 'rxjs';
+import { BottomSheetService } from '../service/bottomsheet.service';
 
 
 @Injectable(
@@ -15,7 +16,8 @@ export class RdvService {
   url: string = appConfig.apiOpusBeauteUrl + '/rdv';
 
   constructor( private logger: NGXLogger,
-               private httpCli: HttpClient) { 
+               private httpCli: HttpClient,
+               private _bottomsheetservice: BottomSheetService) { 
 
   }
 
@@ -133,7 +135,7 @@ export class RdvService {
    * Ajouter un Rdv
    * @param rdv 
    */
-  public postRdv(rdv: Rdv) {
+  public postRdv(rdv: Rdv): Observable<Rdv> {
 
     this.logger.info("RdvService Log : Ajouter le  Rdv");
     this.logger.info("RdvService Log : Rdv a persister : " + JSON.stringify(rdv));
@@ -144,12 +146,28 @@ export class RdvService {
     return this.httpCli
     //
       // ------------------------------------------------
-      .post<Rdv>(this.url + '/add', rdv, option)
-      .subscribe()
+      .post<Rdv>(this.url + '/add', rdv, option);
+      // .subscribe(
+      //   res => { res;
+      //     this.openBottomSheet("Rendez-vous enregistrées");
+      //     this.logger.info("rgpdService Log : Nouveau rendez-vous  persistes");
+      //   },
+      //   err => {
+      //     this.openBottomSheet("Il y a eu un problème, le rendez-vous n'a pas été enregistré");
+      //     this.logger.error("rgpdService Log : Le rendez-vous n'a pas été enregistré");
+      //   })
+
+
+      
+
       // ------------------------------------------------
       // .post<Rdv>(this.url + '/add', rdv,  option);
       // .pipe( map( (res: Rdv)  => res ));      
 
+  }
+
+  openBottomSheet(msg: string): void {
+    this._bottomsheetservice.openBottomSheet(msg);
   }
 
 

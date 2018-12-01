@@ -15,4 +15,5 @@ export class Rdv {
     public client: Client;
     public lieuRdv: LieuRdv;
     public utilisateur: Utilisateur;
+    public isCancelled: boolean;
 }

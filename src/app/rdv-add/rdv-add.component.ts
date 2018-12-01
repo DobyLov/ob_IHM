@@ -23,6 +23,7 @@ import { startWith, map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { MatOptionSelectionChange } from '@angular/material';
 import { Utilisateur } from '../utilisateur/utilisateur';
+import { ToasterService } from '../service/toaster.service';
 
 
 moment.locale('fr');
@@ -67,7 +68,7 @@ export class RdvAddComponent implements OnInit, OnChanges {
   genre: Genre = new Genre();
   genreList: Genre[];
   //client
-  client =new Client();
+  client = new Client();
   clientList: Client[];
   selectedClientFromList: Client;
   // Prestation
@@ -114,7 +115,8 @@ export class RdvAddComponent implements OnInit, OnChanges {
     private _dateService: DateService,
     private _authService: AuthService,
     private _utilisateurService: UtilisateurService,
-    private _historyRouting: HistoryRoutingService) {
+    private _historyRouting: HistoryRoutingService,
+    private _toasterService: ToasterService) {
 
     this.getClientList();
     this.getPrestationList();
@@ -642,19 +644,19 @@ export class RdvAddComponent implements OnInit, OnChanges {
    * Enregistrer un Rdv
    */
   public saveRdv() {
-    
+
 
 
     this.logger.info("RdvAddComponent log : Tentative de sauvegarde du Rdv:)")
- 
-    this.rdv.dateDeSaisie = moment().millisecond(); 
+
+    this.rdv.dateDeSaisie = moment().millisecond();
     this.rdv.dateHeureDebut = moment(this.dateSel)
-            .hours(this._dateService.extracHoursFromGivenTime(this.tpA_selected_value))
-            .minutes(this._dateService.extracMinutesFromGivenTime(this.tpA_selected_value)).millisecond();
+      .hours(this._dateService.extracHoursFromGivenTime(this.tpA_selected_value))
+      .minutes(this._dateService.extracMinutesFromGivenTime(this.tpA_selected_value)).millisecond();
     this.rdv.dateHeureFin = moment(this.dateSel)
-            .hours(this._dateService.extracHoursFromGivenTime(this.tpA_selected_value))
-            .minutes(this._dateService.extracMinutesFromGivenTime(this.tpB_selected_value)).millisecond();
-    this.client.idClient = this.selectedClientFromList.idClient.valueOf(); 
+      .hours(this._dateService.extracHoursFromGivenTime(this.tpA_selected_value))
+      .minutes(this._dateService.extracMinutesFromGivenTime(this.tpB_selected_value)).millisecond();
+    this.client.idClient = this.selectedClientFromList.idClient.valueOf();
     this.logger.info("RdvAddComponent log : Rdv idPrestation " + this.selectedPrestationFromList.idPrestation);
     this.prestation.idPrestation = this.selectedPrestationFromList.idPrestation.valueOf();
     this.praticien.idPraticien = this.selectedPraticienFromlist.idPraticien.valueOf();
@@ -664,14 +666,41 @@ export class RdvAddComponent implements OnInit, OnChanges {
     this.rdv.client = this.client;
     this.rdv.prestation = this.prestation;
     this.rdv.praticien = this.praticien;
-    this.rdv.lieuRdv = this.lieurRdv; 
+    this.rdv.lieuRdv = this.lieurRdv;
     this.rdv.utilisateur = this.utilisateur;
 
 
-    this._rdvService.postRdv(this.rdv);
+    this._rdvService.postRdv(this.rdv)
+      .subscribe(
+        res => {
+          res;
+          let messageRdvOk: string = "Votre Rendez-vous est enregistré :"
+            + "\nRdv Id: " + res.idRdv
+            + "\nRdv Date début: " + new Date(res.dateHeureDebut)
+            + "\nRdv Date Fin: " + new Date(res.dateHeureFin)
+            + "\nRdv Client: " + res.client.prenomClient + " " + res.client.nomClient
+            + "\nRdv Soin: " + res.prestation.activite + " " + res.prestation.soin
+            + "\nRdv Praticien" + res.praticien.prenomPraticien
+            + "\nRdv lieRdv: " + res.lieuRdv.lieuRdv;
+
+          this.toasterMessage(messageRdvOk,'snackbarInfo',35000);
+          this.logger.info("rgpdService Log : Nouveau rendez-vous persistes");
+        },
+        err => {
+          let messageRdvNOk: string = "Il y a eu un problème,"
+            + "\nle rendez-vous saisi n'a pas été enregistré"
+            + "\nVérifiez les dates et heures ..."
+          this.toasterMessage(messageRdvNOk,'snackbarWarning', 5000);
+          this.logger.error("rgpdService Log : Le rendez-vous n'a pas été enregistré");
+        })
+
   }
 
 
+
+  private toasterMessage(snackMessage: string, snackStyle: string, snackTimer: number): void {
+    this._toasterService.showToaster(snackMessage, snackStyle, snackTimer)
+  }
 
 }
 

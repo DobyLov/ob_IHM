@@ -13,164 +13,421 @@
     margin-bottom: 5px;
 }
 
-
-
-// ***********************
-// ***********************
-// LEFT
-// ***********************
-// ***********************
-
-.left-container {
-    display: flex;
-    flex-direction: column;
-    padding-left: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-right: 2.5px;
-    min-width: 318px;
-    flex:1;
-}
-
-
-// ***********************
-// Liste RDV
-// ***********************
-
-.item-titre {
-    display: flex;
-    flex-direction: row;
-    justify-content: baseline;
-    align-items: center;
-    // height: 40px;
-    font-size: 22px;
-    text-align: left;    
-    font-weight: Bolder;
-    color: black;
-    font-family: 'Montserrat', sans-serif;
-    // background-color: rgb(170, 169, 169);
-}
-
-.pas-de-date {
-    padding-left: 10px;
-}
-
-
-.mat-card .mat-card-titre-liste-rdv {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    font-size: 22px;
-    font-weight: bolder;
-}
-
-
-.mat-card-content-info-singleRdvOrRangeRdv {
-    font-size: 18px;
-    font-weight: bolder;
-}
-
-.mat-card .mat-card-content-info-noRdv {
-    font-style: italic;
-    font-size: 14px;
-    font-weight: 300;
-}
-
-
-// TABLE / titre des colonnes
-.mat-header-cell {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    color: black;
-    font-weight: 600;
-    text-align: center;
-}
-
-// Contenu des cellules
-.mat-cell {   
-    font-size: 14px;
-    font-family: 'Montserrat', sans-serif;
-    text-align: justify;
-}
-
-.mat-column-dateHeureDebut {
-    font-weight: 600;
-    text-align: center;
-}
-
-.mat-column-separation {
-    display: none;
-    padding-left: 5px;
-    text-align: center;
-}
-
-.mat-column-dateHeureFin {
-    display: none;
-    padding-left: 5px;
-    font-weight: 600;
-    text-align: center;
-}
-
-.mat-column-lieuRdv {
-    padding-left: 5px;
-    text-align: center;
-}
-
-.mat-column-activite {
-    display: none;
-    text-align: center;
-}
-
-.mat-column-prestation {
-    display: none;
-    padding-left: 5px;
-    text-align: center;
-}
-
-.mat-column-nomClient {
-    display: none;      
-    text-align: center;
-}
-
-.mat-column-prenomClient {
-    display: none;
-    text-align: center;
-}
-
-.mat-column-nomPraticien {
-    // display: none;
-    text-align: center;
-}
-
-th.mat-header-cell:first-of-type {
-    margin-top: 10px;
-    text-align: center;
-    padding-left: 5px;
-}
-td.mat-cell:first-of-type {
-    width: 25px;
-    text-align: center;
-    padding-left: 5px;
-}
-
-th.mat-header-cell:last-of-type {
-    padding-left: 5px;       
-}
-
-.button-Details {
-    width: 20px;
-    text-align: center;
-}
-
-.boutonRemonter {
+//  Tap form field
+::ng-deep .mat-form-field-infix:nth-of-type(1) {
     display: block;
-    text-align: center;
-    margin-top: 20px;
+    position: relative;
+    flex: auto;
+    width: 50%;
 }
 
-// Fin de Table
+::ng-deep .mat-form-field-infix:nth-of-type(2) {
+    display: block;
+    position: relative;
+    flex: auto;
+    width: 50%;
+}
+
+::ng-deep .mat-form-field-infix:nth-of-type(3) {
+    display: block;
+    position: relative;
+    flex: auto;
+    height: 100%;
+    width: 20px;
+}
+
+// calendrier
+::ng-deep .mat-calendar {
+    font-weight: bolder;
+    font-family: 'Montserrat', sans-serif;
+}
+
+::ng-deep .mat-calendar-period-button {
+    font-size: 24px;
+    font-weight: bolder;
+    font-family: 'Montserrat', sans-serif;
+}
+
+::ng-deep .mat-calendar-body-label {
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+::ng-deep .mat-calendar-table-header th {
+    font-size: 15px;
+    font-weight: bolder;
+}
+
+::ng-deep .mat-tab-labels{
+    display: flex;
+    justify-content: space-around;
+}
+
+::ng-deep .mat-tab-label:nth-of-type(1){
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+::ng-deep .mat-tab-label:nth-of-type(2){
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+::ng-deep .mat-ink-bar {
+    height: 3px;
+}
+
+::ng-deep .mat-form-field-wrapper {
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+::ng-deep .mat-select-value {
+    color: green;
+}
+
+// **************************************************************************
+// **************************************************************************
+// **************************************************************************
+// **************************************************************************
+// **************************************************************************
+
+// @media screen
+// and (max-width: 900px)
+// {
+    // ***********************
+    // ***********************
+    // LEFT
+    // ***********************
+    // ***********************
+
+    .left-container {
+        flex:1;
+        display: flex;
+        flex-direction: column;
+        padding-left: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-right: 2.5px;
+        min-width: 318px;
+   
+    }
 
 
+    // ***********************
+    // Liste RDV
+    // ***********************
+
+    .item-titre {
+        display: flex;
+        flex-direction: row;
+        justify-content: baseline;
+        align-items: center;
+        // height: 40px;
+        font-size: 22px;
+        text-align: left;    
+        font-weight: Bolder;
+        color: black;
+        font-family: 'Montserrat', sans-serif;
+        // background-color: rgb(170, 169, 169);
+    }
+
+    .pas-de-date {
+        padding-left: 10px;
+    }
+
+
+    .mat-card .mat-card-titre-liste-rdv {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        font-size: 22px;
+        font-weight: bolder;
+    }
+
+    .matCardListRdv {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+    }
+
+    .mat-card-content-info-singleRdvOrRangeRdv {
+        font-size: 18px;
+        font-weight: bolder;
+    }
+
+    .mat-card .mat-card-content-info-noRdv {
+        font-style: italic;
+        font-size: 14px;
+        font-weight: 300;
+    }
+
+
+    // TABLE / titre des colonnes
+    .mat-header-cell {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        color: black;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    // Contenu des cellules
+    .mat-cell {   
+        font-size: 14px;
+        font-family: 'Montserrat', sans-serif;
+        text-align: justify;
+    }
+
+    .mat-column-dateHeureDebut {
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .mat-column-separation {
+        display: none;
+        padding-left: 5px;
+        text-align: center;
+    }
+
+    .mat-column-dateHeureFin {
+        display: none;
+        padding-left: 5px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .mat-column-lieuRdv {
+        padding-left: 5px;
+        text-align: center;
+    }
+
+    .mat-column-activite {
+        display: none;
+        padding-left: 5px;
+        text-align: center;
+    }
+
+    .mat-column-prestation {
+        display: none;
+        padding-left: 5px;
+        padding-left: 5px;
+        text-align: center;
+    }
+
+    .mat-column-nomClient {
+        display: none;    
+        padding-left: 5px;  
+        text-align: center;
+    }
+
+    .mat-column-prenomClient {
+        display: none;
+        padding-left: 5px;
+        text-align: center;
+    }
+
+    .mat-column-nomPraticien {
+        // display: none;
+        padding-left: 5px;
+        text-align: center;
+    }
+
+    th.mat-header-cell:first-of-type {
+        margin-top: 10px;
+        text-align: center;
+        padding-left: 5px;
+    }
+    td.mat-cell:first-of-type {
+        width: 25px;
+        text-align: center;
+        padding-left: 5px;
+    }
+
+    th.mat-header-cell:last-of-type {
+        padding-left: 5px;       
+    }
+
+    .button-Details {
+        width: 20px;
+        text-align: center;
+    }
+
+    .boutonRemonter {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+    }
+    // Fin de Table
+// }
+
+// @media screen
+// and (min-width: 900px)
+// {
+//     // ***********************
+//     // ***********************
+//     // LEFT
+//     // ***********************
+//     // ***********************
+
+//   .left-container {
+//         display: flex;
+//         flex-direction: column;
+//         padding-left: 5px;
+//         padding-top: 5px;
+//         padding-bottom: 5px;
+//         padding-right: 2.5px;
+//         min-width: 318px;
+//         flex:1;
+//     }
+
+
+//     // ***********************
+//     // Liste RDV
+//     // ***********************
+
+//     .item-titre {
+//         display: flex;
+//         flex-direction: row;
+//         justify-content: baseline;
+//         align-items: center;
+//         // height: 40px;
+//         font-size: 22px;
+//         text-align: left;    
+//         font-weight: Bolder;
+//         color: black;
+//         font-family: 'Montserrat', sans-serif;
+//         // background-color: rgb(170, 169, 169);
+//     }
+
+//     .pas-de-date {
+//         padding-left: 10px;
+//     }
+
+
+//     .mat-card .mat-card-titre-liste-rdv {
+//         display: flex;
+//         flex-direction: row;
+//         justify-content: center;
+//         font-size: 22px;
+//         font-weight: bolder;
+//     }
+
+
+//     .mat-card-content-info-singleRdvOrRangeRdv {
+//         font-size: 18px;
+//         font-weight: bolder;
+//     }
+
+//     .mat-card .mat-card-content-info-noRdv {
+//         font-style: italic;
+//         font-size: 14px;
+//         font-weight: 300;
+//     }
+
+
+//     // TABLE / titre des colonnes
+//     .mat-header-cell {
+//         font-family: 'Montserrat', sans-serif;
+//         font-size: 14px;
+//         color: black;
+//         font-weight: 600;
+//         text-align: center;
+//     }
+
+//     // Contenu des cellules
+//     .mat-cell {   
+//         font-size: 14px;
+//         font-family: 'Montserrat', sans-serif;
+//         text-align: justify;
+//     }
+
+//     .mat-column-dateHeureDebut {
+//         font-weight: 600;
+//         text-align: center;
+//     }
+
+//     .mat-column-separation {
+//         // display: none;
+//         padding-left: 5px;
+//         text-align: center;
+//     }
+
+//     .mat-column-dateHeureFin {
+//         // display: none;
+//         padding-left: 5px;
+//         font-weight: 600;
+//         text-align: center;
+//     }
+
+//     .mat-column-lieuRdv {
+//         padding-left: 5px;
+//         text-align: center;
+//     }
+
+//     .mat-column-activite {
+//         // display: none;
+//         padding-left: 5px;
+//         text-align: center;
+//     }
+
+//     .mat-column-prestation {
+//         // display: none;
+//         padding-left: 5px;
+//         text-align: center;
+//     }
+
+//     .mat-column-nomClient {
+//         // display: none; 
+//         padding-left: 5px;    
+//         text-align: center;
+//     }
+
+//     .mat-column-prenomClient {
+//         // display: none;
+//         padding-left: 5px;
+//         text-align: center;
+//     }
+
+//     .mat-column-nomPraticien {
+//         // display: none;
+//         padding-left: 5px;
+//         text-align: center;
+//     }
+
+//     th.mat-header-cell:first-of-type {
+//         margin-top: 10px;
+//         text-align: center;
+//         padding-left: 5px;
+//     }
+//     td.mat-cell:first-of-type {
+//         width: 25px;
+//         text-align: center;
+//         padding-left: 5px;
+//     }
+
+//     th.mat-header-cell:last-of-type {
+//         padding-left: 5px;       
+//     }
+
+//     .button-Details {
+//         width: 20px;
+//         text-align: center;
+//     }
+
+//     .boutonRemonter {
+//         display: block;
+//         text-align: center;
+//         margin-top: 20px;
+//     }
+//     // Fin de Table
+// }
+
+// **************************************************************************
+// **************************************************************************
+// **************************************************************************
+// **************************************************************************
+// **************************************************************************
 
 // ***********************
 // ***********************
@@ -179,13 +436,15 @@ th.mat-header-cell:last-of-type {
 // ***********************
 
 .right-container {
+    flex:1;
     display: flex;
     flex-direction: column;
+    // max-width: 600px;
     padding-left: 2.5px;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-right: 5px;
-    flex:1;
+
 
 }
 
@@ -235,10 +494,6 @@ th.mat-header-cell:last-of-type {
     font-family: 'Montserrat', sans-serif;
 }
 
-::ng-deep .mat-select-value {
-    color: green;
-}
-
 // Date Selecteurs
 .mat-card-cherche-rdv .mat-card-cherche-rdv-dateSelection {
     display: flex;
@@ -246,31 +501,6 @@ th.mat-header-cell:last-of-type {
     justify-content: flex-end;
     font-weight: 600;
     font-size: 18px;
-}
-
-::ng-deep .mat-tab-labels{
-    display: flex;
-    justify-content: space-around;
-}
-
-::ng-deep .mat-tab-label:nth-of-type(1){
-    font-size: 16px;
-    // font-weight: 500;
-    font-family: 'Montserrat', sans-serif;
-}
-
-::ng-deep .mat-tab-label:nth-of-type(2){
-    font-size: 16px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-::ng-deep .mat-ink-bar {
-    height: 3px;
-}
-
-::ng-deep .mat-form-field-wrapper {
-    margin-top: 5px;
-    font-size: 16px;
 }
 
 .tab-container {
@@ -300,18 +530,7 @@ th.mat-header-cell:last-of-type {
     width: 100%;
 }
 
-// .tab-rangeOfDate-DateA {
-//     max-width: 40%;
-// }
-
-// .tab-rangeOfDate-DateB {
-//     max-width: 40%;
-// }
-
 .tab-rangeOfDate-btn {
-    // display: flex;
-    // justify-content: center;
-    // width: 20%;
     margin: auto;
 }
 
@@ -321,47 +540,13 @@ th.mat-header-cell:last-of-type {
     font-family: 'Montserrat', sans-serif;
 }
 
-//  Tap form field
-::ng-deep .mat-form-field-infix:nth-of-type(1) {
-    display: block;
-    position: relative;
-    flex: auto;
-    width: 50%;
-}
-
-::ng-deep .mat-form-field-infix:nth-of-type(2) {
-    display: block;
-    position: relative;
-    flex: auto;
-    width: 50%;
-}
-
-::ng-deep .mat-form-field-infix:nth-of-type(3) {
-    display: block;
-    position: relative;
-    flex: auto;
-    height: 100%;
-    width: 20px;
-}
-
-// calendrier
-::ng-deep .mat-calendar {
+// Change la couleur de la cellule pour un Rdv annullé
+// afin que cela soit visible
+.isRdvIsCancelled {
+    // color:rgb(255, 102, 0);
     font-weight: bolder;
-    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    background-color: rgb(250, 232, 217);
 }
 
-::ng-deep .mat-calendar-period-button {
-    font-size: 24px;
-    font-weight: bolder;
-    font-family: 'Montserrat', sans-serif;
-}
 
-::ng-deep .mat-calendar-body-label {
-    font-size: 20px;
-    font-weight: bolder;
-}
-
-::ng-deep .mat-calendar-table-header th {
-    font-size: 15px;
-    font-weight: bolder;
-}
