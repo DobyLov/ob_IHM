@@ -73,6 +73,7 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+
 ::ng-deep .mat-ink-bar {
     height: 3px;
 }
@@ -82,9 +83,9 @@
     font-size: 16px;
 }
 
-::ng-deep .mat-select-value {
-    color: green;
-}
+// ::ng-deep .mat-select-value {
+//     color: green;
+// }
 
 // **************************************************************************
 // **************************************************************************
@@ -279,7 +280,6 @@
     padding-bottom: 5px;
     padding-right: 5px;
 
-
 }
 
 .praticienSelection { 
@@ -297,8 +297,19 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+// Praticien / Client Tab Selecteurs
+.mat-card-cherche-rdv 
+    .mat-card-cherche-rdv-pratClieSelection {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    font-weight: 600;
+    font-size: 18px;
+}
+
 // Praticien selecteur
-.mat-card-cherche-rdv .mat-card-cherche-rdv-content-titre  {
+.mat-card-cherche-rdv 
+    .mat-card-cherche-rdv-content-titre  {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -306,7 +317,15 @@
     font-weight: bolder;
 }
 
-.mat-card-cherche-rdv .mat-card-cherche-rdv-header-choisirPraticien {
+.mat-card-cherche-rdv 
+.mat-card-cherche-rdv-mat-select {
+    width: 50%;
+}
+
+
+
+.mat-card-cherche-rdv 
+    .mat-card-cherche-rdv-header-choisirPraticien {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -315,18 +334,35 @@
     font-size: 18px;
 }
 
-.mat-card-cherche-rdv .mat-card-cherche-rdv-content-choisirPraticien {
+.mat-card-cherche-rdv 
+    .mat-card-cherche-rdv-content-choisirPraticien {
     font-size: 18px;
     font-weight: bolder;
 }
 
-.mat-card-cherche-rdv .mat-card-cherche-rdv-mat-select {
-    padding-top: 10px;
+.mat-card-cherche-rdv 
+    .mat-card-cherche-rdv-mat-select {
+    padding-top: 30px;
     font-size: 16px;
-    font-weight: 500;
-    font-style: italic;
+    font-weight: 900;
     font-family: 'Montserrat', sans-serif;
 }
+
+.mat-form-field-appearance-legacy 
+    .mat-form-field-wrapper {
+
+}
+
+// Client Autocomplete
+// .clientele-content {
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: flex-end;
+//     width: 100%;
+// }
+// .clientTab {
+//     font-weight: 500;
+// }
 
 // Date Selecteurs
 .mat-card-cherche-rdv .mat-card-cherche-rdv-dateSelection {

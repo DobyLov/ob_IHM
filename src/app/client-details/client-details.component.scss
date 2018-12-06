@@ -1,0 +1,61 @@
+// conf generique
+
+.body-containerR {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    min-width: 300px;
+}
+
+.body-containerC {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    padding-top: 2px; 
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 50px;
+    width: 600px;
+}
+
+.items-containerR {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+.title {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-color: #b3b3b3fc;
+}
+
+.title-content {
+    font-size: 24px;   
+    font-weight: Bolder;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.calendar-section {
+    flex: 1 1;
+    min-width: 200px;
+    // max-width: 300px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #ddddddfc;
+    margin-bottom: 5px;
+}
+
+.calendar-header {
+    font-size: 20px;
+    text-align: right;    
+    font-weight: Bolder;
+}
+
+.calendar-content {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}

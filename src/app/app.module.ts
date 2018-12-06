@@ -44,19 +44,41 @@ import { RdvSearchComponent } from './rdv-search/rdv-search.component';
 import { RdvService } from './rdv/rdv.service';
 
 // Client
-import { ClientComponent } from './client/client.component';
-import { PrestationComponent } from './prestation/prestation.component';
+import { ClientAddComponent } from './client-add/client-add.component';
+import { ClientSearchComponent } from './client-search/client-search.component';
+import { ClientDetailsComponent } from './client-details/client-details.component';
 import { ClientService } from './client/client.service';
 
 // Utilisateur
+import { UtilisateurAddComponent } from './utilisateur-add/utilisateur-add.component';
+import { UtilisateurDetailsComponent } from './utilisateur-details/utilisateur-details.component';
+import { UtilisateurSearchComponent } from './utilisateur-search/utilisateur-search.component';
+import { UtilisateurService } from './utilisateur/utilisateur.service'; 
 import { Utilisateur } from './utilisateur/utilisateur';
-import { UtilisateurComponent } from './utilisateur/utilisateur.component';
-import { UtilisateurService } from './utilisateur/utilisateur.service';
+
+// Genre
+import { GenreSearchComponent } from './genre-search/genre-search.component';
+import { GenreAddComponent } from './genre-add/genre-add.component';
+import { GenreDetailsComponent } from './genre-details/genre-details.component';
+import { GenreService } from './genre/genre.service';
+
+// LieuRdv
+import { LieurdvAddComponent } from './lieurdv-add/lieurdv-add.component';
+import { LieurdvDetailsComponent } from './lieurdv-details/lieurdv-details.component';
+import { LieurdvSearchComponent } from './lieurdv-search/lieurdv-search.component';
+import { LieuRdvService } from './lieuRdv/lieurdv.service';
 
 // Praticien
+import { PrestationDetailsComponent } from './prestation-details/prestation-details.component';
+import { PrestationAddComponent } from './prestation-add/prestation-add.component';
+import { PrestationSearchComponent } from './prestation-search/prestation-search.component';
 import { PraticienService } from './praticien/praticien.service';
 
 // Prestation
+import { PraticienDetailsComponent } from './praticien-details/praticien-details.component';
+import { PraticienSearchComponent } from './praticien-search/praticien-search.component';
+import { PraticienAddComponent } from './praticien-add/praticien-add.component';
+
 import { PrestationService } from './prestation/prestation.service';
 
 // divers
@@ -76,13 +98,6 @@ import { LoginModalComponent } from './login/login.component';
 import { ForgottenPwdComponent } from './login/forgotten-pwd/forgotten-pwd.component';
 import { ForgottenPwdModalComponent } from './login/forgotten-pwd/forgotten-pwd.component';
 import { ConfimrUserFromTokenModalComponent } from './header/header.component';
-
-// Services 
-// Genre
-import { GenreService } from './genre/genre.service';
-
-// LieuRdv
-import { LieuRdvService } from './lieuRdv/lieurdv.service';
 
 // Rgpd
 import { RgpdComponent } from './rgpd/rgpd.component';
@@ -177,15 +192,10 @@ import {
   MatTooltipModule } from '@angular/material';
 
 
-
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
     BottomSheetComponent,
-    ClientComponent,
     ConfimrUserFromTokenModalComponent,
     DateAndTime24Pipe,
     FirstCharUpperPipe, 
@@ -198,8 +208,7 @@ import {
     InformationsComponent,
     LoginComponent,
     LoginModalComponent,
-    PagenotfoundComponent,   
-    PrestationComponent,
+    PagenotfoundComponent, 
     RdvAddComponent,
     RdvComponent,
     RdvDetailsComponent,
@@ -213,10 +222,27 @@ import {
     Time24Pipe,
     TimeMinuteTwoDigitsPipe,
     TimeHourTwoDigitsPipe,
-    UtilisateurComponent,
     WelcomeComponent,
     SmoothScrollDirective,
-    SuiviActiviteComponent
+    SuiviActiviteComponent,
+    ClientAddComponent,
+    ClientSearchComponent,
+    ClientDetailsComponent,
+    PraticienDetailsComponent,
+    PrestationDetailsComponent,
+    PrestationAddComponent,
+    PrestationSearchComponent,
+    PraticienSearchComponent,
+    PraticienAddComponent,
+    LieurdvAddComponent,
+    LieurdvDetailsComponent,
+    LieurdvSearchComponent,
+    UtilisateurDetailsComponent,
+    UtilisateurAddComponent,
+    UtilisateurSearchComponent,
+    GenreSearchComponent,
+    GenreAddComponent,
+    GenreDetailsComponent
   ],
 
   imports: [    

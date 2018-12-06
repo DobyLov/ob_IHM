@@ -20,10 +20,11 @@ import { PrestationService } from '../prestation/prestation.service';
 import { LieuRdvService } from '../lieuRdv/lieurdv.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
-import { MatOptionSelectionChange } from '@angular/material';
+import { MatOptionSelectionChange, MatDatepickerInputEvent } from '@angular/material';
 import { Utilisateur } from '../utilisateur/utilisateur';
 import { ToasterService } from '../service/toaster.service';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 
 moment.locale('fr');
@@ -90,6 +91,9 @@ export class RdvAddComponent implements OnInit, OnChanges {
   lieuRdvList: LieuRdv[];
   selectedLieuRdvFromList: LieuRdv;
   // Date
+  // Date du jour pour dater la saisie
+  dateSaisie: Date = new Date();
+  // Date Selectionnee
   datePicker_color = "primary"
   dateSel: Date;
   // TIme
@@ -97,6 +101,10 @@ export class RdvAddComponent implements OnInit, OnChanges {
   tpB_selected_value: string;
   timePickerA_initial_value: string = "08:00"
   timePickerB_initial_value: string = "09:00";
+  // dateHeureDebut
+  dateHeureDebut: Date;
+  // dateHeureFin
+  dateHeureFin: Date;
   // Forfait  
   isItAForfait: boolean = false;
   isPrestaIsAForfait: string = "F";
@@ -116,7 +124,8 @@ export class RdvAddComponent implements OnInit, OnChanges {
     private _authService: AuthService,
     private _utilisateurService: UtilisateurService,
     private _historyRouting: HistoryRoutingService,
-    private _toasterService: ToasterService) {
+    private _toasterService: ToasterService,
+    private _router: Router) {
 
     this.getClientList();
     this.getPrestationList();
@@ -349,7 +358,8 @@ export class RdvAddComponent implements OnInit, OnChanges {
    */
   public dateSelectionnee() {
     // la date selectionne est envoye via ngmodel su la ref this.dateSel
-    this.logger.info("RdvAddComponent log : Date sélectionnee Date: " + new Date(this.dateSel));
+    this.logger.info("RdvAddComponent log : Date sélectionnee(ts) : " + this.dateSel);
+    this.logger.info("RdvAddComponent log : Date sélectionnee(TsToDate) : " + new Date(this.dateSel));
 
     this.toggleTimePickerAStatus();
 
@@ -361,8 +371,8 @@ export class RdvAddComponent implements OnInit, OnChanges {
    */
   public timePickerASelectionne(timePickerA: string) {
     this.tpA_selected_value = this._dateService.modStringTime(timePickerA.valueOf(), 0, 0);
-    // Attribution de l heure du selecteur_debut selectionnee au la variable  tpA_selected_value
-    this.tpB_selected_value = timePickerA.valueOf();
+    // Attribution de l heure du selecteur_debut selectionnee au la variable  tpA_selected_value +1Heure
+    this.tpB_selected_value = this._dateService.modStringTime(timePickerA.valueOf(), 1, 0);
     // Attribution du picker a au picker avec 1 heure de plus
     this.timePickerB_initial_value = this._dateService.modStringTime(timePickerA.valueOf(), 1, 0);
 
@@ -645,17 +655,13 @@ export class RdvAddComponent implements OnInit, OnChanges {
    */
   public saveRdv() {
 
+    this.checkIfTokenGotFiveMinutesLeftBeforExpiration();
 
-
-    this.logger.info("RdvAddComponent log : Tentative de sauvegarde du Rdv:)")
-
-    this.rdv.dateDeSaisie = moment().millisecond();
-    this.rdv.dateHeureDebut = moment(this.dateSel)
-      .hours(this._dateService.extracHoursFromGivenTime(this.tpA_selected_value))
-      .minutes(this._dateService.extracMinutesFromGivenTime(this.tpA_selected_value)).millisecond();
-    this.rdv.dateHeureFin = moment(this.dateSel)
-      .hours(this._dateService.extracHoursFromGivenTime(this.tpA_selected_value))
-      .minutes(this._dateService.extracMinutesFromGivenTime(this.tpB_selected_value)).millisecond();
+    this.rdv.dateDeSaisie = moment( this.dateSaisie ).unix()*1000; 
+    this.rdv.dateHeureDebut = moment( this._dateService.dateTimeConstructor(this.dateSel,this.tpA_selected_value)).unix()*1000;
+    this.rdv.dateHeureFin = moment( this._dateService.dateTimeConstructor(this.dateSel,this.tpB_selected_value) ).unix()*1000;
+    
+    // Set Client, Prestation, LieuRdv, Utilisateur of Rdv
     this.client.idClient = this.selectedClientFromList.idClient.valueOf();
     this.logger.info("RdvAddComponent log : Rdv idPrestation " + this.selectedPrestationFromList.idPrestation);
     this.prestation.idPrestation = this.selectedPrestationFromList.idPrestation.valueOf();
@@ -663,6 +669,11 @@ export class RdvAddComponent implements OnInit, OnChanges {
     this.lieurRdv.idLieuRdv = this.selectedLieuRdvFromList.idLieuRdv.valueOf();
     this.utilisateur.idUtilisateur = this.currentUtilisateur$.idUtilisateur.valueOf();
 
+    // Set rdv cancelled to false
+    this.rdv.isCancelled = false;
+
+
+    // set the rdv
     this.rdv.client = this.client;
     this.rdv.prestation = this.prestation;
     this.rdv.praticien = this.praticien;
@@ -674,28 +685,41 @@ export class RdvAddComponent implements OnInit, OnChanges {
       .subscribe(
         res => {
           res;
-          let messageRdvOk: string = "Votre Rendez-vous est enregistré :"
-            + "\nRdv Id: " + res.idRdv
-            + "\nRdv Date début: " + new Date(res.dateHeureDebut)
-            + "\nRdv Date Fin: " + new Date(res.dateHeureFin)
-            + "\nRdv Client: " + res.client.prenomClient + " " + res.client.nomClient
-            + "\nRdv Soin: " + res.prestation.activite + " " + res.prestation.soin
-            + "\nRdv Praticien" + res.praticien.prenomPraticien
-            + "\nRdv lieRdv: " + res.lieuRdv.lieuRdv;
+          let messageRdvOk: string = "Votre Rendez-vous est enregistré";
+          this._router.navigate(['./home'])
+          this.toasterMessage(messageRdvOk,'snackbarInfo',5000);
+          this.logger.info("RdvAddComponent Log : Nouveau rendez-vous persistes");
 
-          this.toasterMessage(messageRdvOk,'snackbarInfo',35000);
-          this.logger.info("rgpdService Log : Nouveau rendez-vous persistes");
         },
         err => {
-          let messageRdvNOk: string = "Il y a eu un problème,"
-            + "\nle rendez-vous saisi n'a pas été enregistré"
-            + "\nVérifiez les dates et heures ..."
+          let messageRdvNOk: string = "Il y a eu un problème, vérifiez les infos ..."
           this.toasterMessage(messageRdvNOk,'snackbarWarning', 5000);
-          this.logger.error("rgpdService Log : Le rendez-vous n'a pas été enregistré");
+          this.logger.error("RdvAddComponent Log : Le rendez-vous n'a pas été enregistré");
         })
 
   }
 
+  /**
+   * Verifiaction si le token possede au minimum 5 minutes avant expiration
+   */
+  private checkIfTokenGotFiveMinutesLeftBeforExpiration(): void {
+
+    this.logger.error("RdvAddComponent Log : Vérification si le token possede encore 5 minutes de vie");
+    let isTokenGot5: boolean = this._authService.checkIfTokenGotFiveMinutesLeftBeforExpiration(this.currentUtilisateur$.adresseMailUtilisateur);
+    this.logger.error("RdvAddComponent Log : Etat si la token a 5 minutes de vie : " + isTokenGot5);
+    
+    if (isTokenGot5 == false) {
+
+      this.logger.info("RdvAddComponent Log : Le token est inferieur a 5 minutes de vie ou meme expiré");
+      this._authService.logOut(this.currentUtilisateur$.adresseMailUtilisateur);
+      this._router.navigate(['./login']);
+
+    } else {
+
+      this.logger.info("RdvAddComponent Log : Le token possede encore au moins 5 minutes de vie");
+
+    }
+  }
 
 
   private toasterMessage(snackMessage: string, snackStyle: string, snackTimer: number): void {

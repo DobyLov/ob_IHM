@@ -1,11 +1,9 @@
-import { ChangeDetectorRef, Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, Output } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { RdvService } from '../rdv/rdv.service';
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
 import { Rdv } from '../rdv/rdv';
 import { AuthService } from '../login/auth.service';
-import { Location } from '@angular/common';
 import { HistoryRoutingService } from '../service/historyRouting.service';
 import { CurrentUtilisateur } from '../login/currentUtilisateur';
 import { Subscription, Observable } from 'rxjs';
@@ -21,9 +19,8 @@ import { PrestationService } from '../prestation/prestation.service';
 import { PraticienService } from '../praticien/praticien.service';
 import { LieuRdvService } from '../lieuRdv/lieurdv.service';
 import { DateService } from '../service/dateservice.service';
-import { ErrorHandlerService } from '../service/errorHandler.service';
 import { startWith, map } from 'rxjs/operators';
-import { MatSlideToggleChange, MatOptionSelectionChange } from '@angular/material';
+import { MatOptionSelectionChange } from '@angular/material';
 import { ToasterService } from '../service/toaster.service';
 import { Utilisateur } from '../utilisateur/utilisateur';
 
@@ -105,6 +102,8 @@ export class RdvDetailsComponent implements OnInit {
   soinList: Prestation[];
   filterSoin: string;
 
+  isRdvIsCancelled:boolean= false;
+
 
   constructor(private logger: NGXLogger,
     private _rdvService: RdvService,
@@ -130,6 +129,9 @@ export class RdvDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    // verifier si le token est encore valide
+    this._authService
 
     // Historique de navigation stocke la route precedent afin de faire un BackPage
     this.previousRoute = this._historyRouting.getPreviousUrl();

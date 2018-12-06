@@ -178,4 +178,25 @@ export class DateService {
   }
 
 
+    /**
+   * Construit une date avec une heure
+   * @param date 
+   * @param time 
+   * @returns :Date
+   */
+  public dateTimeConstructor(date: Date, time: string): Date {
+    // this.logger.info("DateService Log : DateTimeConstructor Date : " + date);
+    // this.logger.info("DateService Log : DateTimeConstructor TimeString : " + time);
+    let heures: number = this.extracHoursFromGivenTime(time);
+    // this.logger.info("DateService Log : DateTimeConstructor Extract Heures : " + heures); 
+    let minutes: number = this.extracMinutesFromGivenTime(time);
+    // this.logger.info("DateService Log : DateTimeConstructor Extract Minutes : " + minutes);
+    let dateTimeConstruite: Date = new Date (new Date(date).setHours(heures, minutes));
+    // this.logger.info("DateService Log : DateTimeConstructor DateTime : " + dateTimeConstruite);
+    
+    return dateTimeConstruite;
+  
+  };
+
+
 }
