@@ -42,8 +42,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   cUtilisateur = new Subscription();  
   
   // paramtres pour Rdv
-  listRdv: any;
-  rdvList: Rdv[];
+  rdvListSubscription: Subscription;
+  homeRdvList: Rdv[];
 
   // Formatage de la table
   tabNomsColonnes: string[] = ['numeroRdv','dateHeureDebut','separation', 'dateHeureFin', 
@@ -71,12 +71,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
                 this._utilisateurService.setCurrentUtilisateur(this.emailUserConnected); 
                 
                 this.getIsUserIsConnected();
-                
+                this.getCurrentUtilisateur();
                 }
 
   ngOnInit() {  
 
-    this.getCurrentUtilisateur();
+    
   }
 
   ngAfterViewInit(): void {
@@ -95,12 +95,13 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getRdvListParDateParIdPraticien(this._dateService.setDateToStringYYYYMMDD(new Date()), this.praticien.idPraticien); 
     this.logger.info("HomeComponent log : Timer => Rdv récupérés :");
     });
+    
   }
 
   ngOnDestroy() {
 
     if ( this.cUtilisateur ) { this.cUtilisateur };
-    if ( this.listRdv ) { this.listRdv.unsubscribe };
+    if ( this.rdvListSubscription ) { this.rdvListSubscription.unsubscribe };
     if (this.refreshTimer.unsubscribe) { this.refreshTimer.unsubscribe };
     this.timerSubscription.unsubscribe();
   
@@ -151,12 +152,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     
     this.logger.info("HomeComponent Log: Recuperation de la liste de Rdv du JourJ et par Id Praticien");
     this.currentUtilisateur$;
-    this.rdvList = null;
+    // this.homeRdvList = null;
     this.logger.info("HomeComponent Log : Recuperation dela liste totale des Rdv's");
-    this.listRdv = this._rdvService.getRdvListByByDateAndByPraticien(dateJj, idPraticien)
-      .subscribe( res => {  this.rdvList = res;
-                            this.dataSource = this.rdvList;  
-                            this.nbRdv = this.rdvList.length;  
+    this.rdvListSubscription = this._rdvService.getRdvListByByDateAndByPraticien(dateJj, idPraticien)
+      .subscribe( res => {  this.homeRdvList = res;
+                            this.dataSource = this.homeRdvList;  
+                            this.nbRdv = this.homeRdvList.length;
                             this._cd.markForCheck();
                           },
                           ( (e) => { 
@@ -164,7 +165,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
                             this._errorHandlerService.handleError(e);
                             }
                           )
-                  );    
+                  );   
+
+    this.logger.info("HomeComponenet Log : LLLLListe de Rdv pour le praticien : " + idPraticien + " => nomcli" + this.homeRdvList);
   }
 
 

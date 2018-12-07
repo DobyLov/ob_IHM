@@ -23,128 +23,65 @@
         <mat-divider></mat-divider>
     </div>
 
-    <div class="table" *ngIf="nbRdv === -1 || nbRdv === 0; then noRdv; else displayRdvList ">
-        <ng-template #noRdv>
-            <mat-table #table mat-table [dataSource]="dataSource">
-                <tr mat-header-row *matHeaderRowDef="tabNomsColonnes"></tr>
-                <tr mat-row *matRowDef="let row; columns: tabNomsColonnes;"></tr>
+    <div class="table" *ngIf="nbRdv >=1">
+        <mat-table #table mat-table [dataSource]="dataSource">
+            <tr mat-header-row *matHeaderRowDef="tabNomsColonnes"></tr>
+            <tr mat-row *matRowDef="let row; columns: tabNomsColonnes;"></tr>
 
-                <ng-container matColumnDef="numeroRdv">
-                    <th mat-header-cell *matHeaderCellDef> </th>
-                    <td mat-cell *matCellDef="let element; let i = index ">{{ i + 1 }}/</td>
-                </ng-container>
+            <ng-container matColumnDef="numeroRdv">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element; let i = index ">{{ i + 1 }}/</td>
+            </ng-container>
 
-                <ng-container matColumnDef="dateHeureDebut">
-                    <th mat-header-cell *matHeaderCellDef>Heure début</th>
-                    <td mat-cell *matCellDef="let element"> {{ element.dateHeureDebut | Time24Pipe }} </td>
-                </ng-container>
+            <ng-container matColumnDef="dateHeureDebut">
+                <th mat-header-cell *matHeaderCellDef>Heure début</th>
+                <td mat-cell *matCellDef="let element"> {{ element.dateHeureDebut | Time24Pipe }} </td>
+            </ng-container>
 
-                <ng-container matColumnDef="separation">
-                    <th mat-header-cell *matHeaderCellDef></th>
-                    <td mat-cell *matCellDef="let element"> - </td>
-                </ng-container>
+            <ng-container matColumnDef="separation">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element"> - </td>
+            </ng-container>
 
-                <ng-container matColumnDef="dateHeureFin">
-                    <th mat-header-cell *matHeaderCellDef>Heure fin</th>
-                    <td mat-cell *matCellDef="let element"> {{ element.dateHeureFin | Time24Pipe }} </td>
-                </ng-container>
+            <ng-container matColumnDef="dateHeureFin">
+                <th mat-header-cell *matHeaderCellDef>Heure fin</th>
+                <td mat-cell *matCellDef="let element"> {{ element.dateHeureFin | Time24Pipe }} </td>
+            </ng-container>
 
-                <ng-container matColumnDef="lieuRdv">
-                    <th mat-header-cell *matHeaderCellDef>Lieu Rdv</th>
-                    <td mat-cell *matCellDef="let element"> {{ element.lieuRdv.lieuRdv }} </td>
-                </ng-container>
+            <ng-container matColumnDef="lieuRdv">
+                <th mat-header-cell *matHeaderCellDef>Lieu Rdv</th>
+                <td mat-cell *matCellDef="let element"> {{ element.lieuRdv.lieuRdv }} </td>
+            </ng-container>
 
-                <ng-container matColumnDef="activite">
-                    <th mat-header-cell *matHeaderCellDef>Activité</th>
-                    <td mat-cell *matCellDef="let element"> {{ element.prestation.activite }} </td>
-                </ng-container>
+            <ng-container matColumnDef="activite">
+                <th mat-header-cell *matHeaderCellDef>Activité</th>
+                <td mat-cell *matCellDef="let element"> {{ element.prestation.activite }} </td>
+            </ng-container>
 
-                <ng-container matColumnDef="prestation">
-                    <th mat-header-cell *matHeaderCellDef>Prestation</th>
-                    <td mat-cell *matCellDef="let element" class="presta"> {{ element.prestation.soin |
-                        FirstCharUpperPipe }} </td>
-                </ng-container>
+            <ng-container matColumnDef="prestation">
+                <th mat-header-cell *matHeaderCellDef>Prestation</th>
+                <td mat-cell *matCellDef="let element" class="presta"> {{ element.prestation.soin |
+                    FirstCharUpperPipe }} </td>
+            </ng-container>
 
-                <ng-container matColumnDef="nomClient">
-                    <th mat-header-cell *matHeaderCellDef>Nom </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.client.nomClient }} </td>
-                </ng-container>
+            <ng-container matColumnDef="nomClient">
+                <th mat-header-cell *matHeaderCellDef>Nom </th>
+                <td mat-cell *matCellDef="let element"> {{ element.client.nomClient }} </td>
+            </ng-container>
 
-                <ng-container matColumnDef="prenomClient">
-                    <th mat-header-cell *matHeaderCellDef>Prénom</th>
-                    <td mat-cell *matCellDef="let element"> {{ element.client.prenomClient }} </td>
-                </ng-container>
-                <ng-container matColumnDef="idRdv">
-                    <th mat-header-cell *matHeaderCellDef>Détails</th>
-                    <td mat-cell *matCellDef="let element" class="button-Details">
-                        <button mat-icon-button color="primary" [routerLink]="['/rdvdetails', element.idRdv]">
-                            <i class="material-icons">remove_red_eye</i>
-                        </button>
-                    </td>
-                </ng-container>
-            </mat-table>
-        </ng-template>
-
-        <ng-template #displayRdvList>
-            <mat-table #table mat-table [dataSource]="dataSource">
-                <tr mat-header-row *matHeaderRowDef="tabNomsColonnes"></tr>
-                <tr mat-row *matRowDef="let row; columns: tabNomsColonnes;"></tr>
-
-                <ng-container matColumnDef="numeroRdv">
-                    <th mat-header-cell *matHeaderCellDef> </th>
-                    <td mat-cell *matCellDef="let element; let i = index ">{{ i + 1 }}/</td>
-                </ng-container>
-
-                <ng-container matColumnDef="dateHeureDebut">
-                    <th mat-header-cell *matHeaderCellDef>Heure début</th>
-                    <td mat-cell *matCellDef="let element"> {{ element.dateHeureDebut | Time24Pipe }} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="separation">
-                    <th mat-header-cell *matHeaderCellDef></th>
-                    <td mat-cell *matCellDef="let element"> - </td>
-                </ng-container>
-
-                <ng-container matColumnDef="dateHeureFin">
-                    <th mat-header-cell *matHeaderCellDef>Heure fin</th>
-                    <td mat-cell *matCellDef="let element"> {{ element.dateHeureFin | Time24Pipe }} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="lieuRdv">
-                    <th mat-header-cell *matHeaderCellDef>Lieu Rdv</th>
-                    <td mat-cell *matCellDef="let element"> {{ element.lieuRdv.lieuRdv }} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="activite">
-                    <th mat-header-cell *matHeaderCellDef>Activité</th>
-                    <td mat-cell *matCellDef="let element"> {{ element.prestation.activite }} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="prestation">
-                    <th mat-header-cell *matHeaderCellDef>Prestation</th>
-                    <td mat-cell *matCellDef="let element" class="presta"> {{ element.prestation.soin |
-                        FirstCharUpperPipe }} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="nomClient">
-                    <th mat-header-cell *matHeaderCellDef>Nom </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.client.nomClient }} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="prenomClient">
-                    <th mat-header-cell *matHeaderCellDef>Prénom</th>
-                    <td mat-cell *matCellDef="let element"> {{ element.client.prenomClient }} </td>
-                </ng-container>
-                <ng-container matColumnDef="idRdv">
-                    <th mat-header-cell *matHeaderCellDef>Détails</th>
-                    <td mat-cell *matCellDef="let element" class="button-Details">
-                        <button mat-icon-button color="primary" [routerLink]="['/rdvdetails', element.idRdv]">
-                            <i class="material-icons">remove_red_eye</i>
-                        </button>
-                    </td>
-                </ng-container>
-            </mat-table>
-        </ng-template>
+            <ng-container matColumnDef="prenomClient">
+                <th mat-header-cell *matHeaderCellDef>Prénom</th>
+                <td mat-cell *matCellDef="let element"> {{ element.client.prenomClient }} </td>
+            </ng-container>
+            <ng-container matColumnDef="idRdv">
+                <th mat-header-cell *matHeaderCellDef>Détails</th>
+                <td mat-cell *matCellDef="let element" class="button-Details">
+                    <button mat-icon-button color="primary" [routerLink]="['/rdvdetails', element.idRdv]">
+                        <i class="material-icons">remove_red_eye</i>
+                    </button>
+                </td>
+            </ng-container>
+        </mat-table>
     </div>
     <div class="boutonRemonter" mat-elevation-z20>
 

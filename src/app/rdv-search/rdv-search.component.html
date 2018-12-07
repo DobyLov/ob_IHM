@@ -21,21 +21,31 @@
 			</mat-card-content>
 		</mat-card>
 		<mat-card class="matCardListRdv">
+			<!-- afiche que si l utilisateur n est pas vide -->
 			<mat-card-content class="mat-card-content-info-noRdv" *ngIf="this.currentUtilisateur$">
-				<ng-container *ngIf="indexRdv == 1; then displaySelectPratAndDate; else displayContent"></ng-container>
-				<ng-template #displaySelectPratAndDate>
+				<!-- Message d accueil si indexRdv == 1 affiche la marche a suivre -->
+				<ng-container *ngIf="indexRdv == 0; then displaySelectPratCliAndDate; else displayContent"></ng-container>
+
+				<ng-template #displaySelectPratCliAndDate>
+					<!-- Si praticien ou client Non selectionne affiche le message de marche suivre  -->
+					<!-- sinon affiche message selectionner date  -->
 					<ng-container *ngIf="(!praticienSelected) && (!clientSelected); then displaySelectPraticien; else displaySelectADate"></ng-container>
+					
 					<ng-template #displaySelectPraticien>
 						<span class="pas-de-date">{{ this.currentUtilisateur$.prenomUtilisateur }}, sélectionnez un praticien ou client =></span>
 					</ng-template>
+
 					<ng-template #displaySelectADate>
+						<!-- si Praticien ou client selectionne affiche la marche suivre sur le selection d ela date -->
 						<ng-container *ngIf="praticienSelected || clientSelected; then date;"></ng-container>
 						<ng-template #date>
+							<!-- selon l onglet actif affiche le maessage pour simple date range of date -->
 							<ng-container *ngIf="activeTabIndex === 0; then simpleDate; else rOfDates"></ng-container>
 							<ng-template #simpleDate>
 								<span class="pas-de-date"> Changez la date et/ou validez ...</span>
 							</ng-template>
 							<ng-template #rOfDates>
+								<!-- invite a selectionner la date B dans le cas du range of date -->
 								<ng-container *ngIf="!dateSelectionneeB; then selDateFin; else rodValidez"></ng-container>
 								<ng-template #selDateFin>
 									<span class="pas-de-date"> Sélectionnez une date de fin ...</span>
@@ -44,12 +54,16 @@
 									<span class="pas-de-date"> Validez ...</span>
 								</ng-template>
 							</ng-template>
-						</ng-template>
+						</ng-template>						
 					</ng-template>
-				</ng-template>
+
+				</ng-template> 
+
 				<ng-template #displayContent>
+					<!-- Affiche les rdv's ou message d information -->
 					<ng-container *ngIf="indexRdv == 0; then noRdv; else displayRdvTable"></ng-container>
 					<ng-template #noRdv>
+						<!-- selon l onglet actif, message d information en fonction de l onglet actif -->
 						<ng-container *ngIf="activeTabIndex === 0; then showSimpleDate; else rangeOfDate"></ng-container>
 						<ng-template #showSimpleDate>
 							<span class="pas-de-date">Pas de Rdv pour cette date.</span>
@@ -160,7 +174,7 @@
 							</ng-container>
 						</mat-table>
 					</ng-template>
-				</ng-template>
+				 </ng-template>
 			</mat-card-content>
 		</mat-card>
 	</div>
@@ -186,7 +200,7 @@
 						<mat-select id="pratselector"
 									class="mat-card-cherche-rdv-mat-select" 
 									placeholder="Liste praticien"
-									[(value)]="cleenPraticienValuefield"
+									[(value)]="cleanPraticienValuefield"
 									[formControl]="praticienCtrl" 									
 									name="praticien">
 							<mat-option *ngFor="let praticien of praticienList" 

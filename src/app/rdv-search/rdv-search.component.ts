@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Input, OnDestroy } from '@angular/core';
 import { Praticien } from '../praticien/praticien';
 import { CurrentUtilisateur } from '../login/currentUtilisateur';
 import { Subscription, Observable } from 'rxjs';
@@ -25,7 +25,7 @@ moment.locale('fr');
   templateUrl: './rdv-search.component.html',
   styleUrls: ['./rdv-search.component.scss']
 })
-export class RdvSearchComponent implements OnInit {
+export class RdvSearchComponent implements OnInit, OnDestroy {
 
   // SearchGroup
   praticienCtrl = new FormControl();
@@ -61,7 +61,7 @@ export class RdvSearchComponent implements OnInit {
   filteredClients: Observable<Client[]>;
 
   // Praticien;
-  cleenPraticienValuefield:string='';
+  cleanPraticienValuefield:string='';
   praticienSelected: boolean = false;
   praticien: Praticien;
   praticienList: Praticien[];
@@ -71,10 +71,10 @@ export class RdvSearchComponent implements OnInit {
   client: Client;
   clientList: Client[];
   // Parametres pour Rdv
-  listRdv: any;
+  listRdvSubscription: Subscription;
   rdvList: Rdv[] = null;
   nbRdv: number = 0;
-  indexRdv: number = 1;
+  indexRdv: number = 0;
 
   // Table
   // Datasource
@@ -109,6 +109,11 @@ export class RdvSearchComponent implements OnInit {
     this.getClientList();
     this.refreshFilteredClients();
 
+  }
+
+  ngOnDestroy() {
+
+    if ( this.listRdvSubscription ) { this.listRdvSubscription.unsubscribe };
   }
 
 
@@ -165,7 +170,7 @@ export class RdvSearchComponent implements OnInit {
    * Recherche Rdv par simple Date et selon si le critere est par Praticien ou par client
    * @param dateSelectionneeA 
    */
-  public getRdvListParDate(dateSelectionneeA) {
+  public async getRdvListParDate(dateSelectionneeA) {
 
     this.logger.info("RdvSearchComponent log : Recherche par date :");
     this.logger.info("RdvSearchComponent log : Affiche la valeur de this.praticienSelected : " + this.praticienSelected);
@@ -174,13 +179,13 @@ export class RdvSearchComponent implements OnInit {
     // recherche par Praticien
     if ( this.praticienSelected == true ) {
       this.logger.info("RdvSearchComponent log : Recherche par date / Praticien :");
-      this.getRdvListParDateParIdPraticien(dateSelectionneeA, this.praticien.idPraticien );
+      await this.getRdvListParDateParIdPraticien(dateSelectionneeA, this.praticien.idPraticien );
     }
 
     // Recherche par client
     if (this.clientSelected == true) {
       this.logger.info("RdvSearchComponent log : Recherche par date / Client :");
-      this.getRdvListParDateParIdClient(dateSelectionneeA, this.client.idClient );
+      await this.getRdvListParDateParIdClient(dateSelectionneeA, this.client.idClient );
     }
 
   }
@@ -189,19 +194,19 @@ export class RdvSearchComponent implements OnInit {
    * Recherche Rdv par plage de Dates et selon si le critere est par Praticien ou par client
    * @param dateSelectionneeA 
    */
-  public getRdvListParPlageDeDates(dateSelectionneeA, dateSelectionneeB) {
+  public async getRdvListParPlageDeDates(dateSelectionneeA, dateSelectionneeB) {
     this.logger.info("RdvSearchComponent log : Recherche par plage de dates :");
     
     // recherche par Praticien
     if (this.praticienSelected == true) {
       this.logger.info("RdvSearchComponent log : Recherche par plage de dates / Praticien :");
-      this.getRdvListParPlageDeDateParIdPraticien(dateSelectionneeA, dateSelectionneeB, this.praticien.idPraticien );
+      await this.getRdvListParPlageDeDateParIdPraticien(dateSelectionneeA, dateSelectionneeB, this.praticien.idPraticien );
     }
 
     // Recherche par client
     if (this.clientSelected == true) {
       this.logger.info("RdvSearchComponent log : Recherche par plage de dates / Client :");
-      this.getRdvListParPlageDeDateParIdClient(dateSelectionneeA, dateSelectionneeB, this.client.idClient );
+      await this.getRdvListParPlageDeDateParIdClient(dateSelectionneeA, dateSelectionneeB, this.client.idClient );
     }
 
   }
@@ -214,16 +219,19 @@ export class RdvSearchComponent implements OnInit {
 
     // this.logger.info("RdvSearchComponent log : Recup list praticien : " + this.praticienList);
     this.logger.info("RdvSearchComponent log : iDPraticien selectionne : " + idPraticien );
+    // ----------------
     this.rdvList = null;
     this.indexRdv = null;
     this.nbRdv = 0;
-    this.listRdv = this._rdvService.getRdvListByByDateAndByPraticien(
+    // ----------------
+    this.listRdvSubscription = this._rdvService.getRdvListByByDateAndByPraticien(
       this._dateService.setSerialDateToStringYYYYMMDD(dateSelectionneeA), idPraticien)
       .subscribe(res => {
-      this.rdvList = res;
+        this.rdvList = res;
         this.dataSource = this.rdvList;
         this.nbRdv = this.rdvList.length;
         this.indexRdv = this.rdvList.length;
+
         this._cd.markForCheck();
       },
         ((e) => {
@@ -232,8 +240,7 @@ export class RdvSearchComponent implements OnInit {
         }
         )
       );
-      this.logger.info("RdvSearchComponent log : Rdv Par date par idPrat Liste : " + this.rdvList);
-
+      
   }
 
     /**
@@ -246,7 +253,7 @@ export class RdvSearchComponent implements OnInit {
     this.rdvList = null;
     this.indexRdv = null;
     this.nbRdv = 0;
-    this.listRdv = this._rdvService.getRdvListByByDateAndByClient(
+    this.listRdvSubscription = this._rdvService.getRdvListByByDateAndByClient(
       this._dateService.setSerialDateToStringYYYYMMDD(dateSelectionneeA), idClient)
       .subscribe(res => {
       this.rdvList = res;
@@ -279,7 +286,7 @@ export class RdvSearchComponent implements OnInit {
     this.rdvList = null;
     this.indexRdv = null;
     this.nbRdv = 0;
-    this.listRdv = this._rdvService.getRdvListRangeOfDateADateBAndByPraticien(
+    this.listRdvSubscription = this._rdvService.getRdvListRangeOfDateADateBAndByPraticien(
       this._dateService.setSerialDateToStringYYYYMMDD(dateA),
       this._dateService.setSerialDateToStringYYYYMMDD(dateB), idPraticien)
       .subscribe(res => {
@@ -312,7 +319,7 @@ export class RdvSearchComponent implements OnInit {
     this.rdvList = null;
     this.indexRdv = null;
     this.nbRdv = 0;
-    this.listRdv = this._rdvService.getRdvListRangeOfDateADateBAndByClient(
+    this.listRdvSubscription = this._rdvService.getRdvListRangeOfDateADateBAndByClient(
       this._dateService.setSerialDateToStringYYYYMMDD(dateA),
       this._dateService.setSerialDateToStringYYYYMMDD(dateB), idClient)
       .subscribe(res => {
@@ -405,7 +412,7 @@ export class RdvSearchComponent implements OnInit {
       this.clientSelected = false
       this.praticienSelected = false;
       this.clientCtrl.reset();
-      this.cleenPraticienValuefield = '';
+      this.cleanPraticienValuefield = '';
   }
 
   // public clientFieldIsSelcted() {
