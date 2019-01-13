@@ -349,23 +349,28 @@
 }
 
 // RdvAnnulé
-.cancelledRdv-section-activated {
-    flex: 1;
-    background-color: #fbf1e3fc;
-    font-family: 'Montserrat', sans-serif;
-    // display: flex;
-    // flex-direction: row;
-    // justify-content: flex-end;
-}
-
-.cancelledRdv-section-disabled {
+.cancelledRdv-section {
     flex: 1;
     background-color: #ddddddfc;
     font-family: 'Montserrat', sans-serif;
-    // display: flex;
-    // flex-direction: row;
-    // justify-content: flex-end;
 }
+// .cancelledRdv-section-activated {
+//     flex: 1;
+//     background-color: #fbf1e3fc;
+//     font-family: 'Montserrat', sans-serif;
+//     // display: flex;
+//     // flex-direction: row;
+//     // justify-content: flex-end;
+// }
+
+// .cancelledRdv-section-disabled {
+//     flex: 1;
+//     background-color: #ddddddfc;
+//     font-family: 'Montserrat', sans-serif;
+//     // display: flex;
+//     // flex-direction: row;
+//     // justify-content: flex-end;
+// }
 
 .cancelledRdv-header {
     font-size: 20px;

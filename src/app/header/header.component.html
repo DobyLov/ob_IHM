@@ -9,6 +9,7 @@
                 class="mat-elevation-z0"
                 mat-icon-button 
                 [disabled]="!isUserIsConnected$" 
+                matTooltip="Menu"
                 (click)="sideBarNavToggle()">
                 <!-- <button *ngIf='displayButtons' mat-icon-button [disabled]="!isUserIsConnected$" (click)="sideBarNavToggle()"> -->
                 <img src="./assets/OpBLogo.svg">
@@ -34,6 +35,7 @@
                     class="mat-elevation-z0"
                     mat-icon-button 
                     [matMenuTriggerFor]="menuLogin" 
+                    matTooltip="Log in/out"
                     (click)="forceCloseSideMenuBar()">
                     <mat-icon *ngIf=isSrvIsOnLine$>menu</mat-icon>
                     <mat-icon color="accent" *ngIf=!isSrvIsOnLine$>menu</mat-icon>

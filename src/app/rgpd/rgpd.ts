@@ -4,13 +4,13 @@ export class Rgpd {
 	rgpdCliPrenom: string;
 	rgpdCliEmail: string;
 	rgpdCliToken: string;
-	rgpdSubsComm: string;
-	rgpdSubsNLetter: string;
-	rgpdSubsMailRem: string;
-	rgpdSubsSmsRem: string;
-	rgpdInfoCliVal: string; // boolean T=true / f=false 
+	rgpdSubsComm: boolean;
+	rgpdSubsNLetter: boolean;
+	rgpdSubsMailRem: boolean;
+	rgpdSubsSmsRem: boolean;
+	rgpdInfoCliVal: boolean; // boolean T=true / f=false 
 	rgpdDateCliVal: number;
-	rgpdCliCanModifyRgpdSettings: string; // boolean T=true / f=false 
-	rgpdDemandeDeCorrectionInformations: string; // boolean T=true / f=falses
+	rgpdCliCanModifyRgpdSettings: boolean; // boolean T=true / f=false 
+	rgpdDemandeDeCorrectionInformations: boolean; // boolean T=true / f=falses
 
 }

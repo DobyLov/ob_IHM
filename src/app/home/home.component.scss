@@ -2473,3 +2473,12 @@ and ( min-width: 800px)
     margin-top: 20px;
   }
 }
+
+// Change la couleur de la cellule pour un Rdv annullé
+// afin que cela soit visible
+.isRdvIsCancelled {
+  // color:rgb(255, 102, 0);
+  font-weight: bolder;
+  font-style: italic;
+  background-color: rgb(250, 232, 217);
+}

@@ -69,10 +69,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
                 ) {  
 
                       // toute premiere détection du serveur MW
-                      this._reachServerService.srvJoignableOuPas();
-
+                      // this._reachServerService.srvJoignableOuPas();
                       // Declanchement du timer qui check la presence du serveur MW
-                      this.timer();
+                      // this.timer();
                       
                       // Recuperation de l adresse URL
                       this.url = this.location.path();

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { NGXLogger } from 'ngx-logger';
+import { HistoryRoutingService } from '../service/historyRouting.service';
+import { Praticien } from '../praticien/praticien';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-praticien-add',
@@ -7,9 +11,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PraticienAddComponent implements OnInit {
 
-  constructor() { }
+   // RouterHistory
+   previousRoute: string;
 
-  ngOnInit() {
-  }
+   praticien: Praticien = new Praticien();
+
+   praticienFb: FormBuilder = new FormBuilder();
+  
+   constructor(private logger: NGXLogger,
+               private _historyRouting: HistoryRoutingService
+               ) { }
+ 
+   ngOnInit() {
+ 
+         // Historique de navigation stocke la route precedent afin de faire un BackPage
+         this.previousRoute = this._historyRouting.getPreviousUrl();
+   }
+
+
 
 }

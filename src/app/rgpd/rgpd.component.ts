@@ -64,14 +64,14 @@ export class RgpdComponent implements OnInit {
 
     // sliders
     ts_Color: string = 'primary';    
-    ts_Commercials_Checked = false;
-    ts_Commercials_hasMoved = false;
-    ts_NewsLetter_Checked = false;
-    ts_NewsLetter_hasMoved = false;
-    ts_SmsRdvRemider_Checked = false;
-    ts_SmsRdvRemider_hasMoved = false;
-    ts_MailRdvReminder_Checked = false;
-    ts_MailRdvReminder_hasMoved = false;
+    ts_Commercials_Checked: boolean = false;
+    ts_Commercials_hasMoved: boolean = false;
+    ts_NewsLetter_Checked: boolean = false;
+    ts_NewsLetter_hasMoved: boolean = false;
+    ts_SmsRdvRemider_Checked: boolean = false;
+    ts_SmsRdvRemider_hasMoved: boolean = false;
+    ts_MailRdvReminder_Checked: boolean = false;
+    ts_MailRdvReminder_hasMoved: boolean = false;
 
     disable_SendRgpdButton: boolean = true;
     is_SendRgpdButtonPressed: boolean = false; 
@@ -300,26 +300,31 @@ export class RgpdComponent implements OnInit {
      * @param rgpd 
      */
     private configSlidersFromClientBddSettings(rgpd: Rgpd): void {
-        this.ts_Commercials_Checked = this.stringValueToBooleanValueChanger(rgpd.rgpdSubsComm.valueOf());
-        this.ts_MailRdvReminder_Checked = this.stringValueToBooleanValueChanger(rgpd.rgpdSubsMailRem.valueOf());
-        this.ts_SmsRdvRemider_Checked = this.stringValueToBooleanValueChanger(rgpd.rgpdSubsSmsRem.valueOf());
-        this.ts_NewsLetter_Checked = this.stringValueToBooleanValueChanger(rgpd.rgpdSubsNLetter.valueOf());
+        // this.ts_Commercials_Checked = this.stringValueToBooleanValueChanger(rgpd.rgpdSubsComm.valueOf());
+        // this.ts_MailRdvReminder_Checked = this.stringValueToBooleanValueChanger(rgpd.rgpdSubsMailRem.valueOf());
+        // this.ts_SmsRdvRemider_Checked = this.stringValueToBooleanValueChanger(rgpd.rgpdSubsSmsRem.valueOf());
+        // this.ts_NewsLetter_Checked = this.stringValueToBooleanValueChanger(rgpd.rgpdSubsNLetter.valueOf());
+        this.ts_Commercials_Checked = rgpd.rgpdSubsComm.valueOf();
+        this.ts_MailRdvReminder_Checked = rgpd.rgpdSubsMailRem.valueOf();
+        this.ts_SmsRdvRemider_Checked = rgpd.rgpdSubsSmsRem.valueOf();
+        this.ts_NewsLetter_Checked =  rgpd.rgpdSubsNLetter.valueOf();
+        
     }
 
-    /**
-     * Converti les Valeurs (F ou f)False / (T)True du format String (depuis la Bdd)
-     * en Booleen (True / False)
-     * @param stringValue 
-     */
-    private stringValueToBooleanValueChanger(stringValue: string): boolean {
-        let boolToReturn: boolean;
-        if ( stringValue.valueOf() == "F" || stringValue.valueOf() == "f" ) {
-            boolToReturn = false;
-        } else {
-            boolToReturn = true;
-        }
-        return boolToReturn;
-    }
+    // /**
+    //  * Converti les Valeurs (F ou f)False / (T)True du format String (depuis la Bdd)
+    //  * en Booleen (True / False)
+    //  * @param stringValue 
+    //  */
+    // private stringValueToBooleanValueChanger(stringValue: string): boolean {
+    //     let boolToReturn: boolean;
+    //     if ( stringValue.valueOf() == "F" || stringValue.valueOf() == "f" ) {
+    //         boolToReturn = false;
+    //     } else {
+    //         boolToReturn = true;
+    //     }
+    //     return boolToReturn;
+    // }
 
     /**
      * Converti les Booleens (True / False) en String (F)False / (T)True
@@ -369,12 +374,17 @@ export class RgpdComponent implements OnInit {
     private rgpdSettingsModifier(rgpd: Rgpd): Rgpd {
 
         this.logger.info("RgpdComponent Log : Conversion des réglages Boolean To String F / T");
-        rgpd.rgpdDemandeDeCorrectionInformations = this.booleanValueToStringValueChanger(this.checkBox_InfoPerso_Checked);        
-        rgpd.rgpdSubsComm = this.booleanValueToStringValueChanger(this.ts_Commercials_Checked);
-        rgpd.rgpdSubsMailRem = this.booleanValueToStringValueChanger(this.ts_MailRdvReminder_Checked);
-        rgpd.rgpdSubsNLetter = this.booleanValueToStringValueChanger(this.ts_NewsLetter_Checked);
-        rgpd.rgpdSubsSmsRem = this.booleanValueToStringValueChanger(this.ts_SmsRdvRemider_Checked);
-
+        // rgpd.rgpdDemandeDeCorrectionInformations = this.booleanValueToStringValueChanger(this.checkBox_InfoPerso_Checked);        
+        // rgpd.rgpdSubsComm = this.booleanValueToStringValueChanger(this.ts_Commercials_Checked);
+        // rgpd.rgpdSubsMailRem = this.booleanValueToStringValueChanger(this.ts_MailRdvReminder_Checked);
+        // rgpd.rgpdSubsNLetter = this.booleanValueToStringValueChanger(this.ts_NewsLetter_Checked);
+        // rgpd.rgpdSubsSmsRem = this.booleanValueToStringValueChanger(this.ts_SmsRdvRemider_Checked);
+        rgpd.rgpdDemandeDeCorrectionInformations = this.checkBox_InfoPerso_Checked;        
+        rgpd.rgpdSubsComm = this.ts_Commercials_Checked;
+        rgpd.rgpdSubsMailRem = this.ts_MailRdvReminder_Checked;
+        rgpd.rgpdSubsNLetter = this.ts_NewsLetter_Checked;
+        rgpd.rgpdSubsSmsRem = this.ts_SmsRdvRemider_Checked;
+        
         return rgpd;
     }
 

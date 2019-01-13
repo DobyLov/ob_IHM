@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import * as moment from 'moment';
+import { timeInterval } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -180,9 +181,9 @@ export class DateService {
 
     /**
    * Construit une date avec une heure
-   * @param date 
-   * @param time 
-   * @returns :Date
+   * @param date
+   * @param string 
+   * @returns Date
    */
   public dateTimeConstructor(date: Date, time: string): Date {
     // this.logger.info("DateService Log : DateTimeConstructor Date : " + date);
@@ -197,6 +198,58 @@ export class DateService {
     return dateTimeConstruite;
   
   };
+
+/**
+ * Retourne l heure du timestamp au format 24H
+ */
+  public extracTimeFromGivenTs(ts: number): string {
+
+    this.logger.info("DateService Log : Extraction du temps depusi le ts fourni : " + ts)
+    let extractedTime: string = moment(ts).hour().toString() + ":" + moment(ts).minute().toString();
+    let format24HTime: string  = this.modStringTime(extractedTime,0,0);
+    this.logger.info("DateService Log : Time : " + format24HTime);
+
+    return format24HTime;
+  }
+
+/**
+ * Compare si heureA et inferieur à heureB
+ * Methode dédie aux timePicker de modification de Rdv 
+ * @returns boolean
+ */
+  public compareTimeATimeB(timeA: string, timeB: string): boolean {
+    console.log("DateService Log : value timeA: " + timeA);
+    this.logger.info("DateService Log : value timeA: " + timeA);
+    console.log("DateService Log : value timeB: " + timeB);
+    this.logger.info("DateService Log : value timeB: " + timeB);
+    let timeAIsBeforeTimeB: boolean = false;
+    const dateDuJour: Date = new Date();
+    let dateDuJourPourTimeA: number = dateDuJour.setHours(this.extracHoursFromGivenTime(timeA),this.extracMinutesFromGivenTime(timeA));
+    let dateDuJourPourTimeB: number = dateDuJour.setHours(this.extracHoursFromGivenTime(timeB),this.extracMinutesFromGivenTime(timeB));
+    
+    // Comparaison des dates
+    if ( dateDuJourPourTimeA < dateDuJourPourTimeB ) {
+      this.logger.info("DateService Log : timeA: " + dateDuJourPourTimeA + " < " + " timeB: " + dateDuJourPourTimeB );
+      console.log("DateService Log : timeA: " + dateDuJourPourTimeA + " < " + " timeB: " + dateDuJourPourTimeB );
+      timeAIsBeforeTimeB = true; 
+
+    } 
+    
+    if ( dateDuJourPourTimeA == dateDuJourPourTimeB ) {
+      this.logger.info("DateService Log : timeA: " + dateDuJourPourTimeA + " == " + " timeB: " + dateDuJourPourTimeB );
+      console.log("DateService Log : timeA: " + dateDuJourPourTimeA + " == " + " timeB: " + dateDuJourPourTimeB );
+      timeAIsBeforeTimeB = false;
+
+    } 
+    
+    if ( dateDuJourPourTimeA > dateDuJourPourTimeB ) {
+      this.logger.info("DateService Log : timeA: " + dateDuJourPourTimeA + " > " + " timeB: " + dateDuJourPourTimeB );
+      console.log("DateService Log : timeA: " + dateDuJourPourTimeA + " > " + " timeB: " + dateDuJourPourTimeB );
+      timeAIsBeforeTimeB = false;
+    }
+
+    return timeAIsBeforeTimeB;
+  }
 
 
 }

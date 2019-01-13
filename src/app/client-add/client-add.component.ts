@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NGXLogger } from 'ngx-logger';
+import { HistoryRoutingService } from '../service/historyRouting.service';
 
 @Component({
   selector: 'app-client-add',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClientAddComponent implements OnInit {
 
-  constructor() { }
+  // RouterHistory
+  previousRoute: string;
+  
+  constructor(private logger: NGXLogger,
+              private _historyRouting: HistoryRoutingService
+              ) { }
 
   ngOnInit() {
+
+        // Historique de navigation stocke la route precedent afin de faire un BackPage
+        this.previousRoute = this._historyRouting.getPreviousUrl();
   }
 
 }

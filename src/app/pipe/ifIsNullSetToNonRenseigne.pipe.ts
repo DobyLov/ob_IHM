@@ -5,7 +5,7 @@ export class IfIsNullSetToNonRenseignePipe implements PipeTransform {
 
     
     transform(value: string): string {
-        console.log("Usage Pipe ifIsNullSetToNonRenseignePipe: value : " + value)
+        // console.log("Usage Pipe ifIsNullSetToNonRenseignePipe: value : " + value)
 
         if (value == null || value == "") {
 

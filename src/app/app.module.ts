@@ -38,7 +38,7 @@ import { HomeComponent } from './home/home.component';
 
 // Rdv
 import { RdvComponent } from './rdv/rdv.component';
-import { RdvDetailsComponent } from './rdv-details/rdvdetails.component';
+import { RdvDetailsComponent } from './rdv-details/rdv-details.component';
 import { RdvAddComponent } from './rdv-add/rdv-add.component';
 import { RdvSearchComponent } from './rdv-search/rdv-search.component';
 import { RdvService } from './rdv/rdv.service';
@@ -78,8 +78,14 @@ import { PraticienService } from './praticien/praticien.service';
 import { PraticienDetailsComponent } from './praticien-details/praticien-details.component';
 import { PraticienSearchComponent } from './praticien-search/praticien-search.component';
 import { PraticienAddComponent } from './praticien-add/praticien-add.component';
-
 import { PrestationService } from './prestation/prestation.service';
+
+// Activite
+import { ActiviteComponent } from './activite/activite.component';
+import { ActiviteAddComponent } from './activite-add/activite-add.component';
+import { ActiviteSearchComponent } from './activite-search/activite-search.component';
+
+import { ConfirmRdvDetailsModalcomponent } from './rdv-details/rdv-details.component';
 
 // divers
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
@@ -145,6 +151,8 @@ import { FirstCharUpperPipe } from './pipe/firstCharUpperPipe.pipe';
 import { IfIsNullSetToNonRenseignePipe } from './pipe/ifIsNullSetToNonRenseigne.pipe';
 import { DateAndTime24Pipe } from './pipe/dateAndTime24.pipe';
 import { Time24Pipe } from './pipe/time24.pipe';
+import { ForfaitPipe } from './pipe/forfait.pipe';
+import { WishProOrNotPipe } from './pipe/wishPro.pipe';
 
 // Perfect ScrollBar
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -192,14 +200,20 @@ import {
   MatTooltipModule } from '@angular/material';
 
 
+
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent,    
+    ActiviteComponent,
+    ActiviteAddComponent,
+    ActiviteSearchComponent,
     BottomSheetComponent,
     ConfimrUserFromTokenModalComponent,
+    ConfirmRdvDetailsModalcomponent,
     DateAndTime24Pipe,
     FirstCharUpperPipe, 
     FooterComponent,
+    ForfaitPipe,
     ForgottenPwdComponent,
     ForgottenPwdModalComponent,
     HeaderComponent,
@@ -242,7 +256,8 @@ import {
     UtilisateurSearchComponent,
     GenreSearchComponent,
     GenreAddComponent,
-    GenreDetailsComponent
+    GenreDetailsComponent,
+    WishProOrNotPipe
   ],
 
   imports: [    
@@ -254,7 +269,7 @@ import {
     FormsModule,
     FlexLayoutModule,
     LayoutModule,
-    LoggerModule.forRoot({level: NgxLoggerLevel.INFO}), // TRACE|DEBUG|INFO|LOG|WARN|ERROR|OFF
+    LoggerModule.forRoot({level: NgxLoggerLevel.DEBUG}), // TRACE|DEBUG|INFO|LOG|WARN|ERROR|OFF
     MatAutocompleteModule,
     MatBottomSheetModule,
     MatButtonModule,

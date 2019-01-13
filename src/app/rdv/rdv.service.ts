@@ -199,8 +199,6 @@ export class RdvService {
 
   }
 
-
-
   /**
    * Ajouter un Rdv
    * @param rdv 
@@ -213,23 +211,41 @@ export class RdvService {
     let option = { headers: myHeaders }
 
 
-    return this.httpCli.post<Rdv>(this.url + '/add', rdv, option);     
+    return this.httpCli.post<Rdv>(this.url + '/add', rdv, option);
 
   }
 
-    /**
-   * Modifier un Rdv
-   * @param rdv 
-   */
+  /**
+ * Modifier un Rdv
+ * @param rdv 
+ */
   public putRdv(rdv: Rdv): Observable<Rdv> {
 
-    this.logger.info("RdvService Log : Modifie le  Rdv idRdv : " +rdv.idRdv);
+    this.logger.info("RdvService Log : Modifie le  Rdv idRdv : " + rdv.idRdv);
     this.logger.info("RdvService Log : Rdv a persister : " + JSON.stringify(rdv));
     let myHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     let option = { headers: myHeaders }
 
 
-    return this.httpCli.post<Rdv>(this.url + '/mod', rdv, option);     
+    return this.httpCli.post<Rdv>(this.url + '/mod', rdv, option);
+
+  }
+
+  /**
+   * Supprime un RendezVous
+   * @param idRdv 
+   * @returns Observable<string>
+   */
+  public supprimeRdv(idRdv: number): Observable<string> {
+
+    this.logger.info("RdvService Log : Suppression du Rdv id: " + idRdv);    
+    let myHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    let option = { headers: myHeaders }
+    
+    return this.httpCli
+      .delete<string>( this.url + '/del/' + idRdv,  option )
+      .pipe(res => res);
+
 
   }
 

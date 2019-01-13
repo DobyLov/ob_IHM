@@ -441,37 +441,43 @@ export class AuthService {
 
   }
 
-  /**
-   * Verifiaction si il reste au moins 5 minutes avant expiration du token
-   * @param emailUser 
-   * @returns boolean
-   */
-  public checkIfTokenGotFiveMinutesLeftBeforExpiration(emailUser: string): boolean {
+  // /**
+  //  * Verifiaction si il reste au moins 5 minutes avant expiration du token
+  //  * @param emailUser 
+  //  * @returns boolean
+  //  */
+  // public checkIfTokenGotFiveMinutesLeftBeforExpiration(emailUser: string): boolean {
 
-    this.logger.info("AuthService Log : Verifie si il reste 5 mintes avant avant expiration du token");
-    // Recupere le token
-    let token = this.getOBTokenViaMailFromLS(emailUser);
-    // Recuepre la date/heure d expiration du token
-    let expirationToken = moment(new Date(jwt_decode(token).exp * 1000));
-    this.logger.info("AuthService Log : Date d expiration du token : " + expirationToken.toISOString());
-    this.logger.info("AuthService Log : Date actuelle : " + moment(new Date()).toISOString()); 
-    // Recupere l heure du moment est soustrait 5 minutes
-    let expirationtokenDateMinusFiveminutes = moment(moment(new Date())).subtract(5, "minutes");
-    this.logger.info("AuthService Log : Date actuelle moins 5minutes : " + expirationtokenDateMinusFiveminutes.toISOString());
+  //   this.logger.info("AuthService Log : Verifie si il reste 5 mintes avant avant expiration du token");
+
+  //   // Recupere le token
+  //   let token = this.getOBTokenViaMailFromLS(emailUser);
+  //   // Recuepre la date/heure d expiration du token
+  //   let expirationToken = moment(new Date(jwt_decode(token).exp * 1000));
+  //   this.logger.info("AuthService Log : Date d expiration du token : " + expirationToken.toISOString());
+  //   // Moment de l instant T
+  //   let instantT = moment(new Date());
+  //   this.logger.info("AuthService Log : Date actuelle : " + instantT.toISOString()); 
+  //   // Recupere l heure du moment est soustrait 5 minutes
+  //   // let expirationTokenDateMinusFiveminutes = moment(moment(new Date())).subtract(5, "minutes");
+  //   let instantTMoins5minutes = moment(moment(new Date())).subtract(5, "minutes");
+  //   // this.logger.info("AuthService Log : Date actuelle moins 5minutes : " + expirationTokenDateMinusFiveminutes.toISOString());
+  //   this.logger.info("AuthService Log : Date actuelle moins 5minutes : " + instantTMoins5minutes.toISOString());
     
-    // Test si le token a encore au minimum 5 minutes avant l expiration
-    if (expirationtokenDateMinusFiveminutes.isBefore(expirationToken)){
+  //   // Test si le token a encore au minimum 5 minutes avant l expiration
+  //   // if (expirationTokenDateMinusFiveminutes.isBefore(expirationToken)){
+  //     if ( expirationToken <= instantTMoins5minutes ||   ){
 
-      this.logger.info("AuthService Log : Il reste au moins 5 minutes avant expiration du token.");
-      return true;
+  //     this.logger.info("AuthService Log : Parfait Il reste au moins 5 minutes avant expiration du token.");
+  //     return true;
 
-    } else {
+  //   } else {
 
-      this.logger.info("AuthService Log : Temps inferieur à 5 minutes avant expiration du token.");
-      return false;
+  //     this.logger.info("AuthService Log : Temps inferieur à 5 minutes avant expiration du token.");
+  //     return false;
 
-    }    
-  }
+  //   }    
+  // }
 
   /**
    * Extraction du role depuis le Token fourni

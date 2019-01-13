@@ -1,0 +1,236 @@
+<link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Source+Sans+Pro|Montserrat:300"
+ rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=0" />
+<form [formGroup]="rdvFg" *ngIf="rdvRecupere">
+	<div class="body-containerR" >
+		<div class="body-containerC">
+
+			<mat-card class="title">
+				<mat-card-content class="title-content">
+					<span>Détail du rendez vous N°: {{ rdv.idRdv }}</span>
+				</mat-card-content>
+			</mat-card>
+			<!-- <div>
+				RdvFormcontrol: {{  rdvFg.status }} -- {{ rdv.client.nomClient }}
+			</div> -->
+			<!-- ----------------------------------------------------------------------------------------------------------------------- -->
+			<div class="items-containerR">
+				<mat-card class="calendar-section">
+					<mat-card-header class="calendar-header">
+						<div>Date Rdv</div>
+					</mat-card-header>
+					<mat-card-content class="calendar-content">
+						<mat-form-field>
+							<input class="input-calendar" matInput [matDatepicker]="picker" name="dateFc"
+									placeholder = "modifier la date"									
+									(dateInput)="dateSelectionnee()"
+									formControlName="dateFc">
+							<mat-datepicker-toggle  class="datePicker-button" matSuffix [for]="picker" matTooltip="Sélectionner une date">
+							</mat-datepicker-toggle>
+							<mat-datepicker #picker disabled="false" touchUi="true" 
+											[startAt]="dateSelectionnee" color="datePicker_color">
+							</mat-datepicker>
+						</mat-form-field>
+					</mat-card-content>
+				</mat-card>
+				<!-- ------------------------------------------------ -->
+				<mat-card class="time-section">
+					<mat-card-header class="time-header">
+						<span>Heures Rdv</span>
+					</mat-card-header>
+					<mat-card-content class="time-content">
+						<div class="timePicker-containerR">
+							<div class="timePicker-containerC">
+								<div><div class="intitule-timePicker">Heure début:</div>
+								</div>
+								<div class="timePicker-containerR">
+									<div class="input-timePicker-container">
+										<input matInput class="timePicker" 
+												[value]="timePickerA_initial_value" 
+												[ngxTimepicker]="timePickerA" 
+												[format]="24" min='08:00' max='21:0' 
+												formControlName="timerAFc"
+												disableClick=true required=true readonly>
+									</div>
+									<div class="icon-timePicker">
+										<ngx-material-timepicker-toggle [for]="timePickerA">
+											<mat-icon ngxMaterialTimepickerToggleIcon 
+											matTooltip="Sélectionner l'heure de début du Rdv">access_time</mat-icon>
+										</ngx-material-timepicker-toggle>
+										<ngx-material-timepicker #timePickerA 
+																[minutesGap]="15" 
+																(timeSet)="timePickerASelectionne($event)">
+										</ngx-material-timepicker>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="timePicker-containerR">
+							<div class="timePicker-containerC">
+								<div><div class="intitule-timePicker">Heure fin:</div>
+								</div>
+								<div class="timePicker-containerR">
+									<div class="input-timePicker-container">
+										<input matInput class="timePicker" 
+												[value]="timePickerB_initial_value" 
+												[ngxTimepicker]="timePickerB"
+												formControlName="timerBFc"
+												[format]="24" min="his.tpA_selected_value" max="22:00" 
+												disableClick=true required=true readonly>
+									</div>
+									<div class="icon-timePicker">
+										<ngx-material-timepicker-toggle [for]="timePickerB">
+											<mat-icon ngxMaterialTimepickerToggleIcon 
+																		matTooltip="Sélectionner l'heure de fin du Rdv">access_time</mat-icon>
+										</ngx-material-timepicker-toggle>
+										<ngx-material-timepicker #timePickerB 
+																[minutesGap]="15" 
+																(timeSet)="timePickerBSelectionne($event)">
+										</ngx-material-timepicker>
+									</div>
+								</div>
+							</div>
+						</div>
+					</mat-card-content>
+				</mat-card>
+			</div>
+			<!-- ---------------------------------------------------------------------- -->
+			<div class="items-containerR">
+				<mat-card class="clientele-section">
+					<mat-card-header class="clientele-header">
+						<span>Clientèle</span>
+					</mat-card-header>
+					<mat-card-content class="clientele-content">
+						<mat-form-field>
+							<input 	matInput
+									aria-label="client" 
+									[matAutocomplete]="autoClient" 
+									[formControl]="rdvFg.get('clientFc')">
+							<mat-autocomplete #autoClient="matAutocomplete">
+								<mat-option *ngFor="let client of filteredClients | async" 											
+											[value]='client.nomClient + " " + client.prenomClient' 
+											(onSelectionChange)="clientSelectionne($event, client)">
+									<span>{{client.nomClient }} {{ client.prenomClient }} </span>
+								</mat-option>
+							</mat-autocomplete>
+						</mat-form-field>
+					</mat-card-content>
+				</mat-card>
+				<mat-card class="forfait-section">
+					<mat-card-header class="forfait-header">
+						<span>Forfait</span>
+					</mat-card-header>
+					<mat-card-content class="forfait-content">
+						<div>Forfait</div>
+						<section class="activite-content-slider">
+							<mat-slide-toggle [color]="prestationSliderColor" 
+											  (toggleChange)="toggleForfaitByUser()" 
+											  [checked]="isItAForfait"
+											  [formControl]="rdvFg.get('forfaitFc')">
+							</mat-slide-toggle>
+						</section>
+					</mat-card-content>
+				</mat-card>
+			</div>
+			<!-- ---------------------------------------------------------------------- -->
+			<div class="items-containerR">
+				<mat-card class="prestation-section">
+					<mat-card-header class="prestation-header">
+						<span>PrestationList</span>
+					</mat-card-header>
+					<mat-card-content class="prestation-content">
+						<mat-form-field>
+							<mat-select aria-label="prestation" 
+										[formControl]="this.rdvFg.get('prestationFc')">
+								<mat-option *ngFor="let prestation of filteredPrestationByGenderAndForfait" 
+											[value]='prestation.activite.activiteNom + " " + prestation.soin + " " + prestation.genre.genreHum' 
+											(optionSelectionChanges)="prestationSelectionnne($event, prestation)">
+											{{ prestation.activite.activiteNom }} /  {{ prestation.soin  | WishProOrNotPipe }} 
+											{{ prestation.genre.genreHum }} {{ prestation.forfait | ForfaitPipe }}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</mat-card-content>
+				</mat-card>
+			</div>
+				<!-- ---------------------------------------------------------------------- -->
+			<div class="items-containerR">
+				<mat-card class="praticien-section">
+					<mat-card-header class="praticien-header">
+						<span>Praticien</span>
+					</mat-card-header>
+					<mat-card-content class="praticien-content">
+						<mat-select [formControl]="this.rdvFg.get('praticienFc')">
+							<mat-option *ngFor="let praticien of praticienList" 
+										[value]='praticien.nomPraticien + " " + praticien.prenomPraticien' 
+										(onSelectionChange)="praticienSelectionne(praticien)">
+								{{ praticien.nomPraticien }} {{ praticien.prenomPraticien }}
+							</mat-option>
+						</mat-select>
+					</mat-card-content>
+				</mat-card>
+				<mat-card class="lieuRdv-section">
+					<mat-card-header class="lieuRdv-header">
+						<span>Lieu Rdv</span>
+					</mat-card-header>
+					<mat-card-content class="lieuRdv-content">
+						<mat-select [formControl]="this.rdvFg.get('lieuRdvFc')">
+							<mat-option *ngFor="let lieuRdv of lieuRdvList" 
+										[value]="lieuRdv.lieuRdv" 
+										(onSelectionChange)="lieuRdvSelectionne(lieuRdv)">
+								{{ lieuRdv.lieuRdv }}
+							</mat-option>
+						</mat-select>
+					</mat-card-content>
+				</mat-card>
+			</div>
+
+
+			<!-- ----------------------------------------------------------------------------------------------------------------------- -->
+			<div class="items-containerR">
+				<mat-card class="cancelledRdv-section">
+						<mat-card-header class="cancelledRdv-header">
+							<span>Annulation de Rdv</span>
+						</mat-card-header>
+						<mat-card-content >
+							<div class="cancelledRdv-slider">
+								<div>Etat du Rdv Annulé ou non Annulé</div>
+								<section >
+									<mat-slide-toggle 
+												id=2 
+												[color]="rdvAnnuleColor" 
+												[checked]="rdv.isCancelled"
+												(toggleChange)="changeStatusOfRdvCancelled()"
+												toolTip="Cela n'efface pas le rdv de la base de donnée">
+									</mat-slide-toggle>
+								</section>
+							</div>
+						</mat-card-content>
+					</mat-card>
+			</div>
+
+			<mat-card class="action-section">
+				<div>
+					<button mat-mini-fab color="warn" matTooltip="Effacer le Rdv" (click)="eraseRdv()">
+						<mat-icon class="remonte-icon-btn">delete</mat-icon>
+					</button>
+				</div>
+				<div>
+					<button mat-mini-fab color="primary" matTooltip="Retourner à la page Home" (click)="annulerLesModificationsRdv()">
+						<mat-icon class="remonte-icon-btn">home</mat-icon>
+					</button>
+				</div>
+				<div>
+					<button mat-mini-fab 
+							color="primary" 
+							matTooltip="Valider les modifications"
+							[disabled]="update_button_state"
+							(click)="updateRdv()">
+						<mat-icon class="remonte-icon-btn">create</mat-icon>
+					</button>
+				</div>
+			</mat-card>
+
+		</div>
+	</div>
+</form>

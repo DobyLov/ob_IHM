@@ -9,7 +9,7 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 // Rdv
 import { RdvComponent } from './rdv/rdv.component';
-import { RdvDetailsComponent } from './rdv-details/rdvdetails.component';
+import { RdvDetailsComponent, ConfirmRdvDetailsModalcomponent } from './rdv-details/rdv-details.component';
 import { RdvAddComponent } from './rdv-add/rdv-add.component';
 import { RdvSearchComponent } from './rdv-search/rdv-search.component';
 
@@ -83,6 +83,7 @@ const routes: Routes = [
   { path: 'rdvadd', component: RdvAddComponent, canActivate: [AuthGuardService] },
   { path: 'rdvsearch', component: RdvSearchComponent, canActivate: [AuthGuardService] },
   { path: 'rdvdetails/:idRdv', component: RdvDetailsComponent, canActivate: [AuthGuardService] },
+  { path: 'confirmrdvdetailsmodal', component: ConfirmRdvDetailsModalcomponent, canActivate: [AuthGuardService] },
   { path: 'genreadd', component: GenreAddComponent, canActivate: [AuthGuardService] },
   { path: 'genresearch', component: GenreSearchComponent, canActivate: [AuthGuardService] },
   { path: 'genredetails/:idGenre', component: GenreDetailsComponent, canActivate: [AuthGuardService] },

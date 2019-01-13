@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectorRef, Input, EventEmitter, Output, OnChanges } from '@angular/core';
+import { Component, OnInit, Output, OnChanges } from '@angular/core';
 import { Praticien } from '../praticien/praticien';
 import { CurrentUtilisateur } from '../login/currentUtilisateur';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { Rdv } from '../rdv/rdv';
 import { NGXLogger } from 'ngx-logger';
 import { AuthService } from '../login/auth.service';
@@ -11,7 +11,6 @@ import { DateService } from '../service/dateservice.service';
 import { RdvService } from '../rdv/rdv.service';
 import { HistoryRoutingService } from '../service/historyRouting.service';
 import { Genre } from '../genre/genre';
-import { GenreService } from '../genre/genre.service';
 import { Client } from '../client/client';
 import { Prestation } from '../prestation/prestation';
 import { LieuRdv } from '../lieuRdv/lieuRdv';
@@ -20,11 +19,13 @@ import { PrestationService } from '../prestation/prestation.service';
 import { LieuRdvService } from '../lieuRdv/lieurdv.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
-import { MatOptionSelectionChange, MatDatepickerInputEvent } from '@angular/material';
+import { MatOptionSelectionChange } from '@angular/material';
 import { Utilisateur } from '../utilisateur/utilisateur';
 import { ToasterService } from '../service/toaster.service';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { Activite } from '../activite/activite';
+import { ActiviteService } from '../activite/activite.service';
 
 
 moment.locale('fr');
@@ -79,7 +80,10 @@ export class RdvAddComponent implements OnInit, OnChanges {
   prestationSliderColor: string = "primary";
   // isPrestationsIsAForfait: string;
   // Activite
-  activiteList: string[];
+  activite: Activite;
+  activiteList: Activite[];
+  activiteListAvecFiltreForfait: string [];
+  activiteListBehaviosrSubject: BehaviorSubject<string[]>;
   selectedActivite: string;
   filterActivite: string;
   // Praticien
@@ -107,7 +111,7 @@ export class RdvAddComponent implements OnInit, OnChanges {
   dateHeureFin: Date;
   // Forfait  
   isItAForfait: boolean = false;
-  isPrestaIsAForfait: string = "F";
+  isPrestaIsAForfait: boolean = false;
   // Soin
   soinList: Prestation[];
   filterSoin: string;
@@ -115,7 +119,7 @@ export class RdvAddComponent implements OnInit, OnChanges {
 
   constructor(private logger: NGXLogger,
     private _rdvService: RdvService,
-    private _genreService: GenreService,
+    private _activiteService: ActiviteService,
     private _clientService: ClientService,
     private _prestationService: PrestationService,
     private _praticienService: PraticienService,
@@ -145,6 +149,7 @@ export class RdvAddComponent implements OnInit, OnChanges {
     this.getCurrentUtilisateur();
     this.getPraticienList();
     this.getLieurRdvList();
+    this.getActiviteList()
 
   }
 
@@ -229,6 +234,16 @@ export class RdvAddComponent implements OnInit, OnChanges {
     // this.logger.info("RdvAddComponent log : Liste des Clients nb entrees : " + this.clientList.length);
   }
 
+  private getActiviteList() {
+    this.logger.info("RdvAddComponent log : Recuperation de la liste des Activites.");
+    this._activiteService.getActiviteList().subscribe(
+      ((activiteList: Activite[]) => {
+        this.activiteList = activiteList;
+      }
+      )
+    )
+  }
+
   // =====================================================================================
   // Methodes de filtrage des donnees
   // =====================================================================================
@@ -263,6 +278,7 @@ export class RdvAddComponent implements OnInit, OnChanges {
   public activiteExtractWithFilters() {
     // purge le tableau
     this.activiteList = [];
+    this.activiteListAvecFiltreForfait = [];
     this.filterActivite = '';
     this.filterSoin = '';
     this.soinCtrl.setValue('');
@@ -283,17 +299,34 @@ export class RdvAddComponent implements OnInit, OnChanges {
     // Filtre 1 Si forfait est False/ true
     // Filtre selon l Id du Genre du client selectionne
     // ----------------------
-    this.activiteList = this.prestationList
+    // this.activiteList = this.prestationList
+    this.activiteListAvecFiltreForfait = 
+      this.prestationList
       // .map(toto => toto)
-      .filter(activ => activ.forfait.valueOf().toUpperCase() == this.isPrestaIsAForfait)
-      .filter(activ => activ.genre.idGenre.valueOf() == idGenre)
-      .map(activ => activ.activite)
-      // supprime les doublons
-      .filter((el, i, a) => i === a.indexOf(el));
+      .filter(presta => presta.forfait.valueOf() == this.isPrestaIsAForfait)
+      .filter(presta => presta.genre.idGenre.valueOf() == idGenre)
+      .map(activite => activite.activite.activiteNom)
+      .filter(((activite, pos, arr) => 
+         arr.indexOf(activite) === pos))
+      ;
 
-    this.logger.info("RdvAddComponent log : Taille de le table Activite : " + this.activiteList.length);
-    this.logger.info("RdvAddComponent log : Liste des Activites disponnible en (f) des filtres : " + this.activiteList);
+      // .filter((el, ind, arr) => 
+      // ind === arr.indexOf(el)); // supprime les doublons   
+    
 
+    this.logger.info("RdvAddComponent log : Taille de le table Activite : " + this.activiteListAvecFiltreForfait.length);
+    this.logger.info("RdvAddComponent log : Liste des Activites disponnible en (f) des filtres : " + this.activiteListAvecFiltreForfait);
+
+    for (let i=0; i < this.activiteListAvecFiltreForfait.length; i++) {
+      this.logger.info("\n: Numero : "  + i + "_" + this.activiteListAvecFiltreForfait[i] + " idActivite : " + this.activiteListAvecFiltreForfait[i].valueOf());
+    }
+
+    this.activiteListBehaviosrSubject = <BehaviorSubject<string[]>> new BehaviorSubject(this.activiteListAvecFiltreForfait);
+
+  }
+
+  private activiteListRealTimeUpdated() {
+    return this.activiteListBehaviosrSubject.asObservable();
   }
 
   /**
@@ -307,9 +340,9 @@ export class RdvAddComponent implements OnInit, OnChanges {
       // filtre par Genre
       .filter(soin => soin.genre.genreHum.valueOf().toLocaleUpperCase() == this.selectedClientFromList.genreClient.genreHum.valueOf().toLocaleUpperCase())
       // filtre par forfait
-      .filter(soin => soin.forfait.valueOf().toLocaleUpperCase() == this.isPrestaIsAForfait.toLocaleUpperCase())
+      .filter(soin => soin.forfait.valueOf() == this.isPrestaIsAForfait)
       // filtre par Activite
-      .filter(soin => soin.activite.valueOf() == this.selectedActivite)
+      .filter(soin => soin.activite.activiteNom == this.selectedActivite)
       // Map les prestations aya reussi le test
       .map(soin => soin)
     // .filter((el, i, a) => i === a.indexOf(el));    
@@ -414,10 +447,10 @@ export class RdvAddComponent implements OnInit, OnChanges {
   }
 
 
-  permutForfait = function togleToFalseForfait(calb) {
-    this.isPrestaIsAForfait = false
-    calb();
-  }
+  // permutForfait = function togleToFalseForfait(calb) {
+  //   this.isPrestaIsAForfait = false
+  //   calb();
+  // }
 
   /**
    * Selectionne si forfait Boolean
@@ -442,12 +475,13 @@ export class RdvAddComponent implements OnInit, OnChanges {
 
     if (forfaitValue.valueOf() == true) {
 
-      this.isPrestaIsAForfait = "T";
+      this.isPrestaIsAForfait = true;
 
     } else {
 
-      this.isPrestaIsAForfait = "F";
+      this.isPrestaIsAForfait = false;
     }
+
     this.logger.info("RdvAddComponent log : Toggle ForfaitString value : " + this.isPrestaIsAForfait);
 
   }
@@ -508,6 +542,7 @@ export class RdvAddComponent implements OnInit, OnChanges {
    * @param lieuRdv 
    */
   public lieuRdvSelectionne(lieuRdv: LieuRdv) {
+
     this.logger.info("RdvAddComponent log : Praticien selectionne Id LieuRdv : " + lieuRdv.idLieuRdv);
     this.selectedLieuRdvFromList = lieuRdv;
     this.logger.info("RdvAddComponent log : LieuRdv IsLieuRdv : " + this.selectedLieuRdvFromList.idLieuRdv);
@@ -630,7 +665,8 @@ export class RdvAddComponent implements OnInit, OnChanges {
    */
   private resetActivites() {
     this.filterActivite = '';
-    this.activiteList = [];
+    // this.activiteList = [];
+    this.activiteListAvecFiltreForfait = [];
     this.filterSoin = '';
     this.soinCtrl.setValue('');
     this.soinList = [];
@@ -655,9 +691,10 @@ export class RdvAddComponent implements OnInit, OnChanges {
    */
   public saveRdv() {
 
-    this.checkIfTokenGotFiveMinutesLeftBeforExpiration();
+    // this.checkIfTokenGotFiveMinutesLeftBeforExpiration();
 
     this.rdv.dateDeSaisie = moment( this.dateSaisie ).unix()*1000; 
+    // this.rdv.dateDeModif = moment( this.dateSaisie ).unix()*1000; 
     this.rdv.dateHeureDebut = moment( this._dateService.dateTimeConstructor(this.dateSel,this.tpA_selected_value)).unix()*1000;
     this.rdv.dateHeureFin = moment( this._dateService.dateTimeConstructor(this.dateSel,this.tpB_selected_value) ).unix()*1000;
     
@@ -697,28 +734,6 @@ export class RdvAddComponent implements OnInit, OnChanges {
           this.logger.error("RdvAddComponent Log : Le rendez-vous n'a pas été enregistré");
         })
 
-  }
-
-  /**
-   * Verifiaction si le token possede au minimum 5 minutes avant expiration
-   */
-  private checkIfTokenGotFiveMinutesLeftBeforExpiration(): void {
-
-    this.logger.error("RdvAddComponent Log : Vérification si le token possede encore 5 minutes de vie");
-    let isTokenGot5: boolean = this._authService.checkIfTokenGotFiveMinutesLeftBeforExpiration(this.currentUtilisateur$.adresseMailUtilisateur);
-    this.logger.error("RdvAddComponent Log : Etat si la token a 5 minutes de vie : " + isTokenGot5);
-    
-    if (isTokenGot5 == false) {
-
-      this.logger.info("RdvAddComponent Log : Le token est inferieur a 5 minutes de vie ou meme expiré");
-      this._authService.logOut(this.currentUtilisateur$.adresseMailUtilisateur);
-      this._router.navigate(['./login']);
-
-    } else {
-
-      this.logger.info("RdvAddComponent Log : Le token possede encore au moins 5 minutes de vie");
-
-    }
   }
 
 

@@ -69,20 +69,50 @@
                         <mat-expansion-panel class="mat-elevation-z0">
                                 <mat-expansion-panel-header>
                                         <mat-panel-title>
-                                                Utilisateur
+                                                Praticien
                                         </mat-panel-title>
                                 </mat-expansion-panel-header>
                                 <mat-nav-list> 
-                                        <a mat-list-item [routerLink]="[ '/utilisateur-add' ]" (click)="closeSideNav()">
+                                        <a mat-list-item [routerLink]="[ '/praticienadd' ]" (click)="closeSideNav()">
                                                 <mat-icon>add</mat-icon>
                                         </a>
-                                        <a mat-list-item [routerLink]="[ '/utilisateur-search' ]" (click)="closeSideNav()">
+                                        <a mat-list-item [routerLink]="[ '/praticiensearch' ]" (click)="closeSideNav()">
                                                 <mat-icon>search</mat-icon>
                                         </a>
                                 </mat-nav-list>      
                         </mat-expansion-panel>
+                        <mat-expansion-panel class="mat-elevation-z0">
+                                <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                                Utilisateur
+                                        </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <mat-nav-list> 
+                                        <a mat-list-item [routerLink]="[ '/utilisateuradd' ]" (click)="closeSideNav()">
+                                                <mat-icon>add</mat-icon>
+                                        </a>
+                                        <a mat-list-item [routerLink]="[ '/utilisateursearch' ]" (click)="closeSideNav()">
+                                                <mat-icon>search</mat-icon>
+                                        </a>
+                                </mat-nav-list>      
+                        </mat-expansion-panel>
+                        <mat-expansion-panel class="mat-elevation-z0">
+                                        <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                        Activite
+                                                </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <mat-nav-list> 
+                                                <a mat-list-item [routerLink]="[ '/activiteadd' ]" (click)="closeSideNav()">
+                                                        <mat-icon>add</mat-icon>
+                                                </a>
+                                                <a mat-list-item [routerLink]="[ '/activitesearch' ]" (click)="closeSideNav()">
+                                                        <mat-icon>search</mat-icon>
+                                                </a>
+                                        </mat-nav-list>      
+                                </mat-expansion-panel>
                         <mat-nav-list style="padding-bottom: 60px;">
-                                <a mat-list-item [routerLink]="[ '/suivi-activite' ]" (click)="closeSideNav()">Suivi</a>
+                                <!-- <a mat-list-item [routerLink]="[ '/suivi-activite' ]" (click)="closeSideNav()">Suivi</a> -->
                         </mat-nav-list>
                 </mat-accordion>
         

@@ -10,6 +10,7 @@ export class Rdv {
     public dateHeureDebut: number;
     public dateDeSaisie: number;
     public dateHeureFin: number;
+    public dateDeModif: number;
     public prestation: Prestation;
     public praticien: Praticien;
     public client: Client;

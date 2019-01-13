@@ -6,7 +6,7 @@ export class Time24Pipe implements PipeTransform {
     
     transform(value: string) {
     
-    console.log("datPipe : TypeofValue : " + typeof(value));
+    // console.log("datPipe : TypeofValue : " + typeof(value));
     return this.addZeroIfUnderOrEqualsToNine( new Date(value).getHours().toString() ) 
         +  ":" + this.addZeroIfUnderOrEqualsToNine(new Date(value).getMinutes().toString() );
 

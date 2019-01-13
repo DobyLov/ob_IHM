@@ -3,24 +3,20 @@
 <div class="flex-container">    
     <div class="flex-item-title">
         <mat-toolbar color="primary" >
-            <p>Confirmation Utilisateur </p>
+            <p>Supprimer le Rdv</p>
         </mat-toolbar>
-    </div>
-    <div class="items">        
-        <p>Avant de continuer, <br>pouvez vous
-        <i>confirmer</i> que vous êtes
-        l'utilisateur <b>{{ prenom }}</b>, enregistré(e)
-        avec l'adresse <b>{{ data.userMail }}</b>.</p>        
-    </div>
-    
-
+    </div> 
+    <div class="items">
+        <p>Confirmez la suppression du Rdv N°: {{ data.idRdv }}.</p>
+    </div> 
     <div class="flex-item-Action">
         <div class="flex-container-actionOkCancel">
             <mat-toolbar color="primary">   
             <div class="flex-item-ActionOkCancel">             
                 <button mat-icon-button 
-                        matTooltip="Oui c'est bien moi"
-                        (click)="userConfirmed()">
+                        alt="Oui je confirme"
+                        matTooltip="Oui supprimer le Rdv"
+                        (click)="okDelete()">
                     <mat-icon>
                         <i class="material-icons">check</i>
                     </mat-icon>
@@ -28,8 +24,9 @@
             </div> 
             <div class="flex-item-ActionOkCancel">
                 <button mat-icon-button 
-                        matTooltip="Non, ce n'est pas moi"
-                        (click)="userNotConfirmed()">
+                        alt="Non, je ne confirme pas"
+                        matTooltip="non ne pas supprimer le Rdv"
+                        (click)="cancelDeletion()">
                     <mat-icon>
                         <i class="material-icons">clear</i>
                     </mat-icon>

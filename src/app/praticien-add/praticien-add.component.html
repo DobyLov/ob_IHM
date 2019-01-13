@@ -1,3 +1,71 @@
-<p>
-  praticien-add works!
-</p>
+<link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Source+Sans+Pro|Montserrat:300"
+ rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=0" />
+<!-- <form> -->
+	<div class="body-containerR" >
+		<div class="body-containerC">
+
+			<mat-card class="title">
+				<mat-card-content class="title-content">
+					<span>Ajouter un Praticien</span>
+				</mat-card-content>
+			</mat-card>
+			<!-- ----------------------------------------------------------------------------------------------------------------------- -->
+			<div class="items-containerR">
+				<mat-card class="matCard-praticien-section">
+					<mat-card-header class="matCard-praticien-header">
+						<div>Identité Praticien</div>
+					</mat-card-header>
+					<mat-card-content class="matCard-praticien-content">
+              <table class="example-full-width" cellspacing="0"><tr>
+                  <td><mat-form-field>
+                  <input matInput placeholder="Prénom">
+                  </mat-form-field></td>
+                  <td><mat-form-field>
+                  <input matInput placeholder="Nom">
+                  </mat-form-field></td>
+                </tr></table>
+					</mat-card-content>
+				</mat-card>
+				<!-- ------------------------------------------------ -->
+
+        
+			</div>
+			<!-- ---------------------------------------------------------------------- -->
+			<div class="items-containerR">
+				<mat-card class="matCard-contact-section">
+					<mat-card-header class="matCard-contact-header">
+						<div>Contact Praticien</div>
+					</mat-card-header>
+					<mat-card-content class="matCard-contact-content">
+					</mat-card-content>
+				</mat-card>
+				<!-- ------------------------------------------------ -->
+				<mat-card class="matCard-optionRappels-section">
+					<mat-card-header class="matCard-optionRappels-header">
+						<span>Options Rappels</span>
+					</mat-card-header>
+					<mat-card-content class="matCard-optionRappels-content">
+					</mat-card-content>
+				</mat-card>
+			</div>
+			<!-- ---------------------------------------------------------------------- -->
+		
+			<mat-card class="action-section">
+				<div>
+          <button mat-mini-fab 
+                  color="warn" 
+                  matTooltip="Annuler la saisie du Praticien" [routerLink]="[this.previousRoute]">
+            <mat-icon class="remonte-icon-btn">clear</mat-icon>
+          </button>
+				</div>
+				<div>
+					<button mat-mini-fab color="primary" matTooltip="Valider">
+						<mat-icon class="remonte-icon-btn">create</mat-icon>
+					</button>
+				</div>
+			</mat-card>
+
+		</div>
+	</div>
+<!-- </form> -->

@@ -31,6 +31,16 @@ export class PrestationService {
 
   }
 
+  public getPrestationById(idPrestation: number): Observable<Prestation> {
+
+    this.logger.info("PrestationService Log : Récupère la prestation par son Id");
+
+    return this.httpCli
+      .get<Prestation>(this.url + "/" + idPrestation )
+      .pipe(map(res => res));
+
+  }
+
   /**
   * Retourne la liste activite filtree depuis la liste de prestation
   */
