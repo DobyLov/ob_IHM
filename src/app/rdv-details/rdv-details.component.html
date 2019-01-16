@@ -21,14 +21,23 @@
 					</mat-card-header>
 					<mat-card-content class="calendar-content">
 						<mat-form-field>
-							<input class="input-calendar" matInput [matDatepicker]="picker" name="dateFc"
+							<input 	[formControl]="this.rdvFg.get('dateFc')"
+									class="input-calendar" 
+									matInput 
+									[matDatepicker]="picker" 
+									name="dateFc"									
 									placeholder = "modifier la date"									
-									(dateInput)="dateSelectionnee()"
+									(dateChange)="dateSelectionnee($event)"
 									formControlName="dateFc">
-							<mat-datepicker-toggle  class="datePicker-button" matSuffix [for]="picker" matTooltip="Sélectionner une date">
+							<mat-datepicker-toggle  class="datePicker-button"
+													matSuffix [for]="picker" 
+													matTooltip="Sélectionner une date">
 							</mat-datepicker-toggle>
-							<mat-datepicker #picker disabled="false" touchUi="true" 
-											[startAt]="dateSelectionnee" color="datePicker_color">
+							<mat-datepicker #picker 
+											disabled="false" 
+											touchUi="true" 
+											[startAt]="dateSelectionnee" 
+											color="datePicker_color">
 							</mat-datepicker>
 						</mat-form-field>
 					</mat-card-content>
@@ -48,7 +57,9 @@
 										<input matInput class="timePicker" 
 												[value]="timePickerA_initial_value" 
 												[ngxTimepicker]="timePickerA" 
-												[format]="24" min='08:00' max='21:0' 
+												[format]="24" 
+												min="08:00" 
+												max="21:00" 
 												formControlName="timerAFc"
 												disableClick=true required=true readonly>
 									</div>
@@ -75,7 +86,9 @@
 												[value]="timePickerB_initial_value" 
 												[ngxTimepicker]="timePickerB"
 												formControlName="timerBFc"
-												[format]="24" min="his.tpA_selected_value" max="22:00" 
+												[format]="24" 
+												[min]="this.tpA_selected_value"
+												max="22:00" 
 												disableClick=true required=true readonly>
 									</div>
 									<div class="icon-timePicker">
@@ -139,17 +152,15 @@
 						<span>PrestationList</span>
 					</mat-card-header>
 					<mat-card-content class="prestation-content">
-						<mat-form-field>
-							<mat-select aria-label="prestation" 
-										[formControl]="this.rdvFg.get('prestationFc')">
-								<mat-option *ngFor="let prestation of filteredPrestationByGenderAndForfait" 
+							<mat-select [formControl]="this.rdvFg.get('prestationFc')">
+								<mat-option *ngFor="let prestation of prestationList" 
 											[value]='prestation.activite.activiteNom + " " + prestation.soin + " " + prestation.genre.genreHum' 
-											(optionSelectionChanges)="prestationSelectionnne($event, prestation)">
+											(onSelectionChange)="prestationSelectionnne($event, prestation)">											
 											{{ prestation.activite.activiteNom }} /  {{ prestation.soin  | WishProOrNotPipe }} 
-											{{ prestation.genre.genreHum }} {{ prestation.forfait | ForfaitPipe }}
-								</mat-option>
+											
+								</mat-option>																
 							</mat-select>
-						</mat-form-field>
+							<!-- <span *ngIf="!this.prestationFieldIsTouched"> {{ rdvFg.get('prestationFc').value }} </span> -->
 					</mat-card-content>
 				</mat-card>
 			</div>
@@ -167,6 +178,7 @@
 								{{ praticien.nomPraticien }} {{ praticien.prenomPraticien }}
 							</mat-option>
 						</mat-select>
+						<!-- <span *ngIf="!this.praticienFieldIsTouched"> {{ rdvFg.get('praticienFc').value }} </span> -->
 					</mat-card-content>
 				</mat-card>
 				<mat-card class="lieuRdv-section">
@@ -181,11 +193,12 @@
 								{{ lieuRdv.lieuRdv }}
 							</mat-option>
 						</mat-select>
+						<!-- <span *ngIf="!this.lieuRdvFieldIsTouched"> {{ rdvFg.get('lieuRdvFc').value }} </span> -->
 					</mat-card-content>
 				</mat-card>
 			</div>
 
-
+			<!-- ----------------------------------------------------------------------------------------------------------------------- -->
 			<!-- ----------------------------------------------------------------------------------------------------------------------- -->
 			<div class="items-containerR">
 				<mat-card class="cancelledRdv-section">

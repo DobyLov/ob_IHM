@@ -1,6 +1,7 @@
-import { Injectable, ChangeDetectorRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { appConfig } from '../constant/apiOpusBeauteUrl';
-import { BehaviorSubject, Observable } from 'rxjs';
+// import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { ToasterService } from './toaster.service';
 import { NGXLogger } from 'ngx-logger';
 import { reject } from 'q';

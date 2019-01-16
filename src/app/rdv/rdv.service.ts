@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { appConfig } from '../constant/apiOpusBeauteUrl';
 import { NGXLogger } from 'ngx-logger';
-import { HttpClient, HttpParams, HttpHeaderResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Rdv } from './rdv';
-import { Observable, throwError, Subscription } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { BottomSheetService } from '../service/bottomsheet.service';
+import { error } from '@angular/compiler/src/util';
+import { text } from '@angular/core/src/render3';
 
 
 @Injectable(
@@ -207,10 +209,9 @@ export class RdvService {
 
     this.logger.info("RdvService Log : Ajouter le  Rdv");
     this.logger.info("RdvService Log : Rdv a persister : " + JSON.stringify(rdv));
+
     let myHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     let option = { headers: myHeaders }
-
-
     return this.httpCli.post<Rdv>(this.url + '/add', rdv, option);
 
   }
@@ -219,18 +220,22 @@ export class RdvService {
  * Modifier un Rdv
  * @param rdv 
  */
-  public putRdv(rdv: Rdv): Observable<Rdv> {
+  public putRdv(rdv: Rdv): Observable<string> {
 
     this.logger.info("RdvService Log : Modifie le  Rdv idRdv : " + rdv.idRdv);
-    this.logger.info("RdvService Log : Rdv a persister : " + JSON.stringify(rdv));
-    let myHeaders = new HttpHeaders().set('Content-Type', 'application/json');
-    let option = { headers: myHeaders }
+    this.logger.info("RdvService Log : Rdv a modifier : " + JSON.stringify(rdv));
+    
+    let myHeaders = new HttpHeaders()
+      .set('Content-Type', 'text/plain')
+      .set('Response', 'text');
+    
+    let option = { headers: myHeaders}
 
-
-    return this.httpCli.post<Rdv>(this.url + '/mod', rdv, option);
+    return this.httpCli.put<string>(this.url + '/mod', rdv, option);
 
   }
 
+  
   /**
    * Supprime un RendezVous
    * @param idRdv 
@@ -238,14 +243,13 @@ export class RdvService {
    */
   public supprimeRdv(idRdv: number): Observable<string> {
 
-    this.logger.info("RdvService Log : Suppression du Rdv id: " + idRdv);    
+    this.logger.info("RdvService Log : Suppression du Rdv id: " + idRdv); 
+
     let myHeaders = new HttpHeaders().set('Content-Type', 'application/json');
-    let option = { headers: myHeaders }
-    
+    let option = { headers: myHeaders }    
     return this.httpCli
       .delete<string>( this.url + '/del/' + idRdv,  option )
       .pipe(res => res);
-
 
   }
 

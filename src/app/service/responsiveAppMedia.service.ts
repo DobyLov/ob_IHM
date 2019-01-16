@@ -1,9 +1,9 @@
 import { Injectable } from "../../../node_modules/@angular/core";
 import { NGXLogger } from "../../../node_modules/ngx-logger";
 import { BreakpointObserver, Breakpoints } from "../../../node_modules/@angular/cdk/layout";
-import { BehaviorSubject } from "../../../node_modules/rxjs/BehaviorSubject";
+// import { BehaviorSubject } from "../../../node_modules/rxjs/BehaviorSubject";
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { Observable } from "../../../node_modules/rxjs/Observable";
 
 
 Injectable()

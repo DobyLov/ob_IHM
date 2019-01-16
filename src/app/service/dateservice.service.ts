@@ -218,9 +218,9 @@ export class DateService {
  * @returns boolean
  */
   public compareTimeATimeB(timeA: string, timeB: string): boolean {
-    console.log("DateService Log : value timeA: " + timeA);
+    // console.log("DateService Log : value timeA: " + timeA);
     this.logger.info("DateService Log : value timeA: " + timeA);
-    console.log("DateService Log : value timeB: " + timeB);
+    // console.log("DateService Log : value timeB: " + timeB);
     this.logger.info("DateService Log : value timeB: " + timeB);
     let timeAIsBeforeTimeB: boolean = false;
     const dateDuJour: Date = new Date();
@@ -230,21 +230,21 @@ export class DateService {
     // Comparaison des dates
     if ( dateDuJourPourTimeA < dateDuJourPourTimeB ) {
       this.logger.info("DateService Log : timeA: " + dateDuJourPourTimeA + " < " + " timeB: " + dateDuJourPourTimeB );
-      console.log("DateService Log : timeA: " + dateDuJourPourTimeA + " < " + " timeB: " + dateDuJourPourTimeB );
+      // console.log("DateService Log : timeA: " + dateDuJourPourTimeA + " < " + " timeB: " + dateDuJourPourTimeB );
       timeAIsBeforeTimeB = true; 
 
     } 
     
     if ( dateDuJourPourTimeA == dateDuJourPourTimeB ) {
       this.logger.info("DateService Log : timeA: " + dateDuJourPourTimeA + " == " + " timeB: " + dateDuJourPourTimeB );
-      console.log("DateService Log : timeA: " + dateDuJourPourTimeA + " == " + " timeB: " + dateDuJourPourTimeB );
+      // console.log("DateService Log : timeA: " + dateDuJourPourTimeA + " == " + " timeB: " + dateDuJourPourTimeB );
       timeAIsBeforeTimeB = false;
 
     } 
     
     if ( dateDuJourPourTimeA > dateDuJourPourTimeB ) {
       this.logger.info("DateService Log : timeA: " + dateDuJourPourTimeA + " > " + " timeB: " + dateDuJourPourTimeB );
-      console.log("DateService Log : timeA: " + dateDuJourPourTimeA + " > " + " timeB: " + dateDuJourPourTimeB );
+      // console.log("DateService Log : timeA: " + dateDuJourPourTimeA + " > " + " timeB: " + dateDuJourPourTimeB );
       timeAIsBeforeTimeB = false;
     }
 

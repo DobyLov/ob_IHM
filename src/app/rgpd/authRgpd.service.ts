@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpHeaders, HttpClient, HttpParams } from "@angular/common/http";
-import { BehaviorSubject } from "rxjs";
+// import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Router } from "@angular/router";
 import { BottomSheetService } from "../service/bottomsheet.service";
 import { appConfig } from "../constant/apiOpusBeauteUrl";

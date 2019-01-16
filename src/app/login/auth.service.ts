@@ -6,7 +6,8 @@ import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular
 import { ToasterService } from '../service/toaster.service';
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
 import { Credentials } from './credentials';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+// import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject'
 import { Router } from '@angular/router';
 import { DateService } from '../service/dateservice.service';
 import * as moment from 'moment';

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, ChangeDetectorRef, Inject } from '@angular/core';
-import { MatOptionSelectionChange, MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatOptionSelectionChange, MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA, MatDatepickerInputEvent } from '@angular/material';
 import { NGXLogger } from 'ngx-logger';
 import { RdvService } from '../rdv/rdv.service';
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
@@ -7,8 +7,7 @@ import { Rdv } from '../rdv/rdv';
 import { AuthService } from '../login/auth.service';
 import { HistoryRoutingService } from '../service/historyRouting.service';
 import { CurrentUtilisateur } from '../login/currentUtilisateur';
-import { Subscription, Observable } from 'rxjs';
-import { FormControl, FormGroup, Validators, Validator } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Client } from '../client/client';
 import { Prestation } from '../prestation/prestation';
 import { Genre } from '../genre/genre';
@@ -23,10 +22,13 @@ import { startWith, map } from 'rxjs/operators';
 import { ToasterService } from '../service/toaster.service';
 import { Utilisateur } from '../utilisateur/utilisateur';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as moment from 'moment';
 import { ActiviteService } from '../activite/activite.service';
 import { Activite } from '../activite/activite';
-import { HttpResponse } from '@angular/common/http';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { Subscription, Observable } from 'rxjs';
+
+// import * as moment from 'moment';
+import * as moment from 'moment-timezone'
 
 @Component({
   selector: 'app-rdvdetails',
@@ -34,6 +36,8 @@ import { HttpResponse } from '@angular/common/http';
   styleUrls: ['./rdv-details.component.scss']
 })
 export class RdvDetailsComponent implements OnInit {
+
+  // @ViewChild(mat-Select)selectComponent:MatSelect;
 
   // RouterHistory
   previousRoute: string;
@@ -49,8 +53,11 @@ export class RdvDetailsComponent implements OnInit {
   filteredClients: Observable<Client[]>;
   // prestationCtrl = new FormControl(); -----------------------------------------------------
   filteredPrestations: Observable<Prestation[]>;
+
   // Activation des champs
   date_changed: boolean = false;
+  datePickerSelected: Date;
+
   timeA_state: boolean = false;
   timeA_changed: boolean = false;
   timeB_state: boolean = false;
@@ -107,9 +114,10 @@ export class RdvDetailsComponent implements OnInit {
   selectedLieuRdvFromList: LieuRdv;
   // Date
   datePicker_color = "primary"
-  dateSel: Date;
+  dateFromBdd: Date;
+  // datePickerDateSelectionne: Date;
   // TIme
-  tpA_selected_value: string;
+  tpA_selected_value: string = "08:00";
   tpB_selected_value: string;
   timePickerA_initial_value: string = "08:00";
   timePickerB_initial_value: string = "09:00";
@@ -123,19 +131,8 @@ export class RdvDetailsComponent implements OnInit {
   idRdvFromRouteObservable: any;
   isRdvIsCancelled: boolean = false;
 
-  rdvFg = new FormGroup({
-    dateFc: new FormControl(this.dateSel),
-    timerAFc: new FormControl({ value: '' }),
-    timerBFc: new FormControl({ value: '', disabled: false }),
-    clientFc: new FormControl({ disable: false }),
-    prestationFc: new FormControl({ disabled: false }),
-    forfaitFc: new FormControl({ value: '', disable: false }),    
-    praticienFc: new FormControl({ value: ''}),
-    lieuRdvFc: new FormControl({ value: '', disable: false }),
-    rdvCancelledFc: new FormControl({ value: '', disable: false })
-    // modifyRdvFc: new FormControl({ value: '', disable: true })
-
-  });
+  // FormGroup
+  rdvFg: FormGroup;
 
   // Confirm Suppression
   userConfimRdvSuppression: boolean = false;
@@ -171,17 +168,30 @@ export class RdvDetailsComponent implements OnInit {
 
     this.refreshFilteredClients();
     // this.refreshFilteredPrestations();
-    
 
   }
 
   ngOnInit() {
 
+    this.rdvFg = new FormGroup({
+      dateFc: new FormControl(this.dateFromBdd),
+      timerAFc: new FormControl({ value: '' }),
+      timerBFc: new FormControl({ value: '', disabled: false }),
+      clientFc: new FormControl({ disable: false }),
+      prestationFc: new FormControl({value: '' }),
+      forfaitFc: new FormControl({ value: '', disable: false }),    
+      praticienFc: new FormControl({ value: '', disable: false}),
+      lieuRdvFc: new FormControl({ value: '', disable: false }),
+      rdvCancelledFc: new FormControl({ value: '', disable: false })
+      // modifyRdvFc: new FormControl({ value: '', disable: true })  
+    });
+
+
     // verifier si le token est encore valide
     // this._authService
     // Historique de navigation stocke la route precedent afin de faire un BackPage
     this.previousRoute = this._historyRouting.getPreviousUrl();
-    this.getCurrentUtilisateur();  
+    this.getCurrentUtilisateur(); 
 
   }
 
@@ -190,6 +200,13 @@ export class RdvDetailsComponent implements OnInit {
     // this.refreshFilteredPrestations();
     
   }
+
+  // public compareFc() {
+    
+  //   this._cd.checkNoChanges();
+  //   return true;
+  // }
+
 
   /**
    * Ouvrir le Modal de Login
@@ -259,16 +276,6 @@ export class RdvDetailsComponent implements OnInit {
     this.isItAForfait = this.rdv.prestation.forfait.valueOf();
     this.rdvFg.get('forfaitFc').setValue(this.isItAForfait);
 
-    // setup Prestation ---------------------------------------------------------------------------------
-    this.prestation = this.rdv.prestation;
-    if (this.prestation.forfait.valueOf() == true) {
-      stringForfait = "Forfait";
-    } else {
-      stringForfait = "";
-    };     
-    this.prestationFromBdd = this.prestation.activite.activiteNom.toString() + " " + this.prestation.soin.valueOf() + " " + this.prestation.genre.genreHum.toString() + " " + stringForfait;
-    this.rdvFg.get('prestationFc').setValue(this.prestationFromBdd);
-
     // setup Praticien ---------------------------------------------------------------------------------
     this.praticienFromBdd = this.rdv.praticien.nomPraticien.toString() + " " + this.rdv.praticien.prenomPraticien.toString();
     this.rdvFg.get('praticienFc').setValue(this.rdv.praticien.nomPraticien.toString() + " " + this.rdv.praticien.prenomPraticien.toString());
@@ -277,16 +284,20 @@ export class RdvDetailsComponent implements OnInit {
     this.lieuRdvFromBdd = this.rdv.lieuRdv.lieuRdv.valueOf();
     this.rdvFg.get('lieuRdvFc').setValue(this.rdv.lieuRdv.lieuRdv.toString());
 
+    // setup Prestation ---------------------------------------------------------------------------------
+    this.rdvFg.get('prestationFc').setValue(this.prestation.activite.activiteNom.toString() 
+    + " " + this.prestation.soin.toString() 
+    + " " + this.prestation.genre.genreHum.toString());
+
     // setup RdvCanceled ---------------------------------------------------------------------------------
-    // this.isRdvIsCancelled = this.rdv.isCancelled;
+    this.isRdvIsCancelled = this.rdv.isCancelled;
+    this.rdvFg.get('rdvCancelledFc').setValue('');
 
     // apres reception du rdv maj des listes
     setTimeout(() => {
-      // this.refreshFilteredPrestations();
       this.prestationExtractWithFilters();
     }, 2000);
-
-
+    // this.prestationExtractWithFilters();
   }
 
 
@@ -453,25 +464,6 @@ export class RdvDetailsComponent implements OnInit {
 
   }
 
-
-  // =====================================================================================
-  // Rafraichissement des listes filtrees
-  // =====================================================================================
-  /**
-   * Rafraichissement la liste filtree des soins
-   */
-  // private refreshFilteredPrestations() {
-  //   this.logger.info("refresh de la liste des prestation");
-
-  //   setTimeout(() => {
-  //     this.filteredPrestations = this.rdvFg.get('prestationFc').valueChanges
-  //     .pipe(
-  //       startWith(''),
-  //       map(prestation => prestation ? this._filteredPrestations(prestation) : this.filteredPrestationByGenderAndForfait.slice())
-  //     );
-  //   }, 2000)
-  // }
-
   /**
    * Rafraichissement de la liste des Clients
    */
@@ -495,9 +487,34 @@ export class RdvDetailsComponent implements OnInit {
    * Dates selectionnee
    * @param date
    */
-  public dateSelectionnee() {
-    // la date selectionne est envoye via ngmodel su la ref this.dateSel
-    this.logger.info("RdvDetailComponent log : Date sélectionnee Date: " + new Date(this.dateSel));
+  public dateSelectionnee(event: MatDatepickerInputEvent<Date>) {
+    
+    this.datePickerSelected = new Date(event.value); 
+    this.logger.info("RdvDetailComponent log : Date sélectionnee Date: " + this.datePickerSelected);
+
+    // Attibuer la nouvelle date
+    // A la date de debut de rdv
+    let test = moment(event.value)
+    .tz('Europe/Paris')
+    .hours(this._dateService.extracHoursFromGivenTime(this.rdvFg.get('timerAFc').value))
+    .minutes(this._dateService.extracMinutesFromGivenTime(this.rdvFg.get('timerAFc').value))
+    .format();
+    this.logger.info("RdvDetailComponent log : DateHeureDebut tz : " + test.toString());
+
+    this.rdv.dateHeureDebut = moment(event.value)
+      .hours(this._dateService.extracHoursFromGivenTime(this.rdvFg.get('timerAFc').value))
+      .minutes(this._dateService.extracMinutesFromGivenTime(this.rdvFg.get('timerAFc').value))
+      .tz('Europe/Paris')
+      .unix()*1000;
+    this.logger.info("RdvDetailComponent log : DateHeureDebut : " + this.rdv.dateHeureDebut.toString());
+    
+    this.rdv.dateHeureFin = moment(this.datePickerSelected)
+      .hours(this._dateService.extracHoursFromGivenTime(this.rdvFg.get('timerBFc').value))
+      .minutes(this._dateService.extracMinutesFromGivenTime(this.rdvFg.get('timerBFc').value))
+      .tz('Europe/Paris')
+      .unix()*1000;
+    this.logger.info("RdvDetailComponent log : DateHeureFin : " + this.rdv.dateHeureFin);
+    
     this.toggleSaveButtonStatus();
 
   }
@@ -511,9 +528,42 @@ export class RdvDetailsComponent implements OnInit {
     // Attribution de l heure du selecteur_debut selectionnee au la variable  tpA_selected_value
     this.tpB_selected_value = timePickerA.valueOf();
  
-    // Attribution du pickerA au picker avec 1 heure de plus
+    // Attribution du pickerA au pickerB avec 1 heure de plus
     this.timePickerB_initial_value = this._dateService.modStringTime(timePickerA.valueOf(), 1, 0);
-    this.toggleTimePickerBStatus();
+
+    
+    if (this.date_changed == true) {
+
+      this.rdv.dateHeureDebut = moment(this.datePickerSelected)
+        .hours(this._dateService.extracHoursFromGivenTime(timePickerA))
+        .minutes(this._dateService.extracMinutesFromGivenTime(timePickerA))
+        .tz('Europe/Paris')
+        .unix()*1000;
+        // Attribution du pickerA au pickerB avec 1 heure de plus
+      this.timePickerB_initial_value = this._dateService.modStringTime(timePickerA.valueOf(), 1, 0);
+      this.rdv.dateHeureFin = moment(this.datePickerSelected)
+        .hours(this._dateService.extracHoursFromGivenTime(this.timePickerB_initial_value))
+        .minutes(this._dateService.extracMinutesFromGivenTime(this.timePickerB_initial_value))
+        .tz('Europe/Paris')
+        .unix()*1000;
+
+    } else {
+      
+      this.rdv.dateHeureDebut = moment(this.dateFromBdd)
+        .hours(this._dateService.extracHoursFromGivenTime(timePickerA))
+        .minutes(this._dateService.extracMinutesFromGivenTime(timePickerA))
+        .tz('Europe/Paris')
+        .unix()*1000;
+        // Attribution du pickerA au pickerB avec 1 heure de plus
+      this.timePickerB_initial_value = this._dateService.modStringTime(timePickerA.valueOf(), 1, 0);
+      this.rdv.dateHeureFin = moment(this.dateFromBdd)
+        .hours(this._dateService.extracHoursFromGivenTime(this.timePickerB_initial_value))
+        .minutes(this._dateService.extracMinutesFromGivenTime(this.timePickerB_initial_value))
+        .tz('Europe/Paris')
+        .unix()*1000;
+
+    }
+
     this.toggleSaveButtonStatus();
   }
 
@@ -526,16 +576,49 @@ export class RdvDetailsComponent implements OnInit {
     // Attribution de l heure du selecteur_debut selectionnee au la variable  tpA_selected_value
     this.tpB_selected_value = timePickerB.valueOf();
     // Attribution du pickerA au pickerB avec 1 heure de plus
-    // this.timePickerB_initial_value = this._dateService.modStringTime(timePickerB.valueOf(), 0, 0);
     if (this._dateService.compareTimeATimeB(this.timePickerA_initial_value, this.tpB_selected_value)){
 
       this.timePickerB_initial_value = this._dateService.modStringTime(timePickerB.valueOf(), 0, 0);
+
+      if (this.date_changed == true) {
+
+        this.rdv.dateHeureDebut = moment(this.datePickerSelected)
+          .hours(this._dateService.extracHoursFromGivenTime(timePickerB))
+          .minutes(this._dateService.extracMinutesFromGivenTime(timePickerB))
+          .tz('Europe/Paris')
+          .unix()*1000;
+          // Attribution du pickerA au pickerB avec 1 heure de plus
+        this.timePickerB_initial_value = this._dateService.modStringTime(this.tpA_selected_value.valueOf(), 1, 0);
+        this.rdv.dateHeureFin = moment(this.datePickerSelected)
+          .hours(this._dateService.extracHoursFromGivenTime(timePickerB))
+          .minutes(this._dateService.extracMinutesFromGivenTime(timePickerB))
+          .tz('Europe/Paris')
+          .unix()*1000;
+  
+      } else {
+        
+        this.rdv.dateHeureDebut = moment(this.dateFromBdd)
+          .hours(this._dateService.extracHoursFromGivenTime(timePickerB))
+          .minutes(this._dateService.extracMinutesFromGivenTime(timePickerB))
+          .tz('Europe/Paris')
+          .unix()*1000;
+          // Attribution du pickerA au pickerB avec 1 heure de plus
+        this.timePickerB_initial_value = this._dateService.modStringTime(this.tpA_selected_value.valueOf(), 1, 0);
+        this.rdv.dateHeureFin = moment(this.dateFromBdd)
+          .hours(this._dateService.extracHoursFromGivenTime(timePickerB))
+          .minutes(this._dateService.extracMinutesFromGivenTime(timePickerB))
+          .tz('Europe/Paris')
+          .unix()*1000;
+  
+      }
 
     }  else {
 
       console.log("Probleme d heure");
       this.timePickerB_initial_value = this._dateService.modStringTime(timePickerB.valueOf(), 0, 0);
     } 
+
+
 
     this.toggleSaveButtonStatus();
 
@@ -549,7 +632,8 @@ export class RdvDetailsComponent implements OnInit {
 
     if (event.source.selected) {
       this.logger.info("RdvDetailComponent log : Client séléctionné idclient: " + client.idClient + " " + client.nomClient);
-      this.selectedClientFromList = client
+      this.selectedClientFromList = client;
+      this.rdv.client.idClient = client.idClient;
     }
 
     this.prestationExtractWithFilters();
@@ -564,6 +648,7 @@ export class RdvDetailsComponent implements OnInit {
     this.isItAForfait = !this.isItAForfait;
     this.toggleForfaitString(this.isItAForfait);
     this.logger.info("RdvDetailComponent log : Toggle Forfait value : " + this.isItAForfait);
+
     this.resetPrestations();
     this.prestationExtractWithFilters();
 
@@ -597,8 +682,11 @@ export class RdvDetailsComponent implements OnInit {
     if (event.source.selected) {
       this.logger.info("RdvDetailComponent log : Soin selectionné id: " + prestation.idPrestation + "_" + prestation.soin);
       this.selectedPrestationFromList = null;
-      this.selectedPrestationFromList = prestation;
-    }
+      this.selectedPrestationFromList = prestation;   
+      
+      this.rdv.prestation.idPrestation = prestation.idPrestation;
+
+    }      
 
     this.toggleSaveButtonStatus();
 
@@ -613,6 +701,9 @@ export class RdvDetailsComponent implements OnInit {
     this.selectedPraticienFromlist = praticien;
     this.logger.info("RdvDetailComponent log : Praticien idPraticien " + this.selectedPraticienFromlist.idPraticien);
 
+
+    this.rdv.praticien.idPraticien = praticien.idPraticien;
+
     this.toggleSaveButtonStatus();
 
   }
@@ -626,6 +717,7 @@ export class RdvDetailsComponent implements OnInit {
     this.selectedLieuRdvFromList = lieuRdv;
     this.logger.info("RdvDetailComponent log : LieuRdv IsLieuRdv : " + this.selectedLieuRdvFromList.idLieuRdv);
 
+    this.rdv.lieuRdv.idLieuRdv = lieuRdv.idLieuRdv;
     this.toggleSaveButtonStatus();
   }
 
@@ -665,24 +757,12 @@ export class RdvDetailsComponent implements OnInit {
   }
 
   /**
-  * Active / Desactive  Activite
-  */
-  // public toggleActiviteStatus() {
-  //   this.logger.info("RdvDetailComponent log : Methode activee : changeActivite_stateStatus");
-
-  //   if (this.activite_state == true) {
-  //     this.activite_state = !this.activite_state;
-  //   }
-
-  // }
-
-  /**
   * Active / Desactive Boutton Sauvegarder
   */
   private toggleSaveButtonStatus() {    
 
     if ( this.update_button_state == true ) {
-      
+
       this.update_button_state = !this.update_button_state;
       this.logger.info("RdvDetailComponent log : Activation du bouton Update");
     }
@@ -697,6 +777,8 @@ export class RdvDetailsComponent implements OnInit {
     
     this.isRdvIsCancelled = !this.isRdvIsCancelled;
     this.logger.info("RdvDetails Log: Etat de Forfait " + this.isRdvIsCancelled);
+
+    this.rdv.isCancelled = this.isRdvIsCancelled;
     this.toggleSaveButtonStatus();   
 
   }
@@ -715,15 +797,6 @@ export class RdvDetailsComponent implements OnInit {
   }
 
   /**
-   * Reinitialise les soins
-   */
-  // private resetSoins() {
-  //   this.filterSoin = '';
-  //   this.soinCtrl.setValue('');
-  //   this.soinList = [];
-  // }
-
-  /**
    * Recupere le rdv via son Id
    * @param idRdvFromRoute 
    */
@@ -734,10 +807,10 @@ export class RdvDetailsComponent implements OnInit {
     this._rdvService.getRdvById(idRdvFromRoute).subscribe(
       res => {
       this.rdv = res;
+        this.prestation = res.prestation;
         this.client = res.client;
         this.lieurRdv = res.lieuRdv;
         this.praticien = res.praticien;
-        this.prestation = res.prestation;
         this.rdvRecupere = true;
         this.attribuerLesValeursDuRdvFromBddAuFormulaire();
         this._cd.markForCheck();
@@ -747,7 +820,7 @@ export class RdvDetailsComponent implements OnInit {
         let messageRdvNOk: string = "Recuperation idRdv: " + this.idRdvFromRoute + " échec";
         this.toasterMessage(messageRdvNOk, 'snackbarWarning', 5000);
         this.goHomePage();
-        this.logger.error("rgpdService Log : Le rendez-vous n'a pas été enregistré");
+        this.logger.error("rgpdService Log : Le rendez-vous n'a pas été Récupéré");
       }
     )
 
@@ -762,43 +835,30 @@ export class RdvDetailsComponent implements OnInit {
    */
   public updateRdv() {
 
-    this.logger.info("RdvDetailComponent log : Tentative de sauvegarde du Rdv:)")
+    // Date de la modif du Rdv
+    this.rdv.dateDeModif = moment().unix()*1000;    
+    // Persiste le Rdv modifie
+    this._rdvService.putRdv(this.rdv).subscribe(
 
-    this.rdv.dateDeModif = moment().millisecond();
-    // this.rdv.dateHeureDebut = moment(this.dateSel)
-    //   .hours(this._dateService.extracHoursFromGivenTime(this.tpA_selected_value))
-    //   .minutes(this._dateService.extracMinutesFromGivenTime(this.tpA_selected_value)).millisecond();
-    // this.rdv.dateHeureFin = moment(this.dateSel)
-    //   .hours(this._dateService.extracHoursFromGivenTime(this.tpA_selected_value))
-    //   .minutes(this._dateService.extracMinutesFromGivenTime(this.tpB_selected_value)).millisecond();
-    this.client.idClient = this.selectedClientFromList.idClient.valueOf();
-    this.logger.info("RdvDetailComponent log : Rdv idPrestation " + this.selectedPrestationFromList.idPrestation);
-    this.prestation.idPrestation = this.selectedPrestationFromList.idPrestation.valueOf();
-    this.praticien.idPraticien = this.selectedPraticienFromlist.idPraticien.valueOf();
-    this.lieurRdv.idLieuRdv = this.selectedLieuRdvFromList.idLieuRdv.valueOf();
-    this.utilisateur.idUtilisateur = this.currentUtilisateur$.idUtilisateur.valueOf();
-
-    this.rdv.client = this.client;
-    this.rdv.prestation = this.prestation;
-    this.rdv.praticien = this.praticien;
-    this.rdv.lieuRdv = this.lieurRdv;
-    this.rdv.utilisateur = this.utilisateur;
-
-
-    this._rdvService.putRdv(this.rdv)
-      .subscribe(
-        res => {
-          res;
-          let messageRdvOk: string = "Rendez-vous enregistré :"
-
-          this.toasterMessage(messageRdvOk, 'snackbarInfo', 5000);
-          this.logger.info("rgpdService Log : Nouveau rendez-vous persistes");
+        () => { 
+            // this.logger.info("rgpdService Log : retour serveur : " + value.valueOf);
+            // let messageRdvOk: string = "Rendez-vous enregistré / modifié :"
+            // this.toasterMessage(messageRdvOk, 'snackbarInfo', 5000);
+            // this.logger.info("rgpdService Log : Le rendez-vous modifié à été persiste");        
         },
-        err => {
 
-          let messageRdvNOk: string = "Il y a eu un problème."
-          this.toasterMessage(messageRdvNOk, 'snackbarWarning', 5000);
-          this.logger.error("rgpdService Log : Le rendez-vous n'a pas été enregistré");
+        (response: HttpResponse<number>) => {
+
+          if (response.status == 200) {
+            let messageRdvOk: string = "Rendez-vous enregistré :"
+            this.toasterMessage(messageRdvOk, 'snackbarInfo', 5000);
+            this.logger.info("rgpdService Log : Le rendez-vous modifié à été persiste"); 
+            
+          } else {
+            let messageRdvNOk: string = "Il y a eu un problème."
+            this.toasterMessage(messageRdvNOk, 'snackbarWarning', 5000);
+            this.logger.error("rgpdService Log : Le rendez-vous modifié n'a pas été persisté");
+          }
         })
 
   }

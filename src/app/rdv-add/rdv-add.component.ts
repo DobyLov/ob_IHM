@@ -1,7 +1,9 @@
 import { Component, OnInit, Output, OnChanges } from '@angular/core';
 import { Praticien } from '../praticien/praticien';
 import { CurrentUtilisateur } from '../login/currentUtilisateur';
-import { Subscription, Observable, BehaviorSubject } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+// import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Rdv } from '../rdv/rdv';
 import { NGXLogger } from 'ngx-logger';
 import { AuthService } from '../login/auth.service';
