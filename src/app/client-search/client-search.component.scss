@@ -8,9 +8,14 @@
     margin-bottom: 80px;
 }
 
+// .mat-card {
+//     background-color: #fbfbfbfc;
+// }
+
 .mat-card {
     font-family: 'Montserrat', sans-serif;
     margin-bottom: 5px;
+    // background-color: #fbfbfbfc;
 }
 
     // ***********************
@@ -27,26 +32,33 @@
         padding-top: 5px;
         padding-bottom: 5px;
         padding-right: 2.5px;
-        min-width: 318px;
+        min-width: 350px;
    
     }
 
 
     // ***********************
-    // Liste RDV
+    // Table CDKListe Client
     // *********************** 
 
 
-    .mat-card-titre .mat-card-content-titre {
+    .mat-card-titre .mat-card-titre-content {
         display: flex;
         flex-direction: row;
         justify-content: center;
         font-size: 22px;
         font-weight: bolder;
-        background-color: #fbfbfbfc;
+        min-width: 318px;
+        // background-color: #fbfbfbfc;
     }
 
-    .matCardListRdv {
+    .mat-card-list {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+    }
+
+    .mat-card-list-content {
         display: flex;
         flex-flow: row nowrap;
         justify-content: center;
@@ -69,55 +81,19 @@
         text-align: justify;
     }
 
-    .mat-column-dateHeureDebut {
-        font-weight: 600;
-        text-align: center;
-    }
-
-    .mat-column-separation {
-        display: none;
-        padding-left: 5px;
-        text-align: center;
-    }
-
-    .mat-column-dateHeureFin {
-        display: none;
-        padding-left: 5px;
-        font-weight: 600;
-        text-align: center;
-    }
-
-    .mat-column-lieuRdv {
-        padding-left: 5px;
-        text-align: center;
-    }
-
-    .mat-column-activite {
-        display: none;
-        padding-left: 5px;
-        text-align: center;
-    }
-
-    .mat-column-prestation {
-        display: none;
-        padding-left: 5px;
-        padding-left: 5px;
-        text-align: center;
-    }
-
-    .mat-column-nomClient {
-        display: none;    
+    .mat-column-nomCli {
+        // display: none;    
         padding-left: 5px;  
         text-align: center;
     }
 
-    .mat-column-prenomClient {
-        display: none;
+    .mat-column-prenomCli {
+        // display: none;
         padding-left: 5px;
         text-align: center;
     }
 
-    .mat-column-nomPraticien {
+    .mat-column-adresseMailCli {
         // display: none;
         padding-left: 5px;
         text-align: center;
@@ -128,6 +104,7 @@
         text-align: center;
         padding-left: 5px;
     }
+
     td.mat-cell:first-of-type {
         width: 25px;
         text-align: center;
@@ -171,33 +148,57 @@
     padding-top: 5px;
     padding-bottom: 5px;
     padding-right: 5px;
+    min-width: 318px;
 
 }
 
-.mat-card-titre {
+.mat-card-cherche {
     background-color: #fbfbfbfc;
 }
 
-.mat-card-header-titre {
-
-}
-
-.mat-card-content-titre {
-
-}
-
-
-.mat-card {
+.mat-card-cherche-titre {
     background-color: #fbfbfbfc;
 }
 
-.mat-card-header {
 
+.mat-card-cherche-titre 
+    .mat-card-cherche-titre-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: bolder;
+    min-width: 350px;
+    // background-color: #fbfbfbfc;
 }
 
-.mat-card-content {
 
+.mat-card-cherche
+    .mat-card-cherche-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    font-weight: 600;
+    font-size: 18px;
+    // background-color: #fbfbfbfc;
 }
+
+.mat-card-cherche
+    .mat-card-cherche-content {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    text-align: left;
+    font-weight: 300;
+    // font-size: 18px;
+}
+
+.radioBtn {
+    // margin-top: 10px;
+    margin-right: 5px;
+}
+
 
 
 

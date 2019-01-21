@@ -12,13 +12,13 @@ export class Client {
     public genreClient: Genre; 
     public adresseMailClient: string;
     public dateAnniversaireClient: number;
-    public suscribedCommercials: string;
-    public suscribedNewsLetter: string;
-    public suscribedMailReminder: string;
-    public suscribedSmsReminder: string;
-    public rgpdInfoClientValidation: string;
-    public rgpdDateClientvalidation: string;
-    public rgpdClientCanModifyRgpdSettings: string;
+    public suscribedCommercials: boolean;
+    public suscribedNewsLetter: boolean;
+    public suscribedMailReminder: boolean;
+    public suscribedSmsReminder: boolean;
+    public rgpdInfoClientValidation: boolean;
+    public rgpdDateClientvalidation: boolean;
+    public rgpdClientCanModifyRgpdSettings: boolean;
 
     constructor(){}
 

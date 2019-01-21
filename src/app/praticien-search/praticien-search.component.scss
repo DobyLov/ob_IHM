@@ -1,0 +1,209 @@
+// conf generique
+.body-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    font-family: 'Montserrat', sans-serif;
+    padding-top: 2px; 
+    margin-bottom: 80px;
+}
+
+// .mat-card {
+//     background-color: #fbfbfbfc;
+// }
+
+.mat-card {
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 5px;
+    // background-color: #fbfbfbfc;
+}
+
+    // ***********************
+    // ***********************
+    // LEFT
+    // ***********************
+    // ***********************
+
+    .left-container {
+        flex:1;
+        display: flex;
+        flex-direction: column;
+        padding-left: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-right: 2.5px;
+        min-width: 350px;
+   
+    }
+
+
+    // ***********************
+    // Table CDKListe Client
+    // *********************** 
+
+
+    .mat-card-titre .mat-card-titre-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        font-size: 22px;
+        font-weight: bolder;
+        min-width: 318px;
+        // background-color: #fbfbfbfc;
+    }
+
+    .mat-card-list {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+    }
+
+    .mat-card-list-content {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+    }
+
+    
+    // TABLE / titre des colonnes
+    .mat-header-cell {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        color: black;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    // Contenu des cellules
+    .mat-cell {   
+        font-size: 14px;
+        font-family: 'Montserrat', sans-serif;
+        text-align: justify;
+    }
+
+    .mat-column-nomCli {
+        // display: none;    
+        padding-left: 5px;  
+        text-align: center;
+    }
+
+    .mat-column-prenomCli {
+        // display: none;
+        padding-left: 5px;
+        text-align: center;
+    }
+
+    .mat-column-adresseMailCli {
+        // display: none;
+        padding-left: 5px;
+        text-align: center;
+    }
+
+    th.mat-header-cell:first-of-type {
+        margin-top: 10px;
+        text-align: center;
+        padding-left: 5px;
+    }
+
+    td.mat-cell:first-of-type {
+        width: 25px;
+        text-align: center;
+        padding-left: 5px;
+    }
+
+    th.mat-header-cell:last-of-type {
+        padding-left: 5px;       
+    }
+
+    .button-Details {
+        width: 20px;
+        text-align: center;
+    }
+
+    .boutonRemonter {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+    }
+    // Fin de Table
+
+// **************************************************************************
+// **************************************************************************
+// **************************************************************************
+// **************************************************************************
+// **************************************************************************
+
+// ***********************
+// ***********************
+// RIGHT
+// ***********************
+// ***********************
+
+.right-container {
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    // max-width: 600px;
+    padding-left: 2.5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    min-width: 318px;
+
+}
+
+.mat-card-cherche {
+    background-color: #fbfbfbfc;
+}
+
+.mat-card-cherche-titre {
+    background-color: #fbfbfbfc;
+}
+
+
+.mat-card-cherche-titre 
+    .mat-card-cherche-titre-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: bolder;
+    min-width: 350px;
+    // background-color: #fbfbfbfc;
+}
+
+
+.mat-card-cherche
+    .mat-card-cherche-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    font-weight: 600;
+    font-size: 18px;
+    // background-color: #fbfbfbfc;
+}
+
+.mat-card-cherche
+    .mat-card-cherche-content {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    text-align: left;
+    font-weight: 300;
+    // font-size: 18px;
+}
+
+.radioBtn {
+    // margin-top: 10px;
+    margin-right: 5px;
+}
+
+
+
+
+
+
+
+
+

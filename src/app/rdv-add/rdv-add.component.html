@@ -16,13 +16,21 @@
 				</mat-card-header>
 				<mat-card-content class="calendar-content">
 					<mat-form-field>
-						<input class="input-calendar" matInput [matDatepicker]="picker"
-								[(ngModel)]="dateSel" placeholder="Sélectionner une date"
+						<input class="input-calendar" 
+								matInput 
+								[matDatepicker]="picker"
+								[(ngModel)]="dateSel" 
+								placeholder="Sélectionner une date"
 						 		(dateInput)="dateSelectionnee()" disabled>
-						<mat-datepicker-toggle  class="datePicker-button" matSuffix [for]="picker" matTooltip="Sélectionner une date">
+						<mat-datepicker-toggle  class="datePicker-button" 
+												matSuffix [for]="picker" 
+												matTooltip="Sélectionner une date">
 						</mat-datepicker-toggle>
-						<mat-datepicker #picker disabled="false" touchUi="true" 
-										[startAt]="dateSelectionnee" color="datePicker_color">
+						<mat-datepicker #picker 
+										disabled="false" 
+										touchUi="true" 
+										[startAt]="dateSelectionnee" 
+										color="datePicker_color">
 						</mat-datepicker>
 					</mat-form-field>
 				</mat-card-content>

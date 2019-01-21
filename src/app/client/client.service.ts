@@ -14,8 +14,8 @@ export class ClientService {
 
     url: string = appConfig.apiOpusBeauteUrl + '/client';
 
-    constructor ( private logger: NGXLogger,
-                  private httpCli: HttpClient){}
+    constructor( private logger: NGXLogger,
+                 private httpCli: HttpClient) { }
 
 
     /**
@@ -24,11 +24,11 @@ export class ClientService {
      * @param idClient number
      * @return Observable<Client>
      */
-    public getClientByID(idClient: number): Observable<Client> {        
+    public getClientByID(idClient: number): Observable<Client> {
         this.logger.info("ClientService: Log : Demande Client Id a la Bdd : " + idClient)
         let rgpdHeaders: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-        return this.httpCli.get<Client>( this.url + "/" + idClient, { headers: rgpdHeaders });
+        return this.httpCli.get<Client>(this.url + "/" + idClient, { headers: rgpdHeaders });
     }
 
     /**
@@ -43,7 +43,7 @@ export class ClientService {
         let rgpdHeaders: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
         let rgpdHttpParams = new HttpParams().set("adresseMailClient", adresseMailClient);
 
-        return this.httpCli.get<Client>( this.url, {headers: rgpdHeaders, params: rgpdHttpParams }); 
+        return this.httpCli.get<Client>(this.url, { headers: rgpdHeaders, params: rgpdHttpParams });
     }
 
     // recupereer la liste des clients
@@ -55,13 +55,64 @@ export class ClientService {
         this.logger.info("CleintService Log : Recupere la liste totale des Clients");
 
         return this.httpCli
-          .get<Client[]>(this.url + '/list')
-          .pipe(map  (res  => res));
-  
-    }
-    
+            .get<Client[]>(this.url + '/list')
+            .pipe(map(res => res));
 
-    // liste des clients par Genre
+    }
+
+
+    /**
+   * Ajouter un Client
+   * @param client 
+   */
+    public postClient(client: Client): Observable<Client> {
+
+        this.logger.info("ClientService Log : Ajouter le  Client");
+        this.logger.info("ClientService Log : Client a persister : " + JSON.stringify(client));
+
+        let myHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+        let option = { headers: myHeaders }
+        return this.httpCli.post<Client>(this.url + '/add', client, option);
+
+    }
+
+    /**
+     * Modifier un Client
+     * @param client 
+     */
+    public putClient(client: Client): Observable<string> {
+
+        this.logger.info("ClientService Log : Modifie le  Client idClient : " + client.idClient);
+        this.logger.info("ClientService Log : Cleint a modifier : " + JSON.stringify(client));
+
+        let myHeaders = new HttpHeaders()
+            .set('Content-Type', 'text/plain')
+            .set('Response', 'text');
+
+        let option = { headers: myHeaders }
+
+        return this.httpCli.put<string>(this.url + '/mod', client, option);
+
+    }
+
+
+      /**
+   * Supprime un Client
+   * @param idcleint
+   * @returns Observable<string>
+   */
+  public delClient(idClient: number): Observable<string> {
+
+    this.logger.info("CleintService Log : Suppression du Client id: " + idClient); 
+
+    let myHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    let option = { headers: myHeaders }    
+    return this.httpCli
+      .delete<string>( this.url + '/del/' + idClient,  option )
+      .pipe(res => res);
+
+  }
+
 
 
 }

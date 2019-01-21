@@ -1,7 +1,7 @@
 <link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Source+Sans+Pro|Montserrat:300"
  rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=0" />
-<!-- <form> -->
+<form [formGroup]="clientFg">
 	<div class="body-containerR" >
 		<div class="body-containerC">
 
@@ -17,6 +17,66 @@
 						<div>Identité client</div>
 					</mat-card-header>
 					<mat-card-content class="matCard-client-content">
+						<div  class="divsInternes">
+								<mat-form-field>
+										<input matInput 
+                        #inputNom
+                        [formControl]="this.clientFg.get('clientNom')"
+												maxlength="30" 
+												autocomplete="off"
+												placeholder="Nom">
+										<mat-hint align="end">{{inputNom.value?.length || 0}}/30</mat-hint>
+										<mat-error *ngIf="this.clientFg.get('clientNom').invalid">{{getIdNomErrorMessage()}}</mat-error>
+								</mat-form-field>
+						</div>
+						<div  class="divsInternes">
+								<mat-form-field>
+										<input matInput 
+                        #inputPrenom                        
+												maxlength="30" 
+												autocomplete="off"
+												[formControl]="this.clientFg.get('clientPrenom')"
+												placeholder="Prénom">
+										<mat-hint align="end">{{inputPrenom.value?.length || 0}}/30</mat-hint>
+										<mat-error *ngIf="this.clientFg.get('clientPrenom').invalid">{{getIdPrenomErrorMessage()}}</mat-error>
+								</mat-form-field>
+						</div>
+					  <div class="divsInternes">
+								<mat-form-field hintLabel="Liste déroulante">
+										<mat-select placeholder="Séléctionner le genre"
+																[formControl]="this.clientFg.get('clientGenre')">
+												<mat-option *ngFor="let genre of genreList" 
+															[value]='genre.genreHum' 
+															(onSelectionChange)="genreSelectionne($event, genre)">
+													{{ genre.genreHum }}
+												</mat-option>
+										</mat-select>
+										<mat-error *ngIf="this.clientFg.get('clientGenre').invalid">{{getClientGenreErrorMessage()}}</mat-error>
+								</mat-form-field>
+            </div>
+            <div class="divsInternes">
+                <mat-form-field>
+                    <input class="input-calendar" 
+														matInput 
+														#inputClientDOB
+														[max]="datePickerMaxDateOfToday"
+														maxlenght="10"
+														autocomplete="off"
+														[matDatepicker]="picker"
+														[formControl]="this.clientFg.get('clientDateOfBirth')"
+														placeholder="Sélectionner la dâte d'anniversaire">
+										<mat-error *ngIf="this.clientFg.get('clientDateOfBirth').invalid">{{ getDateErrorMessage() }}</mat-error>
+                    <mat-datepicker-toggle  class="datePicker-button" 
+                                matSuffix [for]="picker" 
+                                matTooltip="Sélectionner une date">
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #picker 
+                            disabled="false" 
+                            touchUi="true"
+                            color="datePicker_color">
+									</mat-datepicker>
+                </mat-form-field>
+            </div>
 					</mat-card-content>
 				</mat-card>
 				<!-- ------------------------------------------------ -->
@@ -25,6 +85,54 @@
 						<span>Adresse client</span>
 					</mat-card-header>
 					<mat-card-content class="matCard-adresse-content">
+              <div  class="divsInternes">
+                  <mat-form-field>
+                      <input matInput 
+                          #inputNumRue
+													maxlength="3" 
+													autocomplete="off"
+													[formControl]="this.clientFg.get('clientAdresseNumRue')"
+                          placeholder="Numéro de rue">
+											<mat-hint align="end">{{inputNumRue.value?.length || 0}}/3</mat-hint>
+											<mat-error *ngIf="this.clientFg.get('clientAdresseNumRue').invalid">{{getAdresseNumRueErrorMessage()}}</mat-error>
+                  </mat-form-field>
+              </div>
+              <div  class="divsInternes">
+                  <mat-form-field>
+                      <input matInput 
+                          #inputRue
+													maxlength="30" 
+													autocomplete="off"
+													[formControl]="this.clientFg.get('clientAdresseRue')"
+                          placeholder="Rue, avenue, bd">
+											<mat-hint align="end">{{inputRue.value?.length || 0}}/30</mat-hint>
+											<mat-error *ngIf="this.clientFg.get('clientAdresseRue').invalid">{{getgetAdresseRueErrorMessage()}}</mat-error>
+                  </mat-form-field>
+              </div>
+              <div  class="divsInternes">
+                  <mat-form-field>
+                      <input matInput 
+                          #inputCodePostale
+													maxlength="5" 
+													autocomplete="off"
+													[formControl]="this.clientFg.get('clientAdresseCodePostale')"
+                          placeholder="Code postale">
+											<mat-hint align="end">{{inputCodePostale.value?.length || 0}}/5</mat-hint>
+											<mat-error *ngIf="this.clientFg.get('clientAdresseCodePostale').invalid">{{getAdresseCodePostaleErrorMessage()}}</mat-error>
+                  </mat-form-field>
+              </div>
+              <div  class="divsInternes">
+                  <mat-form-field>
+                      <input matInput 
+													#inputVille
+													autocomplete="off"
+													maxlength="30" 
+													[formControl]="this.clientFg.get('clientAdresseVille')"
+                          placeholder="Ville">
+											<mat-hint align="end">{{inputVille.value?.length || 0}}/30</mat-hint>
+											<mat-error *ngIf="this.clientFg.get('clientAdresseVille').invalid">{{getAdresseVilleErrorMessage()}}</mat-error>
+                  </mat-form-field>
+              </div>
 					</mat-card-content>
 				</mat-card>
 			</div>
@@ -35,6 +143,44 @@
 						<div>Contact client</div>
 					</mat-card-header>
 					<mat-card-content class="matCard-contact-content">
+              <div  class="divsInternes">
+                  <mat-form-field>
+                      <input matInput 
+                          #inputTelFix                          
+													autocomplete="off"
+													minlength="10"
+													maxlength="10" 
+													[formControl]="this.clientFg.get('clientTelFix')"
+                          placeholder="Téléphone fixe">
+											<mat-hint align="end">{{inputTelFix.value?.length || 0}}/10</mat-hint>
+											<mat-error *ngIf="this.clientFg.get('clientTelFix').invalid">{{getTelFixErrorMessage()}}</mat-error>
+                  </mat-form-field>
+              </div>
+              <div  class="divsInternes">
+                  <mat-form-field>
+                      <input matInput 
+													#inputTelMob
+													autocomplete="off"
+													minlength="10"
+													maxlength="10"
+													[formControl]="this.clientFg.get('clientTelMobil')"
+													placeholder="Téléphone mobile">
+											<mat-hint align="end">{{inputTelMob.value?.length || 0}}/10</mat-hint>
+											<mat-error *ngIf="this.clientFg.get('clientTelMobil').invalid">{{getTelMobileErrorMessage()}}</mat-error>
+                  </mat-form-field>
+              </div>
+              <div class="divsInternes">
+                  <mat-form-field>
+                    <input matInput 
+													#inputMail
+													autocomplete="off"
+													maxlength="50"
+                          placeholder="Email" 
+                          [formControl]="this.clientFg.get('clientEmail')">
+                      <mat-hint align="end">{{inputMail.value?.length || 0}}/50</mat-hint>
+                    <mat-error *ngIf="this.clientFg.get('clientEmail').invalid">{{getEmailErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                </div>
 					</mat-card-content>
 				</mat-card>
 				<!-- ------------------------------------------------ -->
@@ -43,6 +189,70 @@
 						<span>Options Rappels</span>
 					</mat-card-header>
 					<mat-card-content class="matCard-optionRappels-content">
+              <div class="rgpdTitle">
+                  <span>Si activé le client va reçevoir</span>                  
+              </div>
+              <div class="rgpdReglages-Container">
+                  <span class="slider-Subject">
+                      Offres commerciales par mail
+                  </span>
+                  <span class="slider-Switch">
+                      <mat-slide-toggle  
+                        (change)="onChangeTs_Commercials_Checked()"                         
+												[color]="ts_Color"
+												[checked]="slider_Commercials"
+												[disabled]="this.clientFg.get('clientEmail').invalid 
+																		|| this.clientFg.get('clientEmail').value == ''
+																		|| this.clientFg.get('clientEmail').value == null">                                  
+                      </mat-slide-toggle>
+                  </span>
+                </div>
+                <div class="rgpdReglages-Container">
+                  <span class="slider-Subject">
+                      La NewsLetter par mail
+                  </span>
+                  <span class="slider-Switch">
+                      <mat-slide-toggle    
+                        (change)="onChangeTs_NewsLetter_Checked()"                             
+												[color]="ts_Color"
+												[checked]="slider_NLetter"
+												[disabled]="this.clientFg.get('clientEmail').invalid 
+																		|| this.clientFg.get('clientEmail').value == ''
+																		|| this.clientFg.get('clientEmail').value == null">                                  
+                      </mat-slide-toggle>                    
+                  </span>                        
+                </div>
+                <div class="rgpdReglages-Container">
+                    <span class="slider-Subject">
+                        Rappels de Rdv par SMS 
+                    </span>
+                    <span class="slider-Switch">
+                        <mat-slide-toggle 
+                          (change)="onChangeTs_SmsRdvRemider_Checked()"
+													[color]="ts_Color"
+													[checked]="slider_Sms"
+													[disabled]="this.clientFg.get('clientTelMobil').invalid 
+													&& this.clientFg.get('clientTelMobil').updateOn
+													&& this.clientFg.get('clientTelMobil').valueChanges
+													|| this.clientFg.get('clientTelMobil').value == ''"> 
+                        </mat-slide-toggle>                          
+                    </span>                        
+                  </div>
+                  <div class="rgpdReglages-Container">
+                    <span class="slider-Subject">
+                        Rappels de Rdv par Mail 
+                    </span>
+                    <span class="slider-Switch">                          
+                        <mat-slide-toggle 
+                          (change)="onChangeTs_MailRdvReminder_Checked()"                               
+													[color]="ts_Color"
+													[checked]="slider_Mail"
+													[disabled]="this.clientFg.get('clientEmail').invalid
+																		|| this.clientFg.get('clientEmail').value == ''
+																		|| this.clientFg.get('clientEmail').value == null">                                  
+                        </mat-slide-toggle>         
+                    </span>                        
+                  </div>
 					</mat-card-content>
 				</mat-card>
 			</div>
@@ -50,20 +260,25 @@
 		
 			<mat-card class="action-section">
 				<div>
-          <button mat-mini-fab 
-                  color="warn" 
-                  matTooltip="Annuler la saisie du client" [routerLink]="[this.previousRoute]">
-            <mat-icon class="remonte-icon-btn">clear</mat-icon>
-          </button>
+		  <button mat-mini-fab 
+				 			color="warn" 
+							matTooltip="Annuler la saisie du client" 
+							[routerLink]="[this.previousRoute]">
+			<mat-icon class="remonte-icon-btn">clear</mat-icon>
+		  </button>
 				</div>
 				<div>
-					<button mat-mini-fab color="primary" matTooltip="Valider">
+					<button mat-mini-fab 
+									color="primary" 
+									matTooltip="Valider"
+									(click)="postClient()"
+									[disabled]="!clientFg.valid">
 						<mat-icon class="remonte-icon-btn">create</mat-icon>
 					</button>
 				</div>
 			</mat-card>
 
 		</div>
-	</div>
-<!-- </form> -->
+  </div>
+</form>
 

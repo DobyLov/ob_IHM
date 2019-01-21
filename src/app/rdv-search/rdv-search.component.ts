@@ -232,7 +232,7 @@ export class RdvSearchComponent implements OnInit, OnDestroy {
         this.nbRdv = this.rdvList.length;
         this.indexRdv = this.rdvList.length;
 
-        this._cd.markForCheck();
+        this._cd.detectChanges();
       },
         ((e) => {
           // => vers le Gestionnaire d'érreur
@@ -347,7 +347,7 @@ export class RdvSearchComponent implements OnInit, OnDestroy {
   private getPraticienList() {
 
     this.logger.info("RdvSearchComponent log : Recuperation de la liste des praticiens.");
-    this._praticienService.getPraticienListe().subscribe(
+    this._praticienService.getPraticienList().subscribe(
       ((pratList: Praticien[]) => {
         this.praticienList = pratList
       }

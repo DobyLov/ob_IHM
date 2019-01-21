@@ -183,7 +183,7 @@ export class RdvAddComponent implements OnInit, OnChanges {
   private getPraticienList() {
 
     this.logger.info("RdvAddComponent log : Recuperation de la liste des praticiens.");
-    this._praticienService.getPraticienListe().subscribe(
+    this._praticienService.getPraticienList().subscribe(
       ((pratList: Praticien[]) => {
         this.praticienList = pratList;
       }
@@ -724,15 +724,15 @@ export class RdvAddComponent implements OnInit, OnChanges {
       .subscribe(
         res => {
           res;
-          let messageRdvOk: string = "Votre Rendez-vous est enregistré";
+          let messageOk: string = "Votre Rendez-vous est enregistré";
           this._router.navigate(['./home'])
-          this.toasterMessage(messageRdvOk,'snackbarInfo',5000);
+          this.toasterMessage(messageOk,'snackbarInfo',5000);
           this.logger.info("RdvAddComponent Log : Nouveau rendez-vous persistes");
 
         },
         err => {
-          let messageRdvNOk: string = "Il y a eu un problème, vérifiez les infos ..."
-          this.toasterMessage(messageRdvNOk,'snackbarWarning', 5000);
+          let messageNOk: string = "Il y a eu un problème, vérifiez les infos ..."
+          this.toasterMessage(messageNOk,'snackbarWarning', 5000);
           this.logger.error("RdvAddComponent Log : Le rendez-vous n'a pas été enregistré");
         })
 

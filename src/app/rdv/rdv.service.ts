@@ -5,9 +5,6 @@ import { HttpClient, HttpParams, HttpHeaderResponse, HttpHeaders } from '@angula
 import { map, catchError } from 'rxjs/operators';
 import { Rdv } from './rdv';
 import { Observable, throwError } from 'rxjs';
-import { BottomSheetService } from '../service/bottomsheet.service';
-import { error } from '@angular/compiler/src/util';
-import { text } from '@angular/core/src/render3';
 
 
 @Injectable(
@@ -18,8 +15,7 @@ export class RdvService {
   url: string = appConfig.apiOpusBeauteUrl + '/rdv';
 
   constructor(private logger: NGXLogger,
-    private httpCli: HttpClient,
-    private _bottomsheetservice: BottomSheetService) {
+              private httpCli: HttpClient) {
 
   }
 
@@ -241,7 +237,7 @@ export class RdvService {
    * @param idRdv 
    * @returns Observable<string>
    */
-  public supprimeRdv(idRdv: number): Observable<string> {
+  public delRdv(idRdv: number): Observable<string> {
 
     this.logger.info("RdvService Log : Suppression du Rdv id: " + idRdv); 
 
@@ -253,9 +249,6 @@ export class RdvService {
 
   }
 
-  openBottomSheet(msg: string): void {
-    this._bottomsheetservice.openBottomSheet(msg);
-  }
 
 
 }

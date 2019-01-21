@@ -57,7 +57,7 @@
 .matCard-client-content {
     margin-top: 10px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-end;
 }
 
@@ -81,6 +81,7 @@
 .matCard-adresse-content {
     display: flex;
     flex-flow: row nowrap;
+    flex-direction: column;
     justify-content: space-between;
 }
 
@@ -102,7 +103,7 @@
 .matCard-contact-content {
     margin-top: 10px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-end;
 }
 
@@ -122,6 +123,13 @@
 }
 
 .matCard-optionRappels-content {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.sliderRowContainer {
     margin-top: 10px;
     display: flex;
     flex-direction: row;
@@ -206,4 +214,40 @@
     font-size: 16px;
     width: 100%;
 
+}
+
+.divsInternes {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.rgpdTitle {
+    text-align: left;
+}
+
+.rgpd-Container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;    
+}
+
+.rgpdReglages-Container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: space-between;
+    align-items: center ;
+    width: 100%;
+    height: 60px;
+}
+
+.slider-Subject {
+    text-align: left;
+    width: 90%;    
+}
+
+.slider-Switch {
+    text-align: right;
+    width: 10%;
+    margin: 10px;
 }

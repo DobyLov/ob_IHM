@@ -1,3 +1,80 @@
-<p>
-  praticien-search works!
-</p>
+<link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Source+Sans+Pro|Montserrat:300"
+ rel="stylesheet">
+<div class="body-container">
+	<div class="left-container">
+		<mat-card class="mat-card-titre">
+			<mat-card-content class="mat-card-titre-content">
+				Liste de Praticien
+			</mat-card-content>
+		</mat-card>
+		<mat-card class="mat-card-list">
+			<mat-card-content class="mat-card-list-content">					
+
+							<mat-table #table mat-table [dataSource]="dataSource">
+								<tr mat-header-row *matHeaderRowDef="tabNomsColonnes"></tr>
+								<tr mat-row *matRowDef="let row; columns: tabNomsColonnes;"></tr>	
+
+								<!-- <ng-container matColumnDef="numeroCli">
+										<th mat-header-cell *matHeaderCellDef> </th>
+										<td mat-cell *matCellDef="let element; let i = index ">{{ i + 1 }}/</td>
+								</ng-container> -->
+	
+								<ng-container matColumnDef="nomPrat">
+									<th mat-header-cell *matHeaderCellDef>Nom</th>
+									<td mat-cell *matCellDef="let element"> {{ element.nomPraticien }} </td>
+								</ng-container>
+	
+								<ng-container matColumnDef="prenomPrat">
+									<th mat-header-cell *matHeaderCellDef>Prénom</th>
+									<td mat-cell *matCellDef="let element"> {{ element.prenomPraticien }} </td>
+								</ng-container>
+	
+								<ng-container matColumnDef="telMobilPrat">
+									<th mat-header-cell *matHeaderCellDef>Tel</th>
+									<td mat-cell *matCellDef="let element"> {{ element.teleMobilePraticien }} </td>
+								</ng-container>
+	
+								<ng-container matColumnDef="idPrat">
+									<th mat-header-cell *matHeaderCellDef>Détails</th>
+									<td mat-cell *matCellDef="let element" class="button-Details">
+										<button mat-icon-button color="primary" [routerLink]="['/praticiendetails', element.idpraticien]">
+											<i class="material-icons">remove_red_eye</i>
+										</button>
+									</td>
+								</ng-container>
+							</mat-table>
+
+	
+			</mat-card-content>
+		</mat-card>
+
+	</div>
+	<div class="boutonRemonter" mat-elevation-z20>
+  </div>
+
+  <!-- ------------------------------------------------------------------------- -->
+  
+  <div class="right-container">
+		<!-- TITRE -->
+
+			<mat-card class="mat-card-cherche-titre">
+				<mat-card-content class="mat-card-cherche-titre-content">
+					Rechercher un Praticien
+				</mat-card-content>
+			</mat-card>
+
+		<!-- BlOCS -->
+			<mat-card class="mat-card-cherche">
+					<mat-card-header class="mat-card-cherche-header">
+							<mat-icon>search</mat-icon>Genre du Praticien :
+						</mat-card-header>
+				<mat-card-content class="mat-card-cherche-content">
+						<mat-radio-group>
+								<mat-radio-button class="radioBtn" value="1" disabled>Homme</mat-radio-button>
+								<mat-radio-button class="radioBtn" value="2" disabled>Femme</mat-radio-button>
+								<mat-radio-button class="radioBtn" value="3" checked>Mixte</mat-radio-button>
+						</mat-radio-group>
+				</mat-card-content>
+			</mat-card>		
+	</div>
+</div>

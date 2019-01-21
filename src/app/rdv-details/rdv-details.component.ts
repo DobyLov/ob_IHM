@@ -323,7 +323,7 @@ export class RdvDetailsComponent implements OnInit {
   private getPraticienList() {
 
     this.logger.info("RdvDetailComponent log : Recuperation de la liste des praticiens.");
-    this._praticienService.getPraticienListe().subscribe(
+    this._praticienService.getPraticienList().subscribe(
       ((pratList: Praticien[]) => {
         this.praticienList = pratList;
       }
@@ -853,6 +853,7 @@ export class RdvDetailsComponent implements OnInit {
             let messageRdvOk: string = "Rendez-vous enregistré :"
             this.toasterMessage(messageRdvOk, 'snackbarInfo', 5000);
             this.logger.info("rgpdService Log : Le rendez-vous modifié à été persiste"); 
+            this._router.navigate(['./home']);
             
           } else {
             let messageRdvNOk: string = "Il y a eu un problème."
@@ -879,7 +880,7 @@ export class RdvDetailsComponent implements OnInit {
   private deleteRdvAfterConfirmation(idRdv: number) {  
 
     this.logger.info("RdvDetailsComponent log : Effacer le rdv id:" + idRdv);
-    this._rdvService.supprimeRdv(idRdv).subscribe(
+    this._rdvService.delRdv(idRdv).subscribe(
       
       res => {},
 
