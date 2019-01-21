@@ -1,4 +1,4 @@
-import { Roles } from '../utilisateur/roles';
+import { Roles } from '../roles/roles';
 // import { Utilisateur } from '../utilisateur/utilisateur';
 
 export class CurrentUtilisateur {

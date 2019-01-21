@@ -225,10 +225,6 @@ export class ClientAddComponent implements OnInit {
   }
 
 
-  public telMobileSelected() {
-
-  }
-
   /**
    * Récuperation de la liste des genres Humain
    */

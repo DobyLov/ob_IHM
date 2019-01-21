@@ -1,40 +1,64 @@
 <link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Source+Sans+Pro|Montserrat:300"
  rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=0" />
-<!-- <form> -->
-	<div class="body-containerR" >
+<form [formGroup]="utilisateurFg">
+	<div class="body-containerR">
 		<div class="body-containerC">
-
 			<mat-card class="title">
 				<mat-card-content class="title-content">
-					<span>Ajouter un Utilisateur</span>
+					<span>Ajouter un utilisateur</span>
 				</mat-card-content>
 			</mat-card>
 			<!-- ----------------------------------------------------------------------------------------------------------------------- -->
 			<div class="items-containerR">
 				<mat-card class="matCard-utilisateur-section">
 					<mat-card-header class="matCard-utilisateur-header">
-						<div>Identité Utilisateur</div>
+						<div>Identité utilisateur</div>
 					</mat-card-header>
 					<mat-card-content class="matCard-utilisateur-content">
-					</mat-card-content>
-				</mat-card>
-				<!-- ------------------------------------------------ -->
-				<mat-card class="matCard-adresse-section">
-					<mat-card-header class="matCard-adresse-header">
-						<span>Adresse Utilisateur</span>
-					</mat-card-header>
-					<mat-card-content class="matCard-adresse-content">
+						<div class="divsInternes">
+							<mat-form-field>
+								<input matInput #inputNom [formControl]="this.utilisateurFg.get('utilisateurNom')" maxlength="30" autocomplete="off"
+								 placeholder="Nom">
+								<mat-hint align="end">{{inputNom.value?.length || 0}}/30</mat-hint>
+								<mat-error *ngIf="this.utilisateurFg.get('utilisateurNom').invalid">{{getIdNomErrorMessage()}}</mat-error>
+							</mat-form-field>
+						</div>
+						<div class="divsInternes">
+							<mat-form-field>
+								<input matInput #inputPrenom maxlength="30" autocomplete="off" [formControl]="this.utilisateurFg.get('utilisateurPrenom')"
+								 placeholder="Prénom">
+								<mat-hint align="end">{{inputPrenom.value?.length || 0}}/30</mat-hint>
+								<mat-error *ngIf="this.utilisateurFg.get('utilisateurPrenom').invalid">{{getIdPrenomErrorMessage()}}</mat-error>
+							</mat-form-field>
+						</div>
 					</mat-card-content>
 				</mat-card>
 			</div>
+			<!-- ------------------------------------------------ -->
+
 			<!-- ---------------------------------------------------------------------- -->
 			<div class="items-containerR">
 				<mat-card class="matCard-contact-section">
 					<mat-card-header class="matCard-contact-header">
-						<div>Contact Utilisateur</div>
+						<div>Contact utilisateur</div>
 					</mat-card-header>
 					<mat-card-content class="matCard-contact-content">
+						<div class="divsInternes">
+							<mat-form-field>
+								<input matInput #inputTelMob autocomplete="off" minlength="10" maxlength="10" [formControl]="this.utilisateurFg.get('utilisateurTelMobil')"
+								 placeholder="Téléphone mobile">
+								<mat-hint align="end">{{inputTelMob.value?.length || 0}}/10</mat-hint>
+								<mat-error *ngIf="this.utilisateurFg.get('utilisateurTelMobil').invalid">{{getTelMobileErrorMessage()}}</mat-error>
+							</mat-form-field>
+						</div>
+						<div class="divsInternes">
+							<mat-form-field>
+								<input matInput #inputMail autocomplete="off" maxlength="50" placeholder="Email" [formControl]="this.utilisateurFg.get('utilisateurEmail')">
+								<mat-hint align="end">{{inputMail.value?.length || 0}}/50</mat-hint>
+								<mat-error *ngIf="this.utilisateurFg.get('utilisateurEmail').invalid">{{getEmailErrorMessage()}}</mat-error>
+							</mat-form-field>
+						</div>
 					</mat-card-content>
 				</mat-card>
 				<!-- ------------------------------------------------ -->
@@ -43,26 +67,91 @@
 						<span>Options Rappels</span>
 					</mat-card-header>
 					<mat-card-content class="matCard-optionRappels-content">
+						<div class="rgpdTitle">
+							<span>Si activé le utilisateur va reçevoir</span>
+						</div>
+						<div class="rgpdReglages-Container">
+							<span class="slider-Subject">
+								Rappels de Rdv par SMS
+							</span>
+							<span class="slider-Switch">
+								<mat-slide-toggle (change)="onChangeTs_SmsRdvRemider_Checked()" [color]="ts_Color" [checked]="slider_Sms"
+								 [disabled]="this.utilisateurFg.get('utilisateurTelMobil').invalid 
+                                      && this.utilisateurFg.get('utilisateurTelMobil').updateOn
+                                      && this.utilisateurFg.get('utilisateurTelMobil').valueChanges
+                                      || this.utilisateurFg.get('utilisateurTelMobil').value == ''">
+								</mat-slide-toggle>
+							</span>
+						</div>
+						<div class="rgpdReglages-Container">
+							<span class="slider-Subject">
+								Rappels par Mail
+							</span>
+							<span class="slider-Switch">
+								<mat-slide-toggle (change)="onChangeTs_MailRdvReminder_Checked()" [color]="ts_Color" [checked]="slider_Mail"
+								 [disabled]="this.utilisateurFg.get('utilisateurEmail').invalid
+																	|| this.utilisateurFg.get('utilisateurEmail').value == ''
+																	|| this.utilisateurFg.get('utilisateurEmail').value == null">
+								</mat-slide-toggle>
+							</span>
+						</div>
 					</mat-card-content>
 				</mat-card>
 			</div>
 			<!-- ---------------------------------------------------------------------- -->
-		
+			<div class="items-containerR">
+				<!-- <div class="divsInternes"> -->
+					<!-- <mat-form-field hintLabel="Liste déroulante"> -->
+						<mat-card class="matCard-roles-section">
+							<mat-card-header class="matCard-roles-header">
+								<span>Roles utilisateur</span>
+							</mat-card-header>
+							<mat-card-content class="matCard-roles-content">
+								<mat-select [formControl]="this.utilisateurFg.get('utilisateurRoles')"
+														placeholder="Séléctionner un rôle">
+									<mat-option *ngFor="let roles of rolesList" [value]="roles.roles" (onSelectionChange)="rolesSelectionnne($event, roles)">
+										{{ roles.roles }}
+									</mat-option>
+								</mat-select>
+							</mat-card-content>
+						</mat-card>
+					<!-- </mat-form-field> -->
+				<!-- </div> -->
+
+				<!-- <div> -->
+					<mat-card class="matCard-optionSuppression-section">
+						<mat-card-header class="matCard-optionSuppression-header">
+							<span>Options Spéciales</span>
+						</mat-card-header>
+						<mat-card-content class="matCard-optionSuppression-content">
+							<div class="suppressionReglages-Container">
+								<span class="slider-Subject">
+									Compte supprimable
+								</span>
+								<span class="slider-Switch">
+									<mat-slide-toggle (change)="onChangeTs_DisableErasable_Checked()" [color]="ts_Color" [checked]="slider_Erasable"
+									 [disabled]="disable_Erasable_toggle">
+									</mat-slide-toggle>
+								</span>
+							</div>
+						</mat-card-content>
+					</mat-card>
+				<!-- </div> -->
+			</div>
+			<!-- ---------------------------------------------------------------------- -->
 			<mat-card class="action-section">
 				<div>
-          <button mat-mini-fab 
-                  color="warn" 
-                  matTooltip="Annuler la saisie de l'utilisateur" [routerLink]="[this.previousRoute]">
-            <mat-icon class="remonte-icon-btn">clear</mat-icon>
-          </button>
+					<button mat-mini-fab color="warn" matTooltip="Annuler la saisie de la utilisateur" [routerLink]="[this.previousRoute]">
+						<mat-icon class="remonte-icon-btn">clear</mat-icon>
+					</button>
 				</div>
 				<div>
-					<button mat-mini-fab color="primary" matTooltip="Valider">
+					<button mat-mini-fab color="primary" matTooltip="Valider" (click)="post()" [disabled]="!utilisateurFg.valid">
 						<mat-icon class="remonte-icon-btn">create</mat-icon>
 					</button>
 				</div>
 			</mat-card>
-
 		</div>
 	</div>
-<!-- </form> -->
+	<!-- </div> -->
+</form>

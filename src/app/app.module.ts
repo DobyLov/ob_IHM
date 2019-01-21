@@ -198,6 +198,7 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule } from '@angular/material';
+import { RolesService } from './roles/roles.service';
 
 
 
@@ -311,6 +312,7 @@ import {
               { provide: DateService, useClass: DateService },
               { provide: ResponsiveAppMediaService, useClass: ResponsiveAppMediaService },
               { provide: UtilisateurService, useClass: UtilisateurService },
+              { provide: RolesService, useClass: RolesService },
               { provide: GenreService, useClass: GenreService },
               { provide: PraticienService, useClass: PraticienService },
               { provide: ClientService, useClass: ClientService },

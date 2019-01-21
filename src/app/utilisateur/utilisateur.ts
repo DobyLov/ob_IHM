@@ -1,4 +1,4 @@
-import { Roles } from './roles';
+import { Roles } from '../roles/roles';
 
 export class Utilisateur {
 
@@ -10,9 +10,9 @@ export class Utilisateur {
     public motDePasse: string;
 	public roles: Roles;
 	public isLogged: string;
-	public suscribedSmsReminder: string;
-	public suscribedMailReminder: string;
-    public pwdExpirationDateTime: string;
+	public suscribedSmsReminder: boolean;
+	public suscribedMailReminder: boolean;
+    public pwdExpirationDateTime: boolean;
 
    
 

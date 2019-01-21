@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Utilisateur } from './utilisateur';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { appConfig } from '../constant/apiOpusBeauteUrl';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { CurrentUtilisateur } from '../login/currentUtilisateur';
@@ -115,5 +115,21 @@ export class UtilisateurService {
     return this.httpCli.get<Utilisateur>(this.url + '/idUtilisateur/' + idUser)
       .subscribe( data => { console.log("utilisateur connecte :" + data) } );
   }
+
+
+      /**
+   * Ajouter un utilisateur
+   * @param praticien 
+   */
+  public post(user: Utilisateur): Observable<Utilisateur> {
+
+    this.logger.info("UtilisateurService Log : Ajouter le  Utilisateur");
+    this.logger.info("UtilisateurService Log : Utilisateur a persister : " + JSON.stringify(user));
+
+    let myHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    let option = { headers: myHeaders }
+    return this.httpCli.post<Utilisateur>(this.url + '/add', user, option);
+
+}
 
 }
