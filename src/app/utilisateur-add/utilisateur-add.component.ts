@@ -132,6 +132,15 @@ export class UtilisateurAddComponent implements OnInit {
 
   }
 
+ /**
+ * Recupere le message d erreur du control sur le champs Email
+ */
+  public getUtilisateurRoleErrorMessage(): string {
+
+    return this.utilisateurFg.get('utilisateurRoles').getError('required') ? 'Rôle obligatoire' : '';
+
+  }
+
   /**
    * Récuperation de la liste des roles
    */

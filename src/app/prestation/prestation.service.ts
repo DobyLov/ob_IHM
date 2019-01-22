@@ -2,7 +2,7 @@ import { Injectable } from "../../../node_modules/@angular/core";
 import { NGXLogger } from "../../../node_modules/ngx-logger";
 import { Observable } from "../../../node_modules/rxjs";
 import { appConfig } from "../constant/apiOpusBeauteUrl";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Prestation } from "./prestation";
 
@@ -36,7 +36,7 @@ export class PrestationService {
     this.logger.info("PrestationService Log : Récupère la prestation par son Id");
 
     return this.httpCli
-      .get<Prestation>(this.url + "/" + idPrestation )
+      .get<Prestation>(this.url + "/" + idPrestation)
       .pipe(map(res => res));
 
   }
@@ -46,11 +46,26 @@ export class PrestationService {
   */
   public getPrestationListByActivity() {
 
-  this.logger.info("PrestationService Log : Recupere la liste totale des Prestations");
+    this.logger.info("PrestationService Log : Recupere la liste totale des Prestations");
 
-  return this.httpCli
-    .get<Prestation[]>(this.url + '/list')
-    .pipe(map(res => res));
+    return this.httpCli
+      .get<Prestation[]>(this.url + '/list')
+      .pipe(map(res => res));
 
-}
+  }
+
+  /**
+* Ajouter une prestation
+* @param prestation 
+*/
+  public post(prestation: Prestation): Observable<Prestation> {
+
+    this.logger.info("PraticienService Log : Ajouter le  Praticien");
+    this.logger.info("PraticienService Log : Praticien a persister : " + JSON.stringify(prestation));
+
+    let myHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    let option = { headers: myHeaders }
+    return this.httpCli.post<Prestation>(this.url + '/add', prestation, option);
+
+  }
 }

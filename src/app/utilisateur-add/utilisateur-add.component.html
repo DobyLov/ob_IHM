@@ -102,14 +102,18 @@
 			<div class="items-containerR">
 				<mat-card class="matCard-roles-section">
 					<mat-card-header class="matCard-roles-header">
-						<span>Roles utilisateur</span>
+						<span>Rôle utilisateur</span>
 					</mat-card-header>
 					<mat-card-content class="matCard-roles-content">
-						<mat-select [formControl]="this.utilisateurFg.get('utilisateurRoles')" placeholder="Séléctionner un rôle">
-							<mat-option *ngFor="let rolesUtilisateur of rolesList" [value]="rolesUtilisateur" (onSelectionChange)="rolesSelectionnne($event, rolesUtilisateur)">
-								{{ rolesUtilisateur.rolesName }}
-							</mat-option>
-						</mat-select>
+						<mat-form-field hintLabel="Liste déroulante">
+								<mat-select [formControl]="this.utilisateurFg.get('utilisateurRoles')" placeholder="Séléctionner un rôle">
+										<mat-option *ngFor="let rolesUtilisateur of rolesList" [value]="rolesUtilisateur" (onSelectionChange)="rolesSelectionnne($event, rolesUtilisateur)">
+											{{ rolesUtilisateur.rolesName }}
+										</mat-option>
+								</mat-select>
+								<mat-error *ngIf="this.utilisateurFg.get('utilisateurRoles').invalid">{{getUtilisateurRoleErrorMessage()}}</mat-error>
+						</mat-form-field>
+						
 					</mat-card-content>
 				</mat-card>
 				<mat-card class="matCard-optionSuppression-section">
@@ -117,6 +121,9 @@
 						<span>Options Spéciales</span>
 					</mat-card-header>
 					<mat-card-content class="matCard-optionSuppression-content">
+						<div class="rgpdTitle">
+								<span>Rendre le compte éffacable</span>
+						</div>
 						<div class="suppressionReglages-Container">
 							<span class="slider-Subject">
 								Compte supprimable

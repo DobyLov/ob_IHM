@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { CurrentUtilisateur } from '../login/currentUtilisateur';
 import { Observable } from '../../../node_modules/rxjs';
 import { NGXLogger } from '../../../node_modules/ngx-logger';
+import { map } from 'rxjs/internal/operators/map';
 
 @Injectable()
 export class UtilisateurService {
@@ -98,10 +99,16 @@ export class UtilisateurService {
   /**
    * Recupere la liste des utilisateurs 
    */
-  private getUserList() {
+  public getUserList(): Observable<Utilisateur[]> {
 
-    return this.httpCli.get<Utilisateur>(this.url + '/list')
-      .subscribe( uList  => { console.log("UtilisateurService : ListeUser : " + JSON.stringify(uList)) })
+    this.logger.info("PrestationService Log : Recupere la liste totale des Prestations");
+
+    return this.httpCli
+      .get<Utilisateur[]>(this.url + '/list')
+      .pipe(map(res => res));
+      
+    // return this.httpCli.get<Utilisateur>(this.url + '/list')
+    //   .subscribe( uList  => { console.log("UtilisateurService : ListeUser : " + JSON.stringify(uList)) })
 
   }
 

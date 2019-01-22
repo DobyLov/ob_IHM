@@ -1,3 +1,87 @@
-<p>
-  utilisateur-search works!
-</p>
+<link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Source+Sans+Pro|Montserrat:300"
+ rel="stylesheet">
+<div class="body-container">
+	<div class="left-container">
+		<mat-card class="mat-card-titre">
+			<mat-card-content class="mat-card-titre-content">
+				Liste des Utilisateurs
+			</mat-card-content>
+		</mat-card>
+		<mat-card class="mat-card-list">
+			<mat-card-content class="mat-card-list-content">					
+
+							<mat-table #table mat-table [dataSource]="dataSource">
+								<tr mat-header-row *matHeaderRowDef="tabNomsColonnes"></tr>
+								<tr mat-row *matRowDef="let row; columns: tabNomsColonnes;"></tr>	
+
+								<!-- <ng-container matColumnDef="numeroCli">
+										<th mat-header-cell *matHeaderCellDef> </th>
+										<td mat-cell *matCellDef="let element; let i = index ">{{ i + 1 }}/</td>
+								</ng-container> -->
+	
+								<ng-container matColumnDef="nomUtil">
+									<th mat-header-cell *matHeaderCellDef>Nom</th>
+									<td mat-cell *matCellDef="let element"> {{ element.nomUtilisateur }} </td>
+								</ng-container>
+	
+								<ng-container matColumnDef="prenomUtil">
+									<th mat-header-cell *matHeaderCellDef>Prénom</th>
+									<td mat-cell *matCellDef="let element"> {{ element.prenomUtilisateur }} </td>
+								</ng-container>
+	
+								<ng-container matColumnDef="rolesUtil">
+									<th mat-header-cell *matHeaderCellDef>Rôle</th>
+									<td mat-cell *matCellDef="let element"> {{ element.rolesUtilisateur.rolesName }} </td>
+								</ng-container>
+	
+								<!-- <ng-container matColumnDef="villeCli">
+									<th mat-header-cell *matHeaderCellDef>Ville</th>
+									<td mat-cell *matCellDef="let element"> {{ element.adresse.ville }} </td>
+								</ng-container>  -->
+	
+								<ng-container matColumnDef="idUtil">
+									<th mat-header-cell *matHeaderCellDef>Détails</th>
+									<td mat-cell *matCellDef="let element" class="button-Details">
+										<button mat-icon-button color="primary" [routerLink]="['/utilisateurdetails', element.idUtilisateur]">
+											<i class="material-icons">remove_red_eye</i>
+										</button>
+									</td>
+								</ng-container>
+							</mat-table>
+
+	
+			</mat-card-content>
+		</mat-card>
+
+	</div>
+	<div class="boutonRemonter" mat-elevation-z20>
+  </div>
+
+  <!-- ------------------------------------------------------------------------- -->
+  
+  <div class="right-container">
+		<!-- TITRE -->
+
+			<mat-card class="mat-card-cherche-titre">
+				<mat-card-content class="mat-card-cherche-titre-content">
+					Rechercher un Utilisateur
+				</mat-card-content>
+			</mat-card>
+
+		<!-- BlOCS -->
+			<mat-card class="mat-card-cherche">
+					<mat-card-header class="mat-card-cherche-header">
+							<mat-icon>search</mat-icon>Role Utilisateur:
+						</mat-card-header>
+				<mat-card-content class="mat-card-cherche-content">
+						<mat-radio-group>
+								<mat-radio-button class="radioBtn" value="1" disabled>root</mat-radio-button>
+								<mat-radio-button class="radioBtn" value="2" disabled>admin</mat-radio-button>
+								<mat-radio-button class="radioBtn" value="3" checked>prati</mat-radio-button>
+								<mat-radio-button class="radioBtn" value="1" disabled>stag</mat-radio-button>
+								<mat-radio-button class="radioBtn" value="2" disabled>tous</mat-radio-button>	
+						</mat-radio-group>
+				</mat-card-content>
+			</mat-card>		
+	</div>
+</div>
