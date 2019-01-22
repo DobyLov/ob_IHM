@@ -1,4 +1,4 @@
-import { Roles } from '../roles/roles';
+import { RolesUtilisateur } from '../roles/rolesUtilisateur';
 // import { Utilisateur } from '../utilisateur/utilisateur';
 
 export class CurrentUtilisateur {
@@ -7,5 +7,5 @@ export class CurrentUtilisateur {
     public prenomUtilisateur: string;
     public nomUtilisateur: string;
     public adresseMailUtilisateur: string;
-    public roles: Roles
+    public rolesUtilisateur: RolesUtilisateur;
 }

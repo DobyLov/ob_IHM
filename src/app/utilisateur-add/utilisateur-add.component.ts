@@ -8,8 +8,8 @@ import { CurrentUtilisateur } from '../login/currentUtilisateur';
 import { Subscription } from 'rxjs';
 import { Utilisateur } from '../utilisateur/utilisateur';
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
-import { Roles } from '../roles/roles';
-import { RolesService } from '../roles/roles.service';
+import { RolesUtilisateur } from '../roles/rolesUtilisateur';
+import { RolesUtilisateurService } from '../roles/rolesUtilisateur.service';
 import { MatOptionSelectionChange } from '@angular/material';
 
 // customValidator
@@ -47,12 +47,13 @@ export class UtilisateurAddComponent implements OnInit {
   // FormGroup
   utilisateurFg: FormGroup;
   // roles
-  role: Roles = new Roles();
-  rolesList: Roles[];
+  userRoles: RolesUtilisateur = new RolesUtilisateur();
+  roles: RolesUtilisateur;
+  rolesList: RolesUtilisateur[];
   
   constructor(private logger: NGXLogger,
               private _historyRouting: HistoryRoutingService,
-              private _rolesServices: RolesService,
+              private _rolesServices: RolesUtilisateurService,
               private _utilisateurService: UtilisateurService,
               private _router: Router,
               private _toasterService: ToasterService
@@ -68,7 +69,7 @@ export class UtilisateurAddComponent implements OnInit {
           utilisateurNom: new FormControl( '', [Validators.pattern('^[a-zA-Z-éè]+$'), Validators.required, Validators.maxLength(30)]),
           utilisateurPrenom: new FormControl( '', [Validators.pattern('^[a-zA-Z-éèç]+$'),Validators.required, Validators.maxLength(30)]),
           utilisateurTelMobil: new FormControl({value: '', disabled: false}, [Validators.pattern('([0])([6]|[7])[0-9]{8}'), Validators.minLength(10)]),
-          utilisateurRoles: new FormControl('', [Validators.required] ),
+          utilisateurRoles: new FormControl({value: '', disabled: false}, [Validators.required] ),
           utilisateurEmail: new FormControl({value: '', disabled: false}, [CustomEmailValidator, Validators.required, Validators.maxLength(30), 
                         Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]
                         // Validators.pattern()
@@ -137,18 +138,20 @@ export class UtilisateurAddComponent implements OnInit {
   private getRolesList():void {
 
     this._rolesServices.getRolesList().subscribe(
-      (roles: Roles[]) => {
+      (roles: RolesUtilisateur[]) => {
         this.rolesList = roles;
       }
     )
-  }   
+  }  
 
-  public rolesSelectionnne(event: MatOptionSelectionChange, roles: Roles) {
+  public rolesSelectionnne(event: MatOptionSelectionChange, selectedeRoles: RolesUtilisateur) {
+
 
     if (event.source.selected) {
-      this.logger.info("UtilisateurAddComponent log : role selectionné id: " + roles.idRoles + "_" + roles.roles);
-      this.utilisateurFg.get('utilisateurRoles').setValue(roles.idRoles);
-    
+      this.logger.info("UtilisateurAddComponent log : role selectionné id: " + selectedeRoles.idRoles);
+      this.utilisateurFg.get('utilisateurRoles').setValue(selectedeRoles.idRoles);
+      this.logger.info("UtilisateurAddComponent log : role selectionné Fcontrol : " + this.utilisateurFg.get('utilisateurRoles').value);
+      this.userRoles.idRoles = selectedeRoles.idRoles;
       if ( this.utilisateurFg.get('utilisateurRoles').value == 1 
       || this.utilisateurFg.get('utilisateurRoles').value == 2) {
 
@@ -187,6 +190,7 @@ export class UtilisateurAddComponent implements OnInit {
    * Change la valeur du slider de rappel de Rdv par Mail
    */
   public onChangeTs_MailRdvReminder_Checked() {
+
     this.slider_Mail = !this.slider_Mail;
 
     if ( this.slider_Mail == true ) {
@@ -195,10 +199,6 @@ export class UtilisateurAddComponent implements OnInit {
     } else {
 
       this.utilisateurFg.get('utilisateurEmail').enable();
-    }
-
-    if ( this.slider_Mail == false ) {
-
     }
 
   }  
@@ -232,12 +232,17 @@ export class UtilisateurAddComponent implements OnInit {
     this.utilisateur.teleMobileUtilisateur = this.utilisateurFg.get('utilisateurTelMobil').value;
     // Email
     this.utilisateur.adresseMailUtilisateur = this.utilisateurFg.get('utilisateurEmail').value;
-    // Sliders --------
-    // Slider 
+    // Sliders
     this.utilisateur.suscribedMailReminder = this.slider_Mail.valueOf();
     // Slider SMS
     this.utilisateur.suscribedSmsReminder = this.slider_Sms.valueOf();
-
+    // Slider is utilisateur can be Erased
+    this.utilisateur.compteEffacable = this.slider_Erasable.valueOf();
+    this.utilisateur.isLogged = null;
+    // Roles
+    // this.userRoles.idRoles = this.utilisateurFg.get('utilisateurRoles').value;
+    this.utilisateur.rolesUtilisateur = this.userRoles;this.logger.info("UtilisateurAddComponent Log : Role a persister : " + JSON.stringify(this.userRoles));
+    this.logger.info("UtilisateurAddComponent Log : Utilisateur a persister : " + JSON.stringify(this.utilisateur));
     this._utilisateurService.post(this.utilisateur)
 
     .subscribe(

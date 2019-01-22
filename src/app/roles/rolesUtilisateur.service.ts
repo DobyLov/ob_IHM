@@ -1,13 +1,13 @@
-import { Injectable } from "../../../node_modules/@angular/core";
-import { NGXLogger } from "../../../node_modules/ngx-logger";
-import { Observable } from "../../../node_modules/rxjs";
+import { Injectable } from "@angular/core";
+import { NGXLogger } from "ngx-logger";
+import { Observable } from "rxjs";
 import { appConfig } from "../constant/apiOpusBeauteUrl";
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Roles } from "./roles";
+import { RolesUtilisateur } from "./rolesUtilisateur";
 
 @Injectable()
-export class RolesService {
+export class RolesUtilisateurService {
 
 
   url: string = appConfig.apiOpusBeauteUrl + '/roles';
@@ -19,22 +19,22 @@ export class RolesService {
   /**
   * Retourne la liste complete de Prestations 
   */
-  public getRolesList(): Observable<Roles[]> {
+  public getRolesList(): Observable<RolesUtilisateur[]> {
 
     this.logger.info("PrestationService Log : Recupere la liste totale des Prestations");
 
     return this.httpCli
-      .get<Roles[]>(this.url + '/list')
+      .get<RolesUtilisateur[]>(this.url + '/list')
       .pipe(map(res => res));
 
   }
 
-  public getRolesById(idRoles: number): Observable<Roles> {
+  public getRolesById(idRoles: number): Observable<RolesUtilisateur> {
 
     this.logger.info("PrestationService Log : Récupère la prestation par son Id");
 
     return this.httpCli
-      .get<Roles>(this.url + "/" + idRoles )
+      .get<RolesUtilisateur>(this.url + "/" + idRoles )
       .pipe(map(res => res));
 
   }

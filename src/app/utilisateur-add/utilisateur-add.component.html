@@ -100,43 +100,35 @@
 			</div>
 			<!-- ---------------------------------------------------------------------- -->
 			<div class="items-containerR">
-				<!-- <div class="divsInternes"> -->
-					<!-- <mat-form-field hintLabel="Liste déroulante"> -->
-						<mat-card class="matCard-roles-section">
-							<mat-card-header class="matCard-roles-header">
-								<span>Roles utilisateur</span>
-							</mat-card-header>
-							<mat-card-content class="matCard-roles-content">
-								<mat-select [formControl]="this.utilisateurFg.get('utilisateurRoles')"
-														placeholder="Séléctionner un rôle">
-									<mat-option *ngFor="let roles of rolesList" [value]="roles.roles" (onSelectionChange)="rolesSelectionnne($event, roles)">
-										{{ roles.roles }}
-									</mat-option>
-								</mat-select>
-							</mat-card-content>
-						</mat-card>
-					<!-- </mat-form-field> -->
-				<!-- </div> -->
-
-				<!-- <div> -->
-					<mat-card class="matCard-optionSuppression-section">
-						<mat-card-header class="matCard-optionSuppression-header">
-							<span>Options Spéciales</span>
-						</mat-card-header>
-						<mat-card-content class="matCard-optionSuppression-content">
-							<div class="suppressionReglages-Container">
-								<span class="slider-Subject">
-									Compte supprimable
-								</span>
-								<span class="slider-Switch">
-									<mat-slide-toggle (change)="onChangeTs_DisableErasable_Checked()" [color]="ts_Color" [checked]="slider_Erasable"
-									 [disabled]="disable_Erasable_toggle">
-									</mat-slide-toggle>
-								</span>
-							</div>
-						</mat-card-content>
-					</mat-card>
-				<!-- </div> -->
+				<mat-card class="matCard-roles-section">
+					<mat-card-header class="matCard-roles-header">
+						<span>Roles utilisateur</span>
+					</mat-card-header>
+					<mat-card-content class="matCard-roles-content">
+						<mat-select [formControl]="this.utilisateurFg.get('utilisateurRoles')" placeholder="Séléctionner un rôle">
+							<mat-option *ngFor="let rolesUtilisateur of rolesList" [value]="rolesUtilisateur" (onSelectionChange)="rolesSelectionnne($event, rolesUtilisateur)">
+								{{ rolesUtilisateur.rolesName }}
+							</mat-option>
+						</mat-select>
+					</mat-card-content>
+				</mat-card>
+				<mat-card class="matCard-optionSuppression-section">
+					<mat-card-header class="matCard-optionSuppression-header">
+						<span>Options Spéciales</span>
+					</mat-card-header>
+					<mat-card-content class="matCard-optionSuppression-content">
+						<div class="suppressionReglages-Container">
+							<span class="slider-Subject">
+								Compte supprimable
+							</span>
+							<span class="slider-Switch">
+								<mat-slide-toggle (change)="onChangeTs_DisableErasable_Checked()" [color]="ts_Color" [checked]="slider_Erasable"
+								 [disabled]="disable_Erasable_toggle">
+								</mat-slide-toggle>
+							</span>
+						</div>
+					</mat-card-content>
+				</mat-card>
 			</div>
 			<!-- ---------------------------------------------------------------------- -->
 			<mat-card class="action-section">

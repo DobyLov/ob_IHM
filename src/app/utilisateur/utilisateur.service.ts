@@ -80,7 +80,7 @@ export class UtilisateurService {
     currentUtilisateur.prenomUtilisateur = utilisateur.prenomUtilisateur;
     currentUtilisateur.nomUtilisateur = utilisateur.nomUtilisateur;
     currentUtilisateur.adresseMailUtilisateur = utilisateur.adresseMailUtilisateur;
-    currentUtilisateur.roles = utilisateur.roles;
+    currentUtilisateur.rolesUtilisateur = utilisateur.rolesUtilisateur;
 
     return currentUtilisateur;
   }
@@ -119,7 +119,7 @@ export class UtilisateurService {
 
       /**
    * Ajouter un utilisateur
-   * @param praticien 
+   * @param utilisateur 
    */
   public post(user: Utilisateur): Observable<Utilisateur> {
 
