@@ -153,6 +153,8 @@ import { DateAndTime24Pipe } from './pipe/dateAndTime24.pipe';
 import { Time24Pipe } from './pipe/time24.pipe';
 import { ForfaitPipe } from './pipe/forfait.pipe';
 import { WishProOrNotPipe } from './pipe/wishPro.pipe';
+import { SingulierPlurielNbSeancePipe } from './pipe/singPlurNbSeance.pipe';
+import { EuroCurrencyShowPipe } from './pipe/euroCurrencyPipe.pipe';
 
 // Perfect ScrollBar
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -212,6 +214,7 @@ import { RolesUtilisateurService } from './roles/rolesUtilisateur.service';
     ConfimrUserFromTokenModalComponent,
     ConfirmRdvDetailsModalcomponent,
     DateAndTime24Pipe,
+    EuroCurrencyShowPipe,
     FirstCharUpperPipe, 
     FooterComponent,
     ForfaitPipe,
@@ -232,6 +235,7 @@ import { RolesUtilisateurService } from './roles/rolesUtilisateur.service';
     RgpdPageNotFoundComponent, 
     RgpdTokenExpiredComponent,
     RgpdUrlAlteredComponent,
+    SingulierPlurielNbSeancePipe,
     SnackBarComponent,
     SupportComponent,
     Time24Pipe,
