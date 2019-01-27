@@ -1,9 +1,9 @@
-import { Component, OnInit, Output, EventEmitter, SimpleChanges, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { HistoryRoutingService } from '../service/historyRouting.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { FormControl, Validators, FormGroup, AbstractControl } from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { MatOptionSelectionChange } from '@angular/material';
 import { ToasterService } from '../service/toaster.service';
 import { CurrentUtilisateur } from '../login/currentUtilisateur';
@@ -60,6 +60,8 @@ export class PrestationAddComponent implements OnInit, OnChanges {
   activitePrestation: Activite;
   activite: Activite = new Activite();
   activiteList: Activite[];
+  // Nouvelle activite
+  idOfNewActivite: number;
   // genre
   genrePrestation: Genre;
   genre: Genre = new Genre();
@@ -127,12 +129,13 @@ export class PrestationAddComponent implements OnInit, OnChanges {
           prestationSoinFc: new FormControl( '', [Validators.pattern('^[a-zA-Z-éèçà ]+$'),Validators.required, Validators.maxLength(50)]),
           prestationActiviteFc: new FormControl({value: ''}),
           prestationNouvActFc: new FormControl('', [Validators.pattern('^[a-zA-Z-éèàç]+$'), Validators.maxLength(50)]),
-          prestationGenreFc: new FormControl({value: ''}, [Validators.required]),  
-          // prestationForfait: new FormControl({value: ''}, [Validators.required]),
-          prestationNbSeanceFc: new FormControl({value: '1', disabled: false}, [Validators.required]),
+          prestationNbSeanceFc: new FormControl( [Validators.required]),
           prestationDureeSeanceFc: new FormControl({value: '', disabled: false}, [Validators.required]),
-          prestationDescriptionFc: new FormControl( '', [Validators.pattern('^[a-zA-Z-éèàç]+$'), Validators.maxLength(500)]),
-          prestationPrixFc: new FormControl('',[Validators.pattern('^[0-9.,]+$'), Validators.required, Validators.maxLength(5)])
+          prestationPrixFc: new FormControl('',[Validators.pattern('^[0-9.,]+$'), Validators.required, Validators.maxLength(4)]),
+          prestationGenreFc: new FormControl({value: ''}, [Validators.required]), 
+          prestationForfaitFc: new FormControl(),
+          prestationDescriptionFc: new FormControl( '', [Validators.pattern('^[a-zA-Z-éèàç ]+$'), Validators.maxLength(500)])
+          
        
           })
           
@@ -185,7 +188,7 @@ private getGenreList() {
    * Recupere le message d erreur du control sur le champs TelFix
    */
   public getSoinErrorMessage(): string {
-    return this.prestationFg.get('prestationSoinFc').getError('required') ? 'Champs obligatoire' :
+    return this.prestationFg.get('prestationSoinFc').getError('required') ? 'Champ obligatoire' :
     this.prestationFg.get('prestationSoinFc').getError('pattern') ? 'Charactères spéciaux : tiret autorisé' :
     this.prestationFg.get('prestationSoinFc').getError('maxlength') ? '1 caractère maximum !' : '';
   }
@@ -213,8 +216,7 @@ private getGenreList() {
    * Recupere le message d erreur du control sur le champs TelMobile
    */
   public getNbSeanceErrorMessage(): string {
-    return this.prestationFg.get('prestationNbSeanceFc').getError('required') ? 'Champs obligatoire' :
-    // this.prestationFg.get('prestationNbSeanceFc').getError('pattern') ? 'Que des chiffres svp' :
+    return this.prestationFg.get('prestationNbSeanceFc').getError('required') ? 'Champ obligatoire' :
     this.prestationFg.get('prestationNbSeanceFc').getError('maxlength') ? '2 chiffres max !' : '';
   }
 
@@ -224,12 +226,11 @@ private getGenreList() {
    * Recupere le message d erreur du control sur le champs Genre
    */
   public getGenreErrorMessage(): string {
-    return this.prestationFg.get('prestationGenreFc').getError('required') ? 'Champs obligatoire' : '';
+    return this.prestationFg.get('prestationGenreFc').getError('required') ? 'Champ obligatoire' : '';
   }
 
   public getDureeSeanceErrorMessage(): string {
-    return this.prestationFg.get('prestationDureeSeanceFc').getError('required') ? 'Champs obligatoire' :
-    // this.prestationFg.get('prestationDureeSeanceFc').getError('pattern') ? 'Chiffres uniquement' :
+    return this.prestationFg.get('prestationDureeSeanceFc').getError('required') ? 'Champ obligatoire' :
     this.prestationFg.get('prestationDureeSeanceFc').getError('maxlength') ? '3 chiffres max !' : '';
   }
 
@@ -244,7 +245,7 @@ private getGenreList() {
 
   }
   public getPrixErrorMessage() {
-    return this.prestationFg.get('prestationPrixFc').getError('required') ? 'Champs obligatoire' :
+    return this.prestationFg.get('prestationPrixFc').getError('required') ? 'Champ obligatoire' :
         this.prestationFg.get('prestationPrixFc').getError('pattern') ? 'Chiffres uniquement' :
         this.prestationFg.get('prestationPrixFc').getError('maxlength') ? '5 caractères maximum !' : '';
   }
@@ -253,11 +254,13 @@ private getGenreList() {
 public activiteSelectionne(event: MatOptionSelectionChange, activite: Activite) {
 
   if (event.source.selected) {
-    this.logger.info("PrestationAddComponent Log : valeur de ActiviteSelectionne : " + activite.activiteNom);
+    this.logger.info("PrestationAddComponent Log : valeur de ActiviteSelectionne : " + " id: " + activite.idActivite + " nom : " + activite.activiteNom);
 
     if (activite != null) {
       this.prestationFg.get('prestationNouvActFc').setValue('');
       this.prestationFg.get('prestationNouvActFc').disable();
+      this.logger.info("PrestationAddComponent Log : valeur de ActiviteSelectionne : " + " id: " + activite.idActivite);
+      this.prestationFg.get('prestationActiviteFc').setValue(activite.idActivite);
     } 
   }
 
@@ -296,7 +299,8 @@ public inputFieldNouvelleActivite(inputNouvelleActivite: string) {
 public nombreSeanceSelectionnee(event: EventEmitter<MatOptionSelectionChange>, nbS: nbSeance) {
 
   this.logger.info("PrestationAddComponent log : valeur de nombreSeance :" + nbS.value);
-  this.prestationFg.get('prestationNbSeanceFc').setValue(nbS.value);
+  this.prestationFg.get('prestationNbSeanceFc').setValue('');
+  this.prestationFg.get('prestationNbSeanceFc').setValue(nbS.value.valueOf());
 
 }
 
@@ -308,11 +312,19 @@ public nombreSeanceSelectionnee(event: EventEmitter<MatOptionSelectionChange>, n
 public dureeSeanceSelectionnee(event: EventEmitter<MatOptionSelectionChange>, dureeS: dureeSeance) {
 
   this.logger.info("PrestationAddComponent log : valeur de nombreSeance :" + dureeS.value);
-  this.prestationFg.get('prestationDureeSeanceFc').setValue(dureeS.value);
+  this.prestationFg.get('prestationDureeSeanceFc').setValue('')
+  this.prestationFg.get('prestationDureeSeanceFc').setValue(dureeS.value.valueOf());
 
 }
 
-public genreSelectionnee(event: EventEmitter<MatOptionSelectionChange>, genre) {
+/**
+ * Assigne le paramatre genre selectionne par l utilisateur au formControl
+ */
+public genreSelectionne(event: EventEmitter<MatOptionSelectionChange>, genre: Genre) {
+
+    this.logger.info("PrestationAddComponent Log : Valeur de genre selectionné : " + genre.idGenre)
+    this.prestationFg.get('prestationGenreFc').setValue('');
+    this.prestationFg.get('prestationGenreFc').setValue(genre.idGenre.valueOf());
 
 }
    
@@ -323,7 +335,15 @@ public genreSelectionnee(event: EventEmitter<MatOptionSelectionChange>, genre) {
   public onChangeTs_forfait_Checked() {
     
     this.slider_Forfait = !this.slider_Forfait;
-    
+    this.logger.info("PrestationAddComponent log : Valeur de Forfait : " + this.slider_Forfait);
+    this.prestationFg.get('prestationForfaitFc').setValue(this.slider_Forfait);
+
+  }
+
+  public addNewActivite() {
+    // creer la nouvelle Activite
+    // reffraichir la liste d activite
+    // purger le formcontrol Nouvelle activite
   }
   
   /**
@@ -336,14 +356,67 @@ public genreSelectionnee(event: EventEmitter<MatOptionSelectionChange>, genre) {
     this.activite;
     this.prestation;
 
-    this.prestation.soin = this.prestationFg.get('').value;
+    this.prestation.soin = this.prestationFg.get('prestationSoinFc').value;
     // recuperation de l activite > soit valeur selcetionne ou valeur saisie dans l Input
 
     if (this.prestationFg.get('prestationActiviteFc').disabled == true) {
 
+      // let createNewActivity = new Promise()
+      this.activite.activiteNom = this.prestationFg.get('prestationNouvActFc').value;
+      this._activiteService.postActivite(this.activite).toPromise()
+        .then( 
+          () => { this.getActiviteList() }
+            
+        )
+        .then(
+          () => { 
+            
+            for ( let i=0; i < this.activiteList.length; i++) {
+
+              this.logger.info("PrestationAddComponent Log : liste des prestation : " + this.activiteList[i].activiteNom);
+               
+              if ( this.activiteList[i].activiteNom.valueOf() == this.prestationFg.get('prestationNouvActFc').value) {
+                  
+                this.idOfNewActivite = this.activiteList[i].idActivite.valueOf();
+                  this.logger.info("PrestationAddComponent Log : Prestation trouvee : " + this.activiteList[i].idActivite.valueOf());
+               
+                } else {
+                
+                  this.logger.info("PrestationAddComponent Log : Prestation : " + this.prestationFg.get('prestationNouvActFc').value + " non trouvée");
+               
+                }
+            } 
+
+          }
+
+        )
+        .then(
+          () => {
+            this.activite.idActivite = this.idOfNewActivite.valueOf();
+            this.prestation.activite = this.activite; 
+          }
+          
+
+        )
+        .catch(
+          () => { this.toasterMessage("problème avec la création de la nouvelle activté", "snackbarWarning" , 4000)}
+        )
     } else {
 
+      this.activite.idActivite = this.prestationFg.get('prestationActiviteFc').value;
+      this.prestation.activite = this.activite;
+
     }
+
+
+    this.prestation.nbSeance = this.prestationFg.get('prestationNbSeanceFc').value;
+    this.prestation.dureeSeance = this.prestationFg.get('prestationDureeSeanceFc').value;
+    this.prestation.prix = this.prestationFg.get('prestationPrixFc').value;
+    this.genre.idGenre = this.prestationFg.get('prestationGenreFc').value;
+    this.prestation.genre = this.genre;
+    this.prestation.forfait = this.slider_Forfait.valueOf();
+    this.prestation.description = this.prestationFg.get('prestationDescriptionFc').value;
+    
     // this.prestation.
 
     this._prestationService.post(this.prestation)
@@ -354,17 +427,19 @@ public genreSelectionnee(event: EventEmitter<MatOptionSelectionChange>, genre) {
         let messageOk: string = "Prestation enregistrée";
         // this._router.navigate(['./home']);
         this.toasterMessage(messageOk,'snackbarInfo',5000);
-        this.logger.info("PraticienAddComponent Log : Nouveau Praticien persisté");
+        this.logger.info("PrestationAddComponent Log : Nouvelle prestation persisté");
 
       },
       err => {
         let messageNOk: string = "Il y a eu un problème, vérifiez les infos ..."
         this.toasterMessage(messageNOk,'snackbarWarning', 5000);
-        this.logger.error("PraticienAddComponent Log : La Prestation n'a pas été enregistrée");
+        this.logger.error("PrestationAddComponent Log : La Prestation n'a pas été enregistrée");
       })
 
     
   }
+
+
 
   /**
    * Popup de communication avec l utilisateur
@@ -373,7 +448,7 @@ public genreSelectionnee(event: EventEmitter<MatOptionSelectionChange>, genre) {
    * @param snackTimer 
    */
   private toasterMessage(snackMessage: string, snackStyle: string, snackTimer: number): void {
-    this._toasterService.showToaster(snackMessage, snackStyle, snackTimer)
+    this._toasterService.showToaster(snackMessage, snackStyle, snackTimer);
   }
 
 }
