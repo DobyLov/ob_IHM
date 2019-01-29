@@ -1,3 +1,135 @@
-<p>
-  prestation-search works!
-</p>
+<link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Source+Sans+Pro|Montserrat:300"
+ rel="stylesheet">
+<div class="body-container">
+	<div class="left-container">
+		<mat-card class="mat-card-titre">
+			<mat-card-content class="mat-card-titre-content">
+				Liste de Prestation
+			</mat-card-content>
+		</mat-card>
+		<mat-card class="mat-card-list">
+			<mat-card-content class="mat-card-list-content">					
+
+							<mat-table #table mat-table [dataSource]="dataSource">
+								<tr mat-header-row *matHeaderRowDef="tabNomsColonnes"></tr>
+								<tr mat-row *matRowDef="let row; columns: tabNomsColonnes;"></tr>	
+	
+								<ng-container matColumnDef="activ">
+									<th mat-header-cell *matHeaderCellDef>Activité</th>
+									<td mat-cell *matCellDef="let element"> {{ element.activite.activiteNom }} </td>
+								</ng-container>
+	
+								<ng-container matColumnDef="soin">
+									<th mat-header-cell *matHeaderCellDef>Soin</th>
+									<td mat-cell *matCellDef="let element"> {{ element.soin }} </td>
+								</ng-container>
+
+								<ng-container matColumnDef="genre">
+									<th mat-header-cell *matHeaderCellDef>Genre</th>
+									<td mat-cell *matCellDef="let element"> {{ element.genre.genreHum | HommeFemmePipe }} </td>
+								</ng-container>
+	
+								<ng-container matColumnDef="forfait">
+									<th mat-header-cell *matHeaderCellDef>Forfait</th>
+									<td mat-cell *matCellDef="let element"> {{ element.forfait | ForfaitPipe}} </td>
+								</ng-container>
+	
+								<ng-container matColumnDef="idPrat">
+									<th mat-header-cell *matHeaderCellDef>Détails</th>
+									<td mat-cell *matCellDef="let element" class="button-Details">
+										<button mat-icon-button color="primary" [routerLink]="['/prestationdetails', element.idPrestation]">
+											<i class="material-icons">remove_red_eye</i>
+										</button>
+									</td>
+								</ng-container>
+							</mat-table>
+
+	
+			</mat-card-content>
+		</mat-card>
+
+	</div>
+	<div class="boutonRemonter" mat-elevation-z20>
+  </div>
+
+  <!-- ------------------------------------------------------------------------- -->
+  
+  <div class="right-container">
+		<!-- TITRE -->
+
+			<mat-card class="mat-card-cherche-titre">
+				<mat-card-content class="mat-card-cherche-titre-content">
+					Rechercher une Prestation
+				</mat-card-content>
+			</mat-card>
+
+		<!-- BlOCS -->
+			<mat-card class="mat-card-cherche">
+					<mat-card-header class="mat-card-cherche-header">
+							<mat-icon>search</mat-icon> Flitrer les Prestations :
+						</mat-card-header>
+				<mat-card-content class="mat-card-cherche-content">
+					<!-- <div class="selector-List-container"> -->
+						<mat-form-field>
+							<mat-select placeholder="Séléctionner l'activité" 
+										[formControl]="this.prestationFg.get('activiteFc')">
+								<!-- <mat-option></mat-option> -->
+								<mat-option *ngFor="let activite of activiteList" 
+											[value]='activite.idActivite' 
+											(onSelectionChange)="activiteSelectionnee($event, activite)">
+									{{ activite.activiteNom }}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					<!-- </div>
+					<div class="selector-List-container"> -->
+						<mat-form-field>
+							<mat-select placeholder="Séléctionner le genre" 
+										[formControl]="this.prestationFg.get('genreFc')">
+								<!-- <mat-option></mat-option> -->
+								<mat-option *ngFor="let genre of genreList" 
+											[value]='genre.idGenre' 
+											(onSelectionChange)="genreSelectionne($event, genre)">
+									{{ genre.genreHum }}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					<!-- </div> -->
+					<div class="recherche-Option-Container">
+						<span class="slider-Subject">
+							Activer si forfait
+						</span>
+						<span class="slider-Switch">
+							<mat-slide-toggle (change)="onChangeTs_forfait_Checked()" 
+																[color]="ts_Color" 
+																[checked]="slider_Forfait"
+																[disabled]="this.prestationFg.get('activiteFc').untouched && this.prestationFg.get('genreFc').untouched">
+							</mat-slide-toggle>
+						</span>
+					</div>
+					<div class="recherche-Option-Container">
+						<span class="slider-Subject">
+							Mettre à zéro les filtres
+						</span>
+						<span class="slider-Switch">
+							<button mat-mini-fab 
+											color="primary"
+											(click)="resetFilters()"
+											matTooltip="Annuler les filtres">
+											<i class="material-icons">filter_list</i>                        
+							</button>
+						</span>
+					</div>
+					<div class="recherche-Option-Container" *ngIf="this.filteredPrestation">
+						<span class="slider-Subject">
+							Nombre de prestation listée(s) :
+						</span>
+						<span class="slider-Switch">
+							<b>{{ this.filteredPrestation.length }} </b>
+						</span>
+					</div>
+				</mat-card-content>
+			</mat-card>		
+	</div>
+</div>
+

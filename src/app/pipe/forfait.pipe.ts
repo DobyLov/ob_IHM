@@ -8,14 +8,17 @@ export class ForfaitPipe implements PipeTransform {
 
         if (value != null) {
             if ( value == true ) {
-                return 'Forfait';
+
+                return 'O';
+
             } else {
-                return '';
+
+                return 'N';
+
             }
-        } else {
-            return '';
-        }
     
+    		}
+
     }
 
 }

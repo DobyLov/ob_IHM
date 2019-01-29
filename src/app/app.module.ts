@@ -56,6 +56,7 @@ import { UtilisateurSearchComponent } from './utilisateur-search/utilisateur-sea
 import { UtilisateurService } from './utilisateur/utilisateur.service'; 
 import { Utilisateur } from './utilisateur/utilisateur';
 
+
 // Genre
 import { GenreSearchComponent } from './genre-search/genre-search.component';
 import { GenreAddComponent } from './genre-add/genre-add.component';
@@ -121,6 +122,9 @@ import { AuthRequestOptions } from './login/authRequestOptions';
 import { AuthErrorHandlerService } from './login/authErrorHandler.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+// Role
+import { RolesUtilisateurService } from './roles/rolesUtilisateur.service';
+
 // Modal / bottom pour passer les infos visuellement a l'utilisateur
 import { ToasterService } from './service/toaster.service';
 import { SnackBarComponent } from './service/toaster.service';
@@ -155,6 +159,7 @@ import { ForfaitPipe } from './pipe/forfait.pipe';
 import { WishProOrNotPipe } from './pipe/wishPro.pipe';
 import { SingulierPlurielNbSeancePipe } from './pipe/singPlurNbSeance.pipe';
 import { EuroCurrencyShowPipe } from './pipe/euroCurrencyPipe.pipe';
+import { HommeFemmePipe } from './pipe/hommeFemmePipe.pipe';
 
 // Perfect ScrollBar
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -200,9 +205,6 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule } from '@angular/material';
-import { RolesUtilisateurService } from './roles/rolesUtilisateur.service';
-
-
 
 @NgModule({
   declarations: [
@@ -222,6 +224,7 @@ import { RolesUtilisateurService } from './roles/rolesUtilisateur.service';
     ForgottenPwdModalComponent,
     HeaderComponent,
     HomeComponent,
+    HommeFemmePipe,
     IfIsNullSetToNonRenseignePipe,
     InformationsComponent,
     LoginComponent,
