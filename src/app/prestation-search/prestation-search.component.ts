@@ -189,7 +189,7 @@ export class PrestationSearchComponent implements OnInit {
   private refreshPrestationListSelonLesOptions(): void {
 
     if (this.state_activite == false && this.state_genre == false) {
-
+      this.getPrestationList();
       // this.filteredPrestation = this.prestationList
       this.dataSource = this.prestationList;
       
@@ -230,7 +230,7 @@ export class PrestationSearchComponent implements OnInit {
       this.dataSource = this.filteredPrestation;
       // this.logger.info("PrestationSerachComponent Log : listeFiltree Activite et Genre : " + this.filteredPrestation);
 
-    }
+    } 
   }
 
   /**
@@ -241,8 +241,11 @@ export class PrestationSearchComponent implements OnInit {
     this.state_activite = false;
     this.state_genre = false;
     this.prestationFg.get('activiteFc').setValue('');
+    this.prestationFg.get('activiteFc').markAsUntouched();
     this.prestationFg.get('genreFc').setValue('');
+    this.prestationFg.get('genreFc').markAsUntouched();
     this.slider_Forfait = false;
+
     this.refreshPrestationListSelonLesOptions();
   }
 
