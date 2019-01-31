@@ -47,7 +47,7 @@
                     <mat-icon>input</mat-icon>&nbsp;
                     <span>Connexion</span>
                 </button>
-                <button mat-menu-item [disabled]="!isUserIsConnected$" class="connMenu">
+                <button mat-menu-item [disabled]="!isUserIsConnected$" class="connMenu" *ngIf="isUserIsConnected$">
                     <mat-icon>settings</mat-icon>&nbsp;
                     <span> Paramètres</span>
                 </button>
