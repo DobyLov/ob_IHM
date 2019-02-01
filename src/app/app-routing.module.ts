@@ -102,6 +102,7 @@ const routes: Routes = [
   { path: 'rgpdpagenotfound', component: RgpdPageNotFoundComponent },
   { path: 'rgpdtokenexpired', component: RgpdTokenExpiredComponent},
   { path: 'rgpdurlaltered', component: RgpdUrlAlteredComponent },
+  { path: 'pagenotfound', component: PagenotfoundComponent },
   { path: '**', component: PagenotfoundComponent }
  
 ];
