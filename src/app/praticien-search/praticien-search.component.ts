@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Output, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { HistoryRoutingService } from '../service/historyRouting.service';
 import { Router } from '@angular/router';
@@ -16,7 +16,7 @@ import { PraticienService } from '../praticien/praticien.service';
   templateUrl: './praticien-search.component.html',
   styleUrls: ['./praticien-search.component.scss']
 })
-export class PraticienSearchComponent implements OnInit {
+export class PraticienSearchComponent implements OnInit, OnDestroy {
 
   // RouterHistory
   previousRoute: string;
@@ -28,7 +28,7 @@ export class PraticienSearchComponent implements OnInit {
   // Client
   praticien: Praticien = new Praticien();
   praticienList: Praticien[];
- praticienIndex: number = 0;
+  praticienIndex: number = 0;
   // Table
   // Datasource
   dataSource: Praticien[];
@@ -55,6 +55,12 @@ export class PraticienSearchComponent implements OnInit {
 
   }
 
+  ngOnDestroy() {
+
+    this._cd.detach();
+
+  }
+
   /**
   * Recupere l utilisateur loggé
   */
@@ -78,13 +84,10 @@ export class PraticienSearchComponent implements OnInit {
         this.praticienList = praticienL;        
         this.praticienIndex = this.praticienList.length;  
         this.dataSource = this.praticienList;
-        this._cd.detectChanges();
-        
+        this._cd.markForCheck();      
         }
-    )
-
-    
-  };
+    ) 
+  }
   
   private test() {
     this.logger.info("praticienSearchComponent Log : Nombre de Client dans la Bdd : " + this.praticienIndex );

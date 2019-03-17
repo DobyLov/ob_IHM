@@ -695,14 +695,16 @@ export class RdvDetailsComponent implements OnInit {
   /**
   * Attirbue le praticien selectionne
   */
-  public praticienSelectionne(praticien: Praticien) {
+  public praticienSelectionne(event: MatOptionSelectionChange, praticien: Praticien) {
 
-    this.logger.info("RdvDetailComponent log : Praticien selectionne Id Priatien: " + praticien.idPraticien);
-    this.selectedPraticienFromlist = praticien;
-    this.logger.info("RdvDetailComponent log : Praticien idPraticien " + this.selectedPraticienFromlist.idPraticien);
+    if (event.source.selected) {
+      this.logger.info("RdvDetailComponent log : Praticien selectionne Id Priatien: " + praticien.idPraticien);
+      this.selectedPraticienFromlist = praticien;
+      this.logger.info("RdvDetailComponent log : Praticien idPraticien " + this.selectedPraticienFromlist.idPraticien);
 
 
-    this.rdv.praticien.idPraticien = praticien.idPraticien;
+      this.rdv.praticien.idPraticien = praticien.idPraticien;
+    }
 
     this.toggleSaveButtonStatus();
 
@@ -712,13 +714,16 @@ export class RdvDetailsComponent implements OnInit {
    * Attribue le lieuRdv selectionne
    * @param lieuRdv 
    */
-  public lieuRdvSelectionne(lieuRdv: LieuRdv) {
-    this.logger.info("RdvDetailComponent log : Praticien selectionne Id LieuRdv : " + lieuRdv.idLieuRdv);
-    this.selectedLieuRdvFromList = lieuRdv;
-    this.logger.info("RdvDetailComponent log : LieuRdv IsLieuRdv : " + this.selectedLieuRdvFromList.idLieuRdv);
+  public lieuRdvSelectionne(event: MatOptionSelectionChange, lieuRdv: LieuRdv) {
 
-    this.rdv.lieuRdv.idLieuRdv = lieuRdv.idLieuRdv;
-    this.toggleSaveButtonStatus();
+    if (event.source.selected) {
+      this.logger.info("RdvDetailComponent log : Praticien selectionne Id LieuRdv : " + lieuRdv.idLieuRdv);
+      this.selectedLieuRdvFromList = lieuRdv;
+      this.logger.info("RdvDetailComponent log : LieuRdv IsLieuRdv : " + this.selectedLieuRdvFromList.idLieuRdv);
+
+      this.rdv.lieuRdv.idLieuRdv = lieuRdv.idLieuRdv;
+      this.toggleSaveButtonStatus();
+    }
   }
 
   /**
@@ -853,7 +858,7 @@ export class RdvDetailsComponent implements OnInit {
             let messageRdvOk: string = "Rendez-vous enregistré :"
             this.toasterMessage(messageRdvOk, 'snackbarInfo', 5000);
             this.logger.info("rgpdService Log : Le rendez-vous modifié à été persiste"); 
-            this._router.navigate(['./home']);
+            // this._router.navigate(['./home']);
             
           } else {
             let messageRdvNOk: string = "Il y a eu un problème."

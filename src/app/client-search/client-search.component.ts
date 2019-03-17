@@ -51,10 +51,6 @@ export class ClientSearchComponent implements OnInit {
 
     this.getCurrentUtilisateur();
     this.getClientList();
-
-    // setTimeout(() => {
-    //   this.test()
-    // }, 5000);
   }
 
   /**
@@ -80,7 +76,7 @@ export class ClientSearchComponent implements OnInit {
         this.clientList = clientL;        
         this.clientIndex = this.clientList.length;  
         this.dataSource = this.clientList;
-        this._cd.detectChanges();
+        this._cd.markForCheck();
         
         }
     )

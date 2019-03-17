@@ -50,9 +50,6 @@ export class UtilisateurSearchComponent implements OnInit {
     this.getCurrentUtilisateur();
     this.getUtilisateurList();
 
-    // setTimeout(() => {
-    //   this.test()
-    // }, 5000);
   }
 
   /**
@@ -78,12 +75,11 @@ export class UtilisateurSearchComponent implements OnInit {
         this.userList = utilisateurL;        
         this.userIndex = this.userList.length;  
         this.dataSource = this.userList;
-        this._cd.detectChanges();
+        this._cd.markForCheck();
         
         }
     )
 
-    
   };
   
   private test() {

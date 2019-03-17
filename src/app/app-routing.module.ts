@@ -57,6 +57,7 @@ import { LieurdvDetailsComponent } from './lieurdv-details/lieurdv-details.compo
 import { GenreAddComponent } from './genre-add/genre-add.component';
 import { GenreSearchComponent } from './genre-search/genre-search.component';
 import { GenreDetailsComponent } from './genre-details/genre-details.component';
+import { ParametresComponent } from './parametres/parametres.component';
 
 
 
@@ -97,6 +98,7 @@ const routes: Routes = [
   { path: 'forgottenpwd', component: ForgottenPwdComponent },
   { path: 'forgottenpwdmodal', component: ForgottenPwdModalComponent },
   { path: 'support', component: SupportComponent },
+  { path: 'parametres', component: ParametresComponent },
   { path: 'informations', component: InformationsComponent },
   { path: 'rgpd', component: RgpdComponent, canActivate: [AuthGuardRgpdService] },
   { path: 'rgpdpagenotfound', component: RgpdPageNotFoundComponent },

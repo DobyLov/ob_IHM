@@ -1,0 +1,82 @@
+<link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Source+Sans+Pro|Montserrat:300"
+ rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=0" />
+<!-- <form [formGroup]="utilisateurFg"> -->
+	<div class="body-containerR">
+		<div class="body-containerC">
+			<mat-card class="title">
+				<mat-card-content class="title-content">
+					<span>Paramètres</span>
+				</mat-card-content>
+			</mat-card>
+			<!-- ----------------------------------------------------------------------------------------------------------------------- -->
+			<div class="items-containerR">
+				<mat-card class="matCard-parametres-section">
+					<mat-card-header class="matCard-parametres-header">
+						<div class="titreBlock">Forcer l'envoi de rappel de Rdv par SMS</div>
+					</mat-card-header>
+					<!-- <mat-card-content class="matCard-parametres-content"> -->
+          <mat-card-content class="blocksRemider">
+						<div class="txtBlockFormater">
+              Envoyer les SMS au(x) client(s)
+						</div>
+						<div>
+                <button mat-mini-fab color="primary" matTooltip="SMS Clients" (click)="forcerEnvoiSmsRemiderClients()" >
+                    <mat-icon>send</mat-icon>
+                  </button>
+						</div>
+          </mat-card-content>
+          <mat-card-content class="blocksRemider">
+              <div class="txtBlockFormater">
+                Envoyer les SMS au(x) praticien(s)
+              </div>
+              <div>
+                  <button mat-mini-fab color="primary" matTooltip="SMS Praticiens" (click)="forcerEnvoiSmsRemiderPraticiens()" >
+                      <mat-icon>send</mat-icon>
+                    </button>
+              </div>
+            </mat-card-content>
+				</mat-card>
+			</div>
+			<!-- ------------------------------------------------ -->
+      <div class="items-containerR">
+          <mat-card class="matCard-parametres-section">
+            <mat-card-header class="matCard-parametres-header">
+              <div class="titreBlock">Forcer l'envoi de rappel de Rdv par Email</div>
+            </mat-card-header>
+            <!-- <mat-card-content class="matCard-parametres-content"> -->
+            <mat-card-content class="blocksRemider">
+              <div class="txtBlockFormater">
+                Envoyer les Emails au(x) client(s)
+              </div>
+              <div>
+                  <button mat-mini-fab color="primary" matTooltip="Emails Clients" (click)="forcerEnvoiEmailRemiderClients()" >
+                      <mat-icon>send</mat-icon>
+                    </button>
+              </div>
+            </mat-card-content>
+            <mat-card-content class="blocksRemider">
+                <div class="txtBlockFormater">
+                  Envoyer les Emails au(x) praticien(s)
+                </div>
+                <div>
+                    <button mat-mini-fab color="primary" matTooltip="Emails Praticiens" (click)="forcerEnvoiEmailRemiderPraticiens()" >
+                        <mat-icon>send</mat-icon>
+                      </button>
+                </div>
+              </mat-card-content>
+          </mat-card>
+        </div>
+			
+			<!-- ---------------------------------------------------------------------- -->
+			<mat-card class="action-section">
+				<div>
+					<button mat-mini-fab color="primary" matTooltip="Retour Home" (click)="backHome()" >
+						<mat-icon class="remonte-icon-btn">home</mat-icon>
+					</button>
+				</div>
+			</mat-card>
+		</div>
+	</div>
+	<!-- </div> -->
+<!-- </form> -->

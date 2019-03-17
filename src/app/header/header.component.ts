@@ -415,6 +415,15 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   /**
+   * Ouvre la page paramètres
+   */
+  public openParametres() {
+
+    this.router.navigate(['./parametres']);
+
+  }
+
+  /**
    * Ouvre la page support
    */
   public openSupport() {

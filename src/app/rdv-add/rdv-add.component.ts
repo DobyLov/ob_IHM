@@ -649,9 +649,8 @@ export class RdvAddComponent implements OnInit, OnChanges {
   * Active / Desactive Boutton Sauvegarder
   */
   public toggleSaveButtonStatus() {
-
-    this.logger.info("RdvAddComponent log : Methode activee : changelieuRdv_state");
-
+    
+    this.logger.info("RdvAddComponent log : Methode activee");
     if (this.save_button_state == true) {
       this.save_button_state = !this.save_button_state;
     }

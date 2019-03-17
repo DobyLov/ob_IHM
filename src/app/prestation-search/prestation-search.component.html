@@ -37,7 +37,7 @@
 								<ng-container matColumnDef="idPrat">
 									<th mat-header-cell *matHeaderCellDef>Détails</th>
 									<td mat-cell *matCellDef="let element" class="button-Details">
-										<button mat-icon-button color="primary" [routerLink]="['/prestationdetails', element.idPrestation]">
+										<button mat-icon-button color="primary" [routerLink]="['/prestationdetails', element.idPrestation]" disabled>
 											<i class="material-icons">remove_red_eye</i>
 										</button>
 									</td>

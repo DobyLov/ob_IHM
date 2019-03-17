@@ -92,10 +92,11 @@ import { ConfirmRdvDetailsModalcomponent } from './rdv-details/rdv-details.compo
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { SupportComponent } from './support/support.component';
 import { InformationsComponent } from './informations/informations.component';
+import { ParametresComponent } from './parametres/parametres.component';
 import { SuiviActiviteComponent } from './suivi-activite/suivi-activite.component';
 import { ErrorHandlerService } from './service/errorHandler.service';
 
-// Autentification
+// Authentification
 import { Credentials } from './login/credentials';
 import { AuthService } from './login/auth.service';
 import { AuthGuardService } from './login/authGuard.service';
@@ -117,7 +118,7 @@ import { AuthGuardRgpdService } from './rgpd/authGuardRgpd.service';
 // FontAwsome angular
 import { Angular2FontawesomeModule } from 'angular2-fontawesome'
 
-// Autentification
+// Authentification Interceptors
 import { AuthRequestOptions } from './login/authRequestOptions';
 import { AuthErrorHandlerService } from './login/authErrorHandler.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -206,6 +207,7 @@ import {
   MatToolbarModule,
   MatTooltipModule } from '@angular/material';
 
+
 @NgModule({
   declarations: [
     AppComponent,    
@@ -265,7 +267,8 @@ import {
     GenreSearchComponent,
     GenreAddComponent,
     GenreDetailsComponent,
-    WishProOrNotPipe
+    WishProOrNotPipe,
+    ParametresComponent
   ],
 
   imports: [    

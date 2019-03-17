@@ -148,7 +148,14 @@ dateTimeValider(dateReservationRdv: Date) {
 
 }
 
-formatTime24H(date: Date, heure: number, minute: number) {
+/**
+ * Compose la date et l heure
+ * @param date
+ * @param heure
+ * @param minute
+ * returns Date
+ */
+private formatTime24H(date: Date, heure: number, minute: number) {
   let dateCompleteHeureRdv = date.setHours(heure);
   dateCompleteHeureRdv = date.setMinutes(minute);
   dateCompleteHeureRdv = date.setSeconds(0);

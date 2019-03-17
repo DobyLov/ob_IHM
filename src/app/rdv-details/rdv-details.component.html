@@ -174,7 +174,7 @@
 						<mat-select [formControl]="this.rdvFg.get('praticienFc')">
 							<mat-option *ngFor="let praticien of praticienList" 
 										[value]='praticien.nomPraticien + " " + praticien.prenomPraticien' 
-										(onSelectionChange)="praticienSelectionne(praticien)">
+										(onSelectionChange)="praticienSelectionne($event, praticien)">
 								{{ praticien.nomPraticien }} {{ praticien.prenomPraticien }}
 							</mat-option>
 						</mat-select>
@@ -189,7 +189,7 @@
 						<mat-select [formControl]="this.rdvFg.get('lieuRdvFc')">
 							<mat-option *ngFor="let lieuRdv of lieuRdvList" 
 										[value]="lieuRdv.lieuRdv" 
-										(onSelectionChange)="lieuRdvSelectionne(lieuRdv)">
+										(onSelectionChange)="lieuRdvSelectionne($event,lieuRdv)">
 								{{ lieuRdv.lieuRdv }}
 							</mat-option>
 						</mat-select>
