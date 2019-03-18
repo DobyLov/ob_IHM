@@ -861,7 +861,7 @@ export class RdvDetailsComponent implements OnInit {
             let messageRdvOk: string = "Rendez-vous enregistré :"
             this.toasterMessage(messageRdvOk, 'snackbarInfo', 5000);
             this.logger.info("rgpdService Log : Le rendez-vous modifié à été persiste"); 
-            // this._router.navigate(['./home']);
+            this._router.navigate(['./home']);
             
           } else {
             let messageRdvNOk: string = "Il y a eu un problème."
@@ -903,6 +903,7 @@ export class RdvDetailsComponent implements OnInit {
 
             this.toasterMessage("Rendez-Vous id: " + idRdv+" éffacé",'snackbarInfo',3000);
             this.logger.info("RdvDetailsComponent log : Le Rdv id: " + idRdv + " éffacé");
+            this._router.navigate(['./home']);
 
           }
       }  
