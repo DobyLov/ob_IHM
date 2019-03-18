@@ -258,6 +258,7 @@ export class RdvDetailsComponent implements OnInit {
 
     // setup de la Date ---------------------------------------------------------------------------------
     this.rdvFg.get('dateFc').setValue(new Date(this.rdv.dateHeureDebut));
+    this.datePickerSelected = this.rdvFg.get('dateFc').value;
 
     // setup du timer A ---------------------------------------------------------------------------------
     this.rdvFg.get('timerAFc').setValue(this._dateService.extracTimeFromGivenTs(this.rdv.dateHeureDebut));
@@ -549,14 +550,16 @@ export class RdvDetailsComponent implements OnInit {
 
     } else {
       
-      this.rdv.dateHeureDebut = moment(this.dateFromBdd)
+      // this.rdv.dateHeureDebut = moment(this.dateFromBdd)
+      this.rdv.dateHeureDebut = moment(this.rdvFg.get('dateFc').value)
         .hours(this._dateService.extracHoursFromGivenTime(timePickerA))
         .minutes(this._dateService.extracMinutesFromGivenTime(timePickerA))
         .tz('Europe/Paris')
         .unix()*1000;
         // Attribution du pickerA au pickerB avec 1 heure de plus
       this.timePickerB_initial_value = this._dateService.modStringTime(timePickerA.valueOf(), 1, 0);
-      this.rdv.dateHeureFin = moment(this.dateFromBdd)
+      // this.rdv.dateHeureFin = moment(this.dateFromBdd)
+      this.rdv.dateHeureFin = moment(this.rdvFg.get('dateFc').value)
         .hours(this._dateService.extracHoursFromGivenTime(this.timePickerB_initial_value))
         .minutes(this._dateService.extracMinutesFromGivenTime(this.timePickerB_initial_value))
         .tz('Europe/Paris')
