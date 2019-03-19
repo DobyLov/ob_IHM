@@ -7,6 +7,7 @@ import { Utilisateur } from '../utilisateur/utilisateur';
 import { HistoryRoutingService } from '../service/historyRouting.service';
 import { NGXLogger } from 'ngx-logger';
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
+import { AuthService } from '../login/auth.service';
 
 @Component({
   selector: 'app-parametres',
@@ -19,12 +20,14 @@ export class ParametresComponent implements OnInit {
     previousRoute: string;
     // Utilisateur
     @Output() isUserIsConnected$: boolean = false;
+    
     currentUtilisateur$: CurrentUtilisateur;
     cUtilisateur = new Subscription();
     utilisateur: Utilisateur = new Utilisateur();
 
   constructor( private logger: NGXLogger,
                 private _router: Router,
+                private _authService: AuthService,
                 private _utilisateurService: UtilisateurService,
                 private _historyRouting: HistoryRoutingService,
                 private _parametresService: ParametresService ) { 
@@ -48,6 +51,18 @@ export class ParametresComponent implements OnInit {
       () => {
         this.logger.error("ParametreComponent log : La requete n a pas fonctionnée");
       });
+}
+
+  /**
+ * Souscription a l orbservable isconnected
+ */
+private getIsUserIsConnected() {
+
+  // Souscription a l orbservable isconnected
+  this._authService.statusOfIsUserIsLogged.subscribe(isLoggedIn => {
+    this.isUserIsConnected$ = isLoggedIn.valueOf()
+  });
+
 }
 
   /**

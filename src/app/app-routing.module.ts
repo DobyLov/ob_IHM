@@ -98,7 +98,7 @@ const routes: Routes = [
   { path: 'forgottenpwd', component: ForgottenPwdComponent },
   { path: 'forgottenpwdmodal', component: ForgottenPwdModalComponent },
   { path: 'support', component: SupportComponent },
-  { path: 'parametres', component: ParametresComponent },
+  { path: 'parametres', component: ParametresComponent, canActivate: [AuthGuardService] },
   { path: 'informations', component: InformationsComponent },
   { path: 'rgpd', component: RgpdComponent, canActivate: [AuthGuardRgpdService] },
   { path: 'rgpdpagenotfound', component: RgpdPageNotFoundComponent },
