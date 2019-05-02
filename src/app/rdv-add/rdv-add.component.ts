@@ -19,7 +19,7 @@ import { LieuRdv } from '../lieuRdv/lieuRdv';
 import { ClientService } from '../client/client.service';
 import { PrestationService } from '../prestation/prestation.service';
 import { LieuRdvService } from '../lieuRdv/lieurdv.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { MatOptionSelectionChange } from '@angular/material';
 import { Utilisateur } from '../utilisateur/utilisateur';
@@ -84,7 +84,7 @@ export class RdvAddComponent implements OnInit, OnChanges {
   // Activite
   activite: Activite;
   activiteList: Activite[];
-  activiteListAvecFiltreForfait: string [];
+  activiteListAvecFiltreForfait: string[];
   activiteListBehaviosrSubject: BehaviorSubject<string[]>;
   selectedActivite: string;
   filterActivite: string;
@@ -302,28 +302,28 @@ export class RdvAddComponent implements OnInit, OnChanges {
     // Filtre selon l Id du Genre du client selectionne
     // ----------------------
     // this.activiteList = this.prestationList
-    this.activiteListAvecFiltreForfait = 
+    this.activiteListAvecFiltreForfait =
       this.prestationList
-      // .map(toto => toto)
-      .filter(presta => presta.forfait.valueOf() == this.isPrestaIsAForfait)
-      .filter(presta => presta.genre.idGenre.valueOf() == idGenre)
-      .map(activite => activite.activite.activiteNom)
-      .filter(((activite, pos, arr) => 
-         arr.indexOf(activite) === pos))
+        // .map(toto => toto)
+        .filter(presta => presta.forfait.valueOf() == this.isPrestaIsAForfait)
+        .filter(presta => presta.genre.idGenre.valueOf() == idGenre)
+        .map(activite => activite.activite.activiteNom)
+        .filter(((activite, pos, arr) =>
+          arr.indexOf(activite) === pos))
       ;
 
-      // .filter((el, ind, arr) => 
-      // ind === arr.indexOf(el)); // supprime les doublons   
-    
+    // .filter((el, ind, arr) => 
+    // ind === arr.indexOf(el)); // supprime les doublons   
+
 
     this.logger.info("RdvAddComponent log : Taille de le table Activite : " + this.activiteListAvecFiltreForfait.length);
     this.logger.info("RdvAddComponent log : Liste des Activites disponnible en (f) des filtres : " + this.activiteListAvecFiltreForfait);
 
-    for (let i=0; i < this.activiteListAvecFiltreForfait.length; i++) {
-      this.logger.info("\n: Numero : "  + i + "_" + this.activiteListAvecFiltreForfait[i] + " idActivite : " + this.activiteListAvecFiltreForfait[i].valueOf());
+    for (let i = 0; i < this.activiteListAvecFiltreForfait.length; i++) {
+      this.logger.info("\n: Numero : " + i + "_" + this.activiteListAvecFiltreForfait[i] + " idActivite : " + this.activiteListAvecFiltreForfait[i].valueOf());
     }
 
-    this.activiteListBehaviosrSubject = <BehaviorSubject<string[]>> new BehaviorSubject(this.activiteListAvecFiltreForfait);
+    this.activiteListBehaviosrSubject = <BehaviorSubject<string[]>>new BehaviorSubject(this.activiteListAvecFiltreForfait);
 
   }
 
@@ -649,7 +649,7 @@ export class RdvAddComponent implements OnInit, OnChanges {
   * Active / Desactive Boutton Sauvegarder
   */
   public toggleSaveButtonStatus() {
-    
+
     this.logger.info("RdvAddComponent log : Methode activee");
     if (this.save_button_state == true) {
       this.save_button_state = !this.save_button_state;
@@ -694,11 +694,11 @@ export class RdvAddComponent implements OnInit, OnChanges {
 
     // this.checkIfTokenGotFiveMinutesLeftBeforExpiration();
 
-    this.rdv.dateDeSaisie = moment( this.dateSaisie ).unix()*1000; 
+    this.rdv.dateDeSaisie = moment(this.dateSaisie).unix() * 1000;
     // this.rdv.dateDeModif = moment( this.dateSaisie ).unix()*1000; 
-    this.rdv.dateHeureDebut = moment( this._dateService.dateTimeConstructor(this.dateSel,this.tpA_selected_value)).unix()*1000;
-    this.rdv.dateHeureFin = moment( this._dateService.dateTimeConstructor(this.dateSel,this.tpB_selected_value) ).unix()*1000;
-    
+    this.rdv.dateHeureDebut = moment(this._dateService.dateTimeConstructor(this.dateSel, this.tpA_selected_value)).unix() * 1000;
+    this.rdv.dateHeureFin = moment(this._dateService.dateTimeConstructor(this.dateSel, this.tpB_selected_value)).unix() * 1000;
+
     // Set Client, Prestation, LieuRdv, Utilisateur of Rdv
     this.client.idClient = this.selectedClientFromList.idClient.valueOf();
     this.logger.info("RdvAddComponent log : Rdv idPrestation " + this.selectedPrestationFromList.idPrestation);
@@ -725,13 +725,13 @@ export class RdvAddComponent implements OnInit, OnChanges {
           res;
           let messageOk: string = "Votre Rendez-vous est enregistré";
           this._router.navigate(['./home'])
-          this.toasterMessage(messageOk,'snackbarInfo',5000);
+          this.toasterMessage(messageOk, 'snackbarInfo', 5000);
           this.logger.info("RdvAddComponent Log : Nouveau rendez-vous persistes");
 
         },
         err => {
           let messageNOk: string = "Il y a eu un problème, vérifiez les infos ..."
-          this.toasterMessage(messageNOk,'snackbarWarning', 5000);
+          this.toasterMessage(messageNOk, 'snackbarWarning', 5000);
           this.logger.error("RdvAddComponent Log : Le rendez-vous n'a pas été enregistré");
         })
 

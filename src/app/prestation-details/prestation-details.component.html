@@ -1,3 +1,204 @@
-<p>
-  prestation-details works!
-</p>
+<link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Source+Sans+Pro|Montserrat:300"
+ rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=0" />
+<form [formGroup]="prestationFg">
+	<div class="body-containerR">
+		<div class="body-containerC">
+			<mat-card class="title">
+				<mat-card-content class="title-content">
+					<span>Détails de  la Prestation N°: {{ prestation.idPrestation }}</span>
+				</mat-card-content>
+			</mat-card>
+			<!-- ----------------------------------------------------------------------------------------------------------------------- -->
+			<div class="items-containerR">
+					<mat-card class="matCard-soin-section">
+						<mat-card-header class="matCard-soin-header">
+							<div>Soin</div>
+						</mat-card-header>
+						<mat-card-content class="matCard-soin-content">
+								<mat-form-field>
+										<input matInput 
+														#inputsoin 
+														maxlength="50" 
+														autocomplete="off" 
+														[formControl]="this.prestationFg.get('prestationSoinFc')"												
+														placeholder="Nouveau Soin">
+										<mat-hint align="end">{{inputNouvelleActivite.value?.length || 0}}/50</mat-hint>
+										<mat-error *ngIf="this.prestationFg.get('prestationSoinFc').invalid">{{getSoinErrorMessage()}}</mat-error>
+									</mat-form-field>
+						</mat-card-content>
+					</mat-card>	
+			</div>
+			<!-- ----------------------------------------------------------------------------------------------------------------------- -->
+			<div class="items-containerR">
+				<mat-card class="matCard-activite-section">
+					<mat-card-header class="matCard-activite-header">
+						<div>Activité</div>
+					</mat-card-header>
+					<mat-card-content class="matCard-activite-content">
+						<div class="divsInternes">
+							<mat-form-field hintLabel="Liste déroulante">
+								<mat-select placeholder="Séléctionner l' activité" 
+														[formControl]="this.prestationFg.get('prestationActiviteFc')">
+									<mat-option></mat-option>
+									<mat-option *ngFor="let activite of activiteList" 
+															[value]='activite.idActivite' 
+															(onSelectionChange)="activiteSelectionne($event, activite)">
+										{{ activite.activiteNom }}
+									</mat-option>
+								</mat-select>
+								<mat-error *ngIf="this.prestationFg.get('prestationActiviteFc').invalid">{{getActiviteErrorMessage()}}</mat-error>
+							</mat-form-field>
+						</div>
+						<div class="div-interne-activite"> 
+								<b><u>ou</u></b> saisir une nouvelle activité</div>
+						<div class="divsInternes">
+							<mat-form-field>
+								<input matInput 
+												#inputNouvelleActivite 
+												maxlength="50" 
+												autocomplete="off" 
+												(input)="inputFieldNouvelleActivite($event.target.value)"
+												[formControl]="this.prestationFg.get('prestationNouvActFc')"												
+												placeholder="Nouvelle activite">
+								<mat-hint align="end">{{inputNouvelleActivite.value?.length || 0}}/50</mat-hint>
+								<mat-error *ngIf="this.prestationFg.get('prestationNouvActFc').invalid">{{getNouvActFcErrorMessage()}}</mat-error>
+							</mat-form-field>
+						</div>
+					</mat-card-content>
+				</mat-card>
+
+				<mat-card class="matCard-infoPresta-section">
+						<mat-card-header class="matCard-infoPresta-header">
+							<div>Info Prestation</div>
+						</mat-card-header>
+						<mat-card-content>
+							<div>
+									<mat-form-field>
+											<mat-select placeholder="Nombre de séance" 
+																	[formControl]="this.prestationFg.get('prestationNbSeanceFc')">
+												<mat-option *ngFor="let nombreSeance of nbSeanceList" 
+																		[value]="nombreSeance.value" 
+																		(onSelectionChange)="nombreSeanceSelectionnee($event, nombreSeance)">
+													{{ nombreSeance.viewValue | SingulierPlurielNbSeancePipe}}
+												</mat-option>
+											</mat-select>
+											<mat-error *ngIf="this.prestationFg.get('prestationNbSeanceFc').invalid">{{getNbSeanceErrorMessage()}}</mat-error>
+										</mat-form-field>
+							</div>
+							<div>
+									<mat-form-field>
+											<mat-select placeholder="Durée séance" 
+																	[formControl]="this.prestationFg.get('prestationDureeSeanceFc')">
+												<mat-option *ngFor="let dureeSeance of dureeSeanceList" 
+																		[value]="dureeSeance.value"
+																		(onSelectionChange)="dureeSeanceSelectionnee($event, dureeSeance)">
+													{{ dureeSeance.viewValue }} minutes
+												</mat-option>
+											</mat-select>
+											<mat-error *ngIf="this.prestationFg.get('prestationDureeSeanceFc').invalid">{{getDureeSeanceErrorMessage()}}</mat-error>
+										</mat-form-field>
+							</div>
+							<div>
+								<mat-form-field>
+									<input matInput 
+													#inputPrix 
+													maxlength="4" 
+													autocomplete="off" 
+													[formControl]="this.prestationFg.get('prestationPrixFc')" 
+													placeholder="Prix Prestation">
+													<span matSuffix>€</span>
+									<mat-hint align="end">{{inputPrix.value?.length || 0}}/4</mat-hint>
+									<mat-error *ngIf="this.prestationFg.get('prestationPrixFc').invalid">{{getPrixErrorMessage()}}</mat-error>
+								</mat-form-field>
+							</div>
+						</mat-card-content>
+					</mat-card>
+
+			</div>
+			<!-- -------------------------------------------------------------------------------------------- -->
+			<div class="items-containerR">
+				<mat-card class="matCard-genre-section">
+					<mat-card-header class="matCard-genre-header">
+						<div>Genre</div>
+					</mat-card-header>
+					<mat-card-content class="matCard-genre-content">
+							<mat-form-field>
+								<mat-select placeholder="Séléctionner le genre" 
+														[formControl]="this.prestationFg.get('prestationGenreFc')">
+									<mat-option *ngFor="let genre of genreList" 
+															[value]='genre.idGenre' 
+															(onSelectionChange)="genreSelectionne($event, genre)">
+										{{ genre.genreHum }}
+									</mat-option>
+								</mat-select>
+								<mat-error *ngIf="this.prestationFg.get('prestationGenreFc').invalid">{{getGenreErrorMessage()}}</mat-error>
+							</mat-form-field>
+					</mat-card-content>
+				</mat-card>
+				<!-- ------------------------------------------------ -->
+				<mat-card class="matCard-forfait-section">
+					<mat-card-header class="matCard-forfait-header">
+						<span>Fofait</span>
+					</mat-card-header>
+					<mat-card-content class="matCard-forfait-content">
+						<div class="rgpdReglages-Container">
+							<span class="slider-Subject">
+								Activer si forfait
+							</span>
+							<span class="slider-Switch">
+								<mat-slide-toggle (change)="onChangeTs_forfait_Checked()" 
+																	[color]="ts_Color" 
+																	[checked]="slider_Forfait">
+								</mat-slide-toggle>
+							</span>
+						</div>
+					</mat-card-content>
+				</mat-card>
+			</div>
+
+			<!-- ---------------------------------------------------------------------- -->
+			<div class="items-containerR">
+				<mat-card class="matCard-description-section">
+					<mat-card-header class="matCard-description-header">
+						<div>Description du soin</div>
+					</mat-card-header>
+					<mat-card-content class="matCard-description-content">
+							<mat-form-field>
+									<textarea matInput 
+														#inputDescription 
+														maxlength="500" 
+														autocomplete="off" 
+														[formControl]="this.prestationFg.get('prestationDescriptionFc')"
+														placeholder="Description du soin">
+									</textarea>
+									<mat-hint align="end">{{inputDescription.value?.length || 0}}/500</mat-hint>
+							</mat-form-field>
+					</mat-card-content>
+				</mat-card>
+			</div>
+			<!-- ---------------------------------------------------------------------- -->
+			<mat-card class="action-section">
+				<div>
+					<button mat-mini-fab color="warn" matTooltip="Effacer la prestation" (click)="erase()">
+						<mat-icon class="remonte-icon-btn">delete</mat-icon>
+					</button>
+				</div>
+				<div>
+					<button mat-mini-fab color="primary" matTooltip="Retourner à la page Home" (click)="annulerLesModifications()">
+						<mat-icon class="remonte-icon-btn">home</mat-icon>
+					</button>
+				</div>
+				<div>
+					<button mat-mini-fab 
+							color="primary" 
+							matTooltip="Valider les modifications"
+							[disabled]="update_button_state"
+							(click)="update()">
+						<mat-icon class="remonte-icon-btn">create</mat-icon>
+					</button>
+				</div>
+			</mat-card>
+		</div>
+	</div>
+</form>

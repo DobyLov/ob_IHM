@@ -14,7 +14,7 @@ import { RdvAddComponent } from './rdv-add/rdv-add.component';
 import { RdvSearchComponent } from './rdv-search/rdv-search.component';
 
 // Client
-import { ClientDetailsComponent } from './client-details/client-details.component';
+import { ClientDetailsComponent, ConfirmClientDetailsModalComponent } from './client-details/client-details.component';
 import { ClientSearchComponent } from './client-search/client-search.component';
 import { ClientAddComponent } from './client-add/client-add.component';
 
@@ -42,21 +42,34 @@ import { ConfimrUserFromTokenModalComponent } from './header/header.component';
 import { SupportComponent } from './support/support.component';
 import { InformationsComponent } from './informations/informations.component';
 import { SuiviActiviteComponent } from './suivi-activite/suivi-activite.component';
+
+// Utilisateur
 import { UtilisateurAddComponent } from './utilisateur-add/utilisateur-add.component';
 import { UtilisateurSearchComponent } from './utilisateur-search/utilisateur-search.component';
 import { UtilisateurDetailsComponent } from './utilisateur-details/utilisateur-details.component';
+
+// Praticien
 import { PraticienAddComponent } from './praticien-add/praticien-add.component';
 import { PraticienSearchComponent } from './praticien-search/praticien-search.component';
 import { PraticienDetailsComponent } from './praticien-details/praticien-details.component';
+
+// Prestation
 import { PrestationAddComponent } from './prestation-add/prestation-add.component';
 import { PrestationSearchComponent } from './prestation-search/prestation-search.component';
 import { PrestationDetailsComponent } from './prestation-details/prestation-details.component';
+import { ConfirmPrestationDetailsModalcomponent } from './prestation-details/prestation-details.component';
+
+// LieuRdv
 import { LieurdvAddComponent } from './lieurdv-add/lieurdv-add.component';
 import { LieurdvSearchComponent } from './lieurdv-search/lieurdv-search.component';
-import { LieurdvDetailsComponent } from './lieurdv-details/lieurdv-details.component';
+import { LieuRdvDetailsComponent } from './lieurdv-details/lieurdv-details.component';
+
+// Genre
 import { GenreAddComponent } from './genre-add/genre-add.component';
 import { GenreSearchComponent } from './genre-search/genre-search.component';
 import { GenreDetailsComponent } from './genre-details/genre-details.component';
+
+// Parametres
 import { ParametresComponent } from './parametres/parametres.component';
 
 
@@ -80,11 +93,13 @@ const routes: Routes = [
   { path: 'prestationdetails/:idPrestation', component: PrestationDetailsComponent, canActivate: [AuthGuardService] },
   { path: 'lieurdadd', component: LieurdvAddComponent, canActivate: [AuthGuardService] },
   { path: 'lieurdsearch', component: LieurdvSearchComponent, canActivate: [AuthGuardService] },
-  { path: 'lieurddeatils:/idLieurdv', component: LieurdvDetailsComponent, canActivate: [AuthGuardService] },
+  { path: 'lieurdvdetails/:idLieuRdv', component: LieuRdvDetailsComponent, canActivate: [AuthGuardService] },
   { path: 'rdvadd', component: RdvAddComponent, canActivate: [AuthGuardService] },
   { path: 'rdvsearch', component: RdvSearchComponent, canActivate: [AuthGuardService] },
   { path: 'rdvdetails/:idRdv', component: RdvDetailsComponent, canActivate: [AuthGuardService] },
   { path: 'confirmrdvdetailsmodal', component: ConfirmRdvDetailsModalcomponent, canActivate: [AuthGuardService] },
+  { path: 'confirmClientDetailsmodal', component: ConfirmClientDetailsModalComponent, canActivate: [AuthGuardService] },
+  { path: 'confirmPrestationDetailsmodal', component: ConfirmPrestationDetailsModalcomponent, canActivate: [AuthGuardService] },
   { path: 'genreadd', component: GenreAddComponent, canActivate: [AuthGuardService] },
   { path: 'genresearch', component: GenreSearchComponent, canActivate: [AuthGuardService] },
   { path: 'genredetails/:idGenre', component: GenreDetailsComponent, canActivate: [AuthGuardService] },

@@ -1,5 +1,8 @@
 import { Component, OnInit, Output, ChangeDetectorRef, Inject } from '@angular/core';
-import { MatOptionSelectionChange, MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA, MatDatepickerInputEvent } from '@angular/material';
+import { MatOptionSelectionChange, 
+          MatDialog, MatDialogConfig, 
+          MatDialogRef, MAT_DIALOG_DATA, 
+          MatDatepickerInputEvent } from '@angular/material';
 import { NGXLogger } from 'ngx-logger';
 import { RdvService } from '../rdv/rdv.service';
 import { UtilisateurService } from '../utilisateur/utilisateur.service';
@@ -24,7 +27,7 @@ import { Utilisateur } from '../utilisateur/utilisateur';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActiviteService } from '../activite/activite.service';
 import { Activite } from '../activite/activite';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription, Observable } from 'rxjs';
 
 // import * as moment from 'moment';
@@ -600,11 +603,11 @@ export class RdvDetailsComponent implements OnInit {
   
       } else {
         
-        this.rdv.dateHeureDebut = moment(this.dateFromBdd)
-          .hours(this._dateService.extracHoursFromGivenTime(timePickerB))
-          .minutes(this._dateService.extracMinutesFromGivenTime(timePickerB))
-          .tz('Europe/Paris')
-          .unix()*1000;
+        // this.rdv.dateHeureDebut = moment(this.dateFromBdd)
+        //   .hours(this._dateService.extracHoursFromGivenTime(timePickerB))
+        //   .minutes(this._dateService.extracMinutesFromGivenTime(timePickerB))
+        //   .tz('Europe/Paris')
+        //   .unix()*1000;
           // Attribution du pickerA au pickerB avec 1 heure de plus
         this.timePickerB_initial_value = this._dateService.modStringTime(this.tpA_selected_value.valueOf(), 1, 0);
         this.rdv.dateHeureFin = moment(this.dateFromBdd)

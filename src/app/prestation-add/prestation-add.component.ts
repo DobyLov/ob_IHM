@@ -71,7 +71,6 @@ export class PrestationAddComponent implements OnInit, OnChanges {
   // prestation
   prestation: Prestation = new Prestation();
 
-
   // Slider
   ts_Color: string = 'primary';
   slider_Forfait: boolean = false;
@@ -109,14 +108,13 @@ export class PrestationAddComponent implements OnInit, OnChanges {
   prestationFg: FormGroup;
 
   constructor(private logger: NGXLogger,
-    private _historyRouting: HistoryRoutingService,
-    private _activiteService: ActiviteService,
-    private _genreService: GenreService,
-    private _prestationService: PrestationService,
-    private _utilisateurService: UtilisateurService,
-    private _router: Router,
-    private _toasterService: ToasterService
-  ) { }
+              private _historyRouting: HistoryRoutingService,
+              private _activiteService: ActiviteService,
+              private _genreService: GenreService,
+              private _prestationService: PrestationService,
+              private _utilisateurService: UtilisateurService,
+              private _router: Router,
+              private _toasterService: ToasterService) { }
 
   ngOnInit() {
 

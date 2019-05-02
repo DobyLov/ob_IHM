@@ -14,8 +14,8 @@ export class ClientService {
 
     url: string = appConfig.apiOpusBeauteUrl + '/client';
 
-    constructor( private logger: NGXLogger,
-                 private httpCli: HttpClient) { }
+    constructor(private logger: NGXLogger,
+        private httpCli: HttpClient) { }
 
 
     /**
@@ -96,22 +96,22 @@ export class ClientService {
     }
 
 
-      /**
-   * Supprime un Client
-   * @param idcleint
-   * @returns Observable<string>
-   */
-  public delClient(idClient: number): Observable<string> {
+    /**
+    * Supprime un Client
+    * @param idcleint
+    * @returns Observable<string>
+    */
+    public deleteClient(idClient: number): Observable<string> {
 
-    this.logger.info("CleintService Log : Suppression du Client id: " + idClient); 
+        this.logger.info("CleintService Log : Suppression du Client id: " + idClient);
 
-    let myHeaders = new HttpHeaders().set('Content-Type', 'application/json');
-    let option = { headers: myHeaders }    
-    return this.httpCli
-      .delete<string>( this.url + '/del/' + idClient,  option )
-      .pipe(res => res);
+        let myHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+        let option = { headers: myHeaders }
+        return this.httpCli
+            .delete<string>(this.url + '/del/' + idClient, option)
+            .pipe(res => res);
 
-  }
+    }
 
 
 

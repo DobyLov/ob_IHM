@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './lieurdv-details.component.html',
   styleUrls: ['./lieurdv-details.component.scss']
 })
-export class LieurdvDetailsComponent implements OnInit {
+export class LieuRdvDetailsComponent implements OnInit {
 
   constructor() { }
 

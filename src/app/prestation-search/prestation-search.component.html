@@ -31,13 +31,13 @@
 	
 								<ng-container matColumnDef="forfait">
 									<th mat-header-cell *matHeaderCellDef>Forfait</th>
-									<td mat-cell *matCellDef="let element"> {{ element.forfait | ForfaitPipe}} </td>
+									<td mat-cell *matCellDef="let element"> {{ element.forfait | ForfaitPipe }}</td>
 								</ng-container>
 	
-								<ng-container matColumnDef="idPrat">
+								<ng-container matColumnDef="idPrestation">
 									<th mat-header-cell *matHeaderCellDef>Détails</th>
 									<td mat-cell *matCellDef="let element" class="button-Details">
-										<button mat-icon-button color="primary" [routerLink]="['/prestationdetails', element.idPrestation]" disabled>
+										<button mat-icon-button color="primary" [routerLink]="['/prestationdetails', element.idPrestation]">
 											<i class="material-icons">remove_red_eye</i>
 										</button>
 									</td>

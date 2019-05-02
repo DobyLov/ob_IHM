@@ -44,7 +44,7 @@ export class PrestationSearchComponent implements OnInit {
   dataSource: Prestation[];
   // clolonnes
   // tabNomsColonnes: string[] = ['numeroCli'];
-  tabNomsColonnes: string[] = ['activ', 'soin', 'genre', 'forfait', 'idPrat'];
+  tabNomsColonnes: string[] = ['activ', 'soin', 'genre', 'forfait', 'idPrestation'];
   // FormGroup
   prestationFg: FormGroup;
   // Slider

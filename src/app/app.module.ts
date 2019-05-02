@@ -65,7 +65,7 @@ import { GenreService } from './genre/genre.service';
 
 // LieuRdv
 import { LieurdvAddComponent } from './lieurdv-add/lieurdv-add.component';
-import { LieurdvDetailsComponent } from './lieurdv-details/lieurdv-details.component';
+import { LieuRdvDetailsComponent } from './lieurdv-details/lieurdv-details.component';
 import { LieurdvSearchComponent } from './lieurdv-search/lieurdv-search.component';
 import { LieuRdvService } from './lieuRdv/lieurdv.service';
 
@@ -86,7 +86,10 @@ import { ActiviteComponent } from './activite/activite.component';
 import { ActiviteAddComponent } from './activite-add/activite-add.component';
 import { ActiviteSearchComponent } from './activite-search/activite-search.component';
 
+// Confirm Modals
 import { ConfirmRdvDetailsModalcomponent } from './rdv-details/rdv-details.component';
+import { ConfirmClientDetailsModalComponent } from './client-details/client-details.component';
+import { ConfirmPrestationDetailsModalcomponent } from './prestation-details/prestation-details.component';
 
 // divers
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
@@ -217,6 +220,8 @@ import {
     BottomSheetComponent,
     ConfimrUserFromTokenModalComponent,
     ConfirmRdvDetailsModalcomponent,
+    ConfirmClientDetailsModalComponent,
+    ConfirmPrestationDetailsModalcomponent,
     DateAndTime24Pipe,
     EuroCurrencyShowPipe,
     FirstCharUpperPipe, 
@@ -259,7 +264,7 @@ import {
     PraticienSearchComponent,
     PraticienAddComponent,
     LieurdvAddComponent,
-    LieurdvDetailsComponent,
+    LieuRdvDetailsComponent,
     LieurdvSearchComponent,
     UtilisateurDetailsComponent,
     UtilisateurAddComponent,

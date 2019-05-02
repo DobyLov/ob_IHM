@@ -27,7 +27,8 @@ export function CustomEmailValidator( control: AbstractControl ): {[key: string]
 };
 
 @Component({
-  selector: '<app-clientAdd [inputclientTelMobil]=inputTelMob></app-clientAdd>',
+  // selector: '<app-clientAdd [inputclientTelMobil]=inputTelMob></app-clientAdd>',
+  selector: 'app-clientAdd',
   templateUrl: './client-add.component.html',
   styleUrls: ['./client-add.component.scss'],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'fr-FR'}],
@@ -76,12 +77,12 @@ export class ClientAddComponent implements OnInit {
               ) { }
 
   ngOnInit() {
-
+        this.getCurrentUtilisateur();
         // Historique de navigation stocke la route precedent afin de faire un BackPage
         this.previousRoute = this._historyRouting.getPreviousUrl();
 
         this.getGenreList();
-        this.getCurrentUtilisateur();
+
         this.clientFg = new FormGroup({
           clientNom: new FormControl( '', [Validators.pattern('^[a-zA-Z-éè]+$'), Validators.required, Validators.maxLength(30)]),
           clientPrenom: new FormControl( '', [Validators.pattern('^[a-zA-Z-éèç]+$'),Validators.required, Validators.maxLength(30)]),
@@ -127,7 +128,7 @@ export class ClientAddComponent implements OnInit {
   this.cUtilisateur = await this._utilisateurService.getObjCurrentUtilisateur
     .subscribe((cUtilisateur: CurrentUtilisateur) => { this.currentUtilisateur$ = cUtilisateur },
       () => {
-        this.logger.error("RclientAddComponent log : La requete n a pas fonctionnée");
+        this.logger.error("ClientAddComponent log : La requete n a pas fonctionnée");
       });
 }
 

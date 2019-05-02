@@ -1,0 +1,38 @@
+
+<link href="https://fonts.googleapis.com/css?family=Arsenal|Averia+Serif+Libre:700|Barlow+Semi+Condensed|Dancing+Script|Dosis:800|Great+Vibes|Indie+Flower|Marcellus|Pacifico|Roboto+Slab:700|Roboto:900|Source+Sans+Pro|Montserrat:300" rel="stylesheet">
+<div class="flex-container">    
+    <div class="flex-item-title">
+        <mat-toolbar color="primary" >
+            <p>Supprimer la prestation</p>
+        </mat-toolbar>
+    </div> 
+    <div class="items">
+        <p>Confirmez la suppression de la prestation N°: {{ data.idClient }}.</p>
+    </div> 
+    <div class="flex-item-Action">
+        <div class="flex-container-actionOkCancel">
+            <mat-toolbar color="primary">   
+            <div class="flex-item-ActionOkCancel">             
+                <button mat-icon-button 
+                        alt="Oui je confirme"
+                        matTooltip="Oui supprimer la Prestation"
+                        (click)="okDelete()">
+                    <mat-icon>
+                        <i class="material-icons">check</i>
+                    </mat-icon>
+                </button>
+            </div> 
+            <div class="flex-item-ActionOkCancel">
+                <button mat-icon-button 
+                        alt="Non, je ne confirme pas"
+                        matTooltip="non ne pas supprimer la Prestation"
+                        (click)="cancelDeletion()">
+                    <mat-icon>
+                        <i class="material-icons">clear</i>
+                    </mat-icon>
+                </button>
+            </div>
+            </mat-toolbar>
+        </div>
+    </div>
+</div>
