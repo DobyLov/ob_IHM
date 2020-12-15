@@ -56,3 +56,4 @@ Migration 6 vers 7 le : 19/10/2018
 
 ### Soutenance du Projet
 Consulter le document PDf: [Soutenance](https://github.com/DobyLov/soutenance/blob/main/FBeaudeau_Soutenance_V16032019_VFinale05.pdf)
+[<img src="https://github.com/DobyLov/soutenance/blob/main/pgarde_soutenance.png">]
