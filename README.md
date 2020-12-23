@@ -53,8 +53,3 @@ Migration 6 vers 7 le : 19/10/2018
     git clone https://github.com/DobyLov/ob_IHM.git
     npm install
     ng serve --port 4200 --host @IP à renseigner --aot
-
-### Soutenance du Projet
-Consulter le document PDf: [Soutenance](https://github.com/DobyLov/soutenance/blob/main/FBeaudeau_Soutenance_V16032019_VFinale05.pdf)
-
-[<img src="https://github.com/DobyLov/soutenance/blob/main/pgarde_soutenance.png">](https://github.com/DobyLov/soutenance/blob/main/FBeaudeau_Soutenance_V16032019_VFinale05.pdf)
